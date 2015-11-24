@@ -1,0 +1,62 @@
+<wsdl:definitions targetNamespace="http://www.elliemae.com/encompass/platform" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.elliemae.com/encompass/platform" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/">
+	<wsdl:types>
+		<xsd:schema targetNamespace="http://www.elliemae.com/encompass/platform/Imports">
+			<xsd:import schemaLocation="../../xsd/platform/XMLSchema_-826223433.xsd" namespace="http://www.elliemae.com/encompass/platform"/>
+			<xsd:import schemaLocation="../../xsd/platform/XMLSchema_-1787837450.xsd" namespace="http://schemas.microsoft.com/2003/10/Serialization/"/>
+		</xsd:schema>
+	</wsdl:types>
+	<wsdl:message name="SecurityTradeCreateRequest">
+		<wsdl:part name="SecurityTradeCreateRequest" element="tns:SecurityTradeCreateRequest"/>
+	</wsdl:message>
+	<wsdl:message name="SecurityTradeCreateRequest_Headers">
+		<wsdl:part name="SecurityContext" element="tns:SecurityContext"/>
+	</wsdl:message>
+	<wsdl:message name="SecurityTradeCreateResponse">
+		<wsdl:part name="SecurityTradeCreateResponse" element="tns:SecurityTradeCreateResponse"/>
+	</wsdl:message>
+	<wsdl:message name="SecurityTradeGetRequest">
+		<wsdl:part name="SecurityTradeGetRequest" element="tns:SecurityTradeGetRequest"/>
+	</wsdl:message>
+	<wsdl:message name="SecurityTradeGetRequest_Headers">
+		<wsdl:part name="SecurityContext" element="tns:SecurityContext"/>
+	</wsdl:message>
+	<wsdl:message name="SecurityTradeGetResponse">
+		<wsdl:part name="SecurityTradeGetResponse" element="tns:SecurityTradeGetResponse"/>
+	</wsdl:message>
+	<wsdl:message name="SecurityTradeDeleteRequest">
+		<wsdl:part name="SecurityTradeDeleteRequest" element="tns:SecurityTradeDeleteRequest"/>
+	</wsdl:message>
+	<wsdl:message name="SecurityTradeDeleteRequest_Headers">
+		<wsdl:part name="SecurityContext" element="tns:SecurityContext"/>
+	</wsdl:message>
+	<wsdl:message name="SecurityTradeDeleteResponse">
+		<wsdl:part name="SecurityTradeDeleteResponse" element="tns:SecurityTradeDeleteResponse"/>
+	</wsdl:message>
+	<wsdl:message name="SecurityTradeUpdateRequest">
+		<wsdl:part name="SecurityTradeUpdateRequest" element="tns:SecurityTradeUpdateRequest"/>
+	</wsdl:message>
+	<wsdl:message name="SecurityTradeUpdateRequest_Headers">
+		<wsdl:part name="SecurityContext" element="tns:SecurityContext"/>
+	</wsdl:message>
+	<wsdl:message name="SecurityTradeUpdateResponse">
+		<wsdl:part name="SecurityTradeUpdateResponse" element="tns:SecurityTradeUpdateResponse"/>
+	</wsdl:message>
+	<wsdl:portType name="ISecurityTradeService">
+		<wsdl:operation name="CreateSecurityTrade">
+			<wsdl:input wsaw:Action="http://www.elliemae.com/encompass/platform/ISecurityTradeService/CreateSecurityTrade" name="SecurityTradeCreateRequest" message="tns:SecurityTradeCreateRequest"/>
+			<wsdl:output wsaw:Action="http://www.elliemae.com/encompass/platform/ISecurityTradeService/CreateSecurityTradeResponse" name="SecurityTradeCreateResponse" message="tns:SecurityTradeCreateResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="GetSecurityTrade">
+			<wsdl:input wsaw:Action="http://www.elliemae.com/encompass/platform/ISecurityTradeService/GetSecurityTrade" name="SecurityTradeGetRequest" message="tns:SecurityTradeGetRequest"/>
+			<wsdl:output wsaw:Action="http://www.elliemae.com/encompass/platform/ISecurityTradeService/GetSecurityTradeResponse" name="SecurityTradeGetResponse" message="tns:SecurityTradeGetResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="DeleteSecurityTrade">
+			<wsdl:input wsaw:Action="http://www.elliemae.com/encompass/platform/ISecurityTradeService/DeleteSecurityTrade" name="SecurityTradeDeleteRequest" message="tns:SecurityTradeDeleteRequest"/>
+			<wsdl:output wsaw:Action="http://www.elliemae.com/encompass/platform/ISecurityTradeService/DeleteSecurityTradeResponse" name="SecurityTradeDeleteResponse" message="tns:SecurityTradeDeleteResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="UpdateSecurityTrade">
+			<wsdl:input wsaw:Action="http://www.elliemae.com/encompass/platform/ISecurityTradeService/UpdateSecurityTrade" name="SecurityTradeUpdateRequest" message="tns:SecurityTradeUpdateRequest"/>
+			<wsdl:output wsaw:Action="http://www.elliemae.com/encompass/platform/ISecurityTradeService/UpdateSecurityTradeResponse" name="SecurityTradeUpdateResponse" message="tns:SecurityTradeUpdateResponse"/>
+		</wsdl:operation>
+	</wsdl:portType>
+</wsdl:definitions>

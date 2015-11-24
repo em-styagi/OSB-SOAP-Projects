@@ -1,0 +1,49 @@
+<wsdl:definitions name="MilestoneSvc" targetNamespace="http://www.elliemae.com/services/milestone" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.elliemae.com/services/milestone" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:sec="http://www.elliemae.com/services/security">
+	
+	<wsdl:types>
+		<xsd:schema targetNamespace="http://www.elliemae.com/services/milestone" elementFormDefault="qualified">
+			<xsd:include schemaLocation="../../xsd/services/MilestoneSvc.xsd"/>
+			<xsd:import schemaLocation="../../../../../Security_SOAP_v1/Shared/SecuritySvc.xsd" namespace="http://www.elliemae.com/services/security"/>
+		</xsd:schema>
+	</wsdl:types>
+	
+	
+	<!-- Get MilestoneData -->
+	<wsdl:message name="GetLoanMilestoneDataRequest">
+		<wsdl:part name="GetLoanMilestoneDataRequest" element="tns:GetLoanMilestoneDataRequest"/>
+	</wsdl:message>
+	<wsdl:message name="GetLoanMilestoneDataRequest_Headers">
+		<wsdl:part name="header" element="sec:SecurityContext"/>
+	</wsdl:message>
+	<wsdl:message name="GetLoanMilestoneDataResponse">
+		<wsdl:part name="GetLoanMilestoneDataResponse" element="tns:GetLoanMilestoneDataResponse"/>
+	</wsdl:message>
+	
+	
+	<wsdl:portType name="MilestoneSvc">
+	 	<wsdl:operation name="GetLoanMilestoneData">
+			<wsdl:input message="tns:GetLoanMilestoneDataRequest"/>
+			<wsdl:output message="tns:GetLoanMilestoneDataResponse"/>
+		</wsdl:operation>
+	 </wsdl:portType>
+	
+	<wsdl:binding name="MilestoneSvcSOAP" type="tns:MilestoneSvc">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="GetLoanMilestoneData">
+			<soap:operation soapAction="http://www.elliemae.com/services/LoanSvc/GetLoanMilestoneData"/>
+			<wsdl:input>
+			<soap:header message="tns:GetLoanMilestoneDataRequest_Headers" part="header" use="literal"/>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>				
+	</wsdl:binding>
+	
+	<wsdl:service name="MilestoneSvc">
+		<wsdl:port binding="tns:MilestoneSvcSOAP" name="MilestoneSvcSOAP">
+			<soap:address location="http://encompass-ia.dev.dco.elmae:11001/encompass_v1/milestone"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

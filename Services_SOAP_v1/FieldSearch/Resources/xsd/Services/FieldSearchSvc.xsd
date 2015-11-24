@@ -1,0 +1,814 @@
+<xsd:schema targetNamespace="http://www.elliemae.com/services/fieldsearch"
+	elementFormDefault="qualified" 
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:tns="http://www.elliemae.com/services/fieldsearch" >
+	
+	<xsd:element name="LookupFieldsRequest" type="tns:LookupFieldsRequestType" />
+	<xsd:element name="LookupFieldsResponse" type="tns:LookupFieldsResponseType" />
+	<xsd:element name="GetFieldDetailsRequest" type="tns:GetFieldDetailsRequestType" />
+	<xsd:element name="GetFieldDetailsResponse" type="tns:GetFieldDetailsResponseType" />
+
+
+<!-- #################### -->
+<!-- LookupFields Request -->
+<!-- #################### -->
+
+	<xsd:complexType name="LookupFieldsRequestType"><!-- Add Fields element -->
+		<xsd:sequence>
+			<xsd:element name="Fields" type="tns:LookupFieldsType" />
+			<!--Optional:-->
+			<xsd:element name="FilterColumns" type="tns:ArrayofFilterColumnType" />
+			<xsd:element name="PageIndex" type="xsd:int" />
+			<xsd:element name="PageSize"  type="xsd:int" />
+			<xsd:element name="Paging" nillable="true" type="xsd:string" />
+			<xsd:element name="SortColumns" nillable="true" type="tns:ArrayofSortColumnType" />
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="ArrayofSortColumnType">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" maxOccurs="unbounded" name="SortColumn" nillable="true" type="tns:SortColumnType" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="ArrayofSortColumn" nillable="true" type="tns:ArrayofSortColumnType" />
+
+	<xsd:complexType name="SortColumnType">
+		<xsd:sequence>
+			<xsd:element minOccurs="1" maxOccurs="1" name="Name" type="xsd:string" />
+			<xsd:element minOccurs="1" maxOccurs="1" name="SortOrder" type="tns:SortOrderType" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="SortColumn" nillable="true" type="tns:SortColumnType" />
+	
+	<xsd:simpleType name="SortOrderType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="None" />
+			<xsd:enumeration value="Ascending" />
+			<xsd:enumeration value="Descending" />
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:element name="SortOrder" nillable="true" type="tns:SortOrderType" />
+	
+	
+	<xsd:complexType name="LookupFieldsType">
+		<xsd:sequence>
+			<!--One or more, up to 3 repetitions -->
+			<xsd:element minOccurs="1" maxOccurs="3" name="FieldId" nillable="true" type="xsd:string" />			
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="LookupFields" type="tns:LookupFieldsType" />	
+
+	<xsd:complexType name="ArrayofFilterColumnType">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" maxOccurs="unbounded" name="FilterColumn" nillable="true" type="tns:FilterColumnType" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="ArrayOfFilterColumn" nillable="true" type="tns:ArrayofFilterColumnType" />
+	
+	<xsd:complexType name="FilterColumnType">
+		<xsd:sequence>
+			<xsd:element minOccurs="1" name="Name" nillable="true" type="xsd:string" />
+			<xsd:element minOccurs="0" name="Values" nillable="true" type="tns:ListofItemsType" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="FilterColumn" nillable="true" type="tns:FilterColumnType" />
+	
+	<xsd:complexType name="ListofItemsType">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" maxOccurs="unbounded" name="Item" nillable="true" type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="Item" nillable="true" type="tns:ListofItemsType" />
+	
+
+
+	<xsd:complexType name="LookupFiltersType">
+		<xsd:sequence>
+			<xsd:element name="Item" minOccurs="0" nillable="true" type="xsd:string" />			
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="LookupFilters" nillable="true" type="tns:LookupFiltersType" />	
+
+<!-- ##################### -->
+<!-- LookupFields Response -->
+<!-- ##################### -->
+	
+	<xsd:complexType name="LookupFieldsResponseType">
+		<xsd:sequence>
+			<xsd:element name="FieldData" nillable="true" 	type="tns:FieldType" />
+			<xsd:element name="RuleData" nillable="true"	type="tns:RuleType" />
+			<xsd:element name="TotalRules" nillable="true" type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="FieldType">
+		<xsd:sequence>
+			<!--One or more, up to 3 repetitions-->
+			<xsd:element name="Field" minOccurs="0" maxOccurs="3" type="tns:FieldDataType" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="Field" nillable="true" type="tns:FieldType" />
+	
+	<xsd:complexType name="FieldDataType">
+		<xsd:sequence>
+			<xsd:element name="Id" nillable="true" type="xsd:string" />
+			<xsd:element name="Type" nillable="true" type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>
+	
+		
+	<xsd:complexType name="RuleType">
+		<xsd:sequence>
+			<xsd:element name="Rule" minOccurs="0" maxOccurs="unbounded" type="tns:RuleDataType" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="Rule" nillable="true" type="tns:RuleType" />
+
+	<xsd:complexType name="RuleDataType">
+		<xsd:sequence>
+			<xsd:element name="Id" nillable="true" type="xsd:string" />
+			<xsd:element name="Name" nillable="true" type="xsd:string" />
+			<xsd:element name="Status" nillable="true" type="xsd:string" />
+			<xsd:element name="Type" nillable="true" type="xsd:string" />		
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="RuleData" nillable="true" type="tns:RuleDataType" />
+	
+<!-- ######################### -->
+<!-- Get Field Details Request -->
+<!-- ######################### -->
+
+	<xsd:complexType name="GetFieldDetailsRequestType">
+		<xsd:sequence>
+			<xsd:element name="FieldsSearched" nillable="true" 	type="tns:FieldsSearchedType" />
+			<xsd:element name="RuleData" nillable="true" 	type="tns:RuleIdType" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="FieldsSearchedType">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" maxOccurs="3" name="FieldId" nillable="true" type="xsd:string" />			
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="FieldsSearched" type="tns:FieldsSearchedType" />	
+
+	<xsd:complexType name="RuleIdType">
+		<xsd:sequence>
+			<xsd:element name="Id" nillable="true" type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="RuleId" nillable="true" type="tns:RuleIdType" />	
+	
+<!-- ########################## -->
+<!-- Get Field Details Response -->
+<!-- ########################## -->
+	
+	<xsd:complexType name="GetFieldDetailsResponseType">
+		<xsd:sequence>
+		  <xsd:choice minOccurs="0" maxOccurs="unbounded">
+			<xsd:element name="SearchResultTypeData" nillable="true" 	type="tns:SearchResultTypeDataType" />
+			<xsd:element name="FieldData" minOccurs="0" maxOccurs="unbounded" nillable="true" type="tns:FieldsDataType" />
+			<xsd:element name="FormList" minOccurs="0" maxOccurs="unbounded" nillable="true" type="tns:FormListType" /> <!-- Input Form List -->
+		  </xsd:choice>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="SearchResultTypeDataType">
+		<xsd:sequence>
+		  <xsd:choice minOccurs="0" maxOccurs="unbounded">
+			<xsd:element name="Name" nillable="true" type="xsd:string" />
+			<xsd:element name="Type" nillable="true" type="xsd:string" />
+			<xsd:element name="Channels" minOccurs="0" nillable="true" type="tns:ChannelsType" />
+			<xsd:element name="ConditionFields" minOccurs="0" nillable="true" type="tns:ConditionFieldType" />
+			<xsd:element name="RuleCondition" minOccurs="0" nillable="true" type="xsd:string" />
+			<xsd:element name="ResultFields" minOccurs="0" nillable="true" 	type="tns:ResultFieldsType" /> 	<!-- Persona Access to Fields -->
+			<xsd:element name="TriggerFields" minOccurs="0" nillable="true" type="tns:TriggerFieldsType" />  <!-- Company Status Online -->
+			<xsd:element name="EmailTemplates" minOccurs="0" nillable="true" type="tns:EmailTemplatesType" />  <!-- Company Status Online -->
+			<xsd:element name="CustomData" minOccurs="0" nillable="true" type="tns:CustomDataType" /> <!-- Borrower/Business Custom Fields -->
+
+			<xsd:element name="CustomCategoryData" minOccurs="0" nillable="true" type="tns:CatFieldsType" /> <!-- Business Custom Fields -->
+			<xsd:element name="LockRequestData" minOccurs="0" nillable="true" type="tns:LockRequestDataType" /> <!-- Lock Request Additional Fields -->
+			<xsd:element name="Template" minOccurs="0" maxOccurs ="1" nillable="true" type="tns:TemplateType" /> <!-- HTML Email Templates -->
+			<xsd:element name="Fields" minOccurs="0" nillable="true" type="tns:LookupFieldsType" /> <!-- Piggyback Loan Synchronization -->
+			<xsd:element name="Verifications" minOccurs="0" nillable="true" type="tns:VerificationsType" /> <!-- Piggyback Loan Synchronization -->
+			<xsd:element name="CustomField" minOccurs="0" maxOccurs="1" nillable="true" type="tns:LoanCustomFieldType" /> <!-- Loan Custom Fields -->
+			<xsd:element name="Alerts" minOccurs="0" nillable="true" type="tns:AlertsType" /> <!-- Alerts -->
+		  </xsd:choice>
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<!-- DATATYPES -->
+
+        <xsd:complexType name="ConditionFieldType">
+		<xsd:sequence>
+			<xsd:element name="Field" minOccurs="0" maxOccurs="unbounded" nillable="true" type="tns:CondFieldType" />
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="CondFieldType">
+		<xsd:sequence>
+			<xsd:element name="FieldId" minOccurs="0" maxOccurs="1" nillable="true" type="xsd:string" />
+			<xsd:element name="FieldType" minOccurs="0" maxOccurs="1" nillable="true" type="xsd:string" />
+			<xsd:element name="FieldDescription" minOccurs="0" maxOccurs="1" nillable="true" type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="CondField" nillable="true" type="tns:CondFieldType" />
+	
+	<xsd:complexType name="AdditionalFieldsType">
+		<xsd:sequence>
+			<xsd:element name="Field" minOccurs="0" maxOccurs="unbounded" nillable="true" type="tns:PiggyFieldType" />
+			<xsd:element name="FieldMilestone" minOccurs="0" maxOccurs="unbounded" nillable="true" type="tns:MilestoneFieldType" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="AdditionalFields" nillable="true" type="tns:AdditionalFieldsType" />
+
+	<xsd:complexType name="PiggyFieldType">
+		<xsd:sequence>
+			<xsd:element name="Description" minOccurs="0" maxOccurs="1" nillable="true" type="xsd:string" />
+			<xsd:element name="Id" minOccurs="0" maxOccurs="1" nillable="true" type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="PiggyField" nillable="true" type="tns:PiggyFieldType" />
+
+	<xsd:complexType name="MilestoneFieldType">
+		<xsd:sequence>
+			<xsd:element name="MilestoneName" minOccurs="0" maxOccurs="1" nillable="true" type="xsd:string" />
+			<xsd:element name="FieldID" minOccurs="0" maxOccurs="1" nillable="true" type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="MilestoneField" nillable="true" type="tns:MilestoneFieldType" />
+
+	<xsd:complexType name="SettingDataReqType">
+		<xsd:sequence>
+			<xsd:element name="ID" nillable="true" type="xsd:string" />
+			<xsd:element name="Name" nillable="true" type="xsd:string" />
+			<xsd:element name="Type" nillable="true" type="xsd:string" />			
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<!-- Field Trigger Rule -->	
+	<xsd:complexType name="ChannelsType">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" maxOccurs="unbounded" name="Channel" nillable="true" type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="Channels" nillable="true" type="tns:ChannelsType" />
+
+	<xsd:complexType name="ConditionFieldsType">
+		<xsd:sequence>
+			<xsd:element name="Field" minOccurs="0" maxOccurs="unbounded" nillable="true" type="tns:ConditionFieldType" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="ConditionFields" nillable="true"	type="tns:ConditionFieldsType" />
+
+	<xsd:complexType name="FieldsDataType">
+		<xsd:sequence>
+			<xsd:element name="Field" minOccurs="0" maxOccurs="unbounded" nillable="true" type="tns:FieldIdDataType" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="FieldData" nillable="true" type="tns:FieldsDataType" />
+
+	<xsd:complexType name="FieldIdDataType">
+		<xsd:sequence>
+		  <xsd:choice minOccurs="0" maxOccurs="unbounded">
+			<xsd:element name="FieldId" nillable="true" type="xsd:string" />
+			<xsd:element name="ActionData" minOccurs="0" maxOccurs="1" nillable="true" type="tns:ActionDataType" /> <!-- Field Trigger Rule -->
+			<xsd:element name="Condition" minOccurs="0" maxOccurs="1" nillable="true" type="tns:ConditionType" /> <!-- Field Trigger Rule -->
+			<xsd:element name="AssignRights" minOccurs="0" maxOccurs="unbounded" nillable="true" type="tns:AssignRightsType" /> <!-- Persona Access to Fields  --> 
+			<xsd:element name="LoanFileAcccess" minOccurs="0" maxOccurs="unbounded" nillable="true" type="tns:LoanFileAcccessType" /> <!-- Persona Access to Loans  -->
+			<xsd:element name="FieldEvents" minOccurs="0" maxOccurs="unbounded" nillable="true" type="tns:FieldEventsType" /> <!-- Automated Conditions -->
+			<xsd:element name="FieldRules" minOccurs="0" maxOccurs="1" nillable="true" type="tns:FieldRuleArrayType" /> <!-- Field Data Entry -->
+		  </xsd:choice>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="FieldIdData" nillable="true" type="tns:FieldIdDataType" />
+
+	<xsd:complexType name="ConditionType">
+		<xsd:sequence>
+			<xsd:element name="Type" minOccurs="0" maxOccurs="1" nillable="true" type="xsd:string" />
+			<xsd:element name="Description" minOccurs="0" maxOccurs="1" nillable="true" type="xsd:string" />
+			<xsd:element name="FieldId" minOccurs="0" maxOccurs="1" nillable="true" type="xsd:string" />
+			<xsd:element name="Value" minOccurs="0" maxOccurs="1" nillable="true" type="xsd:string" />
+			<xsd:element name="Values" minOccurs="0" maxOccurs="1" nillable="true" type="tns:ListofItemsType" />
+			<xsd:element name="Maximum" minOccurs="0" maxOccurs="1" nillable="true" type="xsd:string" />
+			<xsd:element name="Minimum" minOccurs="0" maxOccurs="1" nillable="true" type="xsd:string" />
+			<xsd:element name="MilestoneId" minOccurs="0" maxOccurs="1" nillable="true" type="xsd:string" />
+			<xsd:element name="Action" minOccurs="0" maxOccurs="1" nillable="true" type="xsd:string" />
+			<xsd:element name="ConditionType" minOccurs="0" maxOccurs="1" nillable="true" type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="Condition" nillable="true" type="tns:ConditionType" />
+	
+	<xsd:complexType name="ActionDataType">
+		<xsd:sequence>
+			<xsd:element name="FieldEvent" minOccurs="0" maxOccurs="unbounded" nillable="true" type="tns:FieldEventType" />			
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="FieldEventType">
+		<xsd:sequence>
+				<xsd:element minOccurs="0" maxOccurs="1" name="AdvancedCodeAction" nillable="true" type="tns:AdvancedCodeActionType"/>
+				<xsd:element minOccurs="0" maxOccurs="1" name="AssignmentAction" nillable="true" type="tns:AssignmentActionType"/>
+				<xsd:element minOccurs="0" maxOccurs="1" name="CompleteTasksAction" nillable="true" type="tns:CompleteTasksActionType"/>
+				<xsd:element minOccurs="0" maxOccurs="unbounded" name="CopyAction" nillable="true"	type="tns:CopyActionType"/>
+				<xsd:element minOccurs="0" maxOccurs="unbounded" name="EmailAction" nillable="true" type="tns:EmailActionType"/>
+				<xsd:element minOccurs="0" maxOccurs="1" name="FixedValueConditions" nillable="true" type="tns:ArrayOfFixedValueConditionType"/>
+				<xsd:element minOccurs="0" maxOccurs="1" name="MilestoneCompletionConditions" nillable="true" type="tns:ArrayOfMilestoneCompletionConditionType"/>
+				<xsd:element minOccurs="0" maxOccurs="1" name="NonEmptyValueConditions" nillable="true" type="tns:ArrayOfNonEmptyValueConditionType"/>
+				<xsd:element minOccurs="0" maxOccurs="1" name="RangeConditions" nillable="true" type="tns:ArrayOfRangeConditionType"/>
+				<xsd:element minOccurs="0" maxOccurs="1" name="RateLockConditions"	nillable="true" type="tns:ArrayOfRateLockConditionType"/>
+				<xsd:element minOccurs="0" maxOccurs="1" name="ValueChangeConditions" nillable="true" type="tns:ArrayOfValueChangeConditionType"/>
+				<xsd:element minOccurs="0" maxOccurs="1" name="ValueListConditions" nillable="true" type="tns:ArrayOfValueListConditionType"/>
+		</xsd:sequence>			
+	</xsd:complexType>
+
+	<xsd:complexType name="ArrayOfValueListConditionType">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" maxOccurs="unbounded" name="ValueListCondition" nillable="true" type="tns:ValueListConditionType"/>
+		</xsd:sequence>			
+	</xsd:complexType>
+
+	<xsd:complexType name="ValueListConditionType">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" maxOccurs="1" name="Description" nillable="true" type="xsd:string"/>
+			<xsd:element minOccurs="0" maxOccurs="1" name="FieldId" nillable="true" type="xsd:string"/>
+			<xsd:element minOccurs="0" maxOccurs="1" name="Values" nillable="true" type="tns:ItemListType"/>
+		</xsd:sequence>			
+	</xsd:complexType>
+	
+	<xsd:complexType name="ArrayOfValueChangeConditionType">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" maxOccurs="unbounded" name="ValueChangeCondition" nillable="true" type="tns:ValueChangeConditionType"/>
+		</xsd:sequence>			
+	</xsd:complexType>
+
+	<xsd:complexType name="ValueChangeConditionType">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" maxOccurs="1" name="Description" nillable="true" type="xsd:string"/>
+			<xsd:element minOccurs="0" maxOccurs="1" name="FieldId" nillable="true" type="xsd:string"/>
+		</xsd:sequence>			
+	</xsd:complexType>
+		
+	<xsd:complexType name="ArrayOfRateLockConditionType">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" maxOccurs="unbounded" name="RateLockCondition" nillable="true" type="tns:RateLockConditionType"/>
+		</xsd:sequence>			
+	</xsd:complexType>
+
+	<xsd:complexType name="RateLockConditionType">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" name="Action" nillable="true" type="xsd:string"/>
+		</xsd:sequence>			
+	</xsd:complexType>
+	
+	<xsd:complexType name="ArrayOfRangeConditionType">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" maxOccurs="unbounded" name="RangeCondition" nillable="true" type="tns:RangeConditionType"/>
+		</xsd:sequence>			
+	</xsd:complexType>
+
+	<xsd:complexType name="RangeConditionType">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" maxOccurs="1" name="Description" nillable="true" type="xsd:string"/>
+			<xsd:element minOccurs="0" maxOccurs="1" name="FieldId" nillable="true" type="xsd:string"/>
+			<xsd:element minOccurs="0" maxOccurs="1" name="Maximum" nillable="true" type="xsd:string"/>
+			<xsd:element minOccurs="0" maxOccurs="1" name="Minimum" nillable="true" type="xsd:string"/>
+		</xsd:sequence>			
+	</xsd:complexType>
+	
+	<xsd:complexType name="ArrayOfNonEmptyValueConditionType">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" maxOccurs="unbounded" name="NonEmptyValueCondition" nillable="true" type="tns:NonEmptyValueConditionType"/>
+		</xsd:sequence>			
+	</xsd:complexType>
+	
+	<xsd:complexType name="NonEmptyValueConditionType">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" maxOccurs="1" name="Description" nillable="true" type="xsd:string"/>
+			<xsd:element minOccurs="0" maxOccurs="1" name="FieldId" nillable="true" type="xsd:string"/>
+		</xsd:sequence>			
+	</xsd:complexType>
+	
+	<xsd:complexType name="ArrayOfFixedValueConditionType">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" maxOccurs="unbounded" name="FixedValueCondition" nillable="true" type="tns:FixedValueConditionType"/>
+		</xsd:sequence>			
+	</xsd:complexType>
+
+	<xsd:complexType name="FixedValueConditionType">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" maxOccurs="1" name="Description" nillable="true" type="xsd:string"/>
+			<xsd:element minOccurs="0" maxOccurs="1" name="FieldId" nillable="true" type="xsd:string"/>
+			<xsd:element minOccurs="0" maxOccurs="1" name="Value" nillable="true" type="xsd:string"/>
+		</xsd:sequence>			
+	</xsd:complexType>
+	
+	<xsd:complexType name="ArrayOfMilestoneCompletionConditionType">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" maxOccurs="unbounded" name="MilestoneCompletionCondition" nillable="true" type="tns:MilestoneCompletionConditionType"/>
+		</xsd:sequence>			
+	</xsd:complexType>
+
+	<xsd:complexType name="MilestoneCompletionConditionType">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" maxOccurs="1" name="MilestoneId" nillable="true" type="xsd:string"/>
+		</xsd:sequence>			
+	</xsd:complexType>
+	
+	<xsd:complexType name="EmailActionType">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" maxOccurs="1" name="Type" nillable="true" type="xsd:string"/>
+			<xsd:element minOccurs="0" maxOccurs="1" name="Templates" nillable="true" type="tns:EmailActionTemplatesType"/>
+		</xsd:sequence>			
+	</xsd:complexType>
+	
+	<xsd:complexType name="EmailActionTemplatesType">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" maxOccurs="unbounded" name="EmailTemplate" nillable="true" type="tns:EmailTemplateType"/>
+		</xsd:sequence>			
+	</xsd:complexType>
+	
+	<xsd:complexType name="EmailTemplateType">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" maxOccurs="1" name="Body" nillable="true" type="xsd:string"/>
+			<xsd:element minOccurs="0" maxOccurs="1" name="RecipientRoles" nillable="true" type="tns:ItemListType"/>
+			<xsd:element minOccurs="0" maxOccurs="1" name="RecipientUsers" nillable="true" type="tns:ItemListType"/>
+			<xsd:element minOccurs="0" maxOccurs="1" name="Subject" nillable="true" type="xsd:string"/>
+		</xsd:sequence>			
+	</xsd:complexType>
+	
+	<xsd:complexType name="CopyActionType">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" maxOccurs="1" name="Type" nillable="true" type="xsd:string"/>
+			<xsd:element minOccurs="0" maxOccurs="1" name="FieldIds" nillable="true" type="tns:ItemListType"/>
+		</xsd:sequence>			
+	</xsd:complexType>
+	
+	<xsd:complexType name="CompleteTasksActionType">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" maxOccurs="1" name="Type" nillable="true" type="xsd:string"/>
+			<xsd:element minOccurs="0" maxOccurs="1" name="TaskNames" nillable="true" type="tns:ItemListType"/>
+		</xsd:sequence>			
+	</xsd:complexType>
+	
+	<xsd:complexType name="AssignmentArrayType">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" name="Evaluate" type="xsd:boolean"/>
+			<xsd:element minOccurs="0" name="Expression" nillable="true" type="xsd:string"/>
+			<xsd:element minOccurs="0" name="FieldId" nillable="true" type="xsd:string"/>
+		</xsd:sequence>			
+	</xsd:complexType>
+	
+	<xsd:complexType name="AdvancedCodeActionType">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" maxOccurs="1" name="Type" nillable="true" type="xsd:string"/>
+			<xsd:element minOccurs="0" maxOccurs="1" name="SourceCode" nillable="true" type="xsd:string"/>
+		</xsd:sequence>			
+	</xsd:complexType>
+	
+	<xsd:complexType name="AssignmentActionType">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" maxOccurs="1" name="Type" nillable="true" type="xsd:string"/>
+			<xsd:element minOccurs="0" maxOccurs="1" name="Items" nillable="true" type="tns:AssignmentItemsType"/>
+		</xsd:sequence>			
+	</xsd:complexType>
+	
+	<xsd:complexType name="AssignmentItemsType">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" maxOccurs="unbounded" name="Assignment" nillable="true" type="tns:AssignmentArrayType"/>
+		</xsd:sequence>			
+	</xsd:complexType>
+	
+	<xsd:complexType name="ActionType">
+		<xsd:sequence>
+			<xsd:element name="Type" minOccurs="0" maxOccurs="1" nillable="true" type="xsd:string" />			
+			<xsd:element name="Items" minOccurs="0" maxOccurs="1" nillable="true" type="tns:ItemsType" />
+			<xsd:element name="FieldIds" minOccurs="0" maxOccurs="1" nillable="true" type="tns:ListofItemsType" />
+			<xsd:element name="TaskNames" minOccurs="0" maxOccurs="1" nillable="true" type="tns:ListofItemsType" />
+			<xsd:element name="EmailTemplate" minOccurs="0" maxOccurs="1" nillable="true" type="tns:EmailType" />
+			<xsd:element name="SourceCode" minOccurs="0" maxOccurs="1" nillable="true" type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>
+		
+	<xsd:complexType name="ItemsType">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" maxOccurs="unbounded" name="Assignment" nillable="true" type="tns:AssignmentType" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="Items" nillable="true" type="tns:ItemsType" />
+	
+	<xsd:complexType name="ItemListType">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" maxOccurs="unbounded" name="Item" nillable="true" type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="ItemList" nillable="true" type="tns:ItemListType" />
+	
+	<xsd:complexType name="AssignmentType">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" maxOccurs="1" name="Evaluate" type="xsd:boolean"/>
+			<xsd:element minOccurs="0" maxOccurs="1" name="Expression" nillable="true" type="xsd:string"/>
+			<xsd:element minOccurs="0" maxOccurs="1" name="FieldId" nillable="true" type="xsd:string"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="Assignment" nillable="true" type="tns:AssignmentType" />
+	
+	<xsd:complexType name="EmailType">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" maxOccurs="1" name="Body" type="xsd:string"/>
+			<xsd:element minOccurs="0" maxOccurs="1" name="RecipientRoles" nillable="true" type="tns:ItemListType"/>
+			<xsd:element minOccurs="0" maxOccurs="1" name="RecipientUsers" nillable="true" type="tns:ItemListType"/>
+			<xsd:element minOccurs="0" maxOccurs="1" name="Subject" nillable="true" type="xsd:string"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="Email" nillable="true" type="tns:EmailType" />
+		
+	<xsd:complexType name="ResultFieldsType">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" maxOccurs="unbounded" name="Field"	nillable="true" type="tns:CondFieldType" />
+			<xsd:element name="Fields" minOccurs="0" maxOccurs="unbounded" nillable="true" type="tns:AdditionalFieldsType" /> <!-- Piggyback, Milestone -->
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="ResultFields" nillable="true" type="tns:ResultFieldsType" />
+	
+	
+	<xsd:complexType name="AssignRightsType">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" maxOccurs="unbounded" name="Persona"	nillable="true" type="tns:PersonaType" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="AssignRights" nillable="true" type="tns:AssignRightsType" />
+	
+	<xsd:complexType name="PersonaType">
+		<xsd:sequence>
+			<xsd:element name="Name"	nillable="true" type="xsd:string" />
+			<xsd:element name="Value"	nillable="true" type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="Persona" nillable="true" type="tns:PersonaType" />
+	
+	
+	<xsd:complexType name="LoanFileAcccessType">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" maxOccurs="unbounded" name="Persona"	nillable="true" type="tns:PersonaType" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="LoanFileAcccess" nillable="true" type="tns:LoanFileAcccessType" />
+	
+	
+	<xsd:complexType name="FormListType">
+		<xsd:sequence>		
+			<xsd:element minOccurs="0" maxOccurs="unbounded" name="Value"	nillable="true" type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="FormList" nillable="true" type="tns:FormListType" />
+	
+	
+	<xsd:complexType name="FieldEventsType">
+		<xsd:sequence>
+			<xsd:element name="ConditionType"	nillable="true" type="xsd:string" />
+			<xsd:element name="ConditionName"	nillable="true" type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="FieldEvents" nillable="true" type="tns:FieldEventsType" />
+	
+	<xsd:complexType name="FieldRuleArrayType">
+		<xsd:sequence>
+			<xsd:element name="FieldRule"	minOccurs="0" maxOccurs="unbounded" nillable="true" type="tns:FieldRuleType" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="FieldRuleArray" nillable="true" type="tns:FieldRuleArrayType" />
+	
+	<xsd:complexType name="FieldRuleType">
+		<xsd:sequence>
+			<xsd:element name="Description"	nillable="true" type="xsd:string" />
+			<xsd:element name="Details"	nillable="true" type="tns:DetailsType" />
+			<xsd:element name="Id"	nillable="true" type="xsd:string" />
+			<xsd:element name="PreRequiredFields"	minOccurs="0" maxOccurs="1" nillable="true" type="tns:FieldIdsType" /> <!-- Changed to fieldId instead of comma separated values -->
+			<xsd:element name="RuleType"	nillable="true" type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="FieldRule" nillable="true" type="tns:FieldRuleType" />
+	
+	<xsd:complexType name="DetailsType">
+		<xsd:choice>
+			<xsd:element minOccurs="0" maxOccurs="1" name="FRList"			nillable="true" type="tns:FRListType" />
+			<xsd:element minOccurs="0" maxOccurs="1" name="FRRange"			nillable="true" type="tns:FRRangeType" />
+			<xsd:element minOccurs="0" maxOccurs="1" name="AdvancedCode"	nillable="true" type="xsd:string" />
+		</xsd:choice>
+	</xsd:complexType>
+	<xsd:element name="Details" nillable="true" type="tns:DetailsType" />
+	
+	<xsd:complexType name="FRListType">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" maxOccurs="1" name="IsLock" nillable="true" type="xsd:boolean" />		
+			<xsd:element minOccurs="0" maxOccurs="1" name="Items" nillable="true" type="tns:FRListItemsType" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="FRListItems" nillable="true" type="tns:FRListItemsType" />
+	
+	<xsd:complexType name="FRListItemsType">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" maxOccurs="unbounded" name="Item" nillable="true" type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="FRListItemType" nillable="true" type="tns:FRListItemsType" />
+	
+	<xsd:complexType name="FRRangeType">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" maxOccurs="1" name="LowerBound" nillable="true" type="xsd:string" />
+			<xsd:element minOccurs="0" maxOccurs="1" name="UpperBound" nillable="true" type="xsd:string" />
+			<xsd:element minOccurs="0" maxOccurs="1" name="isDateRange" nillable="true" type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:element name="FRRange" nillable="true" type="tns:FRRangeType" />
+
+	<xsd:complexType name="FieldIdsType">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" maxOccurs="unbounded" name="FieldId"	nillable="true" type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="FieldIds" nillable="true" type="tns:FieldIdsType" />
+	
+	<xsd:complexType name="TriggerFieldsType">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" maxOccurs="unbounded" name="Value"	nillable="true" type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="TriggerFields" nillable="true" type="tns:TriggerFieldsType" />
+	
+	<xsd:complexType name="EmailTemplatesType">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" maxOccurs="unbounded" name="Value"	nillable="true" type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="EmailTemplates" nillable="true" type="tns:EmailTemplatesType" />
+	
+	<xsd:complexType name="CustomDataType">
+		<xsd:sequence>
+		  <xsd:choice minOccurs="0" maxOccurs="unbounded">
+            <xsd:element name="CustomFields" minOccurs="0" maxOccurs="1" nillable="true" type="tns:CustomFieldsType" />
+			<xsd:element name="CustomCategoryData" minOccurs="0" maxOccurs="1" nillable="true" type="tns:CategoryType" />
+			<xsd:element name="CustomFieldsToLoanFields" minOccurs="0" maxOccurs="1" nillable="true" type="tns:CustomFieldsType" />
+			<xsd:element name="TabNames" minOccurs="0" maxOccurs="1" nillable="true" type="tns:TabNamesType" />
+		  </xsd:choice>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="CustomData" nillable="true" type="tns:CustomDataType" />
+	
+	<xsd:complexType name="TabNamesType">
+		<xsd:sequence>
+			<xsd:element name="Page1" minOccurs="0" maxOccurs="1" nillable="true" type="xsd:string" />
+			<xsd:element name="Page2" minOccurs="0" maxOccurs="1" nillable="true" type="xsd:string" />
+			<xsd:element name="Page3" minOccurs="0" maxOccurs="1" nillable="true" type="xsd:string" />
+			<xsd:element name="Page4" minOccurs="0" maxOccurs="1" nillable="true" type="xsd:string" />
+			<xsd:element name="Page5" minOccurs="0" maxOccurs="1" nillable="true" type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="TabNames" nillable="true" type="tns:TabNamesType" />
+	
+	<xsd:complexType name="CategoryType">
+		<xsd:sequence>
+			<xsd:element name="Category" minOccurs="1" maxOccurs="unbounded" nillable="true" type="tns:CatCustomFieldsType" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="CategoryData" nillable="true" type="tns:CategoryType" />
+	
+	<xsd:complexType name="CatCustomFieldsType">
+		<xsd:choice minOccurs="0" maxOccurs="unbounded">
+			<xsd:element minOccurs="0" maxOccurs="unbounded" name="Field" nillable="true" type="tns:CatFieldsType" />
+		</xsd:choice>
+                <xsd:attribute name="value" type="xsd:string" use="required"/>
+	</xsd:complexType>
+	<xsd:element name="CatCustomFields" nillable="true" type="tns:CatCustomFieldsType" />
+	
+	<xsd:complexType name="CustomFieldsType">
+		<xsd:choice minOccurs="0" maxOccurs="unbounded">
+			<xsd:element minOccurs="0" maxOccurs="unbounded" name="Field" nillable="true" type="tns:CustomFieldType" />
+		</xsd:choice>
+	</xsd:complexType>
+	<xsd:element name="CustomFields" nillable="true" type="tns:CustomFieldsType" />
+
+	<xsd:complexType name="CatFieldsType">
+		<xsd:sequence>
+			<xsd:element name="FieldDescription" minOccurs="0" maxOccurs="1" nillable="true" type="xsd:string" />
+			<xsd:element name="FieldType" minOccurs="0" maxOccurs="1" nillable="true" type="xsd:string" />
+			<xsd:element name="FieldNumber" minOccurs="0" maxOccurs="1" nillable="true" type="xsd:string" />
+			<xsd:element name="LoanFieldId" minOccurs="0" maxOccurs="1" nillable="true" type="xsd:string" />
+			<xsd:element name="BothWays" minOccurs="0" maxOccurs="1" nillable="true" type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="CatFields" nillable="true" type="tns:CatFieldsType" />
+	
+	<xsd:complexType name="CustomFieldType">
+		<xsd:sequence>
+			<xsd:element name="LoanFieldId" minOccurs="0" maxOccurs="1" nillable="true" type="xsd:string" />
+			<xsd:element name="FieldDescription" minOccurs="0" maxOccurs="1" nillable="true" type="xsd:string" />
+			<xsd:element name="FieldType" minOccurs="0" maxOccurs="1" nillable="true" type="xsd:string" />
+			<xsd:element name="LabelID" minOccurs="0" maxOccurs="1" nillable="true" type="xsd:string" />
+			<xsd:element name="OwnerID" minOccurs="0" maxOccurs="1" nillable="true" type="xsd:string" />
+			<xsd:element name="BothWays" minOccurs="0" maxOccurs="1" nillable="true" type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="CustomField" nillable="true" type="tns:CustomFieldType" />
+	
+	<xsd:complexType name="CustomCategoryDataType">
+		<xsd:sequence>
+			<xsd:element name="Category" nillable="true" type="xsd:string" />
+			<xsd:element name="CustomFields" nillable="true" type="tns:CustomFieldsType" />
+			<xsd:element name="CustomFieldsToLoanFields" nillable="true" type="tns:CustomFieldsType" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="CustomCategoryData" nillable="true" type="tns:CustomCategoryDataType" />
+	
+	
+	<xsd:complexType name="LockRequestDataType">
+		<xsd:sequence>
+			<xsd:element name="LockRequestForm" nillable="true" type="tns:LockRequestFormType" />
+			<xsd:element name="LockSnapshot" nillable="true" type="tns:LockSnapshotType" />			
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="LockRequestData" nillable="true" type="tns:LockRequestDataType" />
+	
+	<xsd:complexType name="LockRequestFormType">
+		<xsd:sequence>
+			<xsd:element name="Field" minOccurs="0" maxOccurs="unbounded" nillable="true" type="tns:LockFieldType" />						
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="LockRequestForm" nillable="true" type="tns:LockRequestFormType" />
+	
+	<xsd:complexType name="LockSnapshotType">
+		<xsd:sequence>
+				<xsd:element name="Field" minOccurs="0" maxOccurs="unbounded" nillable="true" type="tns:LockFieldType" />			
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="LockSnapshot" nillable="true" type="tns:LockSnapshotType" />
+	
+	<xsd:complexType name="LockFieldType">
+		<xsd:sequence>
+				<xsd:element name="AdditionalField" nillable="true" type="xsd:string" />
+				<xsd:element name="Description" nillable="true" type="xsd:string" />	
+				<xsd:element name="NewFieldId" nillable="true" type="xsd:string" />	
+				<xsd:element name="Type" nillable="true" type="xsd:string" />				
+		</xsd:sequence>
+	</xsd:complexType>
+		
+	<xsd:complexType name="TemplateType">
+		<xsd:sequence>
+				<xsd:element name="Type" nillable="true" type="xsd:string" />
+				<xsd:element name="Name" nillable="true" type="xsd:string" />	
+				<xsd:element name="Content" nillable="true" type="xsd:string" />		
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="Template" nillable="true" type="tns:TemplateType" />
+	
+	<xsd:complexType name="VerificationsType">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" maxOccurs="unbounded" name="Value"	nillable="true" type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="Verifications" nillable="true" type="tns:VerificationsType" />
+		
+        <xsd:complexType name="LoanCustomFieldType">
+		<xsd:sequence>
+				<xsd:element name="FieldId" nillable="true" type="xsd:string" />
+				<xsd:element name="Description" nillable="true" type="xsd:string" />	
+				<xsd:element name="Calculation" nillable="true" type="xsd:string" />
+				<xsd:element name="MaxLength" minOccurs="0" nillable="true" type="xsd:string" />
+				<xsd:element name="Format" minOccurs="0" maxOccurs="1" nillable="true" type="xsd:string" />
+				<xsd:element name="Options" minOccurs="0" maxOccurs="1" nillable="true" type="tns:OptionsType" />
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="OptionsType">
+		<xsd:sequence>
+				<xsd:element name="Item" nillable="true" minOccurs="0" maxOccurs="unbounded" type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>
+	
+<xsd:complexType name="AlertsType">
+		<xsd:sequence>
+				<xsd:element name="Alert" nillable="true" type="tns:AlertType" />
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="AlertType">
+		<xsd:sequence>
+				<xsd:element name="AlertName" minOccurs="0" maxOccurs="1" nillable="true" type="xsd:string" />
+				<xsd:element name="AlertType" minOccurs="0" maxOccurs="1" nillable="true" type="xsd:string" />
+				<xsd:element name="TriggerFieldDateId" minOccurs="0" maxOccurs="1" nillable="true" type="tns:TriggerFieldDateIdType" />	
+				<xsd:element name="Condition" minOccurs="0" maxOccurs="1" nillable="true" type="xsd:string" />
+				<xsd:element name="ConditionSummary" minOccurs="0" maxOccurs="1" nillable="true" type="xsd:string" />
+				<xsd:element name="TriggerDescription" minOccurs="0" maxOccurs="1" nillable="true" type="xsd:string" />
+				<xsd:element name="TriggerFieldIds" minOccurs="0" maxOccurs="1" nillable="true" type="tns:FieldIdsType" />							
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="TriggerFieldDateIdType">
+		<xsd:sequence>
+				<xsd:element name="Item" nillable="true" minOccurs="0" maxOccurs="unbounded" type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>
+		
+</xsd:schema>

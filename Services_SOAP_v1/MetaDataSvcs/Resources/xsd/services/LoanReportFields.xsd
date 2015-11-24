@@ -1,0 +1,297 @@
+<xsd:schema targetNamespace="http://www.elliemae.com/services/metadata/pipeline" elementFormDefault="qualified" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.elliemae.com/services/metadata/pipeline" xmlns:sn="http://www.elliemae.com/services/session" xmlns:sc="http://www.elliemae.com/services/security">
+	<xsd:element name="GetPipelineLoanReportFieldDefsRequest" type="tns:GetPipelineLoanReportFieldDefsRequestType"/>
+	<xsd:element name="GetPipelineLoanReportFieldDefsResponse" type="tns:GetPipelineLoanReportFieldDefsResponseType"/>
+	
+	<xsd:complexType name="GetPipelineLoanReportFieldDefsRequestType">
+		<xsd:sequence/>			
+	</xsd:complexType>
+	
+	<xsd:complexType name="GetPipelineLoanReportFieldDefsResponseType">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" name="PipelineLoanReportFieldDefs"	nillable="true" type="tns:ArrayOfPipelineLoanReportFieldDef" />
+			</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="ArrayOfPipelineLoanReportFieldDef">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" maxOccurs="unbounded" name="PipelineLoanReportFieldDef" nillable="true" type="tns:PipelineLoanReportFieldDef" />
+		</xsd:sequence>
+	</xsd:complexType>
+		
+	<xsd:complexType name="PipelineLoanReportFieldDef">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" name="BorrowerPair" type="xsd:int"/>			
+			<xsd:element minOccurs="0" name="Category" nillable="true" type="xsd:string"/>
+			<xsd:element minOccurs="0" name="CriterionFieldName" nillable="true" type="xsd:string"/>
+			<xsd:element minOccurs="0" name="DataConversion" type="tns:DataConversionType"/>
+			<xsd:element minOccurs="0" name="DataSource" type="tns:FilterDataSourceType"/>
+			<xsd:element minOccurs="0" name="Description" nillable="true" type="xsd:string"/>				
+			<xsd:element minOccurs="0" name="DisplayType" type="tns:FieldDisplayType"/>			
+			<xsd:element minOccurs="0" name="FieldDefinition" nillable="true" type="tns:FieldDefinitionType"/>				
+			<xsd:element minOccurs="0" name="FieldID" nillable="true"	type="xsd:string"/>				
+			<xsd:element minOccurs="0" name="FieldType" type="tns:FieldTypes"/>				
+			<xsd:element minOccurs="0" name="ForceDataConversion" type="xsd:boolean"/>				
+			<xsd:element minOccurs="0" name="IsDatabaseField" type="xsd:boolean"/>				
+			<xsd:element minOccurs="0" name="IsLoanDataField" type="xsd:boolean"/>			
+			<xsd:element minOccurs="0" name="IsVolatile" type="xsd:boolean"/>			
+			<xsd:element minOccurs="0" name="Name" nillable="true"	type="xsd:string"/>			
+			<xsd:element minOccurs="0" name="RelatedFields" nillable="true"	type="tns:ArrayOfstring"/>				
+			<xsd:element minOccurs="0" name="ReportingDatabaseColumnType"	type="tns:ReportingDatabaseColumnType"/>				
+			<xsd:element minOccurs="0" name="Selectable" type="xsd:boolean"/>							
+			<xsd:element minOccurs="0" name="SortTerm" nillable="true"	type="tns:DataFieldType"/>		
+		</xsd:sequence>
+	</xsd:complexType>	
+	
+<xsd:simpleType name="DataConversionType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="None" />
+			<xsd:enumeration value="Numeric" />
+			<xsd:enumeration value="DateTime" />
+			<xsd:enumeration value="Text" />
+		</xsd:restriction>
+	</xsd:simpleType>
+	
+		<xsd:simpleType name="FilterDataSourceType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Unknown" />
+			<xsd:enumeration value="Loan" />
+			<xsd:enumeration value="BorrowerContact" />
+			<xsd:enumeration value="BizContact" />
+			<xsd:enumeration value="MasterContract" />
+			<xsd:enumeration value="Trade" />
+			<xsd:enumeration value="CorrespondentMasterCommitment" />
+		</xsd:restriction>
+	</xsd:simpleType>
+	
+		<xsd:simpleType name="FieldDisplayType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Normal" />
+			<xsd:enumeration value="Borrower" />
+			<xsd:enumeration value="Property" />
+			<xsd:enumeration value="Alert" />
+			<xsd:enumeration value="Message" />
+			<xsd:enumeration value="User" />
+			<xsd:enumeration value="Milestone" />
+			<xsd:enumeration value="CoreMilestone" />
+			<xsd:enumeration value="RateLock" />
+			<xsd:enumeration value="LoanFolder" />
+			<xsd:enumeration value="CampaignActivity" />
+			<xsd:enumeration value="ContactEmail" />
+			<xsd:enumeration value="ContactGroup" />
+			<xsd:enumeration value="BizContactGroup" />
+			<xsd:enumeration value="PublicContactGroup" />
+			<xsd:enumeration value="ContactPhone" />
+			<xsd:enumeration value="ContactCellPhone" />
+			<xsd:enumeration value="ContactFax" />
+			<xsd:enumeration value="LoanAssociate" />
+			<xsd:enumeration value="RateLockAndRequest" />
+			<xsd:enumeration value="NextMilestone" />
+			<xsd:enumeration value="Progress" />
+			<xsd:enumeration value="LockLabel" />
+		</xsd:restriction>
+	</xsd:simpleType>
+	
+	<xsd:complexType name="FieldDefinitionType">
+	
+		<xsd:sequence>		
+			<xsd:element minOccurs="0" name="AllowEdit" type="xsd:boolean"/>			
+			<xsd:element minOccurs="0" name="AllowInReportingDatabase"	type="xsd:boolean"/>				
+			<xsd:element minOccurs="0" name="Category" type="tns:FieldCategoryType"/>			
+			<xsd:element minOccurs="0" name="Description" nillable="true"	type="xsd:string"/>		
+			<xsd:element minOccurs="0" name="EnforceMaxLengthDuringValidation"	type="xsd:boolean"/>
+			<xsd:element minOccurs="0" name="FieldID" nillable="true"	type="xsd:string"/>
+			<xsd:element minOccurs="0" name="FieldOptions" nillable="true"	type="tns:FieldOptionCollectionType"/>						
+			<xsd:element minOccurs="0" name="Format" type="tns:FieldFormatType"/>
+			<xsd:element minOccurs="0" name="InstanceSpecifier"	nillable="true" type="xsd:anyType"/>			
+			<xsd:element minOccurs="0" name="InstanceSpecifierType"	type="tns:FieldInstanceSpecifierType"/>
+			<xsd:element minOccurs="0" name="IsDateValued" type="xsd:boolean"/>			
+			<xsd:element minOccurs="0" name="IsInstance" type="xsd:boolean"/>
+			<xsd:element minOccurs="0" name="IsNumeric" type="xsd:boolean"/>			
+			<xsd:element minOccurs="0" name="MaxLength" type="xsd:int"/>
+			<xsd:element minOccurs="0" name="MultiInstance" type="xsd:boolean"/>
+			<xsd:element minOccurs="0" name="ParentField" nillable="true"	type="tns:FieldDefinitionType"/>			
+			<xsd:element minOccurs="0" name="ReportingDatabaseColumnSize"	type="xsd:int"/>
+			<xsd:element minOccurs="0" name="ReportingDatabaseColumnType"	type="tns:ReportingDatabaseColumnType"/>
+			<xsd:element minOccurs="0" name="RequiresBorrowerPredicate"	type="xsd:boolean"/>			
+			<xsd:element minOccurs="0" name="RequiresExclusiveLock"	type="xsd:boolean"/>
+		</xsd:sequence>
+		<xsd:attribute name="type">
+		<xsd:simpleType>
+			<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="ReportingFieldDefinition" />
+			<xsd:enumeration value="FICOField" />
+			<xsd:enumeration value="StandardField" />
+			<xsd:enumeration value="CurrentLoanAssociateField" />
+			<xsd:enumeration value="NextMilestoneField" />
+			<xsd:enumeration value="DocumentTrackingField" />
+			<xsd:enumeration value="MilestoneField" />
+			<xsd:enumeration value="RateLockDaysToExpireField" />
+			<xsd:enumeration value="CoreMilestoneField" />
+			<xsd:enumeration value="CustomField" />
+			<xsd:enumeration value="LockRequestCustomField" />
+			<xsd:enumeration value="EmptyFieldDefinition" />
+			<xsd:enumeration value="UndefinedField" />
+			<xsd:enumeration value="BankerEditionVirtualField" />
+			<xsd:enumeration value="AlertStatusField" />
+			<xsd:enumeration value="AUSTrackingField" />
+			<xsd:enumeration value="CoBorrowerNameField" />
+			<xsd:enumeration value="BorrowerNameField" />
+			<xsd:enumeration value="CoMortgagerCountField" />
+			<xsd:enumeration value="ComplianceReviewField" />
+			<xsd:enumeration value="DocOrderField" />
+			<xsd:enumeration value="UnderwritingConditionCountField" />
+			<xsd:enumeration value="InterimServicingField" />
+			<xsd:enumeration value="GFEDisclosureField" />
+			<xsd:enumeration value="LastDisclosedGFEField" />			
+			<xsd:enumeration value="TILDisclosureField" />
+			<xsd:enumeration value="LastDisclosedTILField" />
+			<xsd:enumeration value="EDisclosureTrackingField" />
+			<xsd:enumeration value="LoanAssociateField" />
+			<xsd:enumeration value="CurrentLoanAssociateNameField" />
+			<xsd:enumeration value="PreviousLoanAssociateField" />
+			<xsd:enumeration value="LastCompletedMilestoneField" />
+			<xsd:enumeration value="CurrentMilestoneField" />			
+			<xsd:enumeration value="MilestoneTemplateField" />	
+			<xsd:enumeration value="MilestoneTaskField" />	
+			<xsd:enumeration value="PostClosingConditionField" />	
+			<xsd:enumeration value="PostClosingConditionSummaryField" />	
+			<xsd:enumeration value="PreliminaryConditionField" />
+			<xsd:enumeration value="PreliminaryConditionSummaryField" />		
+			<xsd:enumeration value="PreliminaryConditionCountField" />	
+			<xsd:enumeration value="RateLockStatusField" />
+			<xsd:enumeration value="UnderwritingConditionField" />	
+			<xsd:enumeration value="UnderwritingConditionSummaryField" />
+                        <xsd:enumeration value="RateLockActiveRequestField" />
+			<xsd:enumeration value="RateLockAndRequestStatusField" />
+			<xsd:enumeration value="RateLockCurrentStatusField" />
+			<xsd:enumeration value="RateLockField" />
+			<xsd:enumeration value="RateLockIsCancelledField" />
+			<xsd:enumeration value="RateLockLastActionTimeField" />
+			<xsd:enumeration value="RateLockOtherField" />
+			<xsd:enumeration value="RateLockPendingCancellationRequestField" />
+			<xsd:enumeration value="RateLockPendingExtensionRequestField" />
+			<xsd:enumeration value="RateLockPendingRelockRequestField" />
+			<xsd:enumeration value="RateLockPendingRequestField" />
+			<xsd:enumeration value="RateLockRequestStatusField" />
+			<xsd:enumeration value="RateLockRequestTypeField" />
+			<xsd:enumeration value="RateLockStatisticField" />						
+		</xsd:restriction>
+		</xsd:simpleType>
+		</xsd:attribute>
+	</xsd:complexType>
+	
+	<xsd:simpleType name="FieldCategoryType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Unknown">				
+			</xsd:enumeration>
+			<xsd:enumeration value="Common" />
+			<xsd:enumeration value="Borrower" />
+			<xsd:enumeration value="Coborrower" />
+		</xsd:restriction>
+	</xsd:simpleType>
+	
+	<xsd:simpleType name="FieldFormatType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="UNDEFINED"/>
+			<xsd:enumeration value="STRING"/>
+			<xsd:enumeration value="YN"/>
+			<xsd:enumeration value="X"/>
+			<xsd:enumeration value="ZIPCODE"/>
+			<xsd:enumeration value="STATE"/>
+			<xsd:enumeration value="PHONE"/>
+			<xsd:enumeration value="SSN"/>
+			<xsd:enumeration value="RA_STRING"/>
+			<xsd:enumeration value="INTEGER"/>
+			<xsd:enumeration value="DECIMAL_1"/>
+			<xsd:enumeration value="DECIMAL_2"/>
+			<xsd:enumeration value="DECIMAL_3"/>
+			<xsd:enumeration value="DECIMAL_4"/>
+			<xsd:enumeration value="DECIMAL_5"/>
+			<xsd:enumeration value="DECIMAL_6"/>
+			<xsd:enumeration value="DECIMAL_7"/>
+			<xsd:enumeration value="DECIMAL_10"/>
+			<xsd:enumeration value="DECIMAL"/>
+			<xsd:enumeration value="DATE"/>
+			<xsd:enumeration value="DATETIME"/>
+			<xsd:enumeration value="MONTHDAY"/>
+			<xsd:enumeration value="NONE"/>
+			<xsd:enumeration value="DROPDOWN"/>
+			<xsd:enumeration value="DROPDOWNLIST"/>
+			<xsd:enumeration value="AUDIT"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:simpleType name="FieldInstanceSpecifierType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="None" />
+			<xsd:enumeration value="Index" />
+			<xsd:enumeration value="Role" />
+			<xsd:enumeration value="Milestone" />
+			<xsd:enumeration value="Document" />
+			<xsd:enumeration value="UnderwritingCondition" />
+			<xsd:enumeration value="PostClosingCondition" />
+			<xsd:enumeration value="MilestoneTask"/>			
+			<xsd:enumeration value="CustomAlert"/>
+			<xsd:enumeration value="PreliminaryCondition"/>				
+			<xsd:enumeration value="MilestoneTemplate"/>				
+		</xsd:restriction>
+	</xsd:simpleType>
+	
+	<xsd:simpleType name="ReportingDatabaseColumnType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Unknown" />
+			<xsd:enumeration value="Text" />
+			<xsd:enumeration value="Numeric" />
+			<xsd:enumeration value="Date" />
+			<xsd:enumeration value="DateTime" />
+		</xsd:restriction>
+	</xsd:simpleType>
+	
+	
+		<xsd:simpleType name="FieldTypes">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="IsNothing"/>		
+			<xsd:enumeration value="IsString"/>			
+			<xsd:enumeration value="IsNumeric"/>			
+			<xsd:enumeration value="IsDate"/>			
+			<xsd:enumeration value="IsPhone"/>			
+			<xsd:enumeration value="IsMonthDay"/>			
+			<xsd:enumeration value="IsOptionList"/>
+			<xsd:enumeration value="IsYesNo"/>			
+			<xsd:enumeration value="IsCheckbox"/>			
+			<xsd:enumeration value="IsDateTime"/>			
+		</xsd:restriction>
+	</xsd:simpleType>
+	
+	<xsd:complexType name="ArrayOfstring">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" maxOccurs="unbounded" name="string"	nillable="true" type="xsd:string" />
+		</xsd:sequence>
+		</xsd:complexType>
+		
+		<xsd:complexType name="DataFieldType">
+		<xsd:sequence>
+			<xsd:element name="name" nillable="true" type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>	
+	
+	<xsd:complexType name="FieldOptionCollectionType">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" name="Options" nillable="true" type="tns:ArrayOfFieldOptionType"/>			
+			<xsd:element minOccurs="0" name="RequireValueFromList"	type="xsd:boolean"/>			
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="ArrayOfFieldOptionType">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" maxOccurs="unbounded" name="FieldOption"	nillable="true" type="tns:FieldOptionType" />
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="FieldOptionType">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" name="ReportingDatabaseValue" nillable="true" type="xsd:string"/>
+			<xsd:element minOccurs="0" name="Text" nillable="true"	type="xsd:string"/>
+			<xsd:element minOccurs="0" name="Value" nillable="true" type="xsd:string"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

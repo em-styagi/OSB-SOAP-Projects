@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema elementFormDefault="qualified"
+	targetNamespace="http://schemas.datacontract.org/2004/07/EllieMae.EMLite.Common"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:tns="http://schemas.datacontract.org/2004/07/EllieMae.EMLite.Common">
+	<xs:simpleType name="DateTimeType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Calendar" />
+			<xs:enumeration value="Business" />
+			<xs:enumeration value="Company" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="DateTimeType" nillable="true" type="tns:DateTimeType" />
+</xs:schema>

@@ -1,0 +1,111 @@
+<wsdl:definitions name="SecurityTradeCursorSvc" targetNamespace="http://www.elliemae.com/services/pipelinetradecursor" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.elliemae.com/services/pipelinetradecursor" xmlns:sec="http://www.elliemae.com/services/security" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+	<wsdl:types>
+		<xsd:schema targetNamespace="http://www.elliemae.com/services/pipelinetradecursor" elementFormDefault="qualified">
+			<xsd:include schemaLocation="../../xsd/Services/SecurityTradeCursorSvc.xsd"/>
+			<xsd:import namespace="http://www.elliemae.com/services/security" schemaLocation="../../../../../Security_SOAP_v1/Shared/SecuritySvc.xsd"/>
+		</xsd:schema>
+	</wsdl:types>
+	
+	<wsdl:message name="SecurityTradeCursorRequest_Header">
+		<wsdl:part name="SecurityContext" element="sec:SecurityContext"/>
+	</wsdl:message>
+	<wsdl:message name="CreateSecurityTradeCursorRequestMsg">
+		<wsdl:part name="body" element="tns:CreateSecurityTradeCursorRequest"/>
+	</wsdl:message>
+	<wsdl:message name="CreateSecurityTradeCursorResponseMsg">
+		<wsdl:part name="body" element="tns:CreateSecurityTradeCursorResponse"/>
+	</wsdl:message>
+	
+    <wsdl:message name="ReadSecurityTradeCursorRequestMsg">
+		<wsdl:part name="body" element="tns:ReadSecurityTradeCursorRequest"/>
+	</wsdl:message>
+	<wsdl:message name="ReadSecurityTradeCursorResponseMsg">
+		<wsdl:part name="body" element="tns:ReadSecurityTradeCursorResponse"/>
+	</wsdl:message>
+
+	<wsdl:message name="DeleteSecurityTradeCursorRequestMsg">
+		<wsdl:part name="body" element="tns:DeleteSecurityTradeCursorRequest"/>
+	</wsdl:message>
+	<wsdl:message name="DeleteSecurityTradeCursorResponseMsg">
+		<wsdl:part name="body" element="tns:DeleteSecurityTradeCursorResponse"/>
+	</wsdl:message>
+	
+	<wsdl:message name="GetSecurityTradeCursorsListRequestMsg">
+		<wsdl:part name="body" element="tns:GetSecurityTradeCursorsListRequest"/>
+	</wsdl:message>
+	<wsdl:message name="GetSecurityTradeCursorsListResponseMsg">
+		<wsdl:part name="body" element="tns:GetSecurityTradeCursorsListResponse"/>
+	</wsdl:message>
+		
+	<wsdl:portType name="SecurityTradeCursorServicesPort">
+		<wsdl:operation name="CreateSecurityTradeCursor">
+			<wsdl:input message="tns:CreateSecurityTradeCursorRequestMsg"/>
+			<wsdl:output message="tns:CreateSecurityTradeCursorResponseMsg"/>
+		</wsdl:operation>
+		<wsdl:operation name="ReadSecurityTradeCursor">
+			<wsdl:input message="tns:ReadSecurityTradeCursorRequestMsg"/>
+			<wsdl:output message="tns:ReadSecurityTradeCursorResponseMsg"/>
+		</wsdl:operation>
+	    <wsdl:operation name="DeleteSecurityTradeCursor">
+			<wsdl:input message="tns:DeleteSecurityTradeCursorRequestMsg"/>
+			<wsdl:output message="tns:DeleteSecurityTradeCursorResponseMsg"/>
+		</wsdl:operation>
+		<wsdl:operation name="GetSecurityTradeCursorsList">
+			<wsdl:input message="tns:GetSecurityTradeCursorsListRequestMsg"/>
+			<wsdl:output message="tns:GetSecurityTradeCursorsListResponseMsg"/>
+		</wsdl:operation>						
+	</wsdl:portType>
+
+	<wsdl:binding name="SecurityTradeCursorServicesSOAP11Binding" type="tns:SecurityTradeCursorServicesPort">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+		<wsdl:operation name="CreateSecurityTradeCursor">
+			<soap:operation soapAction="http://www.elliemae.com/services/securitypipeline/CreateSecurityTradeCursor" style="document"/>
+			<wsdl:input>
+			    <soap:header message="tns:SecurityTradeCursorRequest_Header" part="SecurityContext" use="literal"/>
+				<soap:body use="literal" parts="body"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" parts="body"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="ReadSecurityTradeCursor">
+			<soap:operation soapAction="http://www.elliemae.com/services/securitypipeline/ReadSecurityTradeCursor" style="document"/>
+			<wsdl:input>
+			    <soap:header message="tns:SecurityTradeCursorRequest_Header" part="SecurityContext" use="literal"/>
+				<soap:body use="literal" parts="body"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" parts="body"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="DeleteSecurityTradeCursor">
+			<soap:operation soapAction="http://www.elliemae.com/services/securitypipeline/DeleteSecurityTradeCursor" style="document"/>
+			<wsdl:input>
+			    <soap:header message="tns:SecurityTradeCursorRequest_Header" part="SecurityContext" use="literal"/>
+				<soap:body use="literal" parts="body"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		
+		<wsdl:operation name="GetSecurityTradeCursorsList">
+			<soap:operation soapAction="http://www.elliemae.com/services/securitypipeline/GetSecurityTradeCursorsList" style="document"/>
+			<wsdl:input>
+				<soap:header message="tns:SecurityTradeCursorRequest_Header" part="SecurityContext" use="literal"/>
+				<soap:body use="literal" parts="body"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	
+	<wsdl:service name="SecurityTradeCursorService">
+		<wsdl:port name="SecurityTradeCursorServices" binding="tns:SecurityTradeCursorServicesSOAP11Binding">
+			<soap:address location="http://encompass-ib.dev.dco.elmae:11001/encompass_v1/trade/security/cursor"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

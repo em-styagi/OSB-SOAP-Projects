@@ -1,0 +1,1149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.elliemae.com/services/LoanSvc"
+	xmlns:tns="http://www.elliemae.com/services/LoanSvc"
+	elementFormDefault="qualified">
+	
+    <xsd:element name="CreateLoanRequest" 	nillable="true" type="tns:CreateLoanRequestType" />
+    <xsd:element name="CreateLoanResponse" 	nillable="true" type="tns:CreateLoanResponseType" />
+	<xsd:element name="UpdateLoanRequest" 	nillable="true" type="tns:UpdateLoanRequestType" />
+	<xsd:element name="UpdateLoanResponse" 	nillable="true" type="tns:UpdateLoanResponseType" />
+	<xsd:element name="GetLoanRequest" 		nillable="true" type="tns:GetLoanRequestType" />
+	<xsd:element name="GetLoanResponse" 	nillable="true" type="tns:GetLoanResponseType" />
+	<xsd:element name="CalculateLoanRequest" 	nillable="true" type="tns:CalculateLoanRequestType" />
+	<xsd:element name="CalculateLoanResponse" 	nillable="true" type="tns:CalculateLoanResponseType"/>
+	<xsd:element name="LockLoanRateRequest" 	nillable="true" type="tns:LockLoanRateRequestType" />
+	<xsd:element name="LockLoanRateResponse" 	nillable="true" type="tns:LockLoanRateResponseType"/>
+	<xsd:element name="GetLoanMIRequest" 	nillable="true" type="tns:GetLoanMIRequestType" />
+	<xsd:element name="GetLoanMIResponse" 	nillable="true" type="tns:GetLoanMIResponseType"/>
+	<xsd:element name="LockLoanRequest" 	nillable="true" type="tns:LockLoanRequestType" />
+	<xsd:element name="LockLoanResponse" 	nillable="true" type="tns:LockLoanResponseType" />
+	<xsd:element name="UnlockLoanRequest" 	nillable="true" type="tns:UnlockLoanRequestType"/>
+	<xsd:element name="UnlockLoanResponse" 	nillable="true" type="tns:UnlockLoanResponseType" />
+	<xsd:element name="CompleteLoanMilestoneRequest" 	nillable="true" type="tns:CompleteLoanMilestoneRequestType" />
+	<xsd:element name="CompleteLoanMilestoneResponse" 	nillable="true" type="tns:CompleteLoanMilestoneResponseType"/>
+	<xsd:element name="ImportLoanRequest" 	nillable="true" type="tns:ImportLoanRequestType" />
+	<xsd:element name="ImportLoanResponse" 	nillable="true" type="tns:ImportLoanResponseType" />
+	<xsd:element name="ArchiveLoanRequest" 	nillable="true" type="tns:ArchiveLoanRequestType" />	
+	<xsd:element name="ArchiveLoanResponse" nillable="true" type="tns:ArchiveLoanResponseType" />
+	<xsd:element name="DeleteLoanRequest" 	nillable="true" type="tns:DeleteLoanRequestType" />	
+	<xsd:element name="DeleteLoanResponse" 	nillable="true" type="tns:DeleteLoanResponseType" />
+    <xsd:element name="GetLoanPropertiesInfoRequest" 	nillable="true" type="tns:GetLoanPropertiesInfoRequestType" />	
+	<xsd:element name="GetLoanPropertiesInfoResponse" 	nillable="true" type="tns:GetLoanPropertiesInfoResponseType" />
+    <xsd:element name="MoveLoansRequest" 	nillable="true" type="tns:MoveLoansRequestType" />	
+	<xsd:element name="MoveLoansResponse" 	nillable="true" type="tns:MoveLoansResponseType" />
+	<xsd:element name="ExportLoanRequest" 	nillable="true" type="tns:ExportLoanRequestType" />	
+	<xsd:element name="ExportLoanResponse" nillable="true" type="tns:ExportLoanResponseType" />
+	
+    <xsd:simpleType name="guid">
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern
+				value="[\da-fA-F]{8}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{12}" />
+		</xsd:restriction>
+	</xsd:simpleType>
+	
+	<xsd:simpleType name="PayloadFormatType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Xml"/>
+			<xsd:enumeration value="Json"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	
+	<xsd:simpleType name="FieldAccessRestrictionType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Hide"/>
+			<xsd:enumeration value="Readonly"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	
+	<xsd:complexType name="EntityContractBase">
+		<xsd:sequence/>
+	</xsd:complexType>
+	
+	<xsd:simpleType name="LoanActivityType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Unknown"/>
+			<xsd:enumeration value="OrderCredit"/>
+			<xsd:enumeration value="OrderFlood"/>
+			<xsd:enumeration value="OrderFraud"/>
+			<xsd:enumeration value="OrderTitle"/>
+			<xsd:enumeration value="OrderAppraisal"/>
+			<xsd:enumeration value="ViewCredit"/>
+			<xsd:enumeration value="ImportLiabilities"/>
+			<xsd:enumeration value="CopyFromBorrower"/>
+			<xsd:enumeration value="AccessLenders"/>
+			<xsd:enumeration value="ProductAndPricing"/>
+			<xsd:enumeration value="CopyAddress"/>
+			<xsd:enumeration value="EditRegistration"/>
+			<xsd:enumeration value="AddRegistration"/>
+			<xsd:enumeration value="Ratespread"/>
+			<xsd:enumeration value="Geocode"/>
+			<xsd:enumeration value="EditCheck"/>
+			<xsd:enumeration value="DetailedLock"/>
+			<xsd:enumeration value="GetPricing"/>
+			<xsd:enumeration value="SubmitRequest"/>
+			<xsd:enumeration value="RequestLock"/>
+			<xsd:enumeration value="ExtendLock"/>
+			<xsd:enumeration value="SubFinancing"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	
+	<xsd:simpleType name="NextMilestoneUserType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="None" />
+			<xsd:enumeration value="UserName" />
+			<xsd:enumeration value="GroupName" />
+		</xsd:restriction>
+	</xsd:simpleType>
+		
+	<xsd:complexType name="CreateLoanRequestType">
+		<xsd:sequence>
+		    <xsd:element minOccurs="0" name="Entities" nillable="true" type="tns:ArrayListOfstring"/>
+			<xsd:element name="Format" type="tns:PayloadFormatType"/>
+			<xsd:element name="LoanData" nillable="true" type="xsd:string"/>
+			<xsd:element name="LoanFolder" nillable="true" type="xsd:string"/>
+			<xsd:element minOccurs="0" name="LoanId" type="tns:guid"/>
+			<xsd:element name="Version" nillable="true" type="xsd:string"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="CreateLoanResponseType">
+	    <xsd:sequence>
+			<xsd:element minOccurs="0" name="AlertData" nillable="true" type="xsd:string" />
+			<xsd:element minOccurs="0" name="LoanData" nillable="true" type="xsd:string" />
+			<xsd:element minOccurs="0" name="LoanId" type="tns:guid" />
+			<xsd:element minOccurs="0" name="LoanNumber" nillable="true"  type="xsd:string" />
+			<xsd:element minOccurs="0" name="MilestoneData" nillable="true" type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="UpdateLoanRequestType">
+		<xsd:sequence>
+		    <xsd:element minOccurs="0" name="Entities" nillable="true" type="tns:ArrayListOfstring"/>
+			<xsd:element name="Format" type="tns:PayloadFormatType"/>
+			<xsd:element name="LoanData" nillable="true" type="xsd:string"/>
+			<xsd:element minOccurs="0" name="LoanId" type="tns:guid"/>
+			<xsd:element name="Version" nillable="true" type="xsd:string"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="UpdateLoanResponseType">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" name="AlertData" nillable="true" type="xsd:string" />
+			<xsd:element minOccurs="0" name="LoanData" nillable="true" type="xsd:string" />
+			<xsd:element minOccurs="0" name="LoanId" type="tns:guid" />
+			<xsd:element minOccurs="0" name="MilestoneData" nillable="true" type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="GetLoanRequestType">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" name="Entities" nillable="true" type="tns:ArrayListOfstring"/>
+			<xsd:element name="Format" type="tns:PayloadFormatType"/>
+			<xsd:element name="LoanId" type="tns:guid"/>
+			<xsd:element name="Version" nillable="true" type="xsd:string"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="ArrayListOfstring">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" maxOccurs="unbounded" name="Item" nillable="true" type="xsd:string"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="ArrayListOfstring" nillable="true" type="tns:ArrayListOfstring"/>
+	
+	<xsd:complexType name="GetLoanResponseType">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" name="AlertData" nillable="true" type="xsd:string"/>
+			<xsd:element minOccurs="0" name="FieldRestrictions" nillable="true" type="tns:ArrayListOfFieldRestrictionContract"/>
+			<xsd:element minOccurs="0" name="Format" type="tns:PayloadFormatType"/>
+			<xsd:element minOccurs="0" name="LoanData" nillable="true" type="xsd:string"/>
+			<xsd:element minOccurs="0" name="MilestoneData" nillable="true" type="xsd:string"/>
+			<xsd:element minOccurs="0" name="Version" nillable="true" type="xsd:string"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="ArrayListOfFieldRestrictionContract">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" maxOccurs="unbounded" name="Item" nillable="true" type="tns:FieldRestrictionContract"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="FieldRestrictionContract">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" name="FieldId" nillable="true" type="xsd:string"/>
+			<xsd:element minOccurs="0" name="Name" nillable="true" type="xsd:string"/>
+			<xsd:element minOccurs="0" name="RestrictionType" type="tns:FieldAccessRestrictionType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="CalculateLoanRequestType">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" name="Entities" nillable="true" type="tns:ArrayListOfstring"/>
+			<xsd:element name="Format" type="tns:PayloadFormatType"/>
+			<xsd:element name="LoanData" nillable="true" type="xsd:string"/>
+			<xsd:element minOccurs="0" name="LoanId" type="tns:guid"/>
+			<xsd:element name="Version" nillable="true" type="xsd:string"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="CalculateLoanResponseType">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" name="Format" type="tns:PayloadFormatType"/>
+			<xsd:element minOccurs="0" name="LoanData" nillable="true" type="xsd:string"/>
+			<xsd:element minOccurs="0" name="Version" nillable="true" type="xsd:string"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="RateLock">
+		<xsd:complexContent mixed="false">
+			<xsd:extension base="tns:EntityContractBase">
+				<xsd:sequence>
+					<xsd:element minOccurs="0" name="ActualSRPAmount" nillable="true" type="xsd:decimal" />
+					
+					<xsd:element minOccurs="0" name="ActualSellAmount" nillable="true" type="xsd:decimal" />
+					
+					<xsd:element minOccurs="0" name="ActualSellPrice" nillable="true" type="xsd:decimal" />
+					
+					<xsd:element minOccurs="0" name="ActualSellSideSRP" nillable="true" type="xsd:decimal" />
+					
+					<xsd:element minOccurs="0" name="AmountDue" nillable="true" type="xsd:decimal" />
+					
+                    <xsd:element minOccurs="0" name="AmountDueTo" nillable="true" type="xsd:string" />
+                    
+					<xsd:element minOccurs="0" name="AmountPaid" nillable="true" type="xsd:decimal" />
+					
+					<xsd:element minOccurs="0" name="AmountPaidTo" nillable="true" type="xsd:string" /> 
+					
+					<xsd:element minOccurs="0" name="AmountReceived" nillable="true" type="xsd:decimal" />
+					
+					<xsd:element minOccurs="0" name="BalloonLoanMaturityTermMonths" nillable="true" type="xsd:int" />
+					
+					<xsd:element minOccurs="0" name="BaseLoanAmount" nillable="true" type="xsd:decimal" />
+					
+					<xsd:element minOccurs="0" name="BorrowerRequestedLoanAmount" nillable="true" type="xsd:decimal" />
+					
+					<xsd:element minOccurs="0" name="BranchApprovalDate" nillable="true" type="xsd:dateTime" />
+					
+					<xsd:element minOccurs="0" name="BranchApprovedby" nillable="true" type="xsd:string" />
+					
+					<xsd:element minOccurs="0" name="BranchPrice" nillable="true" type="xsd:decimal" />
+					
+					<xsd:element minOccurs="0" name="BuySideAdjustments" nillable="true" type="tns:ArrayOfPriceAdjustment" />
+					
+					<xsd:element minOccurs="0" name="BuySideComments" nillable="true" type="xsd:string" />
+					
+					<xsd:element minOccurs="0" name="BuySideCurrentRateSetDate" nillable="true" type="xsd:dateTime" />
+					
+					<xsd:element minOccurs="0" name="BuySideDaystoExtend" nillable="true" type="xsd:int" />
+					
+					<xsd:element minOccurs="0" name="BuySideExtendedLockExpires" nillable="true" type="xsd:dateTime" />
+					
+					<xsd:element minOccurs="0" name="BuySideLockDate" nillable="true" type="xsd:dateTime" />
+					
+					<xsd:element minOccurs="0" name="BuySideLockExpires" nillable="true" type="xsd:dateTime" />
+					
+					<xsd:element minOccurs="0" name="BuySideLockExtendPriceAdjustment" nillable="true" type="xsd:decimal" />
+					
+					<xsd:element minOccurs="0" name="BuySideMarginNetBuyRate" nillable="true" type="xsd:decimal" />
+					
+					<xsd:element minOccurs="0" name="BuySideMarginRate" nillable="true" type="xsd:decimal" />
+					
+					<xsd:element minOccurs="0" name="BuySideMarginTotalAdjustment" nillable="true" type="xsd:decimal" />
+					
+					<xsd:element minOccurs="0" name="BuySideNumberOfDays" nillable="true" type="xsd:int" />
+					
+					<xsd:element minOccurs="0" name="BuySideOriginalLockExpires" nillable="true" type="xsd:dateTime"/>
+					
+					<xsd:element minOccurs="0" name="BuySidePriceNetBuyPrice" nillable="true" type="xsd:decimal"/>
+					
+					<xsd:element minOccurs="0" name="BuySidePriceRate" nillable="true" type="xsd:decimal"/>
+					
+					<xsd:element minOccurs="0" name="BuySidePriceTotalAdjustment" nillable="true" type="xsd:decimal"/>
+					
+					<xsd:element minOccurs="0" name="BuySideRate" nillable="true" type="xsd:decimal"/>
+					
+					<xsd:element minOccurs="0" name="BuySideRateNetBuyRate" nillable="true" type="xsd:decimal"/>
+					
+					<xsd:element minOccurs="0" name="BuySideRateSheetID" nillable="true" type="xsd:string"/>
+					
+					<xsd:element minOccurs="0" name="BuySideRateTotalAdjustment" nillable="true" type="xsd:decimal"/>
+					
+					<xsd:element minOccurs="0" name="BuySideRequestedBy" nillable="true" type="xsd:string"/>
+					
+					<xsd:element minOccurs="0" name="BuySideSRPPaidOut" nillable="true" type="xsd:decimal"/>
+					
+					<xsd:element minOccurs="0" name="CombinedLTV" nillable="true" type="xsd:decimal"/>
+					
+					<xsd:element minOccurs="0" name="Comments" nillable="true" type="xsd:string"/>
+					
+					<xsd:element minOccurs="0" name="Commitment" nillable="true" type="xsd:string"/>
+					
+					<xsd:element minOccurs="0" name="ConfirmedBy" nillable="true" type="xsd:string"/>
+					
+					<xsd:element minOccurs="0" name="ConfirmedDate" nillable="true" type="xsd:dateTime"/>
+					
+					<xsd:element minOccurs="0" name="CorporateApprovalDate" nillable="true" type="xsd:dateTime"/>
+					
+					<xsd:element minOccurs="0" name="CorporateApprovedby" nillable="true" type="xsd:string"/>
+					
+					<xsd:element minOccurs="0" name="CorporatePrice" nillable="true" type="xsd:decimal"/>
+					
+					<xsd:element minOccurs="0" name="CorrespondentAdditionalLineAmount1" nillable="true" type="xsd:decimal"/>
+					
+					<xsd:element minOccurs="0" name="CorrespondentAdditionalLineAmount10" nillable="true" type="xsd:decimal"/>
+					
+					<xsd:element minOccurs="0" name="CorrespondentAdditionalLineAmount11" nillable="true" type="xsd:decimal"/>
+					
+					<xsd:element minOccurs="0" name="CorrespondentAdditionalLineAmount12" nillable="true" type="xsd:decimal"/>
+					
+					<xsd:element minOccurs="0" name="CorrespondentAdditionalLineAmount2" nillable="true" type="xsd:decimal"/>
+					
+					<xsd:element minOccurs="0" name="CorrespondentAdditionalLineAmount3" nillable="true" type="xsd:decimal"/>
+					
+					<xsd:element minOccurs="0" name="CorrespondentAdditionalLineAmount4" nillable="true" type="xsd:decimal"/>
+					
+					<xsd:element minOccurs="0" name="CorrespondentAdditionalLineAmount5" nillable="true" type="xsd:decimal"/>
+					
+					<xsd:element minOccurs="0" name="CorrespondentAdditionalLineAmount6" nillable="true" type="xsd:decimal"/>
+					
+					<xsd:element minOccurs="0" name="CorrespondentAdditionalLineAmount7" nillable="true" type="xsd:decimal"/>
+					
+					<xsd:element minOccurs="0" name="CorrespondentAdditionalLineAmount8" nillable="true" type="xsd:decimal"/>
+					
+					<xsd:element minOccurs="0" name="CorrespondentAdditionalLineAmount9" nillable="true" type="xsd:decimal"/>
+					
+					<xsd:element minOccurs="0" name="CorrespondentAdditionalLineDescription1" nillable="true" type="xsd:string"/>
+					
+					<xsd:element minOccurs="0" name="CorrespondentAdditionalLineDescription10" nillable="true" type="xsd:string"/>
+					
+					<xsd:element minOccurs="0" name="CorrespondentAdditionalLineDescription11" nillable="true" type="xsd:string"/>
+					
+					<xsd:element minOccurs="0" name="CorrespondentAdditionalLineDescription12" nillable="true" type="xsd:string"/>
+					
+					<xsd:element minOccurs="0" name="CorrespondentAdditionalLineDescription2" nillable="true" type="xsd:string"/>
+					
+					<xsd:element minOccurs="0" name="CorrespondentAdditionalLineDescription3" nillable="true" type="xsd:string"/>
+					
+					<xsd:element minOccurs="0" name="CorrespondentAdditionalLineDescription4" nillable="true" type="xsd:string"/>
+					
+					<xsd:element minOccurs="0" name="CorrespondentAdditionalLineDescription5" nillable="true" type="xsd:string"/>
+					
+					<xsd:element minOccurs="0" name="CorrespondentAdditionalLineDescription6" nillable="true" type="xsd:string"/>
+					
+					<xsd:element minOccurs="0" name="CorrespondentAdditionalLineDescription7" nillable="true" type="xsd:string"/>
+					
+					<xsd:element minOccurs="0" name="CorrespondentAdditionalLineDescription8" nillable="true" type="xsd:string"/>
+					
+					<xsd:element minOccurs="0" name="CorrespondentAdditionalLineDescription9" nillable="true" type="xsd:string"/>
+					
+					<xsd:element minOccurs="0" name="CorrespondentAdditionalLineTotalAmount" nillable="true" type="xsd:decimal"/>
+					
+					<xsd:element minOccurs="0" name="CorrespondentAdjusterAmount1" nillable="true" type="xsd:decimal"/>
+					
+					<xsd:element minOccurs="0" name="CorrespondentAdjusterAmount2" nillable="true" type="xsd:decimal"/>
+					
+					<xsd:element minOccurs="0" name="CorrespondentAdjusterAmount3" nillable="true" type="xsd:decimal"/>
+					
+					<xsd:element minOccurs="0" name="CorrespondentAdjusterDescription1" nillable="true" type="xsd:string"/>
+					
+					<xsd:element minOccurs="0" name="CorrespondentAdjusterDescription2" nillable="true" type="xsd:string"/>
+					
+					<xsd:element minOccurs="0" name="CorrespondentAdjusterDescription3" nillable="true" type="xsd:string"/>
+					
+					<xsd:element minOccurs="0" name="CorrespondentConfirmedBy" nillable="true" type="xsd:string"/>
+					
+					<xsd:element minOccurs="0" name="CorrespondentConfirmedDate" nillable="true" type="xsd:dateTime"/>
+					
+					<xsd:element minOccurs="0" name="CorrespondentCurrentImpounds" nillable="true" type="xsd:decimal"/>
+					
+					<xsd:element minOccurs="0" name="CorrespondentCurrentPrincipal" nillable="true" type="xsd:decimal"/>
+					
+					<xsd:element minOccurs="0" name="CorrespondentDate" nillable="true" type="xsd:dateTime"/>
+					
+					<xsd:element minOccurs="0" name="CorrespondentFinalBuyAmount" nillable="true" type="xsd:decimal"/>
+					
+					<xsd:element minOccurs="0" name="CorrespondentFinalBuyPrice" nillable="true" type="xsd:decimal"/>
+					
+					<xsd:element minOccurs="0" name="CorrespondentFirstPaymentDate" nillable="true" type="xsd:dateTime"/>
+					
+					<xsd:element minOccurs="0" name="CorrespondentImpounds" nillable="true" type="xsd:decimal"/>
+					
+					<xsd:element minOccurs="0" name="CorrespondentInterest" nillable="true" type="xsd:decimal"/>
+					
+					<xsd:element minOccurs="0" name="CorrespondentInterestDays" nillable="true" type="xsd:int"/>
+					
+					<xsd:element minOccurs="0" name="CorrespondentPaidToDate" nillable="true" type="xsd:dateTime"/>
+					
+					<xsd:element minOccurs="0" name="CorrespondentPurchasedPrincipal" nillable="true" type="xsd:decimal"/>
+					
+					<xsd:element minOccurs="0" name="CorrespondentReconcilationComments" nillable="true" type="xsd:string"/>
+					
+					<xsd:element minOccurs="0" name="CorrespondentRemainingBuydownAmount" nillable="true" type="xsd:decimal"/>
+					
+					<xsd:element minOccurs="0" name="CorrespondentSRPAmount" nillable="true" type="xsd:decimal"/>
+					
+					<xsd:element minOccurs="0" name="CreditScoreToUse" nillable="true" type="xsd:string"/>
+					
+					<xsd:element minOccurs="0" name="CumulatedDaystoExtend" nillable="true" type="xsd:int"/>
+					
+					<xsd:element minOccurs="0" name="CurrentAdjustments" nillable="true" type="tns:ArrayOfPriceAdjustment"/>
+					
+					<xsd:element minOccurs="0" name="CurrentComments" nillable="true" type="xsd:string"/>
+					
+					<xsd:element minOccurs="0" name="CurrentLockDate" nillable="true" type="xsd:dateTime"/>
+					
+					<xsd:element minOccurs="0" name="CurrentLockExpires" nillable="true" type="xsd:dateTime"/>
+					
+					<xsd:element minOccurs="0" name="CurrentMarginRate" nillable="true" type="xsd:decimal"/>
+					
+					<xsd:element minOccurs="0" name="CurrentMarginRateRequested" nillable="true" type="xsd:decimal"/>
+					
+					<xsd:element minOccurs="0" name="CurrentMarginTotalAdjustment" nillable="true" type="xsd:decimal"/>
+					
+					<xsd:element minOccurs="0" name="CurrentNumberOfDays" nillable="true" type="xsd:int"/>
+					
+					<xsd:element minOccurs="0" name="CurrentPriceRate" nillable="true" type="xsd:decimal"/>
+					
+					<xsd:element minOccurs="0" name="CurrentPriceRateRequested" nillable="true" type="xsd:decimal"/>
+					
+					<xsd:element minOccurs="0" name="CurrentPriceTotalAdjustment" nillable="true" type="xsd:decimal"/>
+					
+					<xsd:element minOccurs="0" name="CurrentRate" nillable="true" type="xsd:decimal"/>
+					
+					<xsd:element minOccurs="0" name="CurrentRateRequested" nillable="true" type="xsd:decimal"/>
+					
+					<xsd:element minOccurs="0" name="CurrentRateSetDate" nillable="true" type="xsd:dateTime"/>
+					
+					<xsd:element minOccurs="0" name="CurrentRateSheetID" nillable="true" type="xsd:string"/>
+					
+					<xsd:element minOccurs="0" name="CurrentRateTotalAdjustment" nillable="true" type="xsd:decimal"/>
+					
+					<xsd:element minOccurs="0" name="Date" nillable="true" type="xsd:dateTime"/>
+					
+					<xsd:element minOccurs="0" name="DateFirstPaymentToInvestor" nillable="true" type="xsd:dateTime"/>
+					
+					<xsd:element minOccurs="0" name="DateLockedWithInvestor" nillable="true" type="xsd:dateTime"/>
+					
+					<xsd:element minOccurs="0" name="DateSold" nillable="true" type="xsd:dateTime"/>
+					
+					<xsd:element minOccurs="0" name="DateWarehoused" nillable="true" type="xsd:dateTime"/>
+					
+					<xsd:element minOccurs="0" name="DiffAmountReceived" nillable="true" type="xsd:decimal"/>
+					
+					<xsd:element minOccurs="0" name="DiffImpounds" nillable="true" type="xsd:decimal"/>
+					
+					<xsd:element minOccurs="0" name="DiffInterest" nillable="true" type="xsd:decimal"/>
+					
+					<xsd:element minOccurs="0" name="DiffPremium" nillable="true" type="xsd:decimal"/>
+					
+					<xsd:element minOccurs="0" name="DiffPrinciple" nillable="true" type="xsd:decimal"/>
+					
+					<xsd:element minOccurs="0" name="DiffRemainingBuydownFunds" nillable="true" type="xsd:decimal"/>
+					
+					<xsd:element minOccurs="0" name="DiffSRP" nillable="true" type="xsd:decimal"/>
+					
+					<xsd:element minOccurs="0" name="DiffSRPAmount" nillable="true" type="xsd:decimal"/>
+					
+					<xsd:element minOccurs="0" name="DiffSellAmount" nillable="true" type="xsd:decimal"/>
+					
+					<xsd:element minOccurs="0" name="DiffSellPrice" nillable="true" type="xsd:decimal"/>
+					
+					<xsd:element minOccurs="0" name="DiffSellSideSRP" nillable="true" type="xsd:decimal"/>
+					
+					<xsd:element minOccurs="0" name="EmploymentBorrowerSelfEmployedIndicator1" nillable="true" type="xsd:boolean"/>
+					
+					<xsd:element minOccurs="0" name="EmploymentBorrowerSelfEmployedIndicator10" nillable="true" type="xsd:boolean"/>
+					
+					<xsd:element minOccurs="0" name="EmploymentBorrowerSelfEmployedIndicator11" nillable="true" type="xsd:boolean"/>
+					
+					<xsd:element minOccurs="0" name="EmploymentBorrowerSelfEmployedIndicator12" nillable="true" type="xsd:boolean"/>
+					
+					<xsd:element minOccurs="0" name="EmploymentBorrowerSelfEmployedIndicator2" nillable="true" type="xsd:boolean"/>
+					
+					<xsd:element minOccurs="0" name="EmploymentBorrowerSelfEmployedIndicator3" nillable="true" type="xsd:boolean"/>
+					
+					<xsd:element minOccurs="0" name="EmploymentBorrowerSelfEmployedIndicator4" nillable="true" type="xsd:boolean"/>
+					
+					<xsd:element minOccurs="0" name="EmploymentBorrowerSelfEmployedIndicator5" nillable="true" type="xsd:boolean"/>
+					
+					<xsd:element minOccurs="0" name="EmploymentBorrowerSelfEmployedIndicator6" nillable="true" type="xsd:boolean"/>
+					
+					<xsd:element minOccurs="0" name="EmploymentBorrowerSelfEmployedIndicator7" nillable="true" type="xsd:boolean"/>
+					
+					<xsd:element minOccurs="0" name="EmploymentBorrowerSelfEmployedIndicator8" nillable="true" type="xsd:boolean"/>
+					
+					<xsd:element minOccurs="0" name="EmploymentBorrowerSelfEmployedIndicator9" nillable="true" type="xsd:boolean"/>
+					
+					<xsd:element minOccurs="0" name="ExpectedAmountReceived" nillable="true" type="xsd:decimal"/>
+					
+					<xsd:element minOccurs="0" name="ExpectedImpounds" nillable="true" type="xsd:decimal"/>
+					
+					<xsd:element minOccurs="0" name="ExpectedInterest" nillable="true" type="xsd:decimal"/>
+					
+					<xsd:element minOccurs="0" name="ExpectedPremium" nillable="true" type="xsd:decimal"/>
+					
+					<xsd:element minOccurs="0" name="ExpectedPrinciple" nillable="true" type="xsd:decimal"/>
+					
+					<xsd:element minOccurs="0" name="ExpectedRemainingBuydownFunds" nillable="true" type="xsd:decimal"/>
+					
+					<xsd:element minOccurs="0" name="ExpectedSRP" nillable="true" type="xsd:decimal"/>
+					
+					<xsd:element minOccurs="0" name="ExtensionSequenceNumber" nillable="true" type="xsd:int"/>
+					
+					<xsd:element minOccurs="0" name="FHAUpfrontMIPremiumPercent" nillable="true" type="xsd:string"/>
+					
+					<xsd:element minOccurs="0" name="FNMProductPlanIdentifier" nillable="true" type="xsd:string"/>
+					
+					<xsd:element minOccurs="0" name="FinancedNumberOfUnits" nillable="true" type="xsd:short"/>
+					
+					<xsd:element minOccurs="0" name="FirstPaymenTo" nillable="true" type="xsd:string"/>
+					
+					<xsd:element minOccurs="0" name="FirstSubordinateAmount" nillable="true" type="xsd:decimal"/>
+					
+					<xsd:element minOccurs="0" name="FirstTimeHomebuyersIndicator" nillable="true" type="xsd:boolean"/>
+					
+					<xsd:element minOccurs="0" name="FundingAmount" nillable="true" type="xsd:decimal"/>
+					
+					<xsd:element minOccurs="0" name="GPMRate" nillable="true" type="xsd:decimal"/>
+					
+					<xsd:element minOccurs="0" name="GPMYears" nillable="true" type="xsd:int"/>
+					
+					<xsd:element minOccurs="0" name="GSEPropertyType" nillable="true" type="xsd:string"/>
+					
+					<xsd:element minOccurs="0" name="GainLossPercentage" nillable="true" type="xsd:string"/>
+					
+					<xsd:element minOccurs="0" name="GainLossPrice" nillable="true" type="xsd:decimal"/>
+					
+					<xsd:element minOccurs="0" name="GainLossTotalBuyPrice" nillable="true" type="xsd:decimal"/>
+					
+					<xsd:element minOccurs="0" name="HELOCActualBalance" nillable="true" type="xsd:string"/>
+
+					<xsd:element minOccurs="0" name="Hedging" nillable="true" type="xsd:string"/>
+
+					<xsd:element minOccurs="0" name="Id" nillable="true" type="xsd:string"/>
+
+					<xsd:element minOccurs="0" name="ImpoundType" nillable="true" type="xsd:string"/>
+
+					<xsd:element minOccurs="0" name="ImpoundWavied" nillable="true" type="xsd:string"/>
+
+					<xsd:element minOccurs="0" name="Impounds" nillable="true" type="xsd:decimal"/>
+
+					<xsd:element minOccurs="0" name="Interest" nillable="true" type="xsd:decimal"/>
+
+					<xsd:element minOccurs="0" name="InvestorAddress" nillable="true" type="xsd:string"/>
+
+					<xsd:element minOccurs="0" name="InvestorCity" nillable="true" type="xsd:string"/>
+
+					<xsd:element minOccurs="0" name="InvestorCommitment" nillable="true" type="xsd:string"/>
+
+					<xsd:element minOccurs="0" name="InvestorContact" nillable="true" type="xsd:string"/>
+
+					<xsd:element minOccurs="0" name="InvestorDeliveryDate" nillable="true" type="xsd:dateTime"/>
+
+					<xsd:element minOccurs="0" name="InvestorEmail" nillable="true" type="xsd:string"/>
+
+					<xsd:element minOccurs="0" name="InvestorLoanNumber" nillable="true" type="xsd:string"/>
+
+					<xsd:element minOccurs="0" name="InvestorLockType" nillable="true" type="xsd:string"/>
+
+					<xsd:element minOccurs="0" name="InvestorMERSNumber" nillable="true" type="xsd:string"/>
+
+					<xsd:element minOccurs="0" name="InvestorName" nillable="true" type="xsd:string"/>
+
+					<xsd:element minOccurs="0" name="InvestorPhone" nillable="true" type="xsd:string"/>
+
+					<xsd:element minOccurs="0" name="InvestorPostalCode" nillable="true" type="xsd:string"/>
+
+					<xsd:element minOccurs="0" name="InvestorProgramCode" nillable="true" type="xsd:string"/>
+
+					<xsd:element minOccurs="0" name="InvestorState" nillable="true" type="xsd:string"/>
+
+					<xsd:element minOccurs="0" name="InvestorTargetDeliveryDate" nillable="true" type="xsd:dateTime"/>
+
+					<xsd:element minOccurs="0" name="InvestorTemplateName" nillable="true" type="xsd:string"/>
+
+					<xsd:element minOccurs="0" name="InvestorWebsite" nillable="true" type="xsd:string"/>
+
+					<xsd:element minOccurs="0" name="LTV" nillable="true" type="xsd:decimal"/>
+
+					<xsd:element minOccurs="0" name="LenderPaidMortgageInsuranceIndicator" nillable="true" type="xsd:boolean"/>
+
+					<xsd:element minOccurs="0" name="LienPriorityType" nillable="true" type="xsd:string"/>
+
+					<xsd:element minOccurs="0" name="LoanAmortizationTermMonths" nillable="true" type="xsd:int"/>
+
+					<xsd:element minOccurs="0" name="LoanAmortizationType" nillable="true" type="xsd:string"/>
+
+					<xsd:element minOccurs="0" name="LoanDocumentationType" nillable="true" type="xsd:string"/>
+
+					<xsd:element minOccurs="0" name="LoanFor203K" nillable="true" type="xsd:boolean"/>
+
+					<xsd:element minOccurs="0" name="LoanProgram" nillable="true" type="xsd:string"/>
+
+					<xsd:element minOccurs="0" name="LoanProgramFile" nillable="true" type="xsd:string"/>
+
+					<xsd:element minOccurs="0" name="LoanScheduledClosingDate" nillable="true" type="xsd:dateTime"/>
+
+					<xsd:element minOccurs="0" name="LockField" nillable="true" type="xsd:boolean"/>
+
+					<xsd:element minOccurs="0" name="LockRequestAdjustments" nillable="true" type="tns:ArrayOfPriceAdjustment"/>
+
+					<xsd:element minOccurs="0" name="LockRequestBorrowers" nillable="true" type="tns:ArrayOfLockRequestBorrower"/>
+
+					<xsd:element minOccurs="0" name="LockRequestLoanPurposeType" nillable="true" type="xsd:string"/>
+
+					<xsd:element minOccurs="0" name="MIPPaidInCash" nillable="true" type="xsd:decimal"/>
+
+					<xsd:element minOccurs="0" name="MinFICO" nillable="true" type="xsd:string"/>
+
+					<xsd:element minOccurs="0" name="MinFICO2" nillable="true" type="xsd:string"/>
+
+					<xsd:element minOccurs="0" name="MortgageType" nillable="true" type="xsd:string"/>
+
+					<xsd:element minOccurs="0" name="NetSellAmount" nillable="true" type="xsd:decimal"/>
+
+					<xsd:element minOccurs="0" name="NetSellPrice" nillable="true" type="xsd:decimal"/>
+
+					<xsd:element minOccurs="0" name="NextPaymentDate" nillable="true" type="xsd:dateTime"/>
+
+					<xsd:element minOccurs="0" name="NoClosingCostOption" nillable="true" type="xsd:boolean"/>
+
+					<xsd:element minOccurs="0" name="OtherAmortizationTypeDescription" nillable="true" type="xsd:string"/>
+
+					<xsd:element minOccurs="0" name="OtherSubordinateAmount" nillable="true" type="xsd:decimal"/>
+
+					<xsd:element minOccurs="0" name="PenaltyTerm" nillable="true" type="xsd:string"/>
+
+					<xsd:element minOccurs="0" name="PerDiemInterestRoundingType" nillable="true" type="xsd:string"/>
+
+					<xsd:element minOccurs="0" name="PlanCode" nillable="true" type="xsd:string"/>
+
+					<xsd:element minOccurs="0" name="Premium" nillable="true" type="xsd:decimal"/>
+
+					<xsd:element minOccurs="0" name="PrepayPenalty" nillable="true" type="xsd:string"/>
+
+					<xsd:element minOccurs="0" name="PriceAdjustments" nillable="true" type="tns:ArrayOfPriceAdjustment"/>
+
+					<xsd:element minOccurs="0" name="PricingHistoryData" nillable="true" type="xsd:string"/>
+
+					<xsd:element minOccurs="0" name="PricingUpdated" nillable="true" type="xsd:string"/>
+
+					<xsd:element minOccurs="0" name="Principle" nillable="true" type="xsd:decimal"/>
+
+					<xsd:element minOccurs="0" name="ProfitMarginAdjustedBuyPrice" nillable="true" type="xsd:decimal"/>
+
+					<xsd:element minOccurs="0" name="PropertyAppraisedValueAmount" nillable="true" type="xsd:int"/>
+
+					<xsd:element minOccurs="0" name="PropertyEstimatedValueAmount" nillable="true" type="xsd:int"/>
+
+					<xsd:element minOccurs="0" name="PropertyUsageType" nillable="true" type="xsd:string"/>
+
+					<xsd:element minOccurs="0" name="PurchaseAdviceNumberOfDays" nillable="true" type="xsd:int"/>
+
+					<xsd:element minOccurs="0" name="PurchaseAdvicePayouts" nillable="true" type="tns:ArrayOfPurchaseAdvicePayout"/>
+
+					<xsd:element minOccurs="0" name="PurchasePriceAmount" nillable="true" type="xsd:decimal"/>
+
+					<xsd:element minOccurs="0" name="RateRequestStatus" nillable="true" type="xsd:string"/>
+
+					<xsd:element minOccurs="0" name="ReasonforBranchApproval" nillable="true" type="xsd:string"/>
+
+					<xsd:element minOccurs="0" name="ReasonforCorporateApproval" nillable="true" type="xsd:string"/>
+
+					<xsd:element minOccurs="0" name="ReconciledDiff" nillable="true" type="xsd:decimal"/>
+
+					<xsd:element minOccurs="0" name="RemainingBuydownFunds" nillable="true" type="xsd:decimal"/>
+
+					<xsd:element minOccurs="0" name="RequestComments" nillable="true" type="xsd:string"/>
+
+					<xsd:element minOccurs="0" name="RequestCurrentRateSetDate" nillable="true" type="xsd:dateTime"/>
+
+					<xsd:element minOccurs="0" name="RequestDaystoExtend" nillable="true" type="xsd:int"/>
+
+					<xsd:element minOccurs="0" name="RequestExtendedLockExpires" nillable="true" type="xsd:dateTime"/>
+
+					<xsd:element minOccurs="0" name="RequestFullfilledDateTime" nillable="true" type="xsd:string"/>
+
+					<xsd:element minOccurs="0" name="RequestImpoundType" nillable="true" type="xsd:string"/>
+
+					<xsd:element minOccurs="0" name="RequestImpoundWavied" nillable="true" type="xsd:string"/>
+
+					<xsd:element minOccurs="0" name="RequestLockCancellationComment" nillable="true" type="xsd:string"/>
+
+					<xsd:element minOccurs="0" name="RequestLockCancellationDate" nillable="true" type="xsd:dateTime"/>
+
+					<xsd:element minOccurs="0" name="RequestLockDate" nillable="true" type="xsd:dateTime"/>
+
+					<xsd:element minOccurs="0" name="RequestLockExpires" nillable="true" type="xsd:dateTime"/>
+
+					<xsd:element minOccurs="0" name="RequestLockExtendComment" nillable="true" type="xsd:string"/>
+
+					<xsd:element minOccurs="0" name="RequestLockExtendPriceAdjustment" nillable="true" type="xsd:decimal"/>
+
+					<xsd:element minOccurs="0" name="RequestMarginRate" nillable="true" type="xsd:decimal"/>
+
+					<xsd:element minOccurs="0" name="RequestMarginRateRequested" nillable="true" type="xsd:decimal"/>
+
+					<xsd:element minOccurs="0" name="RequestMarginSRPPaidOut" nillable="true" type="xsd:decimal"/>
+
+					<xsd:element minOccurs="0" name="RequestMarginTotalAdjustment" nillable="true" type="xsd:decimal"/>
+
+					<xsd:element minOccurs="0" name="RequestNumberOfDays" nillable="true" type="xsd:int"/>
+
+					<xsd:element minOccurs="0" name="RequestOriginalLockExpires" nillable="true" type="xsd:dateTime"/>
+
+					<xsd:element minOccurs="0" name="RequestPenaltyTerm" nillable="true" type="xsd:string"/>
+
+					<xsd:element minOccurs="0" name="RequestPrepayPenalty" nillable="true" type="xsd:string"/>
+
+					<xsd:element minOccurs="0" name="RequestPriceRate" nillable="true" type="xsd:decimal"/>
+
+					<xsd:element minOccurs="0" name="RequestPriceRateRequested" nillable="true" type="xsd:decimal"/>
+
+					<xsd:element minOccurs="0" name="RequestPriceTotalAdjustment" nillable="true" type="xsd:decimal"/>
+
+					<xsd:element minOccurs="0" name="RequestRate" nillable="true" type="xsd:decimal"/>
+
+					<xsd:element minOccurs="0" name="RequestRateRequested" nillable="true" type="xsd:decimal"/>
+
+					<xsd:element minOccurs="0" name="RequestRateSheetID" nillable="true" type="xsd:string"/>
+
+					<xsd:element minOccurs="0" name="RequestRateTotalAdjustment" nillable="true" type="xsd:decimal"/>
+
+					<xsd:element minOccurs="0" name="RequestStartingAdjPoint" nillable="true" type="xsd:decimal"/>
+
+					<xsd:element minOccurs="0" name="RequestStartingAdjRate" nillable="true" type="xsd:decimal"/>
+
+					<xsd:element minOccurs="0" name="RequestUnDiscountedRate" nillable="true" type="xsd:decimal"/>
+
+					<xsd:element minOccurs="0" name="RoundToNearest50" nillable="true" type="xsd:boolean"/>
+
+					<xsd:element minOccurs="0" name="SRP" nillable="true" type="xsd:decimal"/>
+
+					<xsd:element minOccurs="0" name="SRPAmount" nillable="true" type="xsd:decimal"/>
+
+					<xsd:element minOccurs="0" name="SecondSubordinateAmount" nillable="true" type="xsd:decimal"/>
+
+					<xsd:element minOccurs="0" name="SellSideAdjustments" nillable="true" type="tns:ArrayOfPriceAdjustment"/>
+
+					<xsd:element minOccurs="0" name="SellSideComments" nillable="true" type="xsd:string"/>
+
+					<xsd:element minOccurs="0" name="SellSideCurrentRateSetDate" nillable="true" type="xsd:dateTime"/>
+
+					<xsd:element minOccurs="0" name="SellSideDaystoExtend" nillable="true" type="xsd:int"/>
+
+					<xsd:element minOccurs="0" name="SellSideDiscountYSP" nillable="true" type="xsd:decimal"/>
+
+					<xsd:element minOccurs="0" name="SellSideExtendedLockExpires" nillable="true" type="xsd:dateTime"/>
+
+					<xsd:element minOccurs="0" name="SellSideInvestorStatus" nillable="true" type="xsd:string"/>
+
+					<xsd:element minOccurs="0" name="SellSideInvestorStatusDate" nillable="true" type="xsd:dateTime"/>
+
+					<xsd:element minOccurs="0" name="SellSideInvestorTradeNumber" nillable="true" type="xsd:string"/>
+
+					<xsd:element minOccurs="0" name="SellSideLoanProgram" nillable="true" type="xsd:string"/>
+
+					<xsd:element minOccurs="0" name="SellSideLockDate" nillable="true" type="xsd:dateTime"/>
+
+					<xsd:element minOccurs="0" name="SellSideLockExpires" nillable="true" type="xsd:dateTime"/>
+
+					<xsd:element minOccurs="0" name="SellSideLockExtendPriceAdjustment" nillable="true" type="xsd:decimal"/>
+
+					<xsd:element minOccurs="0" name="SellSideMarginNetSellRate" nillable="true" type="xsd:decimal"/>
+
+					<xsd:element minOccurs="0" name="SellSideMarginRate" nillable="true" type="xsd:decimal"/>
+
+					<xsd:element minOccurs="0" name="SellSideMarginTotalAdjustment" nillable="true" type="xsd:decimal"/>
+
+					<xsd:element minOccurs="0" name="SellSideMasterContractNumber" nillable="true" type="xsd:string"/>
+
+					<xsd:element minOccurs="0" name="SellSideNetSellPrice" nillable="true" type="xsd:decimal"/>
+
+					<xsd:element minOccurs="0" name="SellSideNetSellRate" nillable="true" type="xsd:decimal"/>
+
+					<xsd:element minOccurs="0" name="SellSideNumberOfDays" nillable="true" type="xsd:int"/>
+
+					<xsd:element minOccurs="0" name="SellSideOriginalLockExpires" nillable="true" type="xsd:dateTime"/>
+
+					<xsd:element minOccurs="0" name="SellSidePriceRate" nillable="true" type="xsd:decimal"/>
+
+					<xsd:element minOccurs="0" name="SellSidePriceTotalAdjustment" nillable="true" type="xsd:decimal"/>
+
+					<xsd:element minOccurs="0" name="SellSideRate" nillable="true" type="xsd:decimal"/>
+
+					<xsd:element minOccurs="0" name="SellSideRateSheetID" nillable="true" type="xsd:string"/>
+
+					<xsd:element minOccurs="0" name="SellSideRateTotalAdjustment" nillable="true" type="xsd:decimal"/>
+
+					<xsd:element minOccurs="0" name="SellSideRequestedBy" nillable="true" type="xsd:string"/>
+
+					<xsd:element minOccurs="0" name="SellSideSRP" nillable="true" type="xsd:decimal"/>
+
+					<xsd:element minOccurs="0" name="SellSideSRPPaidOut" nillable="true" type="xsd:decimal"/>
+
+					<xsd:element minOccurs="0" name="SellSideServicer" nillable="true" type="xsd:string"/>
+
+					<xsd:element minOccurs="0" name="SellSideServicingType" nillable="true" type="xsd:string"/>
+
+					<xsd:element minOccurs="0" name="SellSideTradeGuid" nillable="true" type="xsd:string"/>
+
+					<xsd:element minOccurs="0" name="SellSideTradeNumber" nillable="true" type="xsd:string"/>
+
+					<xsd:element minOccurs="0" name="SellerPaidMIPremium" nillable="true" type="xsd:decimal"/>
+
+					<xsd:element minOccurs="0" name="ServicingReleaseIndicator" nillable="true" type="xsd:boolean"/>
+
+					<xsd:element minOccurs="0" name="SubjectPropertyCity" nillable="true" type="xsd:string"/>
+
+					<xsd:element minOccurs="0" name="SubjectPropertyCounty" nillable="true" type="xsd:string"/>
+
+					<xsd:element minOccurs="0" name="SubjectPropertyPostalCode" nillable="true" type="xsd:string"/>
+
+					<xsd:element minOccurs="0" name="SubjectPropertyState" nillable="true" type="xsd:string"/>
+
+					<xsd:element minOccurs="0" name="SubjectPropertyStreetAddress" nillable="true" type="xsd:string"/>
+
+					<xsd:element minOccurs="0" name="TimeLockedWithInvestor" nillable="true" type="xsd:string"/>
+
+					<xsd:element minOccurs="0" name="TotalBuyPrice" nillable="true" type="xsd:decimal"/>
+
+					<xsd:element minOccurs="0" name="TotalPrice" nillable="true" type="xsd:decimal"/>
+
+					<xsd:element minOccurs="0" name="TotalSubordinateFinancing" nillable="true" type="xsd:decimal"/>
+
+					<xsd:element minOccurs="0" name="TwelveMonthMortgageRentalHistoryIndicator" nillable="true" type="xsd:boolean"/>
+
+					<xsd:element minOccurs="0" name="Type" nillable="true" type="xsd:string"/>
+
+					<xsd:element minOccurs="0" name="UsePoint" nillable="true" type="xsd:boolean"/>
+
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	
+	<xsd:element name="RateLock" nillable="true" type="tns:RateLock"/>
+	
+	<xsd:complexType name="ArrayOfPriceAdjustment">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" maxOccurs="unbounded" name="PriceAdjustment" nillable="true" type="tns:PriceAdjustment"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:element name="ArrayOfPriceAdjustment" nillable="true" type="tns:ArrayOfPriceAdjustment"/>
+	
+	<xsd:complexType name="PriceAdjustment">
+		<xsd:complexContent mixed="false">
+			<xsd:extension base="tns:EntityContractBase">
+				<xsd:sequence>
+					<xsd:element minOccurs="0" name="AdjustmentType" nillable="true" type="xsd:string"/>
+
+					<xsd:element minOccurs="0" name="Description" nillable="true" type="xsd:string"/>
+
+					<xsd:element minOccurs="0" name="Id" nillable="true" type="xsd:string"/>
+
+					<xsd:element minOccurs="0" name="PriceAdjustmentType" nillable="true" type="xsd:string"/>
+
+					<xsd:element minOccurs="0" name="Rate" nillable="true" type="xsd:decimal"/>
+
+					<xsd:element minOccurs="0" name="RateLockAdjustmentType" nillable="true" type="xsd:string"/>
+
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	
+	<xsd:element name="PriceAdjustment" nillable="true" type="tns:PriceAdjustment"/>
+	
+	<xsd:complexType name="ArrayOfLockRequestBorrower">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" maxOccurs="unbounded" name="LockRequestBorrower" nillable="true" type="tns:LockRequestBorrower"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:element name="ArrayOfLockRequestBorrower" nillable="true" type="tns:ArrayOfLockRequestBorrower"/>
+	
+	<xsd:complexType name="LockRequestBorrower">
+		<xsd:complexContent mixed="false">
+			<xsd:extension base="tns:EntityContractBase">
+				<xsd:sequence>
+					<xsd:element minOccurs="0" name="EquifaxScore" nillable="true" type="xsd:string"/>
+
+					<xsd:element minOccurs="0" name="ExperianScore" nillable="true" type="xsd:string"/>
+
+					<xsd:element minOccurs="0" name="FirstName" nillable="true" type="xsd:string"/>
+
+					<xsd:element minOccurs="0" name="Id" nillable="true" type="xsd:string"/>
+
+					<xsd:element minOccurs="0" name="IsEmpty" type="xsd:boolean"/>
+
+					<xsd:element minOccurs="0" name="LastName" nillable="true" type="xsd:string"/>
+
+					<xsd:element minOccurs="0" name="LrbIndex" type="xsd:int"/>
+
+					<xsd:element minOccurs="0" name="SSN" nillable="true" type="xsd:string"/>
+
+					<xsd:element minOccurs="0" name="TransUnionScore" nillable="true" type="xsd:string"/>
+
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	
+	<xsd:element name="LockRequestBorrower" nillable="true" type="tns:LockRequestBorrower"/>
+	
+	<xsd:complexType name="ArrayOfPurchaseAdvicePayout">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" maxOccurs="unbounded" name="PurchaseAdvicePayout" nillable="true" type="tns:PurchaseAdvicePayout"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:element name="ArrayOfPurchaseAdvicePayout" nillable="true" type="tns:ArrayOfPurchaseAdvicePayout"/>
+	
+	<xsd:complexType name="PurchaseAdvicePayout">
+		<xsd:complexContent mixed="false">
+			<xsd:extension base="tns:EntityContractBase">
+				<xsd:sequence>
+					<xsd:element minOccurs="0" name="Amount" nillable="true" type="xsd:decimal"/>
+
+					<xsd:element minOccurs="0" name="Description" nillable="true" type="xsd:string"/>
+
+					<xsd:element minOccurs="0" name="DiffAmount" nillable="true" type="xsd:decimal"/>
+
+					<xsd:element minOccurs="0" name="ExpectedAmount" nillable="true" type="xsd:decimal"/>
+
+					<xsd:element minOccurs="0" name="Id" nillable="true" type="xsd:string"/>
+
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	
+	<xsd:element name="PurchaseAdvicePayout" nillable="true" type="tns:PurchaseAdvicePayout"/>
+	
+	<xsd:complexType name="LockLoanRateResponseType">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" name="Message" nillable="true" type="xsd:string"/>
+			<xsd:element minOccurs="0" name="Status" nillable="true" type="xsd:string"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="LockLoanRateRequestType">
+		<xsd:sequence>
+			<xsd:element name="LoanId" type="tns:guid"/>
+			<xsd:element name="RateLock" nillable="true" type="tns:RateLock"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	
+		
+	<xsd:complexType name="GetLoanMIRequestType">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" name="Format" type="tns:PayloadFormatType"/>
+			<xsd:element minOccurs="0" name="LoanData" nillable="true" type="xsd:string"/>
+			<xsd:element minOccurs="0" name="LoanId" type="tns:guid"/>
+			<xsd:element minOccurs="0" name="Version" nillable="true" type="xsd:string"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="GetLoanMIResponseType">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" maxOccurs="unbounded" name="Item" nillable="true" type="tns:MortgageInsuranceGetTemplateResponse"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="MortgageInsuranceGetTemplateResponse">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" name="Cutoff" type="xsd:double"/>
+			<xsd:element minOccurs="0" name="Id" type="xsd:int"/>
+			<xsd:element minOccurs="0" name="Monthly1st" type="xsd:double"/>
+			<xsd:element minOccurs="0" name="Monthly2nd" type="xsd:double"/>
+			<xsd:element minOccurs="0" name="Months1st" type="xsd:int"/>
+			<xsd:element minOccurs="0" name="Months2nd" type="xsd:int"/>
+			<xsd:element minOccurs="0" name="Premium1st" type="xsd:double"/>
+			<xsd:element minOccurs="0" name="Scenario" nillable="true" type="xsd:string"/>
+			<xsd:element minOccurs="0" name="Subsequent" type="xsd:double"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="CompleteLoanMilestoneRequestType">
+		<xsd:sequence>
+			<xsd:element name="LoanId" nillable="true" type="xsd:string"/>
+			<xsd:element minOccurs="0" name="NextMilestoneUserName" nillable="true" type="xsd:string"/>
+			<xsd:element name="UserType" type="tns:NextMilestoneUserType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:element name="NextMilestoneUserType" nillable="true" type="tns:NextMilestoneUserType" />
+	
+	<xsd:complexType name="CompleteLoanMilestoneResponseType">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" name="ValidationError" nillable="true" type="tns:MilestoneValidationError"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="MilestoneValidationError">
+		<xsd:sequence>
+		    <xsd:element minOccurs="0" name="FieldValidationErrors" nillable="true" type="tns:ArrayListOfFieldValidationError"/>
+			<xsd:element minOccurs="0" name="NextMilestoneUser" nillable="true" type="xsd:string"/>
+			<xsd:element minOccurs="0" name="RequiredDocs" nillable="true" type="tns:ArrayListOfstring"/>
+			<xsd:element minOccurs="0" name="RequiredFields" nillable="true" type="tns:ArrayListOfstring"/>
+			<xsd:element minOccurs="0" name="RequiredTasks" nillable="true" type="tns:ArrayListOfstring"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="ArrayListOfFieldValidationError">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" maxOccurs="unbounded" name="Item" nillable="true" type="tns:FieldValidationError"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:element name="ArrayListOfFieldValidationError" nillable="true" type="tns:ArrayListOfFieldValidationError"/>
+	
+	<xsd:complexType name="FieldValidationError">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" name="PrerequisiteFieldsNotCompleted" nillable="true" type="tns:ArrayListOfstring" />
+			<xsd:element minOccurs="0" name="ValidValues" nillable="true" type="tns:ArrayListOfstring"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="FieldValidationError" nillable="true" type="tns:FieldValidationError"/>
+	
+	<xsd:complexType name="LockLoanRequestType">
+		<xsd:sequence>
+			<xsd:element name="LoanId" type="tns:guid"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="LockLoanResponseType">
+		<xsd:sequence>
+			<xsd:element name="Status" nillable="true" type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="UnlockLoanRequestType">
+		<xsd:sequence>
+			<xsd:element name="LoanId" type="tns:guid"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+    <xsd:complexType name="UnlockLoanResponseType">
+		<xsd:sequence>
+			<xsd:element name="Status" nillable="true" type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	
+	<xsd:complexType name="ImportLoanRequestType">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" name="EncompassLoanGuid" type="tns:guid" />
+			<xsd:element name="FileData" nillable="true" type="xsd:string" />
+			<xsd:element name="Format" nillable="true" type="xsd:string" />
+			<xsd:element minOccurs="0" name="LoanFolder" nillable="true" type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="ImportLoanResponseType">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" name="EncompassLoanGuid" type="tns:guid" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="ArchiveLoanRequestType">
+		<xsd:sequence>
+			<xsd:element name="Action" nillable="true" type="xsd:string" />
+			<xsd:element name="EncompassLoanGuid" type="tns:guid" />
+			<xsd:element name="FileData" nillable="true" type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="ArchiveLoanResponseType">
+		<xsd:sequence>
+			<xsd:element name="Status" nillable="true" type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="DeleteLoanRequestType">
+		<xsd:sequence>
+			<xsd:element name="IsExternalOrganization" nillable="true" type="xsd:boolean" />
+			<xsd:element name="LoanGuids" type="tns:ArrayOfGuidType" />
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="ArrayOfGuidType">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" maxOccurs="unbounded" name="LoanGuid" nillable="true" type="tns:guid" />			
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="DeleteLoanResponseType">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" name="Result" type="xsd:boolean" />
+		</xsd:sequence>
+	</xsd:complexType>
+	
+    <xsd:complexType name="GetLoanPropertiesInfoRequestType">
+    	<xsd:sequence>
+			<xsd:element name="IsExternalOrganization" type="xsd:boolean" />
+			<xsd:element name="LoanGuid" type="tns:guid" />
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="GetLoanPropertiesInfoResponseType">
+    	<xsd:sequence>
+			<xsd:element minOccurs="0" name="LoanPropertiesInfo" nillable="true" type="tns:LoanPropertiesInfo" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="LoanPropertiesInfo">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" name="Identity" nillable="true" type="tns:LoanIdentity" />
+			<xsd:element minOccurs="0" name="Size" type="xsd:long" />
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:element name="LoanPropertiesInfo" nillable="true" type="tns:LoanPropertiesInfo" />
+	<xsd:complexType name="LoanIdentity">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" name="Guid" nillable="true" type="xsd:string" />
+			<xsd:element minOccurs="0" name="LoanFolder" nillable="true" type="xsd:string" />
+			<xsd:element minOccurs="0" name="LoanName" nillable="true" type="xsd:string" />
+			<xsd:element minOccurs="0" name="XrefId" type="xsd:int" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="LoanIdentity" nillable="true" type="tns:LoanIdentity" />
+	
+	<xsd:complexType name="MoveLoansRequestType">
+		<xsd:sequence>
+			<xsd:element minOccurs="1" maxOccurs="1" name="IsExternalOrganization" type="xsd:boolean" />
+			<xsd:element minOccurs="1" maxOccurs="1" name="LoanGuids" type="tns:GuidType" />
+			<xsd:element minOccurs="1" maxOccurs="1" name="TargetFolderName" type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="GuidType">
+		<xsd:sequence>
+			<xsd:element minOccurs="1" maxOccurs="unbounded" name="guid" type="tns:guid" />
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="MoveLoansResponseType">
+		<xsd:sequence>
+			<xsd:element minOccurs="1" maxOccurs="1" name="Result" type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>
+	
+    <xsd:complexType name="ExportLoanRequestType">
+		<xsd:sequence>
+			<xsd:element name="EncompassLoanGuid" type="tns:guid" />
+			<xsd:element name="Format" nillable="true" type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="ExportLoanResponseType">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" name="LoanData" nillable="true" type="xsd:string" />
+	   </xsd:sequence>
+	</xsd:complexType>
+	
+</xsd:schema>

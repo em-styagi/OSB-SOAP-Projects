@@ -1,0 +1,67 @@
+<wsdl:definitions name="FieldSearch" targetNamespace="http://www.elliemae.com/services/fieldsearch" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.elliemae.com/services/fieldsearch" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:sec="http://www.elliemae.com/services/security" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+	<wsdl:types>
+		<xsd:schema targetNamespace="http://www.elliemae.com/services/fieldsearch" elementFormDefault="qualified">
+			<xsd:include schemaLocation="../../xsd/Services/FieldSearchSvc.xsd"/>
+			<xsd:import schemaLocation="../../../../../Security_SOAP_v1/Shared/SecuritySvc.xsd" namespace="http://www.elliemae.com/services/security"/>
+		</xsd:schema>
+	</wsdl:types>
+
+	<wsdl:message name="LookupFieldsRequestMsg">
+		<wsdl:part element="tns:LookupFieldsRequest" name="body"/>
+	</wsdl:message>
+	<wsdl:message name="LookupFieldsResponseMsg">
+		<wsdl:part element="tns:LookupFieldsResponse" name="body"/>
+	</wsdl:message>
+	<wsdl:message name="GetFieldDetailsRequestMsg"> 
+		<wsdl:part element="tns:GetFieldDetailsRequest" name="body"/> 
+	</wsdl:message> <wsdl:message name="GetFieldDetailsResponseMsg"> 
+		<wsdl:part element="tns:GetFieldDetailsResponse" name="body"/> 
+	</wsdl:message>
+	<wsdl:message name="SecurityContextHeader">
+		<wsdl:part name="header" element="sec:SecurityContext"/>
+	</wsdl:message>
+
+	<wsdl:portType name="FieldSearchSvcPort">
+		<wsdl:operation name="LookupFields">
+			<wsdl:input message="tns:LookupFieldsRequestMsg"/>
+			<wsdl:output message="tns:LookupFieldsResponseMsg"/>
+		</wsdl:operation>
+		<wsdl:operation name="GetFieldDetails"> 
+			<wsdl:input message="tns:GetFieldDetailsRequestMsg"/> 
+			<wsdl:output message="tns:GetFieldDetailsResponseMsg"/> 
+		</wsdl:operation>
+	</wsdl:portType>
+
+	<wsdl:binding name="FieldSearchSvcPortSOAP11Binding" type="tns:FieldSearchSvcPort">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="LookupFields">
+			<soap:operation style="document" soapAction="http://www.elliemae.com/services/fieldsearch/LookupFields"/>
+			<wsdl:input>
+				<soap:header message="tns:SecurityContextHeader" part="header" use="literal"/>
+				<soap:body use="literal" parts="body"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" parts="body"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetFieldDetails"> 
+			<soap:operation style="document" soapAction="http://www.elliemae.com/services/fieldsearch/GetFieldDetails"/> 
+			<wsdl:input> 
+				<soap:header message="tns:SecurityContextHeader" part="header" use="literal"/> 
+				<soap:body use="literal" parts="body"/> 
+			</wsdl:input> 
+			<wsdl:output> 
+				<soap:body use="literal" parts="body"/> 
+			</wsdl:output> 
+		</wsdl:operation>
+
+	</wsdl:binding>
+
+	<wsdl:service name="FieldSearchService">
+		<wsdl:port name="BasicHttpBinding_IFieldSearchService" binding="tns:FieldSearchSvcPortSOAP11Binding">
+			<soap:address location="http://encompass-ib.qa.dco.elmae:11001/encompass_v1/fields/search"/>
+		</wsdl:port>
+	</wsdl:service>
+
+</wsdl:definitions>

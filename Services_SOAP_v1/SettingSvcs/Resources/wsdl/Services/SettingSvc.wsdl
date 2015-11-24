@@ -1,0 +1,101 @@
+<wsdl:definitions name="UserService" targetNamespace="http://www.elliemae.com/services/settingservice" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.elliemae.com/services/settingservice" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:sec="http://www.elliemae.com/services/security">
+	<wsdl:types>
+		<xsd:schema targetNamespace="http://www.elliemae.com/services/settingservice" elementFormDefault="qualified">
+			<xsd:include schemaLocation="../../xsd/Services/SettingService.xsd"/>
+			<xsd:import schemaLocation="../../../../../Security_SOAP_v1/Shared/SecuritySvc.xsd" namespace="http://www.elliemae.com/services/security"/>
+		</xsd:schema>
+	</wsdl:types>
+	<wsdl:message name="GetSettingRequest">
+		<wsdl:part element="tns:GetSettingRequest" name="body"/>
+	</wsdl:message>
+	<wsdl:message name="GetSettingResponse">
+		<wsdl:part element="tns:GetSettingResponse" name="body"/>
+	</wsdl:message>
+	<wsdl:message name="GetProductPricingRequest">
+		<wsdl:part element="tns:GetProductPricingRequest" name="body"/>
+	</wsdl:message>
+	<wsdl:message name="GetProductPricingResponse">
+		<wsdl:part element="tns:GetProductPricingResponse" name="body"/>
+	</wsdl:message>
+	<wsdl:message name="GetExternalCompanyNamesRequestMsg">
+		<wsdl:part element="tns:GetExternalCompanyNamesRequest" name="body"/>
+	</wsdl:message>
+	<wsdl:message name="GetExternalCompanyNamesResponseMsg">
+		<wsdl:part element="tns:GetExternalCompanyNamesResponse" name="body"/>
+	</wsdl:message>
+	<wsdl:message name="GetExportServiceSettingsRequestMsg">
+		<wsdl:part element="tns:GetExportServiceSettingsRequest" name="body"/>
+	</wsdl:message>
+	<wsdl:message name="GetExportServiceSettingsResponseMsg">
+		<wsdl:part element="tns:GetExportServiceSettingsResponse" name="body"/>
+	</wsdl:message>
+	<wsdl:message name="SecurityContextHeader">
+		<wsdl:part name="header" element="sec:SecurityContext"/>
+	</wsdl:message>
+	<wsdl:portType name="SettingService">
+		<wsdl:operation name="GetSetting">
+			<wsdl:input message="tns:GetSettingRequest"/>
+			<wsdl:output message="tns:GetSettingResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="GetProductPricing">
+			<wsdl:input message="tns:GetProductPricingRequest"/>
+			<wsdl:output message="tns:GetProductPricingResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="GetExternalCompanyNames">
+			<wsdl:input message="tns:GetExternalCompanyNamesRequestMsg"/>
+			<wsdl:output message="tns:GetExternalCompanyNamesResponseMsg"/>
+		</wsdl:operation>
+		<wsdl:operation name="GetExportServiceSettings">
+			<wsdl:input message="tns:GetExportServiceSettingsRequestMsg"/>
+			<wsdl:output message="tns:GetExportServiceSettingsResponseMsg"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="SettingServiceSOAP" type="tns:SettingService">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="GetSetting">
+			<soap:operation soapAction="http://www.elliemae.com/services/SettingSvc/GetSetting"/>
+			<wsdl:input>
+				<soap:header message="tns:SecurityContextHeader" part="header" use="literal"/>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetProductPricing">
+			<soap:operation soapAction="http://www.elliemae.com/services/SettingSvc/GetProductPricing"/>
+			<wsdl:input>
+				<soap:header message="tns:SecurityContextHeader" part="header" use="literal"/>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetExternalCompanyNames">
+			<soap:operation soapAction="http://www.elliemae.com/services/metadata/GetExternalCompanyNames"/>
+			<wsdl:input>
+				<soap:header message="tns:SecurityContextHeader" part="header" use="literal"/>
+				<soap:body use="literal" parts="body"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" parts="body"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetExportServiceSettings">
+			<soap:operation soapAction="http://www.elliemae.com/services/metadata/GetExportServiceSettings"/>
+			<wsdl:input>
+				<soap:header message="tns:SecurityContextHeader" part="header" use="literal"/>
+				<soap:body use="literal" parts="body"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" parts="body"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="SettingService">
+		<wsdl:port binding="tns:SettingServiceSOAP" name="SettingServiceSOAP">
+			<soap:address location="http://encompass-ia.qa.dco.elmae:11001/encompass_v1/users"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

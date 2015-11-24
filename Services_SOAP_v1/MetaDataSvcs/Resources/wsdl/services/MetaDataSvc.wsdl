@@ -1,0 +1,116 @@
+<wsdl:definitions name="MetaDataSvc" targetNamespace="http://www.elliemae.com/services/metadata" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.elliemae.com/services/metadata" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:sec="http://www.elliemae.com/services/security" xmlns:col="http://www.elliemae.com/services/metadata/pipeline">
+	
+	<wsdl:types>
+		<xsd:schema targetNamespace="http://www.elliemae.com/services/metadata" elementFormDefault="qualified">
+			<xsd:include schemaLocation="../../xsd/services/MetaDataSvc.xsd"/>
+			<xsd:import schemaLocation="../../xsd/services/PipelineColumns.xsd" namespace="http://www.elliemae.com/services/metadata/pipeline"/>
+			<xsd:import schemaLocation="../../xsd/services/LoanReportFields.xsd" namespace="http://www.elliemae.com/services/metadata/pipeline"/>
+		</xsd:schema>
+	</wsdl:types>
+
+	<wsdl:message name="GetFieldInfoRequestMsg">
+		<wsdl:part element="tns:GetFieldInfoRequest" name="GetFieldInfoRequest"/>
+	</wsdl:message>
+	<wsdl:message name="GetFieldInfoResponseMsg">
+		<wsdl:part element="tns:GetFieldInfoResponse" name="GetFieldInfoResponse"/>
+	</wsdl:message>
+
+	<wsdl:message name="GetCurrentVersionRequestMsg">
+		<wsdl:part element="tns:GetCurrentVersionRequest" name="GetCurrentVersionRequest"/>
+	</wsdl:message>
+	<wsdl:message name="GetCurrentVersionResponseMsg">
+		<wsdl:part element="tns:GetCurrentVersionResponse" name="GetCurrentVersionResponse"/>
+	</wsdl:message>
+	
+
+<!-- Get All Customizable Pipeline Columns -->
+	<wsdl:message name="GetPipelineColumnsRequestMsg">
+		<wsdl:part element="col:GetPipelineColumnsRequest" name="body"/>
+	</wsdl:message>
+	<wsdl:message name="GetPipelineColumnsResponseMsg">
+		<wsdl:part element="col:GetPipelineColumnsResponse" name="body"/>
+	</wsdl:message>
+	<wsdl:message name="GetPipelineLoanReportFieldDefsRequestMsg">
+		<wsdl:part element="col:GetPipelineLoanReportFieldDefsRequest" name="body"/>
+	</wsdl:message>
+	<wsdl:message name="GetPipelineLoanReportFieldDefsResponseMsg">
+		<wsdl:part element="col:GetPipelineLoanReportFieldDefsResponse" name="body"/>
+	</wsdl:message>
+	
+	
+	<wsdl:message name="SecurityContextHeader">
+		<wsdl:part name="header" element="sec:SecurityContext"/>
+	</wsdl:message>
+
+	<wsdl:portType name="MetaDataSvcPort">
+		<wsdl:operation name="GetFieldInfo">
+			<wsdl:input message="tns:GetFieldInfoRequestMsg"/>
+			<wsdl:output message="tns:GetFieldInfoResponseMsg"/>
+		</wsdl:operation>
+		<wsdl:operation name="GetCurrentVersion">
+			<wsdl:input message="tns:GetCurrentVersionRequestMsg"/>
+			<wsdl:output message="tns:GetCurrentVersionResponseMsg"/>
+		</wsdl:operation>
+		<wsdl:operation name="GetPipelineColumns">
+			<wsdl:input message="tns:GetPipelineColumnsRequestMsg"/>
+			<wsdl:output message="tns:GetPipelineColumnsResponseMsg"/>
+		</wsdl:operation>
+		<wsdl:operation name="GetPipelineLoanReportFieldDefs">
+			<wsdl:input message="tns:GetPipelineLoanReportFieldDefsRequestMsg"/>
+			<wsdl:output message="tns:GetPipelineLoanReportFieldDefsResponseMsg"/>
+		</wsdl:operation>
+	</wsdl:portType>
+
+	<wsdl:binding name="MetaDataSvcSOAP" type="tns:MetaDataSvcPort">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="GetFieldInfo">
+			<soap:operation soapAction="http://www.elliemae.com/services/metadata/GetFieldInfo"/>
+			<wsdl:input>
+				<soap:header message="tns:SecurityContextHeader" part="header" use="literal"/>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetCurrentVersion">
+			<soap:operation soapAction="http://www.elliemae.com/services/metadata/GetCurrentVersion"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetPipelineColumns">
+			<soap:operation soapAction="http://www.elliemae.com/services/metadata/GetPipelineColumns"/>
+			<wsdl:input>
+				<soap:header message="tns:SecurityContextHeader" part="header" use="literal"/>
+				<soap:body use="literal" parts="body"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" parts="body"/>
+			</wsdl:output>
+		</wsdl:operation>	
+		
+		<wsdl:operation name="GetPipelineLoanReportFieldDefs">
+			<soap:operation soapAction="http://www.elliemae.com/services/metadata/GetPipelineLoanReportFieldDefs"/>
+			<wsdl:input>
+				<soap:header message="tns:SecurityContextHeader" part="header" use="literal"/>
+				<soap:body use="literal" parts="body"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" parts="body"/>
+			</wsdl:output>
+		</wsdl:operation>
+			
+	</wsdl:binding>
+	
+	
+
+	<wsdl:service name="MetaDataSvc">
+		<wsdl:port binding="tns:MetaDataSvcSOAP" name="MetaDataSvcSOAP">
+			<soap:address location="http://encompass-ib.qa.dco.elmae:11001/encompass_v1/metadata"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

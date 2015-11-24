@@ -1,0 +1,70 @@
+<wsdl:definitions name="SessionSvc" targetNamespace="http://www.elliemae.com/services/session" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.elliemae.com/services/session" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<wsdl:types>
+		<xsd:schema targetNamespace="http://www.elliemae.com/services/session" elementFormDefault="unqualified">
+			<xsd:include schemaLocation="../../xsd/Services/SessionSvc.xsd"/>
+		</xsd:schema>
+	</wsdl:types>
+
+	<wsdl:message name="CreateSessionRequestMsg">
+		<wsdl:part name="body" element="tns:CreateSessionRequest"/>
+	</wsdl:message>
+	<wsdl:message name="CreateSessionResponseMsg">
+		<wsdl:part name="body" element="tns:CreateSessionResponse"/>
+	</wsdl:message>
+    <wsdl:message name="GetUserSessionRequestMsg">
+		<wsdl:part name="body" element="tns:GetUserSessionRequest"/>
+	</wsdl:message>
+	<wsdl:message name="GetUserSessionResponseMsg">
+		<wsdl:part name="body" element="tns:GetUserSessionResponse"/>
+	</wsdl:message>
+	<wsdl:message name="DestroySessionRequestMsg">
+		<wsdl:part name="body" element="tns:DestroySessionRequest"/>
+	</wsdl:message>
+	<wsdl:message name="DestroySessionResponseMsg"/>
+	
+	<wsdl:portType name="SessionServicesPort">
+		<wsdl:operation name="CreateSession">
+			<wsdl:input message="tns:CreateSessionRequestMsg"/>
+			<wsdl:output message="tns:CreateSessionResponseMsg"/>
+		</wsdl:operation>
+		<wsdl:operation name="GetUserSession">
+			<wsdl:input message="tns:GetUserSessionRequestMsg"/>
+			<wsdl:output message="tns:GetUserSessionResponseMsg"/>
+		</wsdl:operation>
+	    <wsdl:operation name="DestroySession">
+			<wsdl:input message="tns:DestroySessionRequestMsg"/>
+			<wsdl:output message="tns:DestroySessionResponseMsg"/>
+		</wsdl:operation>
+	</wsdl:portType>
+
+	<wsdl:binding name="SessionServicesSOAP11Binding" type="tns:SessionServicesPort">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="CreateSession">
+			<soap:operation soapAction="http://www.elliemae.com/encompass/services/session/CreateSession" style="document"/>
+			<wsdl:input>
+				<soap:body use="literal" parts="body"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" parts="body"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetUserSession">
+			<soap:operation soapAction="http://www.elliemae.com/encompass/services/session/GetUserSession" style="document"/>
+			<wsdl:input>
+				<soap:body use="literal" parts="body"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" parts="body"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="DestroySession">
+			<soap:operation soapAction="http://www.elliemae.com/encompass/services/session/DestroySession" style="document"/>
+			<wsdl:input>
+				<soap:body use="literal" parts="body"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+</wsdl:definitions>

@@ -1,0 +1,103 @@
+<wsdl:definitions name="LoanTradeSvc" targetNamespace="http://www.elliemae.com/services/trade/loan" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.elliemae.com/services/trade/loan" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:sec="http://www.elliemae.com/services/security">
+	<wsdl:types>
+		<xsd:schema targetNamespace="http://www.elliemae.com/services/trade/loan" elementFormDefault="qualified">
+			<xsd:include schemaLocation="../../xsd/services/LoanTradeSvc.xsd"/>
+			<xsd:import schemaLocation="../../../../../Security_SOAP_v1/Shared/SecuritySvc.xsd" namespace="http://www.elliemae.com/services/security"/>
+		</xsd:schema>
+	</wsdl:types>
+	<wsdl:message name="GetLoanTradeRequest">
+		<wsdl:part name="GetLoanTradeRequest" element="tns:GetLoanTradeRequest"/>
+	</wsdl:message>
+	<wsdl:message name="GetLoanTradeResponse">
+		<wsdl:part name="GetLoanTradeResponse" element="tns:GetLoanTradeResponse"/>
+	</wsdl:message>
+	<wsdl:message name="CreateLoanTradeRequest">
+		<wsdl:part name="CreateLoanTradeRequest" element="tns:CreateLoanTradeRequest"/>
+	</wsdl:message>
+	<wsdl:message name="CreateLoanTradeResponse">
+		<wsdl:part name="CreateLoanTradeResponse" element="tns:CreateLoanTradeResponse"/>
+	</wsdl:message>
+	<wsdl:message name="DeleteLoanTradeRequest">
+		<wsdl:part name="DeleteLoanTradeRequest" element="tns:DeleteLoanTradeRequest"/>
+	</wsdl:message>
+	<wsdl:message name="DeleteLoanTradeResponse">
+		<wsdl:part name="DeleteLoanTradeResponse" element="tns:DeleteLoanTradeResponse"/>
+	</wsdl:message>
+	<wsdl:message name="UpdateLoanTradeRequest">
+		<wsdl:part name="UpdateLoanTradeRequest" element="tns:UpdateLoanTradeRequest"/>
+	</wsdl:message>
+	<wsdl:message name="UpdateLoanTradeResponse">
+		<wsdl:part name="UpdateLoanTradeResponse" element="tns:UpdateLoanTradeResponse"/>
+	</wsdl:message>
+	<wsdl:message name="SecurityContext_Header">
+		<wsdl:part name="header" element="sec:SecurityContext"/>
+	</wsdl:message>
+
+	<wsdl:portType name="LoanTradeServicePort">
+		<wsdl:operation name="GetLoanTrade">
+			<wsdl:input name="GetLoanTradeRequest" message="tns:GetLoanTradeRequest"/>
+			<wsdl:output name="GetLoanTradeResponse" message="tns:GetLoanTradeResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="CreateLoanTrade">
+			<wsdl:input name="CreateLoanTradeRequest" message="tns:CreateLoanTradeRequest"/>
+			<wsdl:output name="CreateLoanTradeResponse" message="tns:CreateLoanTradeResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="DeleteLoanTrade">
+			<wsdl:input name="DeleteLoanTradeRequest" message="tns:DeleteLoanTradeRequest"/>
+			<wsdl:output name="DeleteLoanTradeResponse" message="tns:DeleteLoanTradeResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="UpdateLoanTrade">
+			<wsdl:input name="UpdateLoanTradeRequest" message="tns:UpdateLoanTradeRequest"/>
+			<wsdl:output name="UpdateLoanTradeResponse" message="tns:UpdateLoanTradeResponse"/>
+		</wsdl:operation>
+	</wsdl:portType>
+
+	<wsdl:binding name="LoanTradeServiceSOAP11Binding" type="tns:LoanTradeServicePort">
+		<soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="GetLoanTrade">
+			<soap:operation soapAction="http://www.elliemae.com/services/trade/loan/GetLoanTrade" style="document"/>
+			<wsdl:input name="GetLoanTradeRequest">
+				<soap:header message="tns:SecurityContext_Header" part="header" use="literal"/>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="GetLoanTradeResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="CreateLoanTrade">
+			<soap:operation soapAction="http://www.elliemae.com/services/trade/loan/CreateLoanTrade" style="document"/>
+			<wsdl:input name="CreateLoanTradeRequest">
+				<soap:header message="tns:SecurityContext_Header" part="header" use="literal"/>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="CreateLoanTradeResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="DeleteLoanTrade">
+			<soap:operation soapAction="http://www.elliemae.com/services/trade/loan/DeleteLoanTrade" style="document"/>
+			<wsdl:input name="DeleteLoanTradeRequest">
+				<soap:header message="tns:SecurityContext_Header" part="header" use="literal"/>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="DeleteLoanTradeResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="UpdateLoanTrade">
+			<soap:operation soapAction="http://www.elliemae.com/services/trade/loan/UpdateLoanTrade" style="document"/>
+			<wsdl:input name="UpdateLoanTradeRequest">
+				<soap:header message="tns:SecurityContext_Header" part="header" use="literal"/>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="UpdateLoanTradeResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="LoanTradeService">
+		<wsdl:port name="LoanTradeServicePort" binding="tns:LoanTradeServiceSOAP11Binding">
+			<soap:address location="http://encompass-ia.dev.dco.elmae:11001/encompass_v1/trade/loan"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

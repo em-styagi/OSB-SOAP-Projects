@@ -1,0 +1,100 @@
+<wsdl:definitions targetNamespace="http://www.elliemae.com/services/entitlements" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.elliemae.com/services/entitlements" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:sec="http://www.elliemae.com/services/security" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+
+	<wsdl:types>
+		<xsd:schema targetNamespace="http://www.elliemae.com/services/entitlements" elementFormDefault="qualified">
+			<xsd:include schemaLocation="../../xsd/Services/UserEntitlementSvc.xsd"/>
+			<xsd:import schemaLocation="../../../../../Security_SOAP_v1/Shared/SecuritySvc.xsd" namespace="http://www.elliemae.com/services/security"/>
+		</xsd:schema>
+	</wsdl:types>
+   
+	<wsdl:message name="GetUserAccessRightsRequestMsg">
+		<wsdl:part name="body" element="tns:GetUserAccessRightsRequest"/>
+	</wsdl:message>
+	
+	<wsdl:message name="GetUserAccessRights_Headers">
+		<wsdl:part name="header" element="sec:SecurityContext"/>
+	</wsdl:message>
+	
+	<wsdl:message name="GetUserAccessRightsResponseMsg">
+		<wsdl:part name="body" element="tns:GetUserAccessRightsResponse"/>
+	</wsdl:message> 
+	
+    <wsdl:message name="GetUserPersonaRightsRequestMsg">
+		<wsdl:part name="body" element="tns:GetUserPersonaRightsRequest"/>
+	</wsdl:message>
+	
+	<wsdl:message name="GetUserPersonaRights_Headers">
+		<wsdl:part name="header" element="sec:SecurityContext"/>
+	</wsdl:message>
+	
+	<wsdl:message name="GetUserPersonaRightsResponseMsg">
+		<wsdl:part name="body" element="tns:GetUserPersonaRightsResponse"/>
+	</wsdl:message> 
+	<wsdl:message name="GetUserGroupsRequestMsg">
+		<wsdl:part name="body" element="tns:GetUserGroupsRequest"/>
+	</wsdl:message>
+	
+	<wsdl:message name="GetUserGroups_Headers">
+		<wsdl:part name="header" element="sec:SecurityContext"/>
+	</wsdl:message>
+	
+	<wsdl:message name="GetUserGroupsResponseMsg">
+		<wsdl:part name="body" element="tns:GetUserGroupsResponse"/>
+	</wsdl:message>
+	
+	<wsdl:portType name="UserEntitlementSvcPort">
+		<wsdl:operation name="GetUserAccessRights">
+			<wsdl:input message="tns:GetUserAccessRightsRequestMsg"/>
+			<wsdl:output message="tns:GetUserAccessRightsResponseMsg"/>
+		</wsdl:operation>
+		<wsdl:operation name="GetUserPersonaRights">
+			<wsdl:input message="tns:GetUserPersonaRightsRequestMsg"/>
+			<wsdl:output message="tns:GetUserPersonaRightsResponseMsg"/>
+		</wsdl:operation>
+		<wsdl:operation name="GetUserGroups">
+			<wsdl:input message="tns:GetUserGroupsRequestMsg"/>
+			<wsdl:output message="tns:GetUserGroupsResponseMsg"/>
+		</wsdl:operation>
+	</wsdl:portType>
+
+	<wsdl:binding name="UserEntitlementSvcPortSOAP11Binding" type="tns:UserEntitlementSvcPort">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="GetUserAccessRights">
+			<soap:operation style="document" soapAction="http://www.elliemae.com/services/entitlements/GetUserAccessRights"/>
+			<wsdl:input>
+			    <soap:header message="tns:GetUserAccessRights_Headers" part="header" use="literal"/>
+				<soap:body use="literal" parts="body"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" parts="body"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetUserPersonaRights">
+			<soap:operation style="document" soapAction="http://www.elliemae.com/services/entitlements/GetUserPersonaRights"/>
+			<wsdl:input>
+			    <soap:header message="tns:GetUserPersonaRights_Headers" part="header" use="literal"/>
+				<soap:body use="literal" parts="body"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" parts="body"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetUserGroups">
+			<soap:operation style="document" soapAction="http://www.elliemae.com/services/entitlements/GetUserGroups"/>
+			<wsdl:input>
+			    <soap:header message="tns:GetUserGroups_Headers" part="header" use="literal"/>
+				<soap:body use="literal" parts="body"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" parts="body"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	
+	<wsdl:service name="UserEntitlementSvc">
+		<wsdl:port name="BasicHttpBinding_IPlatformService" binding="tns:UserEntitlementSvcPortSOAP11Binding">
+			<soap:address location="http://encompass-ib.dev.dco.elmae:11001/encompass_v1/users/entitlements"/>
+		</wsdl:port>
+	</wsdl:service>
+
+</wsdl:definitions>

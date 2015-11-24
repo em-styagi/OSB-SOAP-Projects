@@ -1,0 +1,112 @@
+<wsdl:definitions name="eFolderSvc" targetNamespace="http://www.elliemae.com/services/efolder" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.elliemae.com/services/efolder" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<wsdl:types>
+		<xsd:schema targetNamespace="http://www.elliemae.com/services/efolder" elementFormDefault="qualified">
+			<xsd:include schemaLocation="../../xsd/Services/eFolderSvc.xsd"/>
+		</xsd:schema>
+	</wsdl:types>
+
+	<wsdl:message name="GetAttachmentFolderRequest">
+		<wsdl:part name="LoanGuid" element="tns:LoanGuid"/>
+	</wsdl:message>
+	<wsdl:message name="GetAttachmentFolderRequest_Headers">
+		<wsdl:part name="SecurityContext" element="tns:SecurityContext"/>
+	</wsdl:message>
+	<wsdl:message name="GetAttachmentFolderResponse">
+		<wsdl:part name="GetAttachmentFolderResponse" element="tns:GetAttachmentFolderResponse"/>
+	</wsdl:message>
+	<wsdl:message name="GetAttachmentPathRequest">
+		<wsdl:part name="GetAttachmentPathRequest" element="tns:GetAttachmentPathRequest"/>
+	</wsdl:message>
+	<wsdl:message name="GetAttachmentPathRequest_Headers">
+		<wsdl:part name="SecurityContext" element="tns:SecurityContext"/>
+	</wsdl:message>
+	<wsdl:message name="GetAttachmentPathResponse">
+		<wsdl:part name="GetAttachmentPathResponse" element="tns:GetAttachmentPathResponse"/>
+	</wsdl:message>
+	<wsdl:message name="AssignAttachmentRequest">
+		<wsdl:part name="AssignAttachmentRequest" element="tns:AssignAttachmentRequest"/>
+	</wsdl:message>
+	<wsdl:message name="AssignAttachmentRequest_Headers">
+		<wsdl:part name="SecurityContext" element="tns:SecurityContext"/>
+	</wsdl:message>
+	<wsdl:message name="AssignAttachmentResponse">
+		<wsdl:part name="AssignAttachmentResponse" element="tns:AssignAttachmentResponse"/>
+	</wsdl:message>
+		<wsdl:message name="GetDocumentLogListRequest">
+		<wsdl:part name="GetDocumentLogListRequest" element="tns:GetDocumentLogListRequest"/>
+	</wsdl:message>
+	<wsdl:message name="GetDocumentLogListRequest_Headers">
+		<wsdl:part name="SecurityContext" element="tns:SecurityContext"/>
+	</wsdl:message>
+	<wsdl:message name="GetDocumentLogListResponse">
+		<wsdl:part name="GetDocumentLogListResponse" element="tns:GetDocumentLogListResponse"/>
+	</wsdl:message>
+	
+	<wsdl:portType name="eFolderServicesPort">
+		<wsdl:operation name="GetAttachmentFolder">
+			<wsdl:input name="GetAttachmentFolderRequest" message="tns:GetAttachmentFolderRequest"/>
+			<wsdl:output name="GetAttachmentFolderResponse" message="tns:GetAttachmentFolderResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="GetAttachmentPath">
+			<wsdl:input name="GetAttachmentPathRequest" message="tns:GetAttachmentPathRequest"/>
+			<wsdl:output name="GetAttachmentPathResponse" message="tns:GetAttachmentPathResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="AssignAttachment">
+			<wsdl:input name="AssignAttachmentRequest" message="tns:AssignAttachmentRequest"/>
+			<wsdl:output name="AssignAttachmentResponse" message="tns:AssignAttachmentResponse"/>
+		</wsdl:operation>
+	    <wsdl:operation name="GetDocumentLogList">
+			<wsdl:input name="GetDocumentLogListRequest" message="tns:GetDocumentLogListRequest"/>
+			<wsdl:output name="GetDocumentLogListResponse" message="tns:GetDocumentLogListResponse"/>
+		</wsdl:operation>
+	</wsdl:portType>
+
+	<wsdl:binding name="eFolderServicesSOAP11Binding" type="tns:eFolderServicesPort">
+		<soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="GetAttachmentFolder">
+			<soap:operation soapAction="http://www.elliemae.com/services/efolder/GetAttachmentFolder" style="document"/>
+			<wsdl:input name="GetAttachmentFolderRequest">
+				<soap:header message="tns:GetAttachmentFolderRequest_Headers" part="SecurityContext" use="literal"/>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="GetAttachmentFolderResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetAttachmentPath">
+			<soap:operation soapAction="http://www.elliemae.com/services/efolder/GetAttachmentPath" style="document"/>
+			<wsdl:input name="GetAttachmentPathRequest">
+				<soap:header message="tns:GetAttachmentPathRequest_Headers" part="SecurityContext" use="literal"/>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="GetAttachmentPathResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="AssignAttachment">
+			<soap:operation soapAction="http://www.elliemae.com/services/efolder/AssignAttachment" style="document"/>
+			<wsdl:input name="AssignAttachmentRequest">
+				<soap:header message="tns:AssignAttachmentRequest_Headers" part="SecurityContext" use="literal"/>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="AssignAttachmentResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetDocumentLogList">
+			<soap:operation soapAction="http://www.elliemae.com/services/efolder/GetDocumentLogList" style="document"/>
+			<wsdl:input name="GetDocumentLogListRequest">
+				<soap:header message="tns:GetDocumentLogListRequest_Headers" part="SecurityContext" use="literal"/>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="GetDocumentLogListResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="eFolderService">
+		<wsdl:port name="eFolderServices" binding="tns:eFolderServicesSOAP11Binding">
+			<soap:address location="http://encompass-ia.dev.dco.elmae:11001/encompass_v1/loans/efolder"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

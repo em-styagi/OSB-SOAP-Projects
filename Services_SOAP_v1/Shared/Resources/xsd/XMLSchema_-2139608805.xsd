@@ -1,0 +1,354 @@
+<xs:schema elementFormDefault="qualified" targetNamespace="http://www.elliemae.com/encompass/platform" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.elliemae.com/encompass/platform">
+	<xs:import schemaLocation="XMLSchema_2088351738.xsd" namespace="http://schemas.datacontract.org/2004/07/Elli.EncompassPlatform.Common.DataContracts"/>
+	<xs:complexType name="PipelineColumnsGetRequest.PipelineColumnsGetRequestBody">
+		<xs:sequence/>
+	</xs:complexType>
+	<xs:element name="PipelineColumnsGetRequest.PipelineColumnsGetRequestBody" nillable="true" type="tns:PipelineColumnsGetRequest.PipelineColumnsGetRequestBody"/>
+	<xs:element name="PipelineColumnsGetRequest" nillable="true" type="tns:PipelineColumnsGetRequest.PipelineColumnsGetRequestBody"/>
+	<xs:complexType name="SecurityContext">
+		<xs:sequence>
+			<xs:element name="Created" nillable="true" type="xs:dateTime"/>
+			<xs:element name="Realm" nillable="true" type="xs:string"/>
+			<xs:element name="SessionId" nillable="true" type="xs:string"/>
+			<xs:element minOccurs="0" name="TokenData" nillable="true" type="xs:string">
+				<xs:annotation>
+					<xs:appinfo>
+						<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="TokenType" nillable="true" type="xs:string">
+				<xs:annotation>
+					<xs:appinfo>
+						<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="UserName" nillable="true" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="SecurityContext" nillable="true" type="tns:SecurityContext"/>
+	<xs:complexType name="PipelineColumnsGetResponse.PipelineColumnsGetResponseBody">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="PipelineFields" nillable="true" type="tns:ArrayOfPipelineField"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="PipelineColumnsGetResponse.PipelineColumnsGetResponseBody" nillable="true" type="tns:PipelineColumnsGetResponse.PipelineColumnsGetResponseBody"/>
+	<xs:complexType name="ArrayOfPipelineField">
+		<xs:sequence>
+			<xs:element minOccurs="0" maxOccurs="unbounded" name="PipelineField" nillable="true" type="tns:PipelineField"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ArrayOfPipelineField" nillable="true" type="tns:ArrayOfPipelineField"/>
+	<xs:complexType name="PipelineField">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="Header" nillable="true" type="xs:string">
+				<xs:annotation>
+					<xs:appinfo>
+						<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="Name" nillable="true" type="xs:string">
+				<xs:annotation>
+					<xs:appinfo>
+						<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="SortOrder" type="q1:SortOrder" xmlns:q1="http://schemas.datacontract.org/2004/07/Elli.EncompassPlatform.Common.DataContracts">
+				<xs:annotation>
+					<xs:appinfo>
+						<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="PipelineField" nillable="true" type="tns:PipelineField"/>
+	<xs:element name="PipelineColumnsGetResponse" nillable="true" type="tns:PipelineColumnsGetResponse.PipelineColumnsGetResponseBody"/>
+	<xs:complexType name="PipelineViewsGetRequest.PipelineViewsGetRequestBody">
+		<xs:sequence/>
+	</xs:complexType>
+	<xs:element name="PipelineViewsGetRequest.PipelineViewsGetRequestBody" nillable="true" type="tns:PipelineViewsGetRequest.PipelineViewsGetRequestBody"/>
+	<xs:element name="PipelineViewsGetRequest" nillable="true" type="tns:PipelineViewsGetRequest.PipelineViewsGetRequestBody"/>
+	<xs:complexType name="PipelineViewsGetResponse.PipelineViewsGetResponseBody">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="PipelineViews" nillable="true" type="tns:ArrayOfPipelineView"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="PipelineViewsGetResponse.PipelineViewsGetResponseBody" nillable="true" type="tns:PipelineViewsGetResponse.PipelineViewsGetResponseBody"/>
+	<xs:complexType name="ArrayOfPipelineView">
+		<xs:sequence>
+			<xs:element minOccurs="0" maxOccurs="unbounded" name="PipelineView" nillable="true" type="tns:PipelineView"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ArrayOfPipelineView" nillable="true" type="tns:ArrayOfPipelineView"/>
+	<xs:complexType name="PipelineView">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="Columns" nillable="true" type="tns:ArrayOfPipelineColumn">
+				<xs:annotation>
+					<xs:appinfo>
+						<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="ExternalOrgId" nillable="true" type="xs:string">
+				<xs:annotation>
+					<xs:appinfo>
+						<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="Filter" nillable="true" type="tns:ArrayOfPipelineFieldFilter">
+				<xs:annotation>
+					<xs:appinfo>
+						<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="FilterSummary" nillable="true" type="xs:string">
+				<xs:annotation>
+					<xs:appinfo>
+						<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="LoanFolder" nillable="true" type="xs:string">
+				<xs:annotation>
+					<xs:appinfo>
+						<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="Name" nillable="true" type="xs:string">
+				<xs:annotation>
+					<xs:appinfo>
+						<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="OrgType" nillable="true" type="xs:string">
+				<xs:annotation>
+					<xs:appinfo>
+						<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="Ownership" nillable="true" type="xs:string">
+				<xs:annotation>
+					<xs:appinfo>
+						<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="PersonaName" nillable="true" type="xs:string">
+				<xs:annotation>
+					<xs:appinfo>
+						<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="SortIndex" nillable="true" type="xs:int">
+				<xs:annotation>
+					<xs:appinfo>
+						<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="PipelineView" nillable="true" type="tns:PipelineView"/>
+	<xs:complexType name="ArrayOfPipelineColumn">
+		<xs:sequence>
+			<xs:element minOccurs="0" maxOccurs="unbounded" name="PipelineColumn" nillable="true" type="tns:PipelineColumn"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ArrayOfPipelineColumn" nillable="true" type="tns:ArrayOfPipelineColumn"/>
+	<xs:complexType name="PipelineColumn">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="Alignment" nillable="true" type="xs:string">
+				<xs:annotation>
+					<xs:appinfo>
+						<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="OrderIndex" nillable="true" type="xs:string">
+				<xs:annotation>
+					<xs:appinfo>
+						<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="PipelineField" nillable="true" type="tns:PipelineField">
+				<xs:annotation>
+					<xs:appinfo>
+						<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="Required" nillable="true" type="xs:string">
+				<xs:annotation>
+					<xs:appinfo>
+						<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="SortOrder" nillable="true" type="xs:string">
+				<xs:annotation>
+					<xs:appinfo>
+						<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="SortPriority" nillable="true" type="xs:string">
+				<xs:annotation>
+					<xs:appinfo>
+						<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="Width" nillable="true" type="xs:string">
+				<xs:annotation>
+					<xs:appinfo>
+						<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="PipelineColumn" nillable="true" type="tns:PipelineColumn"/>
+	<xs:complexType name="ArrayOfPipelineFieldFilter">
+		<xs:sequence>
+			<xs:element minOccurs="0" maxOccurs="unbounded" name="PipelineFieldFilter" nillable="true" type="tns:PipelineFieldFilter"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ArrayOfPipelineFieldFilter" nillable="true" type="tns:ArrayOfPipelineFieldFilter"/>
+	<xs:complexType name="PipelineFieldFilter">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="CriterionName" nillable="true" type="xs:string">
+				<xs:annotation>
+					<xs:appinfo>
+						<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="DataSource" nillable="true" type="xs:string">
+				<xs:annotation>
+					<xs:appinfo>
+						<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="FieldDescription" nillable="true" type="xs:string">
+				<xs:annotation>
+					<xs:appinfo>
+						<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="FieldID" nillable="true" type="xs:string">
+				<xs:annotation>
+					<xs:appinfo>
+						<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="FieldType" nillable="true" type="xs:string">
+				<xs:annotation>
+					<xs:appinfo>
+						<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="ForceDataConversion" type="xs:boolean">
+				<xs:annotation>
+					<xs:appinfo>
+						<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="IsVolatile" type="xs:boolean">
+				<xs:annotation>
+					<xs:appinfo>
+						<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="JointToken" nillable="true" type="xs:string">
+				<xs:annotation>
+					<xs:appinfo>
+						<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="LeftParentheses" type="xs:int">
+				<xs:annotation>
+					<xs:appinfo>
+						<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="OpDesc" nillable="true" type="xs:string">
+				<xs:annotation>
+					<xs:appinfo>
+						<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="OpType" nillable="true" type="xs:string">
+				<xs:annotation>
+					<xs:appinfo>
+						<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="RightParentheses" type="xs:int">
+				<xs:annotation>
+					<xs:appinfo>
+						<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="ValueDescription" nillable="true" type="xs:string">
+				<xs:annotation>
+					<xs:appinfo>
+						<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="ValueFrom" nillable="true" type="xs:string">
+				<xs:annotation>
+					<xs:appinfo>
+						<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="ValueTo" nillable="true" type="xs:string">
+				<xs:annotation>
+					<xs:appinfo>
+						<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="PipelineFieldFilter" nillable="true" type="tns:PipelineFieldFilter"/>
+	<xs:element name="Payload" nillable="true" type="tns:PipelineViewsGetResponse.PipelineViewsGetResponseBody"/>
+	<xs:complexType name="PipelineViewsSaveRequest.PipelineViewsSaveRequestBody">
+		<xs:sequence>
+			<xs:element name="PipelineViews" nillable="true" type="tns:ArrayOfPipelineView"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="PipelineViewsSaveRequest.PipelineViewsSaveRequestBody" nillable="true" type="tns:PipelineViewsSaveRequest.PipelineViewsSaveRequestBody"/>
+	<xs:element name="PipelineViewsSaveRequest" nillable="true" type="tns:PipelineViewsSaveRequest.PipelineViewsSaveRequestBody"/>
+	<xs:complexType name="PipelineViewsSaveResponse.PipelineViewsSaveResponseBody">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="NumOfUpdatedCustomViews" type="xs:int"/>
+			<xs:element minOccurs="0" name="NumOfUpdatedPersonaViews" type="xs:int"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="PipelineViewsSaveResponse.PipelineViewsSaveResponseBody" nillable="true" type="tns:PipelineViewsSaveResponse.PipelineViewsSaveResponseBody"/>
+	<xs:element name="PipelineViewsSaveResponse" nillable="true" type="tns:PipelineViewsSaveResponse.PipelineViewsSaveResponseBody"/>
+</xs:schema>

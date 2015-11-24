@@ -1,0 +1,208 @@
+<xs:schema elementFormDefault="qualified" targetNamespace="http://www.elliemae.com/encompass/platform" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.elliemae.com/encompass/platform">
+	<xs:import schemaLocation="XMLSchema_490027640.xsd" namespace="http://schemas.datacontract.org/2004/07/Elli.EncompassPlatform.Common.DataContracts"/>
+	<xs:import schemaLocation="XMLSchema_-1433200394.xsd" namespace="http://schemas.microsoft.com/2003/10/Serialization/"/>
+	<xs:import schemaLocation="XMLSchema_1451641657.xsd" namespace="http://schemas.datacontract.org/2004/07/Elli.Domain.Security"/>
+	<xs:complexType name="AuthenticateClientRequest.AuthenticateClientRequestBody">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="ApplicationKey" nillable="true" type="xs:string"/>
+			<xs:element name="ClientCredentials" nillable="true" type="tns:ClientCredentials"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="AuthenticateClientRequest.AuthenticateClientRequestBody" nillable="true" type="tns:AuthenticateClientRequest.AuthenticateClientRequestBody"/>
+	<xs:complexType name="ClientCredentials">
+		<xs:sequence>
+			<xs:element name="Password" nillable="true" type="xs:string"/>
+			<xs:element minOccurs="0" name="Realm" nillable="true" type="xs:string"/>
+			<xs:element name="UserName" nillable="true" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ClientCredentials" nillable="true" type="tns:ClientCredentials"/>
+	<xs:element name="AuthenticateClientRequest" nillable="true" type="tns:AuthenticateClientRequest.AuthenticateClientRequestBody"/>
+	<xs:complexType name="AuthenticateClientResponse.AuthenticateClientResponseBody">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="SecurityContext" nillable="true" type="tns:SecurityContext"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="AuthenticateClientResponse.AuthenticateClientResponseBody" nillable="true" type="tns:AuthenticateClientResponse.AuthenticateClientResponseBody"/>
+	<xs:complexType name="SecurityContext">
+		<xs:sequence>
+			<xs:element name="Created" nillable="true" type="xs:dateTime"/>
+			<xs:element name="Realm" nillable="true" type="xs:string"/>
+			<xs:element name="SessionId" nillable="true" type="xs:string"/>
+			<xs:element minOccurs="0" name="TokenData" nillable="true" type="xs:string">
+				<xs:annotation>
+					<xs:appinfo>
+						<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="TokenType" nillable="true" type="xs:string">
+				<xs:annotation>
+					<xs:appinfo>
+						<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="UserName" nillable="true" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="SecurityContext" nillable="true" type="tns:SecurityContext"/>
+	<xs:element name="AuthenticateClientResponse" nillable="true" type="tns:AuthenticateClientResponse.AuthenticateClientResponseBody"/>
+	<xs:complexType name="UserProfileGetRequest.UserProfileGetRequestBody">
+		<xs:sequence>
+			<xs:element name="UserName" nillable="true" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="UserProfileGetRequest.UserProfileGetRequestBody" nillable="true" type="tns:UserProfileGetRequest.UserProfileGetRequestBody"/>
+	<xs:element name="UserProfileGetRequest" nillable="true" type="tns:UserProfileGetRequest.UserProfileGetRequestBody"/>
+	<xs:complexType name="UserProfileGetResponse.UserProfileGetResponseBody">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="UserProfile" nillable="true" type="tns:UserProfile"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="UserProfileGetResponse.UserProfileGetResponseBody" nillable="true" type="tns:UserProfileGetResponse.UserProfileGetResponseBody"/>
+	<xs:complexType name="UserProfile">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="AccessMode" nillable="true" type="xs:string"/>
+			<xs:element minOccurs="0" name="CHUMId" nillable="true" type="xs:string"/>
+			<xs:element minOccurs="0" name="CellPhone" nillable="true" type="xs:string"/>
+			<xs:element minOccurs="0" name="Email" nillable="true" type="xs:string"/>
+			<xs:element minOccurs="0" name="EmailSignature" nillable="true" type="xs:string"/>
+			<xs:element minOccurs="0" name="EmployeeID" nillable="true" type="xs:string"/>
+			<xs:element minOccurs="0" name="EncompassVersion" nillable="true" type="xs:string"/>
+			<xs:element minOccurs="0" name="Fax" nillable="true" type="xs:string"/>
+			<xs:element minOccurs="0" name="FirstName" nillable="true" type="xs:string"/>
+			<xs:element minOccurs="0" name="FullName" nillable="true" type="xs:string"/>
+			<xs:element minOccurs="0" name="InheritParentCompPlan" nillable="true" type="xs:boolean"/>
+			<xs:element minOccurs="0" name="IsAdministrator" type="xs:boolean"/>
+			<xs:element minOccurs="0" name="IsSuperAdministrator" type="xs:boolean"/>
+			<xs:element minOccurs="0" name="IsTopLevelUser" nillable="true" type="xs:boolean"/>
+			<xs:element minOccurs="0" name="LastLogin" nillable="true" type="xs:dateTime"/>
+			<xs:element minOccurs="0" name="LastName" nillable="true" type="xs:string"/>
+			<xs:element minOccurs="0" name="Locked" nillable="true" type="xs:boolean"/>
+			<xs:element minOccurs="0" name="NMLSExpirationDate" nillable="true" type="xs:dateTime"/>
+			<xs:element minOccurs="0" name="NMLSOriginatorID" nillable="true" type="xs:string"/>
+			<xs:element minOccurs="0" name="OrgId" nillable="true" type="xs:int"/>
+			<xs:element minOccurs="0" name="PeerView" nillable="true" type="xs:string"/>
+			<xs:element minOccurs="0" name="PersonalStatusOnline" nillable="true" type="xs:boolean"/>
+			<xs:element minOccurs="0" name="Phone" nillable="true" type="xs:string"/>
+			<xs:element minOccurs="0" name="Status" nillable="true" type="xs:string"/>
+			<xs:element minOccurs="0" name="Title" nillable="true" type="xs:string"/>
+			<xs:element minOccurs="0" name="UserID" nillable="true" type="xs:string"/>
+			<xs:element minOccurs="0" name="WorkingFolder" nillable="true" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="UserProfile" nillable="true" type="tns:UserProfile"/>
+	<xs:element name="UserProfileGetResponse" nillable="true" type="tns:UserProfileGetResponse.UserProfileGetResponseBody"/>
+	<xs:complexType name="UserGroupsGetRequest.UserGroupsGetRequestBody">
+		<xs:sequence>
+			<xs:element name="UserName" nillable="true" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="UserGroupsGetRequest.UserGroupsGetRequestBody" nillable="true" type="tns:UserGroupsGetRequest.UserGroupsGetRequestBody"/>
+	<xs:element name="UserGroupsGetRequest" nillable="true" type="tns:UserGroupsGetRequest.UserGroupsGetRequestBody"/>
+	<xs:complexType name="UserGroupsGetResponse.UserGroupsGetResponseBody">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="UserGroups" nillable="true" type="tns:EmListOfUserGroupZju2146s"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="UserGroupsGetResponse.UserGroupsGetResponseBody" nillable="true" type="tns:UserGroupsGetResponse.UserGroupsGetResponseBody"/>
+	<xs:complexType name="EmListOfUserGroupZju2146s">
+		<xs:annotation>
+			<xs:appinfo>
+				<GenericType Name="EmListOf{0}{#}" Namespace="http://www.elliemae.com/encompass/platform" xmlns="http://schemas.microsoft.com/2003/10/Serialization/">
+					<GenericParameter Name="UserGroup" Namespace="http://www.elliemae.com/encompass/platform"/>
+				</GenericType>
+			</xs:appinfo>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element minOccurs="0" maxOccurs="unbounded" name="Item" nillable="true" type="tns:UserGroup"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="EmListOfUserGroupZju2146s" nillable="true" type="tns:EmListOfUserGroupZju2146s"/>
+	<xs:complexType name="UserGroup">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="ContactAccess" type="q1:AclResourceAccess" xmlns:q1="http://schemas.datacontract.org/2004/07/Elli.EncompassPlatform.Common.DataContracts"/>
+			<xs:element minOccurs="0" name="DisplayOrder" type="xs:int"/>
+			<xs:element minOccurs="0" name="GroupId" type="xs:int"/>
+			<xs:element minOccurs="0" name="GroupName" nillable="true" type="xs:string"/>
+			<xs:element minOccurs="0" name="ViewSubordContacts" type="xs:boolean"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="UserGroup" nillable="true" type="tns:UserGroup"/>
+	<xs:element name="UserGroupsGetResponse" nillable="true" type="tns:UserGroupsGetResponse.UserGroupsGetResponseBody"/>
+	<xs:element name="UserName" nillable="true" type="xs:string"/>
+	<xs:complexType name="UserAccessRightsResponse.UserAccessRightsResponseBody">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="FeatureSets" nillable="true" type="tns:EmListOfFeatureSetAccessRightsZju2146s"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="UserAccessRightsResponse.UserAccessRightsResponseBody" nillable="true" type="tns:UserAccessRightsResponse.UserAccessRightsResponseBody"/>
+	<xs:complexType name="EmListOfFeatureSetAccessRightsZju2146s">
+		<xs:annotation>
+			<xs:appinfo>
+				<GenericType Name="EmListOf{0}{#}" Namespace="http://www.elliemae.com/encompass/platform" xmlns="http://schemas.microsoft.com/2003/10/Serialization/">
+					<GenericParameter Name="FeatureSetAccessRights" Namespace="http://www.elliemae.com/encompass/platform"/>
+				</GenericType>
+			</xs:appinfo>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element minOccurs="0" maxOccurs="unbounded" name="Item" nillable="true" type="tns:FeatureSetAccessRights"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="EmListOfFeatureSetAccessRightsZju2146s" nillable="true" type="tns:EmListOfFeatureSetAccessRightsZju2146s"/>
+	<xs:complexType name="FeatureSetAccessRights">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="AccessRights" nillable="true" type="tns:EmDictionaryOfstringboolean"/>
+			<xs:element name="Name" nillable="true" type="xs:string">
+				<xs:annotation>
+					<xs:appinfo>
+						<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="FeatureSetAccessRights" nillable="true" type="tns:FeatureSetAccessRights"/>
+	<xs:complexType name="EmDictionaryOfstringboolean">
+		<xs:annotation>
+			<xs:appinfo>
+				<IsDictionary xmlns="http://schemas.microsoft.com/2003/10/Serialization/">true</IsDictionary>
+				<GenericType Name="EmDictionaryOf{0}{1}{#}" Namespace="http://www.elliemae.com/encompass/platform" xmlns="http://schemas.microsoft.com/2003/10/Serialization/">
+					<GenericParameter Name="string" Namespace="http://www.w3.org/2001/XMLSchema"/>
+					<GenericParameter Name="boolean" Namespace="http://www.w3.org/2001/XMLSchema"/>
+				</GenericType>
+			</xs:appinfo>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element minOccurs="0" maxOccurs="unbounded" name="Item">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Key" nillable="true" type="xs:string"/>
+						<xs:element name="Value" type="xs:boolean"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="EmDictionaryOfstringboolean" nillable="true" type="tns:EmDictionaryOfstringboolean"/>
+	<xs:element name="UserAccessRightsRequest" nillable="true" type="tns:UserAccessRightsResponse.UserAccessRightsResponseBody"/>
+	<xs:element name="ServiceClientId" type="q2:guid" xmlns:q2="http://schemas.microsoft.com/2003/10/Serialization/"/>
+	<xs:element name="TokenType" type="q3:AuthenticationTokenType" xmlns:q3="http://schemas.datacontract.org/2004/07/Elli.Domain.Security"/>
+	<xs:complexType name="AuthenticationToken">
+		<xs:sequence>
+			<xs:element name="TokenData" nillable="true" type="xs:string"/>
+			<xs:element name="Type" type="q4:AuthenticationTokenType" xmlns:q4="http://schemas.datacontract.org/2004/07/Elli.Domain.Security"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="AuthenticationToken" nillable="true" type="tns:AuthenticationToken"/>
+	<xs:element name="Token" nillable="true" type="tns:AuthenticationToken"/>
+	<xs:element name="AuthenticateClientTokenRequest">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element minOccurs="0" name="ServiceClientId" type="q5:guid" xmlns:q5="http://schemas.microsoft.com/2003/10/Serialization/"/>
+				<xs:element minOccurs="0" name="Token" nillable="true" type="tns:AuthenticationToken"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

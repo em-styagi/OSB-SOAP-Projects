@@ -1,0 +1,35 @@
+<wsdl:definitions targetNamespace="http://www.elliemae.com/encompass/platform" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.elliemae.com/encompass/platform" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/">
+	<wsdl:types>
+		<xsd:schema targetNamespace="http://www.elliemae.com/encompass/platform/Imports">
+			<xsd:import schemaLocation="../../xsd/Platform/XMLSchema_-1286420383.xsd" namespace="http://www.elliemae.com/encompass/platform"/>
+			<xsd:import schemaLocation="../../xsd/Platform/XMLSchema_-1219413630.xsd" namespace="http://schemas.microsoft.com/2003/10/Serialization/"/>
+		</xsd:schema>
+	</wsdl:types>
+	<wsdl:message name="SessionCreateRequest">
+		<wsdl:part name="SessionCreateRequest" element="tns:SessionCreateRequest"/>
+	</wsdl:message>
+	<wsdl:message name="SessionCreateResponse">
+		<wsdl:part name="SessionCreateResponse" element="tns:SessionCreateResponse"/>
+	</wsdl:message>
+	<wsdl:message name="SessionRequest">
+		<wsdl:part name="SessionRequest" element="tns:SessionRequest"/>
+	</wsdl:message>
+	<wsdl:message name="SessionGetUserResponse">
+		<wsdl:part name="SessionGetUserResponse" element="tns:SessionGetUserResponse"/>
+	</wsdl:message>
+	<wsdl:message name="ISessionService_DestroySession_OutputMessage"/>
+	<wsdl:portType name="ISessionService">
+		<wsdl:operation name="SessionCreate">
+			<wsdl:input wsaw:Action="http://www.elliemae.com/encompass/platform/ISessionService/SessionCreate" name="SessionCreateRequest" message="tns:SessionCreateRequest"/>
+			<wsdl:output wsaw:Action="http://www.elliemae.com/encompass/platform/ISessionService/SessionCreateResponse" name="SessionCreateResponse" message="tns:SessionCreateResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="SessionGetUser">
+			<wsdl:input wsaw:Action="http://www.elliemae.com/encompass/platform/ISessionService/SessionGetUser" name="SessionRequest" message="tns:SessionRequest"/>
+			<wsdl:output wsaw:Action="http://www.elliemae.com/encompass/platform/ISessionService/SessionGetUserResponse" name="SessionGetUserResponse" message="tns:SessionGetUserResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="DestroySession">
+			<wsdl:input wsaw:Action="http://www.elliemae.com/encompass/platform/ISessionService/DestroySession" name="SessionRequest" message="tns:SessionRequest"/>
+			<wsdl:output wsaw:Action="http://www.elliemae.com/encompass/platform/ISessionService/DestroySessionResponse" message="tns:ISessionService_DestroySession_OutputMessage"/>
+		</wsdl:operation>
+	</wsdl:portType>
+</wsdl:definitions>

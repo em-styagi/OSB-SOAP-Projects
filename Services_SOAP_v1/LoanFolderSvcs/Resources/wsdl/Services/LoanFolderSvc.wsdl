@@ -1,0 +1,48 @@
+<wsdl:definitions targetNamespace="http://www.elliemae.com/services/loanfolders" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:folder="http://www.elliemae.com/services/loanfolders" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:sec="http://www.elliemae.com/services/security" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+
+	<wsdl:types>
+		<xsd:schema targetNamespace="http://www.elliemae.com/services/loanfolders" elementFormDefault="qualified">
+			<xsd:include schemaLocation="../../xsd/Services/LoanFolderSvc.xsd"/>
+		 	<xsd:import schemaLocation="../../../../../Security_SOAP_v1/Shared/SecuritySvc.xsd" namespace="http://www.elliemae.com/services/security"/>
+		</xsd:schema>
+	</wsdl:types>
+   
+	<wsdl:message name="GetUserLoanFoldersRequestMsg">
+		<wsdl:part name="body" element="folder:IncludeTrash"/>
+	</wsdl:message>
+	<wsdl:message name="GetUserLoanFoldersResponseMsg">
+		<wsdl:part name="body" element="folder:GetUserLoanFoldersResponse"/>
+	</wsdl:message>
+
+	<wsdl:message name="SecurityContextHeader"> 
+    	<wsdl:part name="header" element="sec:SecurityContext"/>
+ 	</wsdl:message> 
+  
+	<wsdl:portType name="LoanFolderSvcPort">
+		<wsdl:operation name="GetUserLoanFolders">
+			<wsdl:input message="folder:GetUserLoanFoldersRequestMsg"/>
+			<wsdl:output message="folder:GetUserLoanFoldersResponseMsg"/>
+		</wsdl:operation>
+	</wsdl:portType>
+
+	<wsdl:binding name="LoanFolderSvcPortSOAP11Binding" type="folder:LoanFolderSvcPort">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="GetUserLoanFolders">
+			<soap:operation style="document" soapAction="http://www.elliemae.com/services/loanfolders/GetUserLoanFolders"/>
+			<wsdl:input>
+				<soap:header message="folder:SecurityContextHeader" part="header" use="literal"/>
+				<soap:body use="literal" parts="body"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" parts="body"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	
+	<wsdl:service name="LoanFolderService">
+		<wsdl:port name="BasicHttpBinding_IPlatformService" binding="folder:LoanFolderSvcPortSOAP11Binding">
+			<soap:address location="http://encompass-ib.qa.dco.elmae:11001/encompass_v1/loan/folders"/>
+		</wsdl:port>
+	</wsdl:service>
+
+</wsdl:definitions>

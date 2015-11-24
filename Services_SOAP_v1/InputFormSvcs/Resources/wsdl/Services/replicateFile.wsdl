@@ -1,0 +1,48 @@
+<wsdl:definitions name="replicateFile" targetNamespace="http://www.elliemae.com/services/replicateFile" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.elliemae.com/services/replicateFile" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:sec="http://www.elliemae.com/services/security" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+	<wsdl:types>
+		<xsd:schema targetNamespace="http://www.elliemae.com/services/replicateFile" elementFormDefault="qualified">
+			<xsd:include schemaLocation="../../xsd/Services/replicateFile.xsd"/>
+			<xsd:import schemaLocation="../../../../../Security_SOAP_v1/Shared/SecuritySvc.xsd" namespace="http://www.elliemae.com/services/security"/>
+		</xsd:schema>
+	</wsdl:types>
+
+	<wsdl:message name="ReplicateFileRequestMsg">
+		<wsdl:part element="tns:ReplicateFileRequest" name="body"/>
+	</wsdl:message>
+	<wsdl:message name="ReplicateFileResponseMsg">
+		<wsdl:part element="tns:ReplicateFileResponse" name="body"/>
+	</wsdl:message>
+	
+	<wsdl:message name="SecurityContextHeader">
+		<wsdl:part name="header" element="sec:SecurityContext"/>
+	</wsdl:message>
+
+	<wsdl:portType name="replicateFileSvcPort">
+		<wsdl:operation name="ReplicateFile">
+			<wsdl:input message="tns:ReplicateFileRequestMsg"/>
+			<wsdl:output message="tns:ReplicateFileResponseMsg"/>
+		</wsdl:operation>
+	</wsdl:portType>
+
+	<wsdl:binding name="replicateFileSvcPortSOAP11Binding" type="tns:replicateFileSvcPort">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="ReplicateFile">
+			<soap:operation style="document" soapAction="http://www.elliemae.com/services/ReplicateFile"/>
+			<wsdl:input>
+				<soap:header message="tns:SecurityContextHeader" part="header" use="literal"/>
+				<soap:body use="literal" parts="body"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" parts="body"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+
+	<wsdl:service name="replicateFileService">
+		<wsdl:port name="BasicHttpBinding_IreplicateFileService" binding="tns:replicateFileSvcPortSOAP11Binding">
+			<soap:address location="http://encompass-ia.qa.dco.elmae:11001/encompass_v1/inputforms/replicateFile"/>
+		</wsdl:port>
+	</wsdl:service>
+
+</wsdl:definitions>

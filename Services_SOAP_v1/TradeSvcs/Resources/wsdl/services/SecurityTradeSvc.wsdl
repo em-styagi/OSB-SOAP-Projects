@@ -1,0 +1,104 @@
+<wsdl:definitions name="SecurityTradeSvc" targetNamespace="http://www.elliemae.com/services/trade/security" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.elliemae.com/services/trade/security" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:sec="http://www.elliemae.com/services/security">
+	<wsdl:types>
+		<xsd:schema targetNamespace="http://www.elliemae.com/services/trade/security" elementFormDefault="qualified">
+				<xsd:include schemaLocation="../../xsd/services/SecurityTradeSvc.xsd"/>
+			<xsd:import schemaLocation="../../../../../Security_SOAP_v1/Shared/SecuritySvc.xsd" namespace="http://www.elliemae.com/services/security"/>
+		</xsd:schema>
+	</wsdl:types>
+	
+	<wsdl:message name="CreateSecurityTradeRequest">
+		<wsdl:part name="CreateSecurityTradeRequest" element="tns:CreateSecurityTradeRequest"/>
+	</wsdl:message>
+	<wsdl:message name="CreateSecurityTradeResponse">
+		<wsdl:part name="CreateSecurityTradeResponse" element="tns:CreateSecurityTradeResponse"/>
+	</wsdl:message>
+	<wsdl:message name="GetSecurityTradeRequest">
+		<wsdl:part name="GetSecurityTradeRequest" element="tns:GetSecurityTradeRequest"/>
+	</wsdl:message>
+	<wsdl:message name="GetSecurityTradeResponse">
+		<wsdl:part name="GetSecurityTradeResponse" element="tns:GetSecurityTradeResponse"/>
+	</wsdl:message>
+	<wsdl:message name="DeleteSecurityTradeRequest">
+		<wsdl:part name="DeleteSecurityTradeRequest" element="tns:DeleteSecurityTradeRequest"/>
+	</wsdl:message>
+	<wsdl:message name="DeleteSecurityTradeResponse">
+		<wsdl:part name="DeleteSecurityTradeResponse" element="tns:DeleteSecurityTradeResponse"/>
+	</wsdl:message>
+	<wsdl:message name="UpdateSecurityTradeRequest">
+		<wsdl:part name="UpdateSecurityTradeRequest" element="tns:UpdateSecurityTradeRequest"/>
+	</wsdl:message>
+	<wsdl:message name="UpdateSecurityTradeResponse">
+		<wsdl:part name="UpdateSecurityTradeResponse" element="tns:UpdateSecurityTradeResponse"/>
+	</wsdl:message>
+	<wsdl:message name="SecurityContext_Header">
+		<wsdl:part name="header" element="sec:SecurityContext"/>
+	</wsdl:message>
+	
+	<wsdl:portType name="SecurityTradeSvc">
+		<wsdl:operation name="CreateSecurityTrade">
+			<wsdl:input name="CreateSecurityTradeRequest" message="tns:CreateSecurityTradeRequest"/>
+			<wsdl:output name="CreateSecurityTradeResponse" message="tns:CreateSecurityTradeResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="GetSecurityTrade">
+			<wsdl:input name="GetSecurityTradeRequest" message="tns:GetSecurityTradeRequest"/>
+			<wsdl:output name="GetSecurityTradeResponse" message="tns:GetSecurityTradeResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="DeleteSecurityTrade">
+			<wsdl:input name="DeleteSecurityTradeRequest" message="tns:DeleteSecurityTradeRequest"/>
+			<wsdl:output name="DeleteSecurityTradeResponse" message="tns:DeleteSecurityTradeResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="UpdateSecurityTrade">
+			<wsdl:input name="UpdateSecurityTradeRequest" message="tns:UpdateSecurityTradeRequest"/>
+			<wsdl:output name="UpdateSecurityTradeResponse" message="tns:UpdateSecurityTradeResponse"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	
+	<wsdl:binding name="SecurityTradeSvc" type="tns:SecurityTradeSvc">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="CreateSecurityTrade">
+			<soap:operation soapAction="http://www.elliemae.com/services/trade/security/CreateSecurityTrade" style="document"/>
+			<wsdl:input name="CreateSecurityTradeRequest">
+				<soap:header message="tns:SecurityContext_Header" part="header" use="literal"/>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="CreateSecurityTradeResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetSecurityTrade">
+			<soap:operation soapAction="http://www.elliemae.com/services/trade/security/GetSecurityTrade" style="document"/>
+			<wsdl:input name="GetSecurityTradeRequest">
+				<soap:header message="tns:SecurityContext_Header" part="header" use="literal"/>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="GetSecurityTradeResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="DeleteSecurityTrade">
+			<soap:operation soapAction="http://www.elliemae.com/services/trade/security/DeleteSecurityTrade" style="document"/>
+			<wsdl:input name="DeleteSecurityTradeRequest">
+				<soap:header message="tns:SecurityContext_Header" part="header" use="literal"/>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="DeleteSecurityTradeResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="UpdateSecurityTrade">
+			<soap:operation soapAction="http://www.elliemae.com/services/trade/security/UpdateSecurityTrade" style="document"/>
+			<wsdl:input name="UpdateSecurityTradeRequest">
+				<soap:header message="tns:SecurityContext_Header" part="header" use="literal"/>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="UpdateSecurityTradeResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="SecurityTradeService">
+		<wsdl:port binding="tns:SecurityTradeSvc" name="SecurityTradeSvc">
+			<soap:address location="http://encompass-ia.qa.dco.elmae:11001/encompass_v1/trade/security"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

@@ -1,0 +1,11 @@
+<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+							  xmlns:ns0="http://www.elliemae.com/encompass/platform">
+		
+	 <!-- Add prefix "plat:" to all nodes-->
+	 <xsl:template match="ns0:*">
+	 	<xsl:element name="plat:{local-name()}" namespace= "http://www.elliemae.com/encompass/platform">
+	       <xsl:apply-templates select="node()|@*"/>		   
+	  </xsl:element>
+	 </xsl:template>
+	 
+</xsl:stylesheet>

@@ -1,0 +1,245 @@
+<xsd:schema elementFormDefault="qualified" targetNamespace="http://www.elliemae.com/services/pipelinecursor" 
+			xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+			xmlns:tns="http://www.elliemae.com/services/pipelinecursor" >
+	
+	<!-- Old Pipeline schema -->
+	<xsd:element name="CreatePipelineCursorRequest" type="tns:CreatePipelineCursorRequestType"/>
+	<xsd:element name="CreatePipelineCursorResponse" type="tns:CreatePipelineCursorResponseType"/>
+	
+	<xsd:element name="ReadPipelineCursorRequest" type="tns:ReadPipelineCursorRequestType"/>
+	<xsd:element name="ReadPipelineCursorResponse" type="tns:ReadPipelineCursorResponseType"/>
+	
+	<xsd:element name="DeletePipelineCursorRequest" type="tns:DeletePipelineCursorRequestType"/>
+	<xsd:element name="DeletePipelineCursorResponse" type="tns:DeletePipelineCursorResponseType"/>
+	
+	<xsd:element name="GetPipelineCursorsListRequest" type="tns:GetPipelineCursorsListRequestType"/>
+	<xsd:element name="GetPipelineCursorsListResponse" type="tns:GetPipelineCursorsListResponseType"/>
+
+	
+	<xsd:simpleType name="SortOrder">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="None"/>
+			<xsd:enumeration value="Ascending"/>
+			<xsd:enumeration value="Descending"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	
+	<xsd:simpleType name="FilterOperator">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="None"/>
+			<xsd:enumeration value="And"/>
+			<xsd:enumeration value="Or"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	
+	<xsd:simpleType name="guid">
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="[\da-fA-F]{8}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{12}"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	
+	<xsd:simpleType name="OrgType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Internal" />
+			<xsd:enumeration value="TPO" />
+		</xsd:restriction>
+	</xsd:simpleType>
+	
+	<xsd:simpleType name="Ownership">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="All" />
+			<xsd:enumeration value="User" />
+		</xsd:restriction>
+	</xsd:simpleType>
+	
+<!-- Start Create Cursor  --> 
+ 
+ 
+ <xsd:complexType name="CreatePipelineCursorRequestType">
+		<xsd:sequence>
+		     <xsd:element name="ExternalOrgId" nillable="true" type="xsd:string"/>
+		     <xsd:element name="Fields" nillable="true" type="tns:ArrayOfPipelineField"/>
+		     <xsd:element name="FieldSort" nillable="true" type="tns:ArrayOfPipelineFieldSort"/>
+		     <xsd:element name="Filter" nillable="true" type="tns:ArrayOfFilterCriterion"/>
+		     <xsd:element name="LoanFolder" nillable="true" type="xsd:string"/>	
+		     <xsd:element name="OrgType" type="tns:OrgType" />
+			 <xsd:element name="Ownership" type="tns:Ownership" />
+			 <xsd:element name="PipelineItemRequired" nillable="true" type="xsd:string"/>
+			 <xsd:element name="StartIndex" nillable="true" type="xsd:int"/>
+		     <xsd:element name="EndIndex" nillable="true" type="xsd:int"/>		  
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	
+	
+	 <xsd:complexType name="CreatePipelineCursorResponseType">
+		<xsd:sequence>
+		     <xsd:element name="CursorId" nillable="true" type="tns:guid"/>
+		     <xsd:element name="Details" nillable="true" type="tns:ArrayOfCursorMetaData"/>
+		     <xsd:element name="Items" nillable="true" type="tns:ArrayOfPipelineItem"/>
+		 </xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="ArrayOfCursorMetaData">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" maxOccurs="unbounded" name="Item" nillable="true" type="tns:MapType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="MapType">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" name="Key" nillable="true" type="xsd:string"/>		
+			<xsd:element minOccurs="0" name="Value" nillable="true" type="xsd:string"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="ArrayOfPipelineField">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" maxOccurs="unbounded" name="PipelineField" nillable="true" type="tns:NameType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="NameType">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" name="Name" nillable="true" type="xsd:string"/>		
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="ArrayOfPipelineFieldSort">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" maxOccurs="unbounded" name="PipelineField" nillable="true" type="tns:NameSortOrderType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	
+
+	<xsd:complexType name="NameSortOrderType">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" name="Name" nillable="true" type="xsd:string"/>
+			<xsd:element minOccurs="0" name="SortOrder" type="tns:SortOrder"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="ArrayOfFilterCriterion">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" maxOccurs="unbounded" name="FilterCriterion" nillable="true" type="tns:FilterCriterion"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	  <xsd:complexType name="FilterCriterion">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" name="CriterionName" 	nillable="true"	type="xsd:string" />			
+			<xsd:element minOccurs="0" name="FieldDescription"	nillable="true" type="xsd:string" />
+			<xsd:element minOccurs="0" name="FieldID" 			nillable="true"	type="xsd:string" />
+			<xsd:element minOccurs="0" name="FieldType" 		nillable="true"	type="xsd:string" />				
+			<xsd:element minOccurs="0" name="JointToken" 		nillable="true" type="tns:FilterOperator" />
+			<xsd:element minOccurs="0" name="LeftParentheses" 					type="xsd:int" />
+			<xsd:element minOccurs="0" name="OpType" 			nillable="true"	type="xsd:string" />
+			<xsd:element minOccurs="0" name="RightParentheses" 					type="xsd:int" />
+			<xsd:element minOccurs="0" name="ValueFrom" 		nillable="true"	type="xsd:string" />
+			<xsd:element minOccurs="0" name="ValueTo" 			nillable="true" type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>
+ <!--  End create cursor -->
+ 
+ <!--  Start Read cursor -->
+ <xsd:complexType name="ReadPipelineCursorRequestType">
+		<xsd:sequence>
+		     <xsd:element name="CursorId" nillable="false" type="tns:guid"/>
+		     <xsd:element name="StartIndex" nillable="false" type="xsd:int"/>
+		     <xsd:element name="EndIndex" nillable="false" type="xsd:int"/>		     		 
+		</xsd:sequence>
+	</xsd:complexType> 
+ 
+ <xsd:complexType name="ReadPipelineCursorResponseType">
+	<xsd:sequence>
+			<xsd:element name="Items" nillable="true" type="tns:ArrayOfPipelineItem"/>
+		</xsd:sequence>
+	</xsd:complexType> 
+	
+	<xsd:complexType name="ArrayOfPipelineItem">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" maxOccurs="unbounded" name="PipelineItem" nillable="true" type="tns:PipelineItem"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="PipelineItem">
+		<xsd:complexContent mixed="false">
+			<xsd:extension base="tns:EntityContractBase">
+				<xsd:sequence>
+					<xsd:element minOccurs="0" name="AlertCount" type="xsd:int"/>
+					<xsd:element minOccurs="0" name="FieldData" nillable="true" type="tns:ArrayOfPipelineItemData"/>
+					<xsd:element minOccurs="0" name="LoanId" type="tns:guid"/>
+					<xsd:element minOccurs="0" name="LockedBy" nillable="true" type="xsd:string" />
+					<xsd:element minOccurs="0" name="Readonly" type="xsd:boolean" />
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	
+	 <xsd:complexType name="ArrayOfPipelineItemData">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" maxOccurs="unbounded" name="PipelineItemData" nillable="true" type="tns:PipelineItemData"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="PipelineItemData">
+		<xsd:complexContent mixed="false">
+			<xsd:extension base="tns:EntityContractBase">
+				<xsd:sequence>
+					<xsd:element minOccurs="0" name="DataType" nillable="true" type="xsd:string"/>
+					<xsd:element minOccurs="0" name="Name" nillable="true" type="xsd:string"/>
+					<xsd:element minOccurs="0" name="Value" nillable="true" type="xsd:string"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	
+	<xsd:complexType name="EntityContractBase">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" name="Id" type="tns:guid"/>
+		</xsd:sequence>
+	</xsd:complexType> 
+ <!--  End Read cursor -->
+ 
+ <!-- Start Delete Cursor -->
+ <xsd:complexType name="DeletePipelineCursorRequestType">
+		<xsd:sequence>
+		     <xsd:element minOccurs="0" name="CursorId" nillable="false" type="tns:guid"/>		   	     		 
+		</xsd:sequence>
+	</xsd:complexType>
+	
+ 
+ <xsd:complexType name="DeletePipelineCursorResponseType">
+	<xsd:sequence>
+			<xsd:element minOccurs="0" name="Status" nillable="true" type="xsd:string"/>
+		</xsd:sequence>
+	</xsd:complexType> 
+ <!-- End Delete Cursor -->
+ 
+ <!-- Start Get Cursor List -->
+ <xsd:complexType name="GetPipelineCursorsListRequestType"><xsd:sequence/></xsd:complexType>
+ 
+  <xsd:complexType name="ArrayOfCursor">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" maxOccurs="unbounded" name="CursorId" nillable="true" type="tns:guid"/>
+			<xsd:element minOccurs="0" maxOccurs="unbounded" name="Cursor" nillable="true" type="tns:CursorDetails"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+  <xsd:complexType name="CursorDetails">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" maxOccurs="1" name="CursorId" nillable="true" type="tns:guid"/>
+			<xsd:element minOccurs="0" maxOccurs="1" name="CreationTimestamp" nillable="true" type="xsd:dateTime"/>
+			<xsd:element minOccurs="0" maxOccurs="1" name="UpdateTimestamp" nillable="true" type="xsd:dateTime"/>			
+		</xsd:sequence>
+	</xsd:complexType>	
+ 
+ <xsd:complexType name="GetPipelineCursorsListResponseType">
+	<xsd:sequence>
+		     <xsd:element minOccurs="0" name="Cursors" nillable="false" type="tns:ArrayOfCursor"/>		   	     		 
+
+		</xsd:sequence>
+	</xsd:complexType> 
+ <!-- End Get Cursor List -->
+ 		
+</xsd:schema>

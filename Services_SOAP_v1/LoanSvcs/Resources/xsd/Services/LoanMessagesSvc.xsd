@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.elliemae.com/services/loanmsgs"
+	xmlns:tns="http://www.elliemae.com/services/loanmsgs"
+	elementFormDefault="qualified">
+	
+	<xsd:element name="GetEPassLoanMessagesRequest" 	nillable="true" type="tns:GetEPassLoanMessagesRequestType" />
+	<xsd:element name="GetEPassLoanMessagesResponse" 	nillable="true" type="tns:GetEPassLoanMessagesResponseType" />
+	<xsd:element name="GetPipelineLoanAlertsRequest" 		nillable="true" type="tns:GetPipelineLoanAlertsRequestType" />
+	<xsd:element name="GetPipelineLoanAlertsResponse" 		nillable="true" type="tns:GetPipelineLoanAlertsResponseType" />
+	<xsd:element name="UpdatePipelineLoanAlertsRequest" 	nillable="true" type="tns:UpdatePipelineLoanAlertsRequestType" />
+	<xsd:element name="UpdatePipelineLoanAlertsResponse" 	nillable="true" type="tns:UpdatePipelineLoanAlertsResponseType" />
+	
+    <xsd:simpleType name="guid">
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="[\da-fA-F]{8}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{12}" />
+		</xsd:restriction>
+	</xsd:simpleType>
+	
+	<xsd:complexType name="GetEPassLoanMessagesRequestType">
+		<xsd:sequence>
+			<xsd:element name="IsExternalOrganization" type="xsd:boolean" />
+			<xsd:element name="LoanGuid" type="tns:guid" />
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="GetEPassLoanMessagesResponseType">
+		<xsd:sequence>
+			<xsd:element  name="LoanEPassMessages" nillable="true" type="tns:ArrayOfEPassMessageInfo"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	
+    <xsd:complexType name="ArrayOfEPassMessageInfo">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" maxOccurs="unbounded" name="EPassMessageInfo" nillable="true" type="tns:EPassMessageInfo" />
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:element name="ArrayOfEPassMessageInfo" nillable="true" type="tns:ArrayOfEPassMessageInfo"/>
+	
+	<xsd:complexType name="EPassMessageInfo">
+		<xsd:sequence>
+			<xsd:element name="active" type="xsd:boolean" />
+			<xsd:element name="description" nillable="true" type="xsd:string" />
+			<xsd:element name="loanGuid" nillable="true" type="xsd:string" />
+			<xsd:element name="messageId" nillable="true" type="xsd:string" />
+			<xsd:element name="messageType" nillable="true" type="xsd:string" />
+			<xsd:element name="msgXml" nillable="true" type="xsd:string" />
+			<xsd:element name="source" nillable="true" type="xsd:string" />
+			<xsd:element name="timestamp" type="xsd:dateTime" />
+			<xsd:element name="userId" nillable="true" type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="EPassMessageInfo" nillable="true" type="tns:EPassMessageInfo" />
+	
+<!-- GetLoanAlerts -->
+	<xsd:complexType name="GetPipelineLoanAlertsRequestType">
+		<xsd:sequence>
+			<xsd:element name="AlertCriterionName" type="xsd:string" />
+			<xsd:element name="IsExternalOrganization" type="xsd:boolean" />
+			<xsd:element name="LoanGuid" type="tns:guid" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="GetPipelineLoanAlertsResponseType">
+		<xsd:sequence>
+			<xsd:element name="LoanAlerts" minOccurs="0" maxOccurs="1" type="tns:LoanAlertsType" />
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="LoanAlertsType">
+		<xsd:sequence>
+			<xsd:element name="PipelineLoanAlerts" minOccurs="0" maxOccurs="unbounded" type="tns:PipelineLoanAlertsType" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="PipelineLoanAlertsType">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" maxOccurs="1" name="AlertID" 		nillable="true" type="xsd:int"/>
+			<xsd:element minOccurs="0" maxOccurs="1" name="AlertMessage" 	nillable="true" type="xsd:string"/>
+			<xsd:element minOccurs="0" maxOccurs="1" name="AlertTargetID" 	nillable="true" type="xsd:string"/>
+			<xsd:element minOccurs="0" maxOccurs="1" name="DateExpected" 	nillable="true" type="xsd:dateTime"/>
+			<xsd:element minOccurs="0" maxOccurs="1" name="DisplayStatus" 	nillable="true" type="xsd:int"/>
+			<xsd:element minOccurs="0" maxOccurs="1" name="Event" 			nillable="true" type="xsd:string"/>
+			<xsd:element minOccurs="0" maxOccurs="1" name="GroupID" 		nillable="true" type="xsd:int"/>
+			<xsd:element minOccurs="0" maxOccurs="1" name="LoanAlertID" 	nillable="true" type="xsd:string"/>
+			<xsd:element minOccurs="0" maxOccurs="1" name="LogRecordID" 	nillable="true" type="xsd:string"/>
+			<xsd:element minOccurs="0" maxOccurs="1" name="MilestoneID" 	nillable="true" type="xsd:string"/>
+			<xsd:element minOccurs="0" maxOccurs="1" name="SnoozeDuration" 	nillable="true" type="xsd:int"/>
+			<xsd:element minOccurs="0" maxOccurs="1" name="SnoozeStartDTTM" nillable="true" type="xsd:dateTime"/>
+			<xsd:element minOccurs="0" maxOccurs="1" name="Status" 			nillable="true" type="xsd:string"/>
+			<xsd:element minOccurs="0" maxOccurs="1" name="UserID" 			nillable="true" type="xsd:string"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="PipelineLoanAlerts" nillable="true" type="tns:PipelineLoanAlertsType" />
+	
+<!-- UpdateLoanAlerts -->
+	<xsd:complexType name="UpdatePipelineLoanAlertsRequestType">
+		<xsd:sequence>
+			<xsd:element name="Action" type="tns:UpdateLoanAlertActionType" />
+			<xsd:element name="IsExternalOrganization" type="xsd:boolean" />
+			<xsd:element nillable="true" name="LoanAlertIds" type="tns:LoanAlertIdsType" />
+			<xsd:element name="LoanGuid" type="tns:guid" />
+			<xsd:element minOccurs="0" name="SnoozeStartTime" type="xsd:dateTime" />
+			<xsd:element minOccurs="0" nillable="true" name="SnoozeTimePeriod" type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="LoanAlertIdsType">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" maxOccurs="unbounded" nillable="true" name="string" type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="UpdatePipelineLoanAlertsResponseType">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" maxOccurs="1" nillable="true" name="Result" type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:simpleType name="UpdateLoanAlertActionType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="REACTIVATE"/>
+			<xsd:enumeration value="SNOOZED"/>
+			<xsd:enumeration value="DISMISS"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+</xsd:schema>

@@ -1,0 +1,13 @@
+<xs:schema elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Elli.BusinessRules.Milestone" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://schemas.datacontract.org/2004/07/Elli.BusinessRules.Milestone">
+	<xs:import schemaLocation="XMLSchema_999999990.xsd" namespace="http://www.elliemae.com/encompass/platform"/>
+	<xs:complexType name="MilestoneValidationError">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="FieldValidationErrors" nillable="true" type="q1:EmListOfFieldValidationError3byRq2TM" xmlns:q1="http://www.elliemae.com/encompass/platform"/>
+			<xs:element minOccurs="0" name="NextMilestoneUser" nillable="true" type="xs:string"/>
+			<xs:element minOccurs="0" name="RequiredDocs" nillable="true" type="q2:EmListOfstring" xmlns:q2="http://www.elliemae.com/encompass/platform"/>
+			<xs:element minOccurs="0" name="RequiredFields" nillable="true" type="q3:EmListOfstring" xmlns:q3="http://www.elliemae.com/encompass/platform"/>
+			<xs:element minOccurs="0" name="RequiredTasks" nillable="true" type="q4:EmListOfstring" xmlns:q4="http://www.elliemae.com/encompass/platform"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="MilestoneValidationError" nillable="true" type="tns:MilestoneValidationError"/>
+</xs:schema>

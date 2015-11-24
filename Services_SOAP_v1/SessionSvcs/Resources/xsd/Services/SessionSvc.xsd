@@ -1,0 +1,43 @@
+<xsd:schema elementFormDefault="qualified" targetNamespace="http://www.elliemae.com/services/session" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.elliemae.com/services/session" xmlns:sec="http://www.elliemae.com/services/security">
+	
+	<xsd:import namespace="http://www.elliemae.com/services/security" schemaLocation="../../../../../Security_SOAP_v1/Shared/SecuritySvc.xsd"/>
+	
+	<xsd:element name="CreateSessionRequest" type="tns:CreateSessionRequestType"/>
+	<xsd:element name="CreateSessionResponse" type="tns:CreateSessionResponseType"/>
+	<xsd:element name="GetUserSessionRequest" type="tns:GetUserSessionRequestType"/>
+	<xsd:element name="GetUserSessionResponse" type="tns:GetUserSessionResponseType"/>
+	<xsd:element name="DestroySessionRequest" type="tns:DestroySessionRequestType"/>
+	
+	<xsd:complexType name="CreateSessionRequestType">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" name="ApplicationName" nillable="true" type="xsd:string"/>
+			<xsd:element name="SecurityContext" nillable="true" type="sec:SecurityContextType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="CreateSessionResponseType">
+		<xsd:sequence>
+			<xsd:element name="SecurityContext" nillable="true" type="sec:SecurityContextType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="GetUserSessionRequestType">
+		<xsd:sequence>
+	         <xsd:element name="Realm" nillable="true" type="xsd:string"/>
+	         <xsd:element name="SessionId" nillable="true" type="xsd:string"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="GetUserSessionResponseType">
+		<xsd:sequence>
+			<xsd:element name="SecurityContext" nillable="true" type="sec:SecurityContextType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="DestroySessionRequestType">
+		<xsd:sequence>
+	         <xsd:element name="Realm" nillable="true" type="xsd:string"/>
+	         <xsd:element name="SessionId" nillable="true" type="xsd:string"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

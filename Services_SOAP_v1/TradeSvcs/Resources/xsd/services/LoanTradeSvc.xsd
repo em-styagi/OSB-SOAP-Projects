@@ -1,0 +1,825 @@
+<xsd:schema elementFormDefault="qualified"
+	targetNamespace="http://www.elliemae.com/services/trade/loan"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.elliemae.com/services/trade/loan">
+	<xsd:element name="GetLoanTradeRequest" nillable="true"
+		type="tns:GetLoanTradeRequest" />
+	<xsd:element name="GetLoanTradeResponse" nillable="true"
+		type="tns:GetLoanTradeResponse" />
+	<xsd:complexType name="GetLoanTradeRequest">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" name="TradeId" type="xsd:int" />
+			<xsd:element minOccurs="0" name="TradeName" nillable="true"
+				type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="GetLoanTradeResponse">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" name="LoanTrade" nillable="true"
+				type="tns:LoanTradeGet" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="LoanTradeGet">
+		<xsd:complexContent mixed="false">
+			<xsd:extension base="tns:TradeInfo">
+				<xsd:sequence>
+					<xsd:element minOccurs="0" name="Archived" type="xsd:boolean" />
+					<xsd:element minOccurs="0" name="Guid" nillable="true"
+						type="xsd:string" />
+					<xsd:element minOccurs="0" name="LoanTradePairOffsInfo"
+						nillable="true" type="tns:LoanTradePairOffsGet" />
+					<xsd:element minOccurs="0" name="TradeID" type="xsd:int" />
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:element name="LoanTradeGet" nillable="true"
+		type="tns:LoanTradeGet" />
+	<xsd:complexType name="TradeInfo">
+		<xsd:complexContent mixed="false">
+			<xsd:extension base="tns:TradeInfoBaseContract">
+				<xsd:sequence>
+					<xsd:element minOccurs="0" name="ContractNumber"
+						nillable="true" type="xsd:string" />
+					<xsd:element minOccurs="0" name="Filter" nillable="true"
+						type="tns:TradeFilterInfo" />
+					<xsd:element minOccurs="0" name="MaxAmount" type="xsd:decimal" />
+					<xsd:element minOccurs="0" name="MinAmount" type="xsd:decimal" />
+					<xsd:element minOccurs="0" name="OpenAmount" type="xsd:decimal" />
+					<xsd:element minOccurs="0" name="PairOffAmount" type="xsd:decimal" />
+					<xsd:element minOccurs="0" name="Status" type="tns:TradeStatus" />
+					<xsd:element minOccurs="0" name="TradePriceAdjustments"
+						nillable="true" type="tns:ArrayOfTradePriceAdjustmentInfo" />
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:element name="TradeInfo" nillable="true" type="tns:TradeInfo" />
+	<xsd:simpleType name="TradeStatus">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="None" />
+			<xsd:enumeration value="Open" />
+			<xsd:enumeration value="Committed" />
+			<xsd:enumeration value="Shipped" />
+			<xsd:enumeration value="Purchased" />
+			<xsd:enumeration value="Archived" />
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:element name="TradeStatus" nillable="true" type="tns:TradeStatus" />
+	<xsd:complexType name="TradeInfoBaseContract">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" name="Addresses" nillable="true"
+				type="tns:Addresses" />
+			<xsd:element minOccurs="0" name="BuyDownAmount" type="xsd:decimal" />
+			<xsd:element minOccurs="0" name="BuyUpAmount" type="xsd:decimal" />
+			<xsd:element minOccurs="0" name="CommitmentDate" type="xsd:dateTime" />
+			<xsd:element minOccurs="0" name="CommitmentType"
+				nillable="true" type="xsd:string" />
+			<xsd:element minOccurs="0" name="ContractID" type="xsd:int" />
+			<xsd:element minOccurs="0" name="EarlyDeliveryDate" type="xsd:dateTime" />
+			<xsd:element minOccurs="0" name="InvestorCommitmentNumber"
+				nillable="true" type="xsd:string" />
+			<xsd:element minOccurs="0" name="InvestorDeliveryDate"
+				type="xsd:dateTime" />
+			<xsd:element minOccurs="0" name="InvestorName" nillable="true"
+				type="xsd:string" />
+			<xsd:element minOccurs="0" name="InvestorTradeNumber"
+				nillable="true" type="xsd:string" />
+			<xsd:element minOccurs="0" name="Locked" type="xsd:boolean" />
+			<xsd:element minOccurs="0" name="MiscAdjustment" type="xsd:decimal" />
+			<xsd:element minOccurs="0" name="Name" nillable="true"
+				type="xsd:string" />
+			<xsd:element minOccurs="0" name="Notes" nillable="true"
+				type="xsd:string" />
+			<xsd:element minOccurs="0" name="PairOffFee" type="xsd:decimal" />
+			<xsd:element minOccurs="0" name="Pricing" nillable="true"
+				type="tns:TradePricing" />
+			<xsd:element minOccurs="0" name="PurchaseDate" type="xsd:dateTime" />
+			<xsd:element minOccurs="0" name="RateAdjustment" type="xsd:decimal" />
+			<xsd:element minOccurs="0" name="SRPTable" nillable="true"
+				type="tns:ArrayOfPricingItem" />
+			<xsd:element minOccurs="0" name="Servicer" nillable="true"
+				type="xsd:string" />
+			<xsd:element minOccurs="0" name="ServicingType" type="tns:ServicingType" />
+			<xsd:element minOccurs="0" name="ShipmentDate" type="xsd:dateTime" />
+			<xsd:element minOccurs="0" name="TargetDeliveryDate"
+				type="xsd:dateTime" />
+			<xsd:element minOccurs="0" name="Tolerance" type="xsd:decimal" />
+			<xsd:element minOccurs="0" name="TradeAmount" type="xsd:decimal" />
+			<xsd:element minOccurs="0" name="TradeDescription"
+				nillable="true" type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="TradeInfoBaseContract" nillable="true"
+		type="tns:TradeInfoBaseContract" />
+	<xsd:simpleType name="ServicingType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="ServicingReleased" />
+			<xsd:enumeration value="ServicingRetained" />
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:element name="ServicingType" nillable="true"
+		type="tns:ServicingType" />
+	<xsd:complexType name="Addresses">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" name="Assignment" nillable="true"
+				type="tns:ContactInformation" />
+			<xsd:element minOccurs="0" name="Correspondence"
+				nillable="true" type="tns:ContactInformation" />
+			<xsd:element minOccurs="0" name="CustomerService"
+				nillable="true" type="tns:ContactInformation" />
+			<xsd:element minOccurs="0" name="Generic1" nillable="true"
+				type="tns:ContactInformation" />
+			<xsd:element minOccurs="0" name="Generic2" nillable="true"
+				type="tns:ContactInformation" />
+			<xsd:element minOccurs="0" name="Generic3" nillable="true"
+				type="tns:ContactInformation" />
+			<xsd:element minOccurs="0" name="Generic4" nillable="true"
+				type="tns:ContactInformation" />
+			<xsd:element minOccurs="0" name="Insurance" nillable="true"
+				type="tns:ContactInformation" />
+			<xsd:element minOccurs="0" name="LoanDelivery" nillable="true"
+				type="tns:ContactInformation" />
+			<xsd:element minOccurs="0" name="MortgageInsurance"
+				nillable="true" type="tns:ContactInformation" />
+			<xsd:element minOccurs="0" name="NoteDelivery" nillable="true"
+				type="tns:ContactInformation" />
+			<xsd:element minOccurs="0" name="Payment" nillable="true"
+				type="tns:ContactInformation" />
+			<xsd:element minOccurs="0" name="Secondary" nillable="true"
+				type="tns:ContactInformation" />
+			<xsd:element minOccurs="0" name="Shipping" nillable="true"
+				type="tns:ContactInformation" />
+			<xsd:element minOccurs="0" name="TaxNotice" nillable="true"
+				type="tns:ContactInformation" />
+			<xsd:element minOccurs="0" name="TrailingDocuments"
+				nillable="true" type="tns:ContactInformation" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="Addresses" nillable="true" type="tns:Addresses" />
+	<xsd:complexType name="ContactInformation">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" name="Address" nillable="true"
+				type="tns:Address" />
+			<xsd:element minOccurs="0" name="ContactName" nillable="true"
+				type="xsd:string" />
+			<xsd:element minOccurs="0" name="EmailAddress" nillable="true"
+				type="xsd:string" />
+			<xsd:element minOccurs="0" name="EntityName" nillable="true"
+				type="xsd:string" />
+			<xsd:element minOccurs="0" name="FaxNumber" nillable="true"
+				type="xsd:string" />
+			<xsd:element minOccurs="0" name="PhoneNumber" nillable="true"
+				type="xsd:string" />
+			<xsd:element minOccurs="0" name="WebSite" nillable="true"
+				type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="ContactInformation" nillable="true"
+		type="tns:ContactInformation" />
+	<xsd:complexType name="Address">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" name="City" nillable="true"
+				type="xsd:string" />
+			<xsd:element minOccurs="0" name="State" nillable="true"
+				type="xsd:string" />
+			<xsd:element minOccurs="0" name="Street1" nillable="true"
+				type="xsd:string" />
+			<xsd:element minOccurs="0" name="Street2" nillable="true"
+				type="xsd:string" />
+			<xsd:element minOccurs="0" name="Zip" nillable="true"
+				type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="Address" nillable="true" type="tns:Address" />
+	<xsd:complexType name="TradePricing">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" name="AdvancedPricing"
+				nillable="true" type="tns:TradeAdvancedPricing" />
+			<xsd:element minOccurs="0" name="IsAdvancedPricing" type="xsd:boolean" />
+			<xsd:element minOccurs="0" name="SimpleTradePricingItems"
+				nillable="true" type="tns:ArrayOfTradePricingItem" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="TradePricing" nillable="true"
+		type="tns:TradePricing" />
+	<xsd:complexType name="TradeAdvancedPricing">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" name="EarlyDeliveryCredit"
+				type="xsd:decimal" />
+			<xsd:element minOccurs="0" name="GuaranteeFee" type="xsd:decimal" />
+			<xsd:element minOccurs="0" name="NegotiatedIncentive"
+				type="xsd:decimal" />
+			<xsd:element minOccurs="0" name="ServiceFee" type="xsd:decimal" />
+			<xsd:element minOccurs="0" name="TradeAdvancedPricingItems"
+				nillable="true" type="tns:ArrayOfTradeAdvancedPricingItem" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="TradeAdvancedPricing" nillable="true"
+		type="tns:TradeAdvancedPricing" />
+	<xsd:complexType name="ArrayOfTradeAdvancedPricingItem">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" maxOccurs="unbounded"
+				name="TradeAdvancedPricingItem" nillable="true"
+				type="tns:TradeAdvancedPricingItem" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="ArrayOfTradeAdvancedPricingItem"
+		nillable="true" type="tns:ArrayOfTradeAdvancedPricingItem" />
+	<xsd:complexType name="TradeAdvancedPricingItem">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" name="BuyDown" type="xsd:decimal" />
+			<xsd:element minOccurs="0" name="BuyUp" type="xsd:decimal" />
+			<xsd:element minOccurs="0" name="GNMAIIExcess" type="xsd:decimal" />
+			<xsd:element minOccurs="0" name="MandAdj" type="xsd:decimal" />
+			<xsd:element minOccurs="0" name="NoteRate" type="xsd:decimal" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="TradeAdvancedPricingItem" nillable="true"
+		type="tns:TradeAdvancedPricingItem" />
+	<xsd:complexType name="ArrayOfTradePricingItem">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" maxOccurs="unbounded" name="TradePricingItem"
+				nillable="true" type="tns:TradePricingItem" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="ArrayOfTradePricingItem" nillable="true"
+		type="tns:ArrayOfTradePricingItem" />
+	<xsd:complexType name="TradePricingItem">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" name="Price" type="xsd:decimal" />
+			<xsd:element minOccurs="0" name="Rate" type="xsd:decimal" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="TradePricingItem" nillable="true"
+		type="tns:TradePricingItem" />
+	<xsd:complexType name="ArrayOfPricingItem">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" maxOccurs="unbounded" name="PricingItem"
+				nillable="true" type="tns:PricingItem" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="ArrayOfPricingItem" nillable="true"
+		type="tns:ArrayOfPricingItem" />
+	<xsd:complexType name="PricingItem">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" name="BaseAdjustment" type="xsd:decimal" />
+			<xsd:element minOccurs="0" name="ImpoundsAdjustment"
+				type="xsd:decimal" />
+			<xsd:element minOccurs="0" name="LoanAmount" nillable="true"
+				type="tns:RangeOfdecimal" />
+			<xsd:element minOccurs="0" name="SRPStateAdjustments"
+				nillable="true" type="tns:ArrayOfStateAdjustment" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="PricingItem" nillable="true" type="tns:PricingItem" />
+	<xsd:complexType name="ArrayOfStateAdjustment">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" maxOccurs="unbounded" name="StateAdjustment"
+				nillable="true" type="tns:StateAdjustment" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="ArrayOfStateAdjustment" nillable="true"
+		type="tns:ArrayOfStateAdjustment" />
+	<xsd:complexType name="StateAdjustment">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" name="Adjustment" type="xsd:decimal" />
+			<xsd:element minOccurs="0" name="ImpoundAdjustment" type="xsd:decimal" />
+			<xsd:element minOccurs="0" name="State" nillable="true"
+				type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="StateAdjustment" nillable="true"
+		type="tns:StateAdjustment" />
+	<xsd:complexType name="TradeFilterInfo">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" name="AdvancedTradeFilter"
+				nillable="true" type="tns:FieldFilterListInfo" />
+			<xsd:element minOccurs="0" name="DataLayout" nillable="true"
+				type="tns:TableLayout" />
+			<xsd:element minOccurs="0" name="FilterType" type="tns:TradeFilterType" />
+			<xsd:element minOccurs="0" name="SimpleTradeFilter"
+				nillable="true" type="tns:SimpleTradeFilter" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="TradeFilterInfo" nillable="true"
+		type="tns:TradeFilterInfo" />
+	<xsd:simpleType name="TradeFilterType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Simple" />
+			<xsd:enumeration value="Advanced" />
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:element name="TradeFilterType" nillable="true"
+		type="tns:TradeFilterType" />
+	<xsd:complexType name="FieldFilterListInfo">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" name="FieldFilters" nillable="true"
+				type="tns:ArrayOfFieldFilterInfo" />
+			<xsd:element minOccurs="0" name="RelatedLoanMatchType"
+				type="tns:RelatedLoanMatchType" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="FieldFilterListInfo" nillable="true"
+		type="tns:FieldFilterListInfo" />
+	<xsd:complexType name="ArrayOfFieldFilterInfo">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" maxOccurs="unbounded" name="FieldFilterInfo"
+				nillable="true" type="tns:FieldFilterInfo" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="ArrayOfFieldFilterInfo" nillable="true"
+		type="tns:ArrayOfFieldFilterInfo" />
+	<xsd:complexType name="FieldFilterInfo">
+		<xsd:complexContent mixed="false">
+			<xsd:extension base="tns:FieldFilter">
+				<xsd:sequence>
+					<xsd:element minOccurs="0" name="DateFrom" type="xsd:dateTime" />
+					<xsd:element minOccurs="0" name="DateTo" type="xsd:dateTime" />
+					<xsd:element minOccurs="0" name="JointTokenToString"
+						nillable="true" type="xsd:string" />
+					<xsd:element minOccurs="0" name="LeftParenthesesToString"
+						nillable="true" type="xsd:string" />
+					<xsd:element minOccurs="0" name="OperatorDescription"
+						nillable="true" type="xsd:string" />
+					<xsd:element minOccurs="0" name="OperatorTypeAsString"
+						nillable="true" type="xsd:string" />
+					<xsd:element minOccurs="0" name="RightParenthesesToString"
+						nillable="true" type="xsd:string" />
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:element name="FieldFilterInfo" nillable="true"
+		type="tns:FieldFilterInfo" />
+	<xsd:complexType name="FieldFilter">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" name="CriterionName" nillable="true"
+				type="xsd:string" />
+			<xsd:element minOccurs="0" name="DataSource" type="tns:FilterDataSource" />
+			<xsd:element minOccurs="0" name="FieldDescription"
+				nillable="true" type="xsd:string" />
+			<xsd:element minOccurs="0" name="FieldID" nillable="true"
+				type="xsd:string" />
+			<xsd:element minOccurs="0" name="FieldType" type="tns:FieldTypes" />
+			<xsd:element minOccurs="0" name="ForceDataConversion"
+				type="xsd:boolean" />
+			<xsd:element minOccurs="0" name="IsVolatile" type="xsd:boolean" />
+			<xsd:element minOccurs="0" name="JointToken" type="tns:JointTokens" />
+			<xsd:element minOccurs="0" name="LeftParentheses" type="xsd:int" />
+			<xsd:element minOccurs="0" name="OperatorType" type="tns:OperatorTypes" />
+			<xsd:element minOccurs="0" name="RightParentheses" type="xsd:int" />
+			<xsd:element minOccurs="0" name="ValueDescription"
+				nillable="true" type="xsd:string" />
+			<xsd:element minOccurs="0" name="ValueFrom" nillable="true"
+				type="xsd:string" />
+			<xsd:element minOccurs="0" name="ValueTo" nillable="true"
+				type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="FieldFilter" nillable="true" type="tns:FieldFilter" />
+	<xsd:simpleType name="FilterDataSource">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Unknown" />
+			<xsd:enumeration value="Loan" />
+			<xsd:enumeration value="BorrowerContact" />
+			<xsd:enumeration value="BizContact" />
+			<xsd:enumeration value="MasterContract" />
+			<xsd:enumeration value="Trade" />
+			<xsd:enumeration value="CorrespondentMasterCommitment" />
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:element name="FilterDataSource" nillable="true"
+		type="tns:FilterDataSource" />
+	<xsd:simpleType name="FieldTypes">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="IsNothing" />
+			<xsd:enumeration value="IsString" />
+			<xsd:enumeration value="IsNumeric" />
+			<xsd:enumeration value="IsDate" />
+			<xsd:enumeration value="IsPhone" />
+			<xsd:enumeration value="IsMonthDay" />
+			<xsd:enumeration value="IsOptionList" />
+			<xsd:enumeration value="IsYesNo" />
+			<xsd:enumeration value="IsCheckbox" />
+			<xsd:enumeration value="IsDateTime" />
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:element name="FieldTypes" nillable="true" type="tns:FieldTypes" />
+	<xsd:simpleType name="JointTokens">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Nothing" />
+			<xsd:enumeration value="And" />
+			<xsd:enumeration value="Or" />
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:element name="JointTokens" nillable="true" type="tns:JointTokens" />
+	<xsd:simpleType name="OperatorTypes">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="None" />
+			<xsd:enumeration value="IsExact" />
+			<xsd:enumeration value="IsNot" />
+			<xsd:enumeration value="StartsWith" />
+			<xsd:enumeration value="DoesnotStartWith" />
+			<xsd:enumeration value="Contains" />
+			<xsd:enumeration value="DoesnotContain" />
+			<xsd:enumeration value="Equals" />
+			<xsd:enumeration value="NotEqual" />
+			<xsd:enumeration value="GreaterThan" />
+			<xsd:enumeration value="NotGreaterThan" />
+			<xsd:enumeration value="LessThan" />
+			<xsd:enumeration value="NotLessThan" />
+			<xsd:enumeration value="Between" />
+			<xsd:enumeration value="NotBetween" />
+			<xsd:enumeration value="CurrentWeek" />
+			<xsd:enumeration value="CurrentMonth" />
+			<xsd:enumeration value="YearToDate" />
+			<xsd:enumeration value="PreviousWeek" />
+			<xsd:enumeration value="PreviousMonth" />
+			<xsd:enumeration value="PreviousYear" />
+			<xsd:enumeration value="Last7Days" />
+			<xsd:enumeration value="Last30Days" />
+			<xsd:enumeration value="Last90Days" />
+			<xsd:enumeration value="Last365Days" />
+			<xsd:enumeration value="DateBetween" />
+			<xsd:enumeration value="DateNotBetween" />
+			<xsd:enumeration value="EmptyDate" />
+			<xsd:enumeration value="NotEmptyDate" />
+			<xsd:enumeration value="DateAfter" />
+			<xsd:enumeration value="DateOnOrAfter" />
+			<xsd:enumeration value="DateBefore" />
+			<xsd:enumeration value="DateOnOrBefore" />
+			<xsd:enumeration value="IsAnyOf" />
+			<xsd:enumeration value="IsNotAnyOf" />
+			<xsd:enumeration value="IsYes" />
+			<xsd:enumeration value="IsNotYes" />
+			<xsd:enumeration value="IsChecked" />
+			<xsd:enumeration value="IsNotChecked" />
+			<xsd:enumeration value="Today" />
+			<xsd:enumeration value="NextWeek" />
+			<xsd:enumeration value="NextMonth" />
+			<xsd:enumeration value="NextYear" />
+			<xsd:enumeration value="Last15Days" />
+			<xsd:enumeration value="Last60Days" />
+			<xsd:enumeration value="Last180Days" />
+			<xsd:enumeration value="Next7Days" />
+			<xsd:enumeration value="Next15Days" />
+			<xsd:enumeration value="Next30Days" />
+			<xsd:enumeration value="Next60Days" />
+			<xsd:enumeration value="Next90Days" />
+			<xsd:enumeration value="Next180Days" />
+			<xsd:enumeration value="Next365Days" />
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:element name="OperatorTypes" nillable="true"
+		type="tns:OperatorTypes" />
+	<xsd:complexType name="TableLayout">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" name="ColumnCount" type="xsd:int" />
+			<xsd:element minOccurs="0" name="ColumnTags" nillable="true"
+				type="tns:ArrayOfColumnTags" />
+			<xsd:element minOccurs="0" name="Columns" nillable="true"
+				type="tns:ArrayOfColumn" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="TableLayout" nillable="true" type="tns:TableLayout" />
+	<xsd:complexType name="ArrayOfColumnTags">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" maxOccurs="unbounded" name="ColumnTag"
+				nillable="true" type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="ArrayOfColumnTags" nillable="true"
+		type="tns:ArrayOfColumnTags" />
+	<xsd:complexType name="ArrayOfColumn">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" maxOccurs="unbounded" name="Column"
+				nillable="true" type="tns:Column" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="ArrayOfColumn" nillable="true"
+		type="tns:ArrayOfColumn" />
+	<xsd:complexType name="Column">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" name="Alignment" nillable="true"
+				type="xsd:string" />
+			<xsd:element minOccurs="0" name="ColumnID" nillable="true"
+				type="xsd:string" />
+			<xsd:element minOccurs="0" name="Description" nillable="true"
+				type="xsd:string" />
+			<xsd:element minOccurs="0" name="DisplayOrder" type="xsd:int" />
+			<xsd:element minOccurs="0" name="Required" type="xsd:boolean" />
+			<xsd:element minOccurs="0" name="SortOrder" type="tns:SortOrder" />
+			<xsd:element minOccurs="0" name="SortPriority" type="xsd:int" />
+			<xsd:element minOccurs="0" name="Tag" nillable="true"
+				type="xsd:string" />
+			<xsd:element minOccurs="0" name="Title" nillable="true"
+				type="xsd:string" />
+			<xsd:element minOccurs="0" name="Width" type="xsd:int" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="Column" nillable="true" type="tns:Column" />
+	<xsd:simpleType name="SortOrder">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="None" />
+			<xsd:enumeration value="Ascending" />
+			<xsd:enumeration value="Descending" />
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:element name="SortOrder" nillable="true" type="tns:SortOrder" />
+	<xsd:complexType name="SimpleTradeFilter">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" name="FieldList" nillable="true"
+				type="tns:ArrayOfField" />
+			<xsd:element minOccurs="0" name="InvestorStatuses"
+				nillable="true" type="tns:ArrayOfInvestorStatus" />
+			<xsd:element minOccurs="0" name="LTVRange" nillable="true"
+				type="tns:RangeOfdecimal" />
+			<xsd:element minOccurs="0" name="LoanPrograms" nillable="true"
+				type="tns:ArrayOfLoanProgram" />
+			<xsd:element minOccurs="0" name="Milestones" nillable="true"
+				type="tns:ArrayOfMilestone" />
+			<xsd:element minOccurs="0" name="NoteRateRange" nillable="true"
+				type="tns:RangeOfdecimal" />
+			<xsd:element minOccurs="0" name="OccupancyStatuses"
+				nillable="true" type="tns:ArrayOfOccupancyStatus" />
+			<xsd:element minOccurs="0" name="TermRange" nillable="true"
+				type="tns:RangeOfint" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="SimpleTradeFilter" nillable="true"
+		type="tns:SimpleTradeFilter" />
+	<xsd:complexType name="ArrayOfField">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" maxOccurs="unbounded" name="Field"
+				nillable="true" type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="ArrayOfField" nillable="true"
+		type="tns:ArrayOfField" />
+	<xsd:complexType name="ArrayOfInvestorStatus">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" maxOccurs="unbounded" name="InvestorStatus"
+				nillable="true" type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="ArrayOfInvestorStatus" nillable="true"
+		type="tns:ArrayOfInvestorStatus" />
+	<xsd:complexType name="ArrayOfLoanProgram">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" maxOccurs="unbounded" name="LoanProgram"
+				nillable="true" type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="ArrayOfLoanProgram" nillable="true"
+		type="tns:ArrayOfLoanProgram" />
+	<xsd:complexType name="ArrayOfMilestone">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" maxOccurs="unbounded" name="Milestone"
+				nillable="true" type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="ArrayOfMilestone" nillable="true"
+		type="tns:ArrayOfMilestone" />
+	<xsd:complexType name="ArrayOfOccupancyStatus">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" maxOccurs="unbounded" name="OccupancyStatus"
+				nillable="true" type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="ArrayOfOccupancyStatus" nillable="true"
+		type="tns:ArrayOfOccupancyStatus" />
+	<xsd:complexType name="ArrayOfTradePriceAdjustmentInfo">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" maxOccurs="unbounded"
+				name="TradePriceAdjustmentInfo" nillable="true"
+				type="tns:TradePriceAdjustmentInfo" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="ArrayOfTradePriceAdjustmentInfo"
+		nillable="true" type="tns:ArrayOfTradePriceAdjustmentInfo" />
+	<xsd:complexType name="TradePriceAdjustmentInfo">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" name="CriterionList" nillable="true"
+				type="tns:FieldFilterListInfo" />
+			<xsd:element minOccurs="0" name="PriceAdjustment" type="xsd:decimal" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="TradePriceAdjustmentInfo" nillable="true"
+		type="tns:TradePriceAdjustmentInfo" />
+	<xsd:complexType name="LoanTradePairOffsGet">
+		<xsd:complexContent mixed="false">
+			<xsd:extension base="tns:LoanTradePairOffs">
+				<xsd:sequence>
+					<xsd:element minOccurs="0" name="TotalTradeAmount"
+						type="xsd:decimal" />
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:element name="LoanTradePairOffsGet" nillable="true"
+		type="tns:LoanTradePairOffsGet" />
+	<xsd:complexType name="LoanTradePairOffs">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" name="LoanTradePairOffs"
+				nillable="true" type="tns:ArrayOfLoanTradePairOff" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="LoanTradePairOffs" nillable="true"
+		type="tns:LoanTradePairOffs" />
+	<xsd:complexType name="ArrayOfLoanTradePairOff">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" maxOccurs="unbounded" name="LoanTradePairOff"
+				nillable="true" type="tns:LoanTradePairOff" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="ArrayOfLoanTradePairOff" nillable="true"
+		type="tns:ArrayOfLoanTradePairOff" />
+	<xsd:complexType name="LoanTradePairOff">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" name="CalculatedPairOffFee"
+				type="xsd:decimal" />
+			<xsd:element minOccurs="0" name="Date" type="xsd:dateTime" />
+			<xsd:element minOccurs="0" name="DisplayCalculatedPairOffFee"
+				type="xsd:decimal" />
+			<xsd:element minOccurs="0" name="DisplayedTradeAmount"
+				type="xsd:decimal" />
+			<xsd:element minOccurs="0" name="Fee" type="xsd:decimal" />
+			<xsd:element minOccurs="0" name="Index" type="xsd:int" />
+			<xsd:element minOccurs="0" name="Locked" type="xsd:boolean" />
+			<xsd:element minOccurs="0" name="PairOffFeePercentage"
+				type="xsd:decimal" />
+			<xsd:element minOccurs="0" name="TradeAmount" type="xsd:decimal" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="LoanTradePairOff" nillable="true"
+		type="tns:LoanTradePairOff" />
+	<xsd:complexType name="LoanTrade">
+		<xsd:complexContent mixed="false">
+			<xsd:extension base="tns:LoanTradeInfo">
+				<xsd:sequence />
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:element name="LoanTrade" nillable="true" type="tns:LoanTrade" />
+	<xsd:complexType name="LoanTradeInfo">
+		<xsd:complexContent mixed="false">
+			<xsd:extension base="tns:TradeInfoBaseContract">
+				<xsd:sequence>
+					<xsd:element minOccurs="0" name="Filter" nillable="true"
+						type="tns:TradeFilter" />
+					<xsd:element minOccurs="0" name="PairOffs" nillable="true"
+						type="tns:ArrayOfPairOff" />
+					<xsd:element minOccurs="0" name="TradePriceAdjustments"
+						nillable="true" type="tns:ArrayOfTradePriceAdjustment" />
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:element name="LoanTradeInfo" nillable="true"
+		type="tns:LoanTradeInfo" />
+	<xsd:complexType name="TradeFilter">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" name="AdvancedTradeFilter"
+				nillable="true" type="tns:FieldFilterList" />
+			<xsd:element minOccurs="0" name="DataLayout" nillable="true"
+				type="tns:TableLayout" />
+			<xsd:element minOccurs="0" name="FilterType" type="tns:TradeFilterType" />
+			<xsd:element minOccurs="0" name="SimpleTradeFilter"
+				nillable="true" type="tns:SimpleTradeFilter" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="TradeFilter" nillable="true" type="tns:TradeFilter" />
+	<xsd:complexType name="FieldFilterList">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" name="FieldFilters" nillable="true"
+				type="tns:ArrayOfFieldFilter" />
+			<xsd:element minOccurs="0" name="RelatedLoanMatchType"
+				type="tns:RelatedLoanMatchType" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="FieldFilterList" nillable="true"
+		type="tns:FieldFilterList" />
+	<xsd:simpleType name="RelatedLoanMatchType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="None" />
+			<xsd:enumeration value="AnyClosed" />
+			<xsd:enumeration value="LastClosed" />
+			<xsd:enumeration value="AnyOriginated" />
+			<xsd:enumeration value="LastOriginated" />
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:element name="RelatedLoanMatchType" nillable="true"
+		type="tns:RelatedLoanMatchType" />
+	<xsd:complexType name="ArrayOfFieldFilter">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" maxOccurs="unbounded" name="FieldFilter"
+				nillable="true" type="tns:FieldFilter" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="ArrayOfFieldFilter" nillable="true"
+		type="tns:ArrayOfFieldFilter" />
+	<xsd:complexType name="ArrayOfPairOff">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" maxOccurs="unbounded" name="PairOff"
+				nillable="true" type="tns:PairOff" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="ArrayOfPairOff" nillable="true"
+		type="tns:ArrayOfPairOff" />
+	<xsd:complexType name="PairOff">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" name="Date" type="xsd:dateTime" />
+			<xsd:element minOccurs="0" name="Fee" type="xsd:decimal" />
+			<xsd:element minOccurs="0" name="Locked" type="xsd:boolean" />
+			<xsd:element minOccurs="0" name="UndeliveredAmount" type="xsd:decimal" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="PairOff" nillable="true" type="tns:PairOff" />
+	<xsd:complexType name="ArrayOfTradePriceAdjustment">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" maxOccurs="unbounded"
+				name="TradePriceAdjustment" nillable="true" type="tns:TradePriceAdjustment" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="ArrayOfTradePriceAdjustment" nillable="true"
+		type="tns:ArrayOfTradePriceAdjustment" />
+	<xsd:complexType name="TradePriceAdjustment">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" name="CriterionList" nillable="true"
+				type="tns:FieldFilterList" />
+			<xsd:element minOccurs="0" name="PriceAdjustment" type="xsd:decimal" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="TradePriceAdjustment" nillable="true"
+		type="tns:TradePriceAdjustment" />
+	<xsd:complexType name="RangeOfdecimal">
+		<xsd:sequence>
+			<xsd:element name="maxValue" type="xsd:decimal" />
+			<xsd:element name="minValue" type="xsd:decimal" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="RangeOfdecimal" nillable="true"
+		type="tns:RangeOfdecimal" />
+	<xsd:complexType name="RangeOfint">
+		<xsd:sequence>
+			<xsd:element name="maxValue" type="xsd:int" />
+			<xsd:element name="minValue" type="xsd:int" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="RangeOfint" nillable="true" type="tns:RangeOfint" />
+	<xsd:element name="CreateLoanTradeRequest" nillable="true"
+		type="tns:CreateLoanTradeRequest" />
+	<xsd:element name="CreateLoanTradeResponse" nillable="true"
+		type="tns:CreateLoanTradeResponse" />
+	<xsd:complexType name="CreateLoanTradeResponse">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" name="LoanTradeID" type="xsd:int" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="CreateLoanTradeRequest">
+		<xsd:sequence>
+			<xsd:element name="LoanTrade" nillable="true" type="tns:LoanTrade" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="DeleteLoanTradeRequest" nillable="true"
+		type="tns:DeleteLoanTradeRequest" />
+	<xsd:element name="DeleteLoanTradeResponse" nillable="true"
+		type="tns:DeleteLoanTradeResponse" />
+	<xsd:complexType name="DeleteLoanTradeRequest">
+		<xsd:sequence>
+			<xsd:element name="TradeId" type="xsd:int" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="DeleteLoanTradeResponse">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" name="Result" type="xsd:boolean" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="UpdateLoanTradeRequest" nillable="true"
+		type="tns:UpdateLoanTradeRequest" />
+	<xsd:element name="UpdateLoanTradeResponse" nillable="true"
+		type="tns:UpdateLoanTradeResponse" />
+	<xsd:complexType name="UpdateLoanTradeRequest">
+		<xsd:sequence>
+			<xsd:element name="LoanTrade" nillable="true"
+				type="tns:LoanTradeUpdate" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:complexType name="LoanTradeUpdate">
+		<xsd:complexContent mixed="false">
+			<xsd:extension base="tns:LoanTradeInfo">
+				<xsd:sequence>
+					<xsd:element name="TradeID" type="xsd:int" />
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:element name="LoanTradeUpdate" nillable="true"
+		type="tns:LoanTradeUpdate" />
+	<xsd:complexType name="UpdateLoanTradeResponse">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" name="Result" type="xsd:boolean" />
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

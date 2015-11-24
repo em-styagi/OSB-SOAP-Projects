@@ -1,0 +1,46 @@
+<wsdl:definitions name="LoanTemplatesSvc" targetNamespace="http://www.elliemae.com/services/loantemplates" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.elliemae.com/services/loantemplates" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:sec="http://www.elliemae.com/services/security">
+	
+	<wsdl:types>
+		<xsd:schema targetNamespace="http://www.elliemae.com/services/loantemplates" elementFormDefault="qualified">
+			<xsd:include schemaLocation="../../xsd/Services/LoanTemplatesSvc.xsd"/>
+			<xsd:import schemaLocation="../../../../../Security_SOAP_v1/Shared/SecuritySvc.xsd" namespace="http://www.elliemae.com/services/security"/>
+		</xsd:schema>
+	</wsdl:types>
+	
+   <!--  get Duplicate Loan Templates -->
+	<wsdl:message name="GetDuplicateLoanTemplatesRequest">
+		<wsdl:part name="GetDuplicateLoanTemplatesRequest" element="tns:GetDuplicateLoanTemplatesRequest"/>
+	</wsdl:message>
+	<wsdl:message name="GetDuplicateLoanTemplatesRequest_Headers">
+		<wsdl:part name="header" element="sec:SecurityContext"/>
+	</wsdl:message>
+	<wsdl:message name="GetDuplicateLoanTemplatesResponse">
+		<wsdl:part name="GetDuplicateLoanTemplatesResponse" element="tns:GetDuplicateLoanTemplatesResponse"/>
+	</wsdl:message>
+		
+	<wsdl:portType name="LoanTemplatesSvc">
+		<wsdl:operation name="GetDuplicateLoanTemplates">
+			<wsdl:input message="tns:GetDuplicateLoanTemplatesRequest"/>
+			<wsdl:output message="tns:GetDuplicateLoanTemplatesResponse"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	
+	<wsdl:binding name="LoanTemplatesSvcSOAP" type="tns:LoanTemplatesSvc">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="GetDuplicateLoanTemplates">
+			<soap:operation soapAction="http://www.elliemae.com/services/loantemplates/GetDuplicateLoanTemplates"/>
+			<wsdl:input>
+			<soap:header message="tns:GetDuplicateLoanTemplatesRequest_Headers" part="header" use="literal"/>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="LoanTemplatesSvc">
+		<wsdl:port binding="tns:LoanTemplatesSvcSOAP" name="LoanTemplatesSvcSOAP">
+			<soap:address location="http://encompass-ib.dev.dco.elmae:11001/encompass_v1/loan/templates"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

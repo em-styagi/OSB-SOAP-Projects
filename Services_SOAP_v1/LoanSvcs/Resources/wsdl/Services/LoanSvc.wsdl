@@ -1,0 +1,396 @@
+<wsdl:definitions name="LoanSvc" targetNamespace="http://www.elliemae.com/services/LoanSvc" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.elliemae.com/services/LoanSvc" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:sec="http://www.elliemae.com/services/security">
+	
+	<wsdl:types>
+		<xsd:schema targetNamespace="http://www.elliemae.com/services/LoanSvc" elementFormDefault="qualified">
+			<xsd:include schemaLocation="../../xsd/Services/LoanSvc.xsd"/>
+			<xsd:import schemaLocation="../../../../../Security_SOAP_v1/Shared/SecuritySvc.xsd" namespace="http://www.elliemae.com/services/security"/>
+		</xsd:schema>
+	</wsdl:types>
+	
+	<!--  create loan -->
+    <wsdl:message name="CreateLoanRequest">
+		<wsdl:part name="CreateLoanRequest" element="tns:CreateLoanRequest"/>
+	</wsdl:message>
+	<wsdl:message name="CreateLoanRequest_Headers">
+		<wsdl:part name="header" element="sec:SecurityContext"/>
+	</wsdl:message>
+	<wsdl:message name="CreateLoanResponse">
+		<wsdl:part name="CreateLoanResponse" element="tns:CreateLoanResponse"/>
+	</wsdl:message>
+	
+	<!--  update loan -->
+	<wsdl:message name="UpdateLoanRequest">
+		<wsdl:part name="UpdateLoanRequest" element="tns:UpdateLoanRequest"/>
+	</wsdl:message>
+	<wsdl:message name="UpdateLoanRequest_Headers">
+		<wsdl:part name="header" element="sec:SecurityContext"/>
+	</wsdl:message>
+	<wsdl:message name="UpdateLoanResponse">
+		<wsdl:part name="UpdateLoanResponse" element="tns:UpdateLoanResponse"/>
+	</wsdl:message>
+	
+	<!--  get loan -->
+	<wsdl:message name="GetLoanRequest">
+		<wsdl:part name="GetLoanRequest" element="tns:GetLoanRequest"/>
+	</wsdl:message>
+	<wsdl:message name="GetLoanRequest_Headers">
+		<wsdl:part name="header" element="sec:SecurityContext"/>
+	</wsdl:message>
+	<wsdl:message name="GetLoanResponse">
+		<wsdl:part name="GetLoanResponse" element="tns:GetLoanResponse"/>
+	</wsdl:message>
+	
+	<!--  calculate loan -->
+	<wsdl:message name="CalculateLoanRequest">
+		<wsdl:part name="CalculateLoanRequest" element="tns:CalculateLoanRequest"/>
+	</wsdl:message>
+	<wsdl:message name="CalculateLoanRequest_Headers">
+		<wsdl:part name="header" element="sec:SecurityContext"/>
+	</wsdl:message>
+	<wsdl:message name="CalculateLoanResponse">
+		<wsdl:part name="CalculateLoanResponse" element="tns:CalculateLoanResponse"/>
+	</wsdl:message>
+	
+	<!--  lock loan rate -->
+	<wsdl:message name="LockLoanRateRequest">
+		<wsdl:part name="LockLoanRateRequest" element="tns:LockLoanRateRequest"/>
+	</wsdl:message>
+	<wsdl:message name="LockLoanRateRequest_Headers">
+		<wsdl:part name="header" element="sec:SecurityContext"/>
+	</wsdl:message>
+	<wsdl:message name="LockLoanRateResponse">
+		<wsdl:part name="LockLoanRateResponse" element="tns:LockLoanRateResponse"/>
+	</wsdl:message>
+		
+	<!--  get loan MI -->
+	<wsdl:message name="GetLoanMIRequest">
+		<wsdl:part name="GetLoanMIRequest" element="tns:GetLoanMIRequest"/>
+	</wsdl:message>
+	<wsdl:message name="GetLoanMIRequest_Headers">
+		<wsdl:part name="header" element="sec:SecurityContext"/>
+	</wsdl:message>
+	<wsdl:message name="GetLoanMIResponse">
+		<wsdl:part name="GetLoanMIResponse" element="tns:GetLoanMIResponse"/>
+	</wsdl:message>
+	
+	<!--  complete loan milestone -->
+	<wsdl:message name="CompleteLoanMilestoneRequest">
+		<wsdl:part name="CompleteLoanMilestoneRequest" element="tns:CompleteLoanMilestoneRequest"/>
+	</wsdl:message>
+	<wsdl:message name="CompleteLoanMilestoneRequest_Headers">
+		<wsdl:part name="header" element="sec:SecurityContext"/>
+	</wsdl:message>
+	<wsdl:message name="CompleteLoanMilestoneResponse">
+		<wsdl:part name="CompleteLoanMilestoneResponse" element="tns:CompleteLoanMilestoneResponse"/>
+	</wsdl:message>
+	
+	<!--  lock loan -->
+	<wsdl:message name="LockLoanRequest">
+		<wsdl:part name="LockLoanRequest" element="tns:LockLoanRequest"/>
+	</wsdl:message>
+	<wsdl:message name="LockLoanRequest_Headers">
+		<wsdl:part name="header" element="sec:SecurityContext"/>
+	</wsdl:message>
+	<wsdl:message name="LockLoanResponse">
+			<wsdl:part name="LockLoanResponse" element="tns:LockLoanResponse"/>
+	</wsdl:message>
+	
+	<!--  unlock loan -->
+	<wsdl:message name="UnlockLoanRequest">
+		<wsdl:part name="UnlockLoanRequest" element="tns:UnlockLoanRequest"/>
+	</wsdl:message>
+	<wsdl:message name="UnlockLoanRequest_Headers">
+		<wsdl:part name="header" element="sec:SecurityContext"/>
+	</wsdl:message>
+	<wsdl:message name="UnlockLoanResponse">
+	<wsdl:part name="UnlockLoanResponse" element="tns:UnlockLoanResponse"/>
+	</wsdl:message>
+	
+	<!-- Import Loan -->
+    <wsdl:message name="ImportLoanRequest">
+		<wsdl:part name="ImportLoanRequest" element="tns:ImportLoanRequest"/>
+	</wsdl:message>
+	<wsdl:message name="ImportLoanRequest_Headers">
+		<wsdl:part name="header" element="sec:SecurityContext"/>
+	</wsdl:message>
+	<wsdl:message name="ImportLoanResponse">
+		<wsdl:part name="ImportLoanResponse" element="tns:ImportLoanResponse"/>
+	</wsdl:message>
+	<!--Archive Loan -->
+	<wsdl:message name="ArchiveLoanRequest">
+		<wsdl:part name="ArchiveLoanRequest" element="tns:ArchiveLoanRequest"/>
+	</wsdl:message>
+	<wsdl:message name="ArchiveLoanRequest_Headers">
+		<wsdl:part name="header" element="sec:SecurityContext"/>
+	</wsdl:message>
+	<wsdl:message name="ArchiveLoanResponse">
+		<wsdl:part name="ArchiveLoanResponse" element="tns:ArchiveLoanResponse"/>
+	</wsdl:message>
+	
+    <!--Export Loan -->
+	<wsdl:message name="ExportLoanRequest">
+		<wsdl:part name="ExportLoanRequest" element="tns:ExportLoanRequest"/>
+	</wsdl:message>
+	<wsdl:message name="ExportLoanRequest_Headers">
+		<wsdl:part name="header" element="sec:SecurityContext"/>
+	</wsdl:message>
+	<wsdl:message name="ExportLoanResponse">
+		<wsdl:part name="ExportLoanResponse" element="tns:ExportLoanResponse"/>
+	</wsdl:message>
+	
+	<!--Delete Loan -->
+	<wsdl:message name="DeleteLoanRequest">
+		<wsdl:part name="DeleteLoanRequest" element="tns:DeleteLoanRequest"/>
+	</wsdl:message>
+	<wsdl:message name="DeleteLoanRequest_Headers">
+		<wsdl:part name="header" element="sec:SecurityContext"/>
+	</wsdl:message>
+	<wsdl:message name="DeleteLoanResponse">
+		<wsdl:part name="DeleteLoanResponse" element="tns:DeleteLoanResponse"/>
+	</wsdl:message>
+	
+	<!--Get Loan Properties Info -->
+	<wsdl:message name="GetLoanPropertiesInfoRequest">
+		<wsdl:part name="GetLoanPropertiesInfoRequest" element="tns:GetLoanPropertiesInfoRequest"/>
+	</wsdl:message>
+	<wsdl:message name="GetLoanPropertiesInfoRequest_Headers">
+		<wsdl:part name="header" element="sec:SecurityContext"/>
+	</wsdl:message>
+	<wsdl:message name="GetLoanPropertiesInfoResponse">
+		<wsdl:part name="GetLoanPropertiesInfoResponse" element="tns:GetLoanPropertiesInfoResponse"/>
+	</wsdl:message>
+	
+	<!--Move Loans -->
+	<wsdl:message name="MoveLoansRequest">
+		<wsdl:part name="MoveLoansRequest" element="tns:MoveLoansRequest"/>
+	</wsdl:message>
+	<wsdl:message name="MoveLoansRequest_Headers">
+		<wsdl:part name="header" element="sec:SecurityContext"/>
+	</wsdl:message>
+	<wsdl:message name="MoveLoansResponse">
+		<wsdl:part name="MoveLoansResponse" element="tns:MoveLoansResponse"/>
+	</wsdl:message>
+		
+	<wsdl:portType name="LoanSvc">
+	    <wsdl:operation name="CreateLoan">
+			<wsdl:input message="tns:CreateLoanRequest"/>
+			<wsdl:output message="tns:CreateLoanResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="UpdateLoan">
+			<wsdl:input message="tns:UpdateLoanRequest"/>
+			<wsdl:output message="tns:UpdateLoanResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="GetLoan">
+			<wsdl:input message="tns:GetLoanRequest"/>
+			<wsdl:output message="tns:GetLoanResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="CalculateLoan">
+			<wsdl:input message="tns:CalculateLoanRequest"/>
+			<wsdl:output message="tns:CalculateLoanResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="LockLoanRate">
+			<wsdl:input message="tns:LockLoanRateRequest"/>
+			<wsdl:output message="tns:LockLoanRateResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="GetLoanMI">
+			<wsdl:input message="tns:GetLoanMIRequest"/>
+			<wsdl:output message="tns:GetLoanMIResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="CompleteLoanMilestone">
+			<wsdl:input message="tns:CompleteLoanMilestoneRequest"/>
+			<wsdl:output message="tns:CompleteLoanMilestoneResponse"/>
+		</wsdl:operation>
+	    <wsdl:operation name="LockLoan">
+			<wsdl:input message="tns:LockLoanRequest"/>
+			<wsdl:output message="tns:LockLoanResponse"/>
+		</wsdl:operation>
+	    <wsdl:operation name="UnlockLoan">
+			<wsdl:input message="tns:UnlockLoanRequest"/>
+			<wsdl:output message="tns:UnlockLoanResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="ImportLoan">
+			<wsdl:input message="tns:ImportLoanRequest"/>
+			<wsdl:output message="tns:ImportLoanResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="ArchiveLoan">
+			<wsdl:input message="tns:ArchiveLoanRequest"/>
+			<wsdl:output message="tns:ArchiveLoanResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="ExportLoan">
+			<wsdl:input message="tns:ExportLoanRequest"/>
+			<wsdl:output message="tns:ExportLoanResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="DeleteLoan">
+			<wsdl:input message="tns:DeleteLoanRequest"/>
+			<wsdl:output message="tns:DeleteLoanResponse"/>
+		</wsdl:operation>
+	    <wsdl:operation name="GetLoanPropertiesInfo">
+			<wsdl:input message="tns:GetLoanPropertiesInfoRequest"/>
+			<wsdl:output message="tns:GetLoanPropertiesInfoResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="MoveLoans">
+			<wsdl:input message="tns:MoveLoansRequest"/>
+			<wsdl:output message="tns:MoveLoansResponse"/>
+		</wsdl:operation>		
+	</wsdl:portType>
+	
+	<wsdl:binding name="LoanSvcSOAP" type="tns:LoanSvc">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="CreateLoan">
+			<soap:operation soapAction="http://www.elliemae.com/services/LoanSvc/CreateLoan"/>
+			<wsdl:input>
+			<soap:header message="tns:CreateLoanRequest_Headers" part="header" use="literal"/>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="UpdateLoan">
+			<soap:operation soapAction="http://www.elliemae.com/services/LoanSvc/UpdateLoan"/>
+			<wsdl:input>
+			<soap:header message="tns:UpdateLoanRequest_Headers" part="header" use="literal"/>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetLoan">
+			<soap:operation soapAction="http://www.elliemae.com/services/LoanSvc/GetLoan"/>
+			<wsdl:input>
+			<soap:header message="tns:GetLoanRequest_Headers" part="header" use="literal"/>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="CalculateLoan">
+			<soap:operation soapAction="http://www.elliemae.com/services/LoanSvc/CalculateLoan"/>
+			<wsdl:input>
+			<soap:header message="tns:CalculateLoanRequest_Headers" part="header" use="literal"/>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="LockLoanRate">
+			<soap:operation soapAction="http://www.elliemae.com/services/LoanSvc/LockLoanRate"/>
+			<wsdl:input>
+			<soap:header message="tns:LockLoanRateRequest_Headers" part="header" use="literal"/>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		
+		<wsdl:operation name="GetLoanMI">
+			<soap:operation soapAction="http://www.elliemae.com/services/LoanSvc/GetLoanMI"/>
+			<wsdl:input>
+			<soap:header message="tns:GetLoanMIRequest_Headers" part="header" use="literal"/>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="CompleteLoanMilestone">
+			<soap:operation soapAction="http://www.elliemae.com/services/LoanSvc/CompleteLoanMilestone"/>
+			<wsdl:input>
+			<soap:header message="tns:CompleteLoanMilestoneRequest_Headers" part="header" use="literal"/>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="LockLoan">
+			<soap:operation soapAction="http://www.elliemae.com/services/LoanSvc/LockLoan"/>
+			<wsdl:input>
+			<soap:header message="tns:LockLoanRequest_Headers" part="header" use="literal"/>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="UnlockLoan">
+			<soap:operation soapAction="http://www.elliemae.com/services/LoanSvc/UnlockLoan"/>
+			<wsdl:input>
+			<soap:header message="tns:UnlockLoanRequest_Headers" part="header" use="literal"/>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="ImportLoan">
+			<soap:operation soapAction="http://www.elliemae.com/services/LoanSvc/ImportLoan"/>
+			<wsdl:input>
+			<soap:header message="tns:ImportLoanRequest_Headers" part="header" use="literal"/>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	 	<wsdl:operation name="ArchiveLoan">
+			<soap:operation soapAction="http://www.elliemae.com/services/LoanSvc/ArchiveLoan"/>
+			<wsdl:input>
+			<soap:header message="tns:ArchiveLoanRequest_Headers" part="header" use="literal"/>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="ExportLoan">
+			<soap:operation soapAction="http://www.elliemae.com/services/LoanSvc/ExportLoan"/>
+			<wsdl:input>
+			<soap:header message="tns:ExportLoanRequest_Headers" part="header" use="literal"/>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="DeleteLoan">
+			<soap:operation soapAction="http://www.elliemae.com/services/LoanSvc/DeleteLoan"/>
+			<wsdl:input>
+			<soap:header message="tns:DeleteLoanRequest_Headers" part="header" use="literal"/>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+        <wsdl:operation name="GetLoanPropertiesInfo">
+			<soap:operation soapAction="http://www.elliemae.com/services/LoanSvc/GetLoanPropertiesInfo"/>
+			<wsdl:input>
+			<soap:header message="tns:GetLoanPropertiesInfoRequest_Headers" part="header" use="literal"/>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="MoveLoans">
+			<soap:operation soapAction="http://www.elliemae.com/services/LoanSvc/MoveLoans"/>
+			<wsdl:input>
+			<soap:header message="tns:MoveLoansRequest_Headers" part="header" use="literal"/>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>		
+	</wsdl:binding>
+	<wsdl:service name="LoanSvc">
+		<wsdl:port binding="tns:LoanSvcSOAP" name="LoanSvcSOAP">
+			<soap:address location="http://encompass-ib.dev.dco.elmae:11001/encompass_v1/loans"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

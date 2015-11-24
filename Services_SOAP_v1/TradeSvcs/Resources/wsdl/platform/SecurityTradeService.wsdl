@@ -1,0 +1,52 @@
+<wsdl:definitions name="SecurityTradeService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:i0="http://www.elliemae.com/encompass/platform" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://tempuri.org/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/">
+	<wsdl:import namespace="http://www.elliemae.com/encompass/platform" location="WSDL_-1347565970.wsdl"/>
+	<wsdl:types/>
+	<wsdl:binding name="BasicHttpBinding_ISecurityTradeService" type="i0:ISecurityTradeService">
+		<soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="CreateSecurityTrade">
+			<soap:operation soapAction="http://www.elliemae.com/encompass/platform/ISecurityTradeService/CreateSecurityTrade" style="document"/>
+			<wsdl:input name="SecurityTradeCreateRequest">
+				<soap:header message="i0:SecurityTradeCreateRequest_Headers" part="SecurityContext" use="literal"/>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="SecurityTradeCreateResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetSecurityTrade">
+			<soap:operation soapAction="http://www.elliemae.com/encompass/platform/ISecurityTradeService/GetSecurityTrade" style="document"/>
+			<wsdl:input name="SecurityTradeGetRequest">
+				<soap:header message="i0:SecurityTradeGetRequest_Headers" part="SecurityContext" use="literal"/>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="SecurityTradeGetResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="DeleteSecurityTrade">
+			<soap:operation soapAction="http://www.elliemae.com/encompass/platform/ISecurityTradeService/DeleteSecurityTrade" style="document"/>
+			<wsdl:input name="SecurityTradeDeleteRequest">
+				<soap:header message="i0:SecurityTradeDeleteRequest_Headers" part="SecurityContext" use="literal"/>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="SecurityTradeDeleteResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="UpdateSecurityTrade">
+			<soap:operation soapAction="http://www.elliemae.com/encompass/platform/ISecurityTradeService/UpdateSecurityTrade" style="document"/>
+			<wsdl:input name="SecurityTradeUpdateRequest">
+				<soap:header message="i0:SecurityTradeUpdateRequest_Headers" part="SecurityContext" use="literal"/>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="SecurityTradeUpdateResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="SecurityTradeService">
+		<wsdl:port name="BasicHttpBinding_ISecurityTradeService" binding="tns:BasicHttpBinding_ISecurityTradeService">
+			<soap:address location="http://encplat-pod1.qa.dco.elmae/EncompassPlatform/SecurityTradeService.svc"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

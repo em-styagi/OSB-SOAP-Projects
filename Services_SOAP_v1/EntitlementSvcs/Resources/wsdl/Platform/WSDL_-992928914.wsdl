@@ -1,0 +1,71 @@
+<wsdl:definitions targetNamespace="http://www.elliemae.com/encompass/platform" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.elliemae.com/encompass/platform" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/">
+	<wsdl:types>
+		<xsd:schema targetNamespace="http://www.elliemae.com/encompass/platform/Imports">
+			<xsd:import schemaLocation="../../xsd/Platform/XMLSchema_-471586377.xsd" namespace="http://www.elliemae.com/encompass/platform"/>
+			<xsd:import schemaLocation="../../xsd/Platform/XMLSchema_-1433200394.xsd" namespace="http://schemas.microsoft.com/2003/10/Serialization/"/>
+			<xsd:import schemaLocation="../../xsd/Platform/XMLSchema_490027640.xsd" namespace="http://schemas.datacontract.org/2004/07/Elli.EncompassPlatform.Common.DataContracts"/>
+			<xsd:import schemaLocation="../../xsd/Platform/XMLSchema_1451641657.xsd" namespace="http://schemas.datacontract.org/2004/07/Elli.Domain.Security"/>
+		</xsd:schema>
+	</wsdl:types>
+	<wsdl:message name="AuthenticateClientRequest">
+		<wsdl:part name="AuthenticateClientRequest" element="tns:AuthenticateClientRequest"/>
+	</wsdl:message>
+	<wsdl:message name="AuthenticateClientResponse">
+		<wsdl:part name="AuthenticateClientResponse" element="tns:AuthenticateClientResponse"/>
+	</wsdl:message>
+	<wsdl:message name="UserProfileGetRequest">
+		<wsdl:part name="UserProfileGetRequest" element="tns:UserProfileGetRequest"/>
+	</wsdl:message>
+	<wsdl:message name="UserProfileGetResponse">
+		<wsdl:part name="UserProfileGetResponse" element="tns:UserProfileGetResponse"/>
+	</wsdl:message>
+	<wsdl:message name="UserGroupsGetRequest">
+		<wsdl:part name="UserGroupsGetRequest" element="tns:UserGroupsGetRequest"/>
+	</wsdl:message>
+	<wsdl:message name="UserGroupsGetResponse">
+		<wsdl:part name="UserGroupsGetResponse" element="tns:UserGroupsGetResponse"/>
+	</wsdl:message>
+	<wsdl:message name="UserAccessRightsRequest">
+		<wsdl:part name="UserName" element="tns:UserName"/>
+	</wsdl:message>
+	<wsdl:message name="UserAccessRightsResponse">
+		<wsdl:part name="UserAccessRightsRequest" element="tns:UserAccessRightsRequest"/>
+	</wsdl:message>
+	<wsdl:message name="IssueAuthenticationTokenRequest">
+		<wsdl:part name="ClientCredentials" element="tns:ClientCredentials"/>
+		<wsdl:part name="ServiceClientId" element="tns:ServiceClientId"/>
+		<wsdl:part name="TokenType" element="tns:TokenType"/>
+	</wsdl:message>
+	<wsdl:message name="IssueAuthenticationTokenResponse">
+		<wsdl:part name="Token" element="tns:Token"/>
+	</wsdl:message>
+	<wsdl:message name="AuthenticateClientTokenRequest">
+		<wsdl:part name="parameters" element="tns:AuthenticateClientTokenRequest"/>
+	</wsdl:message>
+	<wsdl:portType name="ISecurityService">
+		<wsdl:operation name="AuthenticateClient">
+			<wsdl:input wsaw:Action="http://www.elliemae.com/encompass/platform/ISecurityService/AuthenticateClient" name="AuthenticateClientRequest" message="tns:AuthenticateClientRequest"/>
+			<wsdl:output wsaw:Action="http://www.elliemae.com/encompass/platform/ISecurityService/AuthenticateClientResponse" name="AuthenticateClientResponse" message="tns:AuthenticateClientResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="UserProfileGet">
+			<wsdl:input wsaw:Action="http://www.elliemae.com/encompass/platform/ISecurityService/UserProfileGet" name="UserProfileGetRequest" message="tns:UserProfileGetRequest"/>
+			<wsdl:output wsaw:Action="http://www.elliemae.com/encompass/platform/ISecurityService/UserProfileGetResponse" name="UserProfileGetResponse" message="tns:UserProfileGetResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="GetUserGroups">
+			<wsdl:input wsaw:Action="http://www.elliemae.com/encompass/platform/ISecurityService/GetUserGroups" name="UserGroupsGetRequest" message="tns:UserGroupsGetRequest"/>
+			<wsdl:output wsaw:Action="http://www.elliemae.com/encompass/platform/ISecurityService/GetUserGroupsResponse" name="UserGroupsGetResponse" message="tns:UserGroupsGetResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="UserAccessRightsGet">
+			<wsdl:input wsaw:Action="http://www.elliemae.com/encompass/platform/ISecurityService/UserAccessRightsGet" name="UserAccessRightsRequest" message="tns:UserAccessRightsRequest"/>
+			<wsdl:output wsaw:Action="http://www.elliemae.com/encompass/platform/ISecurityService/UserAccessRightsGetResponse" name="UserAccessRightsResponse" message="tns:UserAccessRightsResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="IssueAuthenticationToken">
+			<wsdl:input wsaw:Action="http://www.elliemae.com/encompass/platform/ISecurityService/IssueAuthenticationToken" name="IssueAuthenticationTokenRequest" message="tns:IssueAuthenticationTokenRequest"/>
+			<wsdl:output wsaw:Action="http://www.elliemae.com/encompass/platform/ISecurityService/IssueAuthenticationTokenResponse" name="IssueAuthenticationTokenResponse" message="tns:IssueAuthenticationTokenResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="AuthenticateClientWithToken">
+			<wsdl:input wsaw:Action="http://www.elliemae.com/encompass/platform/ISecurityService/AuthenticateClientWithToken" name="AuthenticateClientTokenRequest" message="tns:AuthenticateClientTokenRequest"/>
+			<wsdl:output wsaw:Action="http://www.elliemae.com/encompass/platform/ISecurityService/AuthenticateClientWithTokenResponse" name="AuthenticateClientResponse" message="tns:AuthenticateClientResponse"/>
+		</wsdl:operation>
+	</wsdl:portType>
+</wsdl:definitions>

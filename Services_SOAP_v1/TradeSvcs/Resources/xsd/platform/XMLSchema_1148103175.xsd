@@ -1,0 +1,507 @@
+<xs:schema elementFormDefault="qualified" targetNamespace="http://www.elliemae.com/encompass/platform" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.elliemae.com/encompass/platform">
+	<xs:import schemaLocation="XMLSchema_-1223636087.xsd" namespace="http://schemas.datacontract.org/2004/07/Elli.EncompassPlatform.Common.DataContracts"/>
+	<xs:import schemaLocation="XMLSchema_2109717192.xsd" namespace="http://schemas.datacontract.org/2004/07/EllieMae.EMLite.Common"/>
+	<xs:import schemaLocation="XMLSchema_-262022070.xsd" namespace="http://schemas.datacontract.org/2004/07/EllieMae.EMLite.ClientServer.Reporting"/>
+	<xs:complexType name="LoanTradeGetRequest.LoanTradeGetRequestBody">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="TradeId" type="xs:int"/>
+			<xs:element minOccurs="0" name="TradeName" nillable="true" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="LoanTradeGetRequest.LoanTradeGetRequestBody" nillable="true" type="tns:LoanTradeGetRequest.LoanTradeGetRequestBody"/>
+	<xs:element name="LoanTradeGetRequest" nillable="true" type="tns:LoanTradeGetRequest.LoanTradeGetRequestBody"/>
+	<xs:complexType name="SecurityContext">
+		<xs:sequence>
+			<xs:element name="Created" nillable="true" type="xs:dateTime"/>
+			<xs:element name="Realm" nillable="true" type="xs:string"/>
+			<xs:element name="SessionId" nillable="true" type="xs:string"/>
+			<xs:element minOccurs="0" name="TokenData" nillable="true" type="xs:string">
+				<xs:annotation>
+					<xs:appinfo>
+						<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="TokenType" nillable="true" type="xs:string">
+				<xs:annotation>
+					<xs:appinfo>
+						<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="UserName" nillable="true" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="SecurityContext" nillable="true" type="tns:SecurityContext"/>
+	<xs:complexType name="LoanTradeGetResponse.LoanTradeGetResponseBody">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="LoanTrade" nillable="true" type="tns:LoanTradeGet"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="LoanTradeGetResponse.LoanTradeGetResponseBody" nillable="true" type="tns:LoanTradeGetResponse.LoanTradeGetResponseBody"/>
+	<xs:complexType name="LoanTradeGet">
+		<xs:complexContent mixed="false">
+			<xs:extension base="tns:TradeInfo">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="Archived" type="xs:boolean"/>
+					<xs:element minOccurs="0" name="Guid" nillable="true" type="xs:string"/>
+					<xs:element minOccurs="0" name="LoanTradePairOffsInfo" nillable="true" type="tns:LoanTradePairOffsGet"/>
+					<xs:element minOccurs="0" name="TradeID" type="xs:int"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="LoanTradeGet" nillable="true" type="tns:LoanTradeGet"/>
+	<xs:complexType name="TradeInfo">
+		<xs:complexContent mixed="false">
+			<xs:extension base="tns:TradeInfoBaseContract">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="ContractNumber" nillable="true" type="xs:string"/>
+					<xs:element minOccurs="0" name="Filter" nillable="true" type="tns:TradeFilterInfo"/>
+					<xs:element minOccurs="0" name="MaxAmount" type="xs:decimal"/>
+					<xs:element minOccurs="0" name="MinAmount" type="xs:decimal"/>
+					<xs:element minOccurs="0" name="OpenAmount" type="xs:decimal"/>
+					<xs:element minOccurs="0" name="PairOffAmount" type="xs:decimal"/>
+					<xs:element minOccurs="0" name="Status" type="q1:TradeStatus" xmlns:q1="http://schemas.datacontract.org/2004/07/Elli.EncompassPlatform.Common.DataContracts"/>
+					<xs:element minOccurs="0" name="TradePriceAdjustments" nillable="true" type="tns:ArrayOfTradePriceAdjustmentInfo"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="TradeInfo" nillable="true" type="tns:TradeInfo"/>
+	<xs:complexType name="TradeInfoBaseContract">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="Addresses" nillable="true" type="tns:Addresses"/>
+			<xs:element minOccurs="0" name="BuyDownAmount" type="xs:decimal"/>
+			<xs:element minOccurs="0" name="BuyUpAmount" type="xs:decimal"/>
+			<xs:element minOccurs="0" name="CommitmentDate" type="xs:dateTime"/>
+			<xs:element minOccurs="0" name="CommitmentType" nillable="true" type="xs:string"/>
+			<xs:element minOccurs="0" name="ContractID" type="xs:int"/>
+			<xs:element minOccurs="0" name="EarlyDeliveryDate" type="xs:dateTime"/>
+			<xs:element minOccurs="0" name="InvestorCommitmentNumber" nillable="true" type="xs:string"/>
+			<xs:element minOccurs="0" name="InvestorDeliveryDate" type="xs:dateTime"/>
+			<xs:element minOccurs="0" name="InvestorName" nillable="true" type="xs:string"/>
+			<xs:element minOccurs="0" name="InvestorTradeNumber" nillable="true" type="xs:string"/>
+			<xs:element minOccurs="0" name="Locked" type="xs:boolean"/>
+			<xs:element minOccurs="0" name="MiscAdjustment" type="xs:decimal"/>
+			<xs:element minOccurs="0" name="Name" nillable="true" type="xs:string"/>
+			<xs:element minOccurs="0" name="Notes" nillable="true" type="xs:string"/>
+			<xs:element minOccurs="0" name="PairOffFee" type="xs:decimal"/>
+			<xs:element minOccurs="0" name="Pricing" nillable="true" type="tns:TradePricing"/>
+			<xs:element minOccurs="0" name="PurchaseDate" type="xs:dateTime"/>
+			<xs:element minOccurs="0" name="RateAdjustment" type="xs:decimal"/>
+			<xs:element minOccurs="0" name="SRPTable" nillable="true" type="tns:ArrayOfPricingItem"/>
+			<xs:element minOccurs="0" name="Servicer" nillable="true" type="xs:string"/>
+			<xs:element minOccurs="0" name="ServicingType" type="q2:ServicingType" xmlns:q2="http://schemas.datacontract.org/2004/07/Elli.EncompassPlatform.Common.DataContracts"/>
+			<xs:element minOccurs="0" name="ShipmentDate" type="xs:dateTime"/>
+			<xs:element minOccurs="0" name="TargetDeliveryDate" type="xs:dateTime"/>
+			<xs:element minOccurs="0" name="Tolerance" type="xs:decimal"/>
+			<xs:element minOccurs="0" name="TradeAmount" type="xs:decimal"/>
+			<xs:element minOccurs="0" name="TradeDescription" nillable="true" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="TradeInfoBaseContract" nillable="true" type="tns:TradeInfoBaseContract"/>
+	<xs:complexType name="Addresses">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="Assignment" nillable="true" type="tns:ContactInformation"/>
+			<xs:element minOccurs="0" name="Correspondence" nillable="true" type="tns:ContactInformation"/>
+			<xs:element minOccurs="0" name="CustomerService" nillable="true" type="tns:ContactInformation"/>
+			<xs:element minOccurs="0" name="Generic1" nillable="true" type="tns:ContactInformation"/>
+			<xs:element minOccurs="0" name="Generic2" nillable="true" type="tns:ContactInformation"/>
+			<xs:element minOccurs="0" name="Generic3" nillable="true" type="tns:ContactInformation"/>
+			<xs:element minOccurs="0" name="Generic4" nillable="true" type="tns:ContactInformation"/>
+			<xs:element minOccurs="0" name="Insurance" nillable="true" type="tns:ContactInformation"/>
+			<xs:element minOccurs="0" name="LoanDelivery" nillable="true" type="tns:ContactInformation"/>
+			<xs:element minOccurs="0" name="MortgageInsurance" nillable="true" type="tns:ContactInformation"/>
+			<xs:element minOccurs="0" name="NoteDelivery" nillable="true" type="tns:ContactInformation"/>
+			<xs:element minOccurs="0" name="Payment" nillable="true" type="tns:ContactInformation"/>
+			<xs:element minOccurs="0" name="Secondary" nillable="true" type="tns:ContactInformation"/>
+			<xs:element minOccurs="0" name="Shipping" nillable="true" type="tns:ContactInformation"/>
+			<xs:element minOccurs="0" name="TaxNotice" nillable="true" type="tns:ContactInformation"/>
+			<xs:element minOccurs="0" name="TrailingDocuments" nillable="true" type="tns:ContactInformation"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Addresses" nillable="true" type="tns:Addresses"/>
+	<xs:complexType name="ContactInformation">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="Address" nillable="true" type="tns:Address"/>
+			<xs:element minOccurs="0" name="ContactName" nillable="true" type="xs:string"/>
+			<xs:element minOccurs="0" name="EmailAddress" nillable="true" type="xs:string"/>
+			<xs:element minOccurs="0" name="EntityName" nillable="true" type="xs:string"/>
+			<xs:element minOccurs="0" name="FaxNumber" nillable="true" type="xs:string"/>
+			<xs:element minOccurs="0" name="PhoneNumber" nillable="true" type="xs:string"/>
+			<xs:element minOccurs="0" name="WebSite" nillable="true" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ContactInformation" nillable="true" type="tns:ContactInformation"/>
+	<xs:complexType name="Address">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="City" nillable="true" type="xs:string"/>
+			<xs:element minOccurs="0" name="State" nillable="true" type="xs:string"/>
+			<xs:element minOccurs="0" name="Street1" nillable="true" type="xs:string"/>
+			<xs:element minOccurs="0" name="Street2" nillable="true" type="xs:string"/>
+			<xs:element minOccurs="0" name="Zip" nillable="true" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Address" nillable="true" type="tns:Address"/>
+	<xs:complexType name="TradePricing">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="AdvancedPricing" nillable="true" type="tns:TradeAdvancedPricing"/>
+			<xs:element minOccurs="0" name="IsAdvancedPricing" type="xs:boolean"/>
+			<xs:element minOccurs="0" name="SimpleTradePricingItems" nillable="true" type="tns:ArrayOfTradePricingItem"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="TradePricing" nillable="true" type="tns:TradePricing"/>
+	<xs:complexType name="TradeAdvancedPricing">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="EarlyDeliveryCredit" type="xs:decimal"/>
+			<xs:element minOccurs="0" name="GuaranteeFee" type="xs:decimal"/>
+			<xs:element minOccurs="0" name="NegotiatedIncentive" type="xs:decimal"/>
+			<xs:element minOccurs="0" name="ServiceFee" type="xs:decimal"/>
+			<xs:element minOccurs="0" name="TradeAdvancedPricingItems" nillable="true" type="tns:ArrayOfTradeAdvancedPricingItem"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="TradeAdvancedPricing" nillable="true" type="tns:TradeAdvancedPricing"/>
+	<xs:complexType name="ArrayOfTradeAdvancedPricingItem">
+		<xs:sequence>
+			<xs:element minOccurs="0" maxOccurs="unbounded" name="TradeAdvancedPricingItem" nillable="true" type="tns:TradeAdvancedPricingItem"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ArrayOfTradeAdvancedPricingItem" nillable="true" type="tns:ArrayOfTradeAdvancedPricingItem"/>
+	<xs:complexType name="TradeAdvancedPricingItem">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="BuyDown" type="xs:decimal"/>
+			<xs:element minOccurs="0" name="BuyUp" type="xs:decimal"/>
+			<xs:element minOccurs="0" name="GNMAIIExcess" type="xs:decimal"/>
+			<xs:element minOccurs="0" name="MandAdj" type="xs:decimal"/>
+			<xs:element minOccurs="0" name="NoteRate" type="xs:decimal"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="TradeAdvancedPricingItem" nillable="true" type="tns:TradeAdvancedPricingItem"/>
+	<xs:complexType name="ArrayOfTradePricingItem">
+		<xs:sequence>
+			<xs:element minOccurs="0" maxOccurs="unbounded" name="TradePricingItem" nillable="true" type="tns:TradePricingItem"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ArrayOfTradePricingItem" nillable="true" type="tns:ArrayOfTradePricingItem"/>
+	<xs:complexType name="TradePricingItem">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="Price" type="xs:decimal"/>
+			<xs:element minOccurs="0" name="Rate" type="xs:decimal"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="TradePricingItem" nillable="true" type="tns:TradePricingItem"/>
+	<xs:complexType name="ArrayOfPricingItem">
+		<xs:sequence>
+			<xs:element minOccurs="0" maxOccurs="unbounded" name="PricingItem" nillable="true" type="tns:PricingItem"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ArrayOfPricingItem" nillable="true" type="tns:ArrayOfPricingItem"/>
+	<xs:complexType name="PricingItem">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="BaseAdjustment" type="xs:decimal"/>
+			<xs:element minOccurs="0" name="ImpoundsAdjustment" type="xs:decimal"/>
+			<xs:element minOccurs="0" name="LoanAmount" nillable="true" type="q3:RangeOfdecimal" xmlns:q3="http://schemas.datacontract.org/2004/07/EllieMae.EMLite.Common"/>
+			<xs:element minOccurs="0" name="SRPStateAdjustments" nillable="true" type="tns:ArrayOfStateAdjustment"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="PricingItem" nillable="true" type="tns:PricingItem"/>
+	<xs:complexType name="ArrayOfStateAdjustment">
+		<xs:sequence>
+			<xs:element minOccurs="0" maxOccurs="unbounded" name="StateAdjustment" nillable="true" type="tns:StateAdjustment"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ArrayOfStateAdjustment" nillable="true" type="tns:ArrayOfStateAdjustment"/>
+	<xs:complexType name="StateAdjustment">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="Adjustment" type="xs:decimal"/>
+			<xs:element minOccurs="0" name="ImpoundAdjustment" type="xs:decimal"/>
+			<xs:element minOccurs="0" name="State" nillable="true" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="StateAdjustment" nillable="true" type="tns:StateAdjustment"/>
+	<xs:complexType name="TradeFilterInfo">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="AdvancedTradeFilter" nillable="true" type="tns:FieldFilterListInfo"/>
+			<xs:element minOccurs="0" name="DataLayout" nillable="true" type="tns:TableLayout"/>
+			<xs:element minOccurs="0" name="FilterType" type="q4:TradeFilterType" xmlns:q4="http://schemas.datacontract.org/2004/07/Elli.EncompassPlatform.Common.DataContracts"/>
+			<xs:element minOccurs="0" name="SimpleTradeFilter" nillable="true" type="tns:SimpleTradeFilter"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="TradeFilterInfo" nillable="true" type="tns:TradeFilterInfo"/>
+	<xs:complexType name="FieldFilterListInfo">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="FieldFilters" nillable="true" type="tns:ArrayOfFieldFilterInfo"/>
+			<xs:element minOccurs="0" name="RelatedLoanMatchType" type="q5:RelatedLoanMatchType" xmlns:q5="http://schemas.datacontract.org/2004/07/Elli.EncompassPlatform.Common.DataContracts"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="FieldFilterListInfo" nillable="true" type="tns:FieldFilterListInfo"/>
+	<xs:complexType name="ArrayOfFieldFilterInfo">
+		<xs:sequence>
+			<xs:element minOccurs="0" maxOccurs="unbounded" name="FieldFilterInfo" nillable="true" type="tns:FieldFilterInfo"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ArrayOfFieldFilterInfo" nillable="true" type="tns:ArrayOfFieldFilterInfo"/>
+	<xs:complexType name="FieldFilterInfo">
+		<xs:complexContent mixed="false">
+			<xs:extension base="tns:FieldFilter">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="DateFrom" type="xs:dateTime"/>
+					<xs:element minOccurs="0" name="DateTo" type="xs:dateTime"/>
+					<xs:element minOccurs="0" name="JointTokenToString" nillable="true" type="xs:string"/>
+					<xs:element minOccurs="0" name="LeftParenthesesToString" nillable="true" type="xs:string"/>
+					<xs:element minOccurs="0" name="OperatorDescription" nillable="true" type="xs:string"/>
+					<xs:element minOccurs="0" name="OperatorTypeAsString" nillable="true" type="xs:string"/>
+					<xs:element minOccurs="0" name="RightParenthesesToString" nillable="true" type="xs:string"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="FieldFilterInfo" nillable="true" type="tns:FieldFilterInfo"/>
+	<xs:complexType name="FieldFilter">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="CriterionName" nillable="true" type="xs:string"/>
+			<xs:element minOccurs="0" name="DataSource" type="q6:FilterDataSource" xmlns:q6="http://schemas.datacontract.org/2004/07/Elli.EncompassPlatform.Common.DataContracts"/>
+			<xs:element minOccurs="0" name="FieldDescription" nillable="true" type="xs:string"/>
+			<xs:element minOccurs="0" name="FieldID" nillable="true" type="xs:string"/>
+			<xs:element minOccurs="0" name="FieldType" type="q7:FieldTypes" xmlns:q7="http://schemas.datacontract.org/2004/07/Elli.EncompassPlatform.Common.DataContracts"/>
+			<xs:element minOccurs="0" name="ForceDataConversion" type="xs:boolean"/>
+			<xs:element minOccurs="0" name="IsVolatile" type="xs:boolean"/>
+			<xs:element minOccurs="0" name="JointToken" type="q8:JointTokens" xmlns:q8="http://schemas.datacontract.org/2004/07/EllieMae.EMLite.ClientServer.Reporting"/>
+			<xs:element minOccurs="0" name="LeftParentheses" type="xs:int"/>
+			<xs:element minOccurs="0" name="OperatorType" type="q9:OperatorTypes" xmlns:q9="http://schemas.datacontract.org/2004/07/EllieMae.EMLite.ClientServer.Reporting"/>
+			<xs:element minOccurs="0" name="RightParentheses" type="xs:int"/>
+			<xs:element minOccurs="0" name="ValueDescription" nillable="true" type="xs:string"/>
+			<xs:element minOccurs="0" name="ValueFrom" nillable="true" type="xs:string"/>
+			<xs:element minOccurs="0" name="ValueTo" nillable="true" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="FieldFilter" nillable="true" type="tns:FieldFilter"/>
+	<xs:complexType name="TableLayout">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="ColumnCount" type="xs:int"/>
+			<xs:element minOccurs="0" name="ColumnTags" nillable="true" type="tns:EmListOfstring"/>
+			<xs:element minOccurs="0" name="Columns" nillable="true" type="tns:ArrayOfColumn"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="TableLayout" nillable="true" type="tns:TableLayout"/>
+	<xs:complexType name="EmListOfstring">
+		<xs:annotation>
+			<xs:appinfo>
+				<GenericType Name="EmListOf{0}{#}" Namespace="http://www.elliemae.com/encompass/platform" xmlns="http://schemas.microsoft.com/2003/10/Serialization/">
+					<GenericParameter Name="string" Namespace="http://www.w3.org/2001/XMLSchema"/>
+				</GenericType>
+			</xs:appinfo>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element minOccurs="0" maxOccurs="unbounded" name="Item" nillable="true" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="EmListOfstring" nillable="true" type="tns:EmListOfstring"/>
+	<xs:complexType name="ArrayOfColumn">
+		<xs:sequence>
+			<xs:element minOccurs="0" maxOccurs="unbounded" name="Column" nillable="true" type="tns:Column"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ArrayOfColumn" nillable="true" type="tns:ArrayOfColumn"/>
+	<xs:complexType name="Column">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="Alignment" nillable="true" type="xs:string"/>
+			<xs:element minOccurs="0" name="ColumnID" nillable="true" type="xs:string"/>
+			<xs:element minOccurs="0" name="Description" nillable="true" type="xs:string"/>
+			<xs:element minOccurs="0" name="DisplayOrder" type="xs:int"/>
+			<xs:element minOccurs="0" name="Required" type="xs:boolean"/>
+			<xs:element minOccurs="0" name="SortOrder" type="q10:SortOrder" xmlns:q10="http://schemas.datacontract.org/2004/07/Elli.EncompassPlatform.Common.DataContracts"/>
+			<xs:element minOccurs="0" name="SortPriority" type="xs:int"/>
+			<xs:element minOccurs="0" name="Tag" nillable="true" type="xs:string"/>
+			<xs:element minOccurs="0" name="Title" nillable="true" type="xs:string"/>
+			<xs:element minOccurs="0" name="Width" type="xs:int"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Column" nillable="true" type="tns:Column"/>
+	<xs:complexType name="SimpleTradeFilter">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="FieldList" nillable="true" type="tns:EmListOfstring"/>
+			<xs:element minOccurs="0" name="InvestorStatuses" nillable="true" type="tns:EmListOfstring"/>
+			<xs:element minOccurs="0" name="LTVRange" nillable="true" type="q11:RangeOfdecimal" xmlns:q11="http://schemas.datacontract.org/2004/07/EllieMae.EMLite.Common"/>
+			<xs:element minOccurs="0" name="LoanPrograms" nillable="true" type="tns:EmListOfstring"/>
+			<xs:element minOccurs="0" name="Milestones" nillable="true" type="tns:EmListOfstring"/>
+			<xs:element minOccurs="0" name="NoteRateRange" nillable="true" type="q12:RangeOfdecimal" xmlns:q12="http://schemas.datacontract.org/2004/07/EllieMae.EMLite.Common"/>
+			<xs:element minOccurs="0" name="OccupancyStatuses" nillable="true" type="tns:EmListOfstring"/>
+			<xs:element minOccurs="0" name="TermRange" nillable="true" type="q13:RangeOfint" xmlns:q13="http://schemas.datacontract.org/2004/07/EllieMae.EMLite.Common"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="SimpleTradeFilter" nillable="true" type="tns:SimpleTradeFilter"/>
+	<xs:complexType name="ArrayOfTradePriceAdjustmentInfo">
+		<xs:sequence>
+			<xs:element minOccurs="0" maxOccurs="unbounded" name="TradePriceAdjustmentInfo" nillable="true" type="tns:TradePriceAdjustmentInfo"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ArrayOfTradePriceAdjustmentInfo" nillable="true" type="tns:ArrayOfTradePriceAdjustmentInfo"/>
+	<xs:complexType name="TradePriceAdjustmentInfo">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="CriterionList" nillable="true" type="tns:FieldFilterListInfo"/>
+			<xs:element minOccurs="0" name="PriceAdjustment" type="xs:decimal"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="TradePriceAdjustmentInfo" nillable="true" type="tns:TradePriceAdjustmentInfo"/>
+	<xs:complexType name="LoanTradePairOffsGet">
+		<xs:complexContent mixed="false">
+			<xs:extension base="tns:LoanTradePairOffs">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="TotalTradeAmount" type="xs:decimal"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="LoanTradePairOffsGet" nillable="true" type="tns:LoanTradePairOffsGet"/>
+	<xs:complexType name="LoanTradePairOffs">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="LoanTradePairOffs" nillable="true" type="tns:ArrayOfLoanTradePairOff"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="LoanTradePairOffs" nillable="true" type="tns:LoanTradePairOffs"/>
+	<xs:complexType name="ArrayOfLoanTradePairOff">
+		<xs:sequence>
+			<xs:element minOccurs="0" maxOccurs="unbounded" name="LoanTradePairOff" nillable="true" type="tns:LoanTradePairOff"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ArrayOfLoanTradePairOff" nillable="true" type="tns:ArrayOfLoanTradePairOff"/>
+	<xs:complexType name="LoanTradePairOff">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="CalculatedPairOffFee" type="xs:decimal"/>
+			<xs:element minOccurs="0" name="Date" type="xs:dateTime"/>
+			<xs:element minOccurs="0" name="DisplayCalculatedPairOffFee" type="xs:decimal"/>
+			<xs:element minOccurs="0" name="DisplayedTradeAmount" type="xs:decimal"/>
+			<xs:element minOccurs="0" name="Fee" type="xs:decimal"/>
+			<xs:element minOccurs="0" name="Index" type="xs:int"/>
+			<xs:element minOccurs="0" name="Locked" type="xs:boolean"/>
+			<xs:element minOccurs="0" name="PairOffFeePercentage" type="xs:decimal"/>
+			<xs:element minOccurs="0" name="TradeAmount" type="xs:decimal"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="LoanTradePairOff" nillable="true" type="tns:LoanTradePairOff"/>
+	<xs:complexType name="LoanTrade">
+		<xs:complexContent mixed="false">
+			<xs:extension base="tns:LoanTradeInfo">
+				<xs:sequence/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="LoanTrade" nillable="true" type="tns:LoanTrade"/>
+	<xs:complexType name="LoanTradeInfo">
+		<xs:complexContent mixed="false">
+			<xs:extension base="tns:TradeInfoBaseContract">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="Filter" nillable="true" type="tns:TradeFilter"/>
+					<xs:element minOccurs="0" name="PairOffs" nillable="true" type="tns:ArrayOfPairOff"/>
+					<xs:element minOccurs="0" name="TradePriceAdjustments" nillable="true" type="tns:ArrayOfTradePriceAdjustment"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="LoanTradeInfo" nillable="true" type="tns:LoanTradeInfo"/>
+	<xs:complexType name="TradeFilter">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="AdvancedTradeFilter" nillable="true" type="tns:FieldFilterList"/>
+			<xs:element minOccurs="0" name="DataLayout" nillable="true" type="tns:TableLayout"/>
+			<xs:element minOccurs="0" name="FilterType" type="q14:TradeFilterType" xmlns:q14="http://schemas.datacontract.org/2004/07/Elli.EncompassPlatform.Common.DataContracts"/>
+			<xs:element minOccurs="0" name="SimpleTradeFilter" nillable="true" type="tns:SimpleTradeFilter"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="TradeFilter" nillable="true" type="tns:TradeFilter"/>
+	<xs:complexType name="FieldFilterList">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="FieldFilters" nillable="true" type="tns:ArrayOfFieldFilter"/>
+			<xs:element minOccurs="0" name="RelatedLoanMatchType" type="q15:RelatedLoanMatchType" xmlns:q15="http://schemas.datacontract.org/2004/07/Elli.EncompassPlatform.Common.DataContracts"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="FieldFilterList" nillable="true" type="tns:FieldFilterList"/>
+	<xs:complexType name="ArrayOfFieldFilter">
+		<xs:sequence>
+			<xs:element minOccurs="0" maxOccurs="unbounded" name="FieldFilter" nillable="true" type="tns:FieldFilter"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ArrayOfFieldFilter" nillable="true" type="tns:ArrayOfFieldFilter"/>
+	<xs:complexType name="ArrayOfPairOff">
+		<xs:sequence>
+			<xs:element minOccurs="0" maxOccurs="unbounded" name="PairOff" nillable="true" type="tns:PairOff"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ArrayOfPairOff" nillable="true" type="tns:ArrayOfPairOff"/>
+	<xs:complexType name="PairOff">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="Date" type="xs:dateTime"/>
+			<xs:element minOccurs="0" name="Fee" type="xs:decimal"/>
+			<xs:element minOccurs="0" name="Locked" type="xs:boolean"/>
+			<xs:element minOccurs="0" name="UndeliveredAmount" type="xs:decimal"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="PairOff" nillable="true" type="tns:PairOff"/>
+	<xs:complexType name="ArrayOfTradePriceAdjustment">
+		<xs:sequence>
+			<xs:element minOccurs="0" maxOccurs="unbounded" name="TradePriceAdjustment" nillable="true" type="tns:TradePriceAdjustment"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ArrayOfTradePriceAdjustment" nillable="true" type="tns:ArrayOfTradePriceAdjustment"/>
+	<xs:complexType name="TradePriceAdjustment">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="CriterionList" nillable="true" type="tns:FieldFilterList"/>
+			<xs:element minOccurs="0" name="PriceAdjustment" type="xs:decimal"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="TradePriceAdjustment" nillable="true" type="tns:TradePriceAdjustment"/>
+	<xs:element name="LoanTradeGetResponse" nillable="true" type="tns:LoanTradeGetResponse.LoanTradeGetResponseBody"/>
+	<xs:complexType name="LoanTradeCreateRequest.CreateLoanTradeRequestBody">
+		<xs:sequence>
+			<xs:element name="LoanTrade" nillable="true" type="tns:LoanTrade"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="LoanTradeCreateRequest.CreateLoanTradeRequestBody" nillable="true" type="tns:LoanTradeCreateRequest.CreateLoanTradeRequestBody"/>
+	<xs:element name="LoanTradeCreateRequest" nillable="true" type="tns:LoanTradeCreateRequest.CreateLoanTradeRequestBody"/>
+	<xs:complexType name="LoanTradeCreateResponse.CreateLoanTradeResponseBody">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="LoanTradeID" type="xs:int"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="LoanTradeCreateResponse.CreateLoanTradeResponseBody" nillable="true" type="tns:LoanTradeCreateResponse.CreateLoanTradeResponseBody"/>
+	<xs:element name="LoanTradeCreateResponse" nillable="true" type="tns:LoanTradeCreateResponse.CreateLoanTradeResponseBody"/>
+	<xs:complexType name="LoanTradeDeleteRequest.LoanTradeDeleteRequestBody">
+		<xs:sequence>
+			<xs:element name="TradeId" type="xs:int"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="LoanTradeDeleteRequest.LoanTradeDeleteRequestBody" nillable="true" type="tns:LoanTradeDeleteRequest.LoanTradeDeleteRequestBody"/>
+	<xs:element name="LoanTradeDeleteRequest" nillable="true" type="tns:LoanTradeDeleteRequest.LoanTradeDeleteRequestBody"/>
+	<xs:complexType name="LoanTradeDeleteResponse.LoanTradeDeleteResponseBody">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="Result" type="xs:boolean"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="LoanTradeDeleteResponse.LoanTradeDeleteResponseBody" nillable="true" type="tns:LoanTradeDeleteResponse.LoanTradeDeleteResponseBody"/>
+	<xs:element name="LoanTradeDeleteResponse" nillable="true" type="tns:LoanTradeDeleteResponse.LoanTradeDeleteResponseBody"/>
+	<xs:complexType name="LoanTradeUpdateRequest.LoanTradeUpdateRequestBody">
+		<xs:sequence>
+			<xs:element name="LoanTrade" nillable="true" type="tns:LoanTradeUpdate"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="LoanTradeUpdateRequest.LoanTradeUpdateRequestBody" nillable="true" type="tns:LoanTradeUpdateRequest.LoanTradeUpdateRequestBody"/>
+	<xs:complexType name="LoanTradeUpdate">
+		<xs:complexContent mixed="false">
+			<xs:extension base="tns:LoanTradeInfo">
+				<xs:sequence>
+					<xs:element name="TradeID" type="xs:int"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="LoanTradeUpdate" nillable="true" type="tns:LoanTradeUpdate"/>
+	<xs:element name="LoanTradeUpdateRequest" nillable="true" type="tns:LoanTradeUpdateRequest.LoanTradeUpdateRequestBody"/>
+	<xs:complexType name="LoanTradeUpdateResponse.LoanTradeUpdateResponseBody">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="Result" type="xs:boolean"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="LoanTradeUpdateResponse.LoanTradeUpdateResponseBody" nillable="true" type="tns:LoanTradeUpdateResponse.LoanTradeUpdateResponseBody"/>
+	<xs:element name="LoanTradeUpdateResponse" nillable="true" type="tns:LoanTradeUpdateResponse.LoanTradeUpdateResponseBody"/>
+</xs:schema>

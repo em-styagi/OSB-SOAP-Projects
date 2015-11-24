@@ -1,0 +1,64 @@
+<wsdl:definitions name="LoanTradePipelineSvc" targetNamespace="http://www.elliemae.com/services/trade/loan/pipeline" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.elliemae.com/services/trade/loan/pipeline" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:sec="http://www.elliemae.com/services/security">
+	<wsdl:types>
+		<xsd:schema targetNamespace="http://www.elliemae.com/services/trade/loan/pipeline" elementFormDefault="qualified">
+			<xsd:include schemaLocation="../../xsd/Services/LoanTradePipelineSvc.xsd"/>
+			<xsd:import schemaLocation="../../../../../Security_SOAP_v1/Shared/SecuritySvc.xsd" namespace="http://www.elliemae.com/services/security"/>
+		</xsd:schema>
+	</wsdl:types>
+	
+	<wsdl:message name="GetLoanTradePipelineDetailRequest">
+		<wsdl:part name="GetLoanTradePipelineDetailRequest" element="tns:GetLoanTradePipelineDetailRequest"/>
+	</wsdl:message>
+	<wsdl:message name="GetLoanTradePipelineDetailResponse">
+		<wsdl:part name="GetLoanTradePipelineDetailResponse" element="tns:GetLoanTradePipelineDetailResponse"/>
+	</wsdl:message>
+	<wsdl:message name="GetLoanTradePipelineRequest">
+		<wsdl:part name="GetLoanTradePipelineRequest" element="tns:GetLoanTradePipelineRequest"/>
+	</wsdl:message>
+	<wsdl:message name="GetLoanTradePipelineResponse">
+		<wsdl:part name="GetLoanTradePipelineResponse" element="tns:GetLoanTradePipelineResponse"/>
+	</wsdl:message>
+	<wsdl:message name="SecurityContext_Header">
+		<wsdl:part name="header" element="sec:SecurityContext"/>
+	</wsdl:message>
+
+	<wsdl:portType name="LoanTradePipelineServicePort">
+		<wsdl:operation name="GetLoanTradePipelineDetail">
+			<wsdl:input name="GetLoanTradePipelineDetailRequest" message="tns:GetLoanTradePipelineDetailRequest"/>
+			<wsdl:output name="GetLoanTradePipelineDetailResponse" message="tns:GetLoanTradePipelineDetailResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="GetLoanTradePipeline">
+			<wsdl:input name="GetLoanTradePipelineRequest" message="tns:GetLoanTradePipelineRequest"/>
+			<wsdl:output name="GetLoanTradePipelineResponse" message="tns:GetLoanTradePipelineResponse"/>
+		</wsdl:operation>
+	</wsdl:portType>
+
+	<wsdl:binding name="LoanTradePipelineServiceSOAP11Binding" type="tns:LoanTradePipelineServicePort">
+		<soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="GetLoanTradePipelineDetail">
+			<soap:operation soapAction="http://www.elliemae.com/services/trade/loan/pipeline/GetLoanTradePipelineDetail" style="document"/>
+			<wsdl:input name="GetLoanTradePipelineDetailRequest">
+				<soap:header message="tns:SecurityContext_Header" part="header" use="literal"/>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="GetLoanTradePipelineDetailResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetLoanTradePipeline">
+			<soap:operation soapAction="http://www.elliemae.com/services/trade/loan/pipeline/GetLoanTradePipeline" style="document"/>
+			<wsdl:input name="GetLoanTradePipelineRequest">
+				<soap:header message="tns:SecurityContext_Header" part="header" use="literal"/>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="GetLoanTradePipelineResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="LoanTradePipelineService">
+		<wsdl:port name="LoanTradePipelineServicePort" binding="tns:LoanTradePipelineServiceSOAP11Binding">
+			<soap:address location="http://encompass-ia.dev.dco.elmae:11001/encompass_v1/trade/loan/pipeline"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

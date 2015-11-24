@@ -1,0 +1,174 @@
+<wsdl:definitions name="AssetLibrary" targetNamespace="http://www.elliemae.com/services/assetlibrary" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.elliemae.com/services/assetlibrary" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:sec="http://www.elliemae.com/services/security" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+	<wsdl:types>
+		<xsd:schema targetNamespace="http://www.elliemae.com/services/assetlibrary" elementFormDefault="qualified">
+			<xsd:include schemaLocation="../../xsd/Services/AssetLibrary.xsd"/>
+			<xsd:import schemaLocation="../../../../../Security_SOAP_v1/Shared/SecuritySvc.xsd" namespace="http://www.elliemae.com/services/security"/>
+		</xsd:schema>
+	</wsdl:types>
+
+	<wsdl:message name="CreateAssetRequestMsg">
+		<wsdl:part element="tns:CreateAssetRequest" name="body"/>
+	</wsdl:message>
+	<wsdl:message name="CreateAssetResponseMsg">
+		<wsdl:part element="tns:CreateAssetResponse" name="body"/>
+	</wsdl:message>
+	
+	<wsdl:message name="GetAssetRequestMsg">
+		<wsdl:part element="tns:GetAssetRequest" name="body"/>
+	</wsdl:message>
+	<wsdl:message name="GetAssetResponseMsg">
+		<wsdl:part element="tns:GetAssetResponse" name="body"/>
+	</wsdl:message>
+	
+	<wsdl:message name="GetInputFormsByAssetRequestMsg">
+		<wsdl:part element="tns:GetInputFormsByAssetRequest" name="body"/>
+	</wsdl:message>
+	<wsdl:message name="GetInputFormsByAssetResponseMsg">
+		<wsdl:part element="tns:GetInputFormsByAssetResponse" name="body"/>
+	</wsdl:message>
+	
+	<wsdl:message name="UpdateAssetRequestMsg">
+		<wsdl:part element="tns:UpdateAssetRequest" name="body"/>
+	</wsdl:message>
+	<wsdl:message name="UpdateAssetResponseMsg">
+		<wsdl:part element="tns:UpdateAssetResponse" name="body"/>
+	</wsdl:message>
+	
+	<wsdl:message name="DeleteAssetRequestMsg">
+		<wsdl:part element="tns:DeleteAssetRequest" name="body"/>
+	</wsdl:message>
+	<wsdl:message name="DeleteAssetResponseMsg">
+		<wsdl:part element="tns:DeleteAssetResponse" name="body"/>
+	</wsdl:message>
+	
+	<wsdl:message name="GetAssetsRequestMsg">
+		<wsdl:part element="tns:GetAssetsRequest" name="body"/>
+	</wsdl:message>
+	<wsdl:message name="GetAssetsResponseMsg">
+		<wsdl:part element="tns:GetAssetsResponse" name="body"/>
+	</wsdl:message>
+	
+	<wsdl:message name="OverwriteAssetRequestMsg">
+		<wsdl:part element="tns:OverwriteAssetRequest" name="body"/>
+	</wsdl:message>
+	<wsdl:message name="OverwriteAssetResponseMsg">
+		<wsdl:part element="tns:OverwriteAssetResponse" name="body"/>
+	</wsdl:message>
+	
+	<wsdl:message name="SecurityContextHeader">
+		<wsdl:part name="header" element="sec:SecurityContext"/>
+	</wsdl:message>
+
+	<wsdl:portType name="AssetLibrarySvcPort">
+		<wsdl:operation name="CreateAsset">
+			<wsdl:input message="tns:CreateAssetRequestMsg"/>
+			<wsdl:output message="tns:CreateAssetResponseMsg"/>
+		</wsdl:operation>
+		<wsdl:operation name="GetAsset">
+			<wsdl:input message="tns:GetAssetRequestMsg"/>
+			<wsdl:output message="tns:GetAssetResponseMsg"/>
+		</wsdl:operation>
+		<wsdl:operation name="GetInputFormsByAsset">
+			<wsdl:input message="tns:GetInputFormsByAssetRequestMsg"/>
+			<wsdl:output message="tns:GetInputFormsByAssetResponseMsg"/>
+		</wsdl:operation>
+		<wsdl:operation name="UpdateAsset">
+			<wsdl:input message="tns:UpdateAssetRequestMsg"/>
+			<wsdl:output message="tns:UpdateAssetResponseMsg"/>
+		</wsdl:operation>
+		<wsdl:operation name="DeleteAsset">
+			<wsdl:input message="tns:DeleteAssetRequestMsg"/>
+			<wsdl:output message="tns:DeleteAssetResponseMsg"/>
+		</wsdl:operation>	
+		<wsdl:operation name="GetAssets">
+			<wsdl:input message="tns:GetAssetsRequestMsg"/>
+			<wsdl:output message="tns:GetAssetsResponseMsg"/>
+		</wsdl:operation>
+		<wsdl:operation name="OverwriteAsset">
+			<wsdl:input message="tns:OverwriteAssetRequestMsg"/>
+			<wsdl:output message="tns:OverwriteAssetResponseMsg"/>
+		</wsdl:operation>
+	</wsdl:portType>
+
+	<wsdl:binding name="AssetLibrarySvcPortSOAP11Binding" type="tns:AssetLibrarySvcPort">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="CreateAsset">
+			<soap:operation style="document" soapAction="http://www.elliemae.com/services/assetlibrary/CreateAsset"/>
+			<wsdl:input>
+				<soap:header message="tns:SecurityContextHeader" part="header" use="literal"/>
+				<soap:body use="literal" parts="body"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" parts="body"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetAsset">
+			<soap:operation style="document" soapAction="http://www.elliemae.com/services/assetlibrary/GetAsset"/>
+			<wsdl:input>
+				<soap:header message="tns:SecurityContextHeader" part="header" use="literal"/>
+				<soap:body use="literal" parts="body"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" parts="body"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetInputFormsByAsset">
+			<soap:operation style="document" soapAction="http://www.elliemae.com/services/assetlibrary/GetInputFormsByAsset"/>
+			<wsdl:input>
+				<soap:header message="tns:SecurityContextHeader" part="header" use="literal"/>
+				<soap:body use="literal" parts="body"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" parts="body"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="UpdateAsset">
+			<soap:operation style="document" soapAction="http://www.elliemae.com/services/assetlibrary/UpdateAsset"/>
+			<wsdl:input>
+				<soap:header message="tns:SecurityContextHeader" part="header" use="literal"/>
+				<soap:body use="literal" parts="body"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" parts="body"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="DeleteAsset">
+			<soap:operation style="document" soapAction="http://www.elliemae.com/services/assetlibrary/DeleteAsset"/>
+			<wsdl:input>
+				<soap:header message="tns:SecurityContextHeader" part="header" use="literal"/>
+				<soap:body use="literal" parts="body"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" parts="body"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetAssets">
+			<soap:operation style="document" soapAction="http://www.elliemae.com/services/assetlibrary/GetAssets"/>
+			<wsdl:input>
+				<soap:header message="tns:SecurityContextHeader" part="header" use="literal"/>
+				<soap:body use="literal" parts="body"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" parts="body"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="OverwriteAsset">
+			<soap:operation style="document" soapAction="http://www.elliemae.com/services/assetlibrary/OverwriteAsset"/>
+			<wsdl:input>
+				<soap:header message="tns:SecurityContextHeader" part="header" use="literal"/>
+				<soap:body use="literal" parts="body"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" parts="body"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+
+	<wsdl:service name="AssetLibraryService">
+		<wsdl:port name="BasicHttpBinding_IAssetLibraryService" binding="tns:AssetLibrarySvcPortSOAP11Binding">
+			<soap:address location="http://encompass-ia.qa.dco.elmae:11001/encompass_v1/assetlibrary"/>
+		</wsdl:port>
+	</wsdl:service>
+
+</wsdl:definitions>

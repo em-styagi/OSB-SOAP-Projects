@@ -1,0 +1,74 @@
+<definitions targetNamespace="http://www.elliemae.com/services/login" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://www.elliemae.com/services/login" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+	<wsdl:types>
+		<xsd:schema targetNamespace="http://www.elliemae.com/services/login" elementFormDefault="qualified">
+			<xsd:include schemaLocation="../../xsd/services/LoginSvc.xsd"/>
+		</xsd:schema>
+	</wsdl:types>
+	<wsdl:message name="LoginRequestMsg">
+		<wsdl:part name="body" element="tns:LoginRequest"/>
+	</wsdl:message>
+	<wsdl:message name="LoginResponseMsg">
+		<wsdl:part name="body" element="tns:LoginResponse"/>
+	</wsdl:message>
+	<wsdl:message name="LogoutRequestMsg">
+		<wsdl:part name="body" element="tns:LogoutRequest"/>
+	</wsdl:message>
+	<wsdl:message name="LogoutResponseMsg">
+		<wsdl:part name="body" element="tns:LogoutResponse"/>
+	</wsdl:message>
+	<wsdl:message name="SessionKeepAliveRequestMsg">
+		<wsdl:part name="body" element="tns:SessionKeepAliveRequest"/>
+	</wsdl:message>
+	<wsdl:message name="SessionKeepAliveResponseMsg">
+		<wsdl:part name="body" element="tns:SessionKeepAliveResponse"/>
+	</wsdl:message>
+	<wsdl:portType name="LoginSvcPort">
+		<wsdl:operation name="Login">
+			<wsdl:input message="tns:LoginRequestMsg"/>
+			<wsdl:output message="tns:LoginResponseMsg"/>
+		</wsdl:operation>
+		<wsdl:operation name="Logout">
+			<wsdl:input message="tns:LogoutRequestMsg"/>
+			<wsdl:output message="tns:LogoutResponseMsg"/>
+		</wsdl:operation>
+	    <wsdl:operation name="SessionKeepAlive">
+			<wsdl:input message="tns:SessionKeepAliveRequestMsg"/>
+			<wsdl:output message="tns:SessionKeepAliveResponseMsg"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="LoginSvcPortSOAP11Binding" type="tns:LoginSvcPort">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="Login">
+			<soap:operation style="document" soapAction="http://www.elliemae.com/services/login/Login"/>
+			<wsdl:input>
+				<soap:body use="literal" parts="body"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" parts="body"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="Logout">
+			<soap:operation style="document" soapAction="http://www.elliemae.com/services/login/Logout"/>
+			<wsdl:input>
+				<soap:body use="literal" parts="body"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" parts="body"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="SessionKeepAlive">
+			<soap:operation style="document" soapAction="http://www.elliemae.com/services/login/SessionKeepAlive"/>
+			<wsdl:input>
+				<soap:body use="literal" parts="body"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" parts="body"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="LoginService">
+		<wsdl:port name="BasicHttpBinding_ILoginService" binding="tns:LoginSvcPortSOAP11Binding">
+			<soap:address location="http://encompass-ib.dev.dco.elmae:11001/encompass_v1/security/login"/>
+		</wsdl:port>
+	</wsdl:service>
+</definitions>

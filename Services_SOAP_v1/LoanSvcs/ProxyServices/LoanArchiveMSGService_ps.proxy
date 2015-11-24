@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml-fragment xmlns:ser="http://www.bea.com/wli/sb/services" xmlns:tran="http://www.bea.com/wli/sb/transports" xmlns:env="http://www.bea.com/wli/config/env" xmlns:http="http://www.bea.com/wli/sb/transports/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con3="http://www.bea.com/wli/sb/stages/publish/config">
+  <ser:coreEntry isProxy="true" isEnabled="true" isAutoPublish="false" isTracingEnabled="false">
+    <ser:binding type="Mixed" xsi:type="con4:MixedBindingType" xmlns:con4="http://www.bea.com/wli/sb/services/bindings/config">
+      <con4:request type="Text"/>
+      <con4:response type="Text"/>
+    </ser:binding>
+    <ser:monitoring isEnabled="true">
+      <ser:aggregationInterval>120</ser:aggregationInterval>
+      <ser:pipelineMonitoringLevel>Action</ser:pipelineMonitoringLevel>
+    </ser:monitoring>
+    <ser:reporting>true</ser:reporting>
+    <ser:logging isEnabled="true">
+      <ser:logLevel>debug</ser:logLevel>
+    </ser:logging>
+    <ser:sla-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:sla-alerting>
+    <ser:pipeline-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:pipeline-alerting>
+    <ser:throttling enabled="false">
+      <ser:capacity>0</ser:capacity>
+      <ser:maxQueueLength>0</ser:maxQueueLength>
+      <ser:timeToLive>0</ser:timeToLive>
+    </ser:throttling>
+    <ser:messageTracing enabled="false">
+      <ser:detailsLevel>Terse</ser:detailsLevel>
+      <ser:maxSize>8192</ser:maxSize>
+    </ser:messageTracing>
+  </ser:coreEntry>
+  <ser:endpointConfig>
+    <tran:provider-id>http</tran:provider-id>
+    <tran:inbound>true</tran:inbound>
+    <tran:URI>
+      <env:value>/encompass_v1/loans/archive/msg</env:value>
+    </tran:URI>
+    <tran:inbound-properties/>
+    <tran:all-headers>true</tran:all-headers>
+    <tran:provider-specific>
+      <http:inbound-properties/>
+    </tran:provider-specific>
+  </ser:endpointConfig>
+  <ser:router>
+    <con:pipeline type="request" name="CommonActionsPipeline_request">
+      <con:stage name="CaptureTime1">
+        <con5:context xmlns:con4="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con5="http://www.bea.com/wli/sb/pipeline/config"/>
+        <con5:actions xmlns:con4="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con5="http://www.bea.com/wli/sb/pipeline/config">
+          <con4:assign varName="StartTime">
+            <con1:id>_ActionId-7541065331206302326-6a583758.150d80ee69e.-757d</con1:id>
+            <con4:expr>
+              <con1:xqueryText>fn:current-dateTime()</con1:xqueryText>
+            </con4:expr>
+          </con4:assign>
+        </con5:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:pipeline type="response" name="CommonActionsPipeline_response">
+      <con:stage name="Header4PerfCalc1">
+        <con4:context xmlns:con5="http://www.bea.com/wli/sb/stages/alert/config" xmlns:con4="http://www.bea.com/wli/sb/pipeline/config"/>
+        <con4:actions xmlns:con5="http://www.bea.com/wli/sb/stages/alert/config" xmlns:con4="http://www.bea.com/wli/sb/pipeline/config">
+          <con2:transport-headers copy-all="true">
+            <con1:id>_ActionId-7541065331206302326-6a583758.150d80ee69e.-74f2</con1:id>
+            <con2:header-set>inbound-response</con2:header-set>
+            <con2:header name="x-IntOSB-ElapsedTime" value="expression">
+              <con1:xqueryText>( xdt:dayTimeDuration( xs:dateTime(fn:current-dateTime()) - xs:dateTime($StartTime) ) ) div xdt:dayTimeDuration('PT1S')</con1:xqueryText>
+            </con2:header>
+          </con2:transport-headers>
+        </con4:actions>
+      </con:stage>
+      <con:stage name="ResponseStage">
+        <con:context xmlns:con3="http://www.bea.com/wli/sb/stages/alert/config" xmlns:con5="http://www.bea.com/wli/sb/stages/publish/config" xmlns:con4="http://www.bea.com/wli/sb/stages/transform/config">
+          <con1:userNsDecl namespace="http://www.elliemae.com/services/LoanSvc" prefix="loan"/>
+        </con:context>
+        <con:actions xmlns:con3="http://www.bea.com/wli/sb/stages/alert/config" xmlns:con5="http://www.bea.com/wli/sb/stages/publish/config" xmlns:con4="http://www.bea.com/wli/sb/stages/transform/config">
+          <con4:delete varName="header">
+            <con1:id>_ActionId-7541065331206302326-6a583758.150d80ee69e.-7871</con1:id>
+          </con4:delete>
+          <con4:replace contents-only="true" varName="body">
+            <con1:id>_ActionId-7541065331206302326-6a583758.150d80ee69e.-78af</con1:id>
+            <con4:location>
+              <con1:xpathText>.</con1:xpathText>
+            </con4:location>
+            <con4:expr>
+              <con1:xqueryText>&lt;loan:ArchiveLoanResponse>
+ &lt;loan:Status>Archive Loan is Successful&lt;/loan:Status>
+&lt;/loan:ArchiveLoanResponse></con1:xqueryText>
+            </con4:expr>
+          </con4:replace>
+        </con:actions>
+      </con:stage>
+    </con:pipeline>
+    <con:flow>
+      <con:pipeline-node name="CommonActionsPipeline">
+        <con:request>CommonActionsPipeline_request</con:request>
+        <con:response>CommonActionsPipeline_response</con:response>
+      </con:pipeline-node>
+    </con:flow>
+  </ser:router>
+</xml-fragment>

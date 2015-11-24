@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.elliemae.com/services/usersettings"
+	xmlns:tns="http://www.elliemae.com/services/usersettings" elementFormDefault="qualified">
+
+	<element name="SetWorkingFolderRequest" type="tns:SetWorkingFolderRequestType" />
+	<element name="SetWorkingFolderResponse" type="tns:SetWorkingFolderResponseType" />
+	<element name="WorkingFolder" nillable="true" type="string" />
+	<element name="GetUserSettingsRequest" type="tns:GetUserSettingsRequestType" />
+	<element name="GetUserSettingsResponse" type="tns:GetUserSettingsResponseType" />
+	<element name="SetUserSettingsRequest" type="tns:GetUserSettingsResponseType" />
+	<element name="SetUserSettingsResponse" type="tns:SetUserSettingsResponseType" />
+
+	<complexType name="SetWorkingFolderRequestType">
+		<sequence>
+			<element name="WorkingFolder" nillable="true" type="string" />
+		</sequence>
+	</complexType>
+
+	<complexType name="SetWorkingFolderResponseType" />
+	
+	<complexType name="GetUserSettingsRequestType">
+		<sequence>
+			<element name="Category" nillable="true" type="string" />
+			<element minOccurs="0" name="Setting" nillable="true" type="string" />
+		</sequence>
+	</complexType>
+		
+	<complexType name="GetUserSettingsResponseType">
+		<sequence>
+			<element minOccurs="0" maxOccurs="1" name="Category" nillable="true" type="string" />
+			<element minOccurs="0" maxOccurs="1" name="Settings" nillable="true" type="tns:ArrayOfSetting" />
+		</sequence>
+	</complexType>
+	
+	<complexType name="SetUserSettingsResponseType">
+		<sequence>
+			<element minOccurs="0" maxOccurs="1" name="Result" nillable="true" type="string" />
+		</sequence>
+	</complexType>
+		
+	<complexType name="ArrayOfSetting">
+		<sequence>
+			<element minOccurs="0" maxOccurs="unbounded" name="Setting" nillable="true" type="tns:Setting" />
+		</sequence>
+	</complexType>
+
+	<complexType name="Setting">
+		<complexContent mixed="false">
+			<extension base="tns:EntityContractBase">
+				<sequence>
+					<element minOccurs="0" name="Name" nillable="true"  type="string" />
+					<element minOccurs="0" name="Value" nillable="true" type="string" />
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+
+	<complexType name="EntityContractBase">
+		<sequence>
+			<element minOccurs="0" name="Id" type="tns:guid" />
+		</sequence>
+	</complexType>
+
+	<simpleType name="guid">
+		<restriction base="string">
+			<pattern
+				value="[\da-fA-F]{8}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{12}" />
+		</restriction>
+	</simpleType>
+	
+
+</schema>

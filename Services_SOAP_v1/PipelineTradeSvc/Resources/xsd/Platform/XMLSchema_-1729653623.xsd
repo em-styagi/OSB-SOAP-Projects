@@ -1,0 +1,248 @@
+<xs:schema elementFormDefault="qualified" targetNamespace="http://www.elliemae.com/encompass/platform" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.elliemae.com/encompass/platform">
+	<xs:import schemaLocation="XMLSchema_-768039606.xsd" namespace="http://schemas.datacontract.org/2004/07/Elli.EncompassPlatform.Common.DataContracts"/>
+	<xs:import schemaLocation="XMLSchema_193574411.xsd" namespace="http://schemas.datacontract.org/2004/07/EllieMae.EMLite.ClientServer.Reporting"/>
+	<xs:complexType name="LoanTradePipelineDetailGetRequestBody">
+		<xs:sequence>
+			<xs:element name="Fields" nillable="true" type="tns:EmListOfstring"/>
+			<xs:element name="TradeIds" nillable="true" type="tns:EmListOfint"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="LoanTradePipelineDetailGetRequestBody" nillable="true" type="tns:LoanTradePipelineDetailGetRequestBody"/>
+	<xs:complexType name="EmListOfstring">
+		<xs:annotation>
+			<xs:appinfo>
+				<GenericType Name="EmListOf{0}{#}" Namespace="http://www.elliemae.com/encompass/platform" xmlns="http://schemas.microsoft.com/2003/10/Serialization/">
+					<GenericParameter Name="string" Namespace="http://www.w3.org/2001/XMLSchema"/>
+				</GenericType>
+			</xs:appinfo>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element minOccurs="0" maxOccurs="unbounded" name="Item" nillable="true" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="EmListOfstring" nillable="true" type="tns:EmListOfstring"/>
+	<xs:complexType name="EmListOfint">
+		<xs:annotation>
+			<xs:appinfo>
+				<GenericType Name="EmListOf{0}{#}" Namespace="http://www.elliemae.com/encompass/platform" xmlns="http://schemas.microsoft.com/2003/10/Serialization/">
+					<GenericParameter Name="int" Namespace="http://www.w3.org/2001/XMLSchema"/>
+				</GenericType>
+			</xs:appinfo>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element minOccurs="0" maxOccurs="unbounded" name="Item" type="xs:int"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="EmListOfint" nillable="true" type="tns:EmListOfint"/>
+	<xs:element name="LoanTradePipelineDetailGetRequest" nillable="true" type="tns:LoanTradePipelineDetailGetRequestBody"/>
+	<xs:complexType name="SecurityContext">
+		<xs:sequence>
+			<xs:element name="Created" nillable="true" type="xs:dateTime"/>
+			<xs:element name="Realm" nillable="true" type="xs:string"/>
+			<xs:element name="SessionId" nillable="true" type="xs:string"/>
+			<xs:element minOccurs="0" name="TokenData" nillable="true" type="xs:string">
+				<xs:annotation>
+					<xs:appinfo>
+						<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="TokenType" nillable="true" type="xs:string">
+				<xs:annotation>
+					<xs:appinfo>
+						<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="UserName" nillable="true" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="SecurityContext" nillable="true" type="tns:SecurityContext"/>
+	<xs:complexType name="LoanTradePipelineDetailGetResponseBody">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="LoanTradePipelineDetails" nillable="true" type="tns:ArrayOfLoanTradePipelineView"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="LoanTradePipelineDetailGetResponseBody" nillable="true" type="tns:LoanTradePipelineDetailGetResponseBody"/>
+	<xs:complexType name="ArrayOfLoanTradePipelineView">
+		<xs:sequence>
+			<xs:element minOccurs="0" maxOccurs="unbounded" name="LoanTradePipelineView" nillable="true" type="tns:LoanTradePipelineView"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ArrayOfLoanTradePipelineView" nillable="true" type="tns:ArrayOfLoanTradePipelineView"/>
+	<xs:complexType name="LoanTradePipelineView">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="TradeId" type="xs:int"/>
+			<xs:element minOccurs="0" name="TradePipelineFields" nillable="true" type="tns:ArrayOfTradePipelineField"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="LoanTradePipelineView" nillable="true" type="tns:LoanTradePipelineView"/>
+	<xs:complexType name="ArrayOfTradePipelineField">
+		<xs:sequence>
+			<xs:element minOccurs="0" maxOccurs="unbounded" name="TradePipelineField" nillable="true" type="tns:TradePipelineField"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ArrayOfTradePipelineField" nillable="true" type="tns:ArrayOfTradePipelineField"/>
+	<xs:complexType name="TradePipelineField">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="Name" nillable="true" type="xs:string"/>
+			<xs:element minOccurs="0" name="Value" nillable="true" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="TradePipelineField" nillable="true" type="tns:TradePipelineField"/>
+	<xs:element name="LoanTradePipelineDetailGetResponse" nillable="true" type="tns:LoanTradePipelineDetailGetResponseBody"/>
+	<xs:complexType name="LoanTradePipelineGetRequestBody">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="FieldFilters" nillable="true" type="tns:ArrayOfTradePipelineFieldFilter"/>
+			<xs:element minOccurs="0" name="PageIndex" type="xs:int"/>
+			<xs:element minOccurs="0" name="PageSize" type="xs:int"/>
+			<xs:element minOccurs="0" name="SortFields" nillable="true" type="tns:ArrayOfSortField"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="LoanTradePipelineGetRequestBody" nillable="true" type="tns:LoanTradePipelineGetRequestBody"/>
+	<xs:complexType name="ArrayOfTradePipelineFieldFilter">
+		<xs:sequence>
+			<xs:element minOccurs="0" maxOccurs="unbounded" name="TradePipelineFieldFilter" nillable="true" type="tns:TradePipelineFieldFilter"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ArrayOfTradePipelineFieldFilter" nillable="true" type="tns:ArrayOfTradePipelineFieldFilter"/>
+	<xs:complexType name="TradePipelineFieldFilter">
+		<xs:complexContent mixed="false">
+			<xs:extension base="tns:FieldFilterBase">
+				<xs:sequence/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="TradePipelineFieldFilter" nillable="true" type="tns:TradePipelineFieldFilter"/>
+	<xs:complexType name="FieldFilterBase">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="CriterionName" nillable="true" type="xs:string">
+				<xs:annotation>
+					<xs:appinfo>
+						<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="DataSource" type="q1:FilterDataSource" xmlns:q1="http://schemas.datacontract.org/2004/07/Elli.EncompassPlatform.Common.DataContracts">
+				<xs:annotation>
+					<xs:appinfo>
+						<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="FieldDescription" nillable="true" type="xs:string">
+				<xs:annotation>
+					<xs:appinfo>
+						<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="FieldID" nillable="true" type="xs:string">
+				<xs:annotation>
+					<xs:appinfo>
+						<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="FieldType" type="q2:FieldTypes" xmlns:q2="http://schemas.datacontract.org/2004/07/Elli.EncompassPlatform.Common.DataContracts">
+				<xs:annotation>
+					<xs:appinfo>
+						<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="ForceDataConversion" type="xs:boolean">
+				<xs:annotation>
+					<xs:appinfo>
+						<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="IsVolatile" type="xs:boolean">
+				<xs:annotation>
+					<xs:appinfo>
+						<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="JointToken" type="q3:JointTokens" xmlns:q3="http://schemas.datacontract.org/2004/07/EllieMae.EMLite.ClientServer.Reporting">
+				<xs:annotation>
+					<xs:appinfo>
+						<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="LeftParentheses" type="xs:int">
+				<xs:annotation>
+					<xs:appinfo>
+						<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="OpDesc" nillable="true" type="xs:string">
+				<xs:annotation>
+					<xs:appinfo>
+						<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="OpType" type="q4:OperatorTypes" xmlns:q4="http://schemas.datacontract.org/2004/07/EllieMae.EMLite.ClientServer.Reporting">
+				<xs:annotation>
+					<xs:appinfo>
+						<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="RightParentheses" type="xs:int">
+				<xs:annotation>
+					<xs:appinfo>
+						<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="ValueDescription" nillable="true" type="xs:string">
+				<xs:annotation>
+					<xs:appinfo>
+						<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="ValueFrom" nillable="true" type="xs:string">
+				<xs:annotation>
+					<xs:appinfo>
+						<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="ValueTo" nillable="true" type="xs:string">
+				<xs:annotation>
+					<xs:appinfo>
+						<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="FieldFilterBase" nillable="true" type="tns:FieldFilterBase"/>
+	<xs:complexType name="ArrayOfSortField">
+		<xs:sequence>
+			<xs:element minOccurs="0" maxOccurs="unbounded" name="SortField" nillable="true" type="tns:SortField"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ArrayOfSortField" nillable="true" type="tns:ArrayOfSortField"/>
+	<xs:complexType name="SortField">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="FieldName" nillable="true" type="xs:string"/>
+			<xs:element minOccurs="0" name="FieldSortOrder" type="q5:SortOrderOption" xmlns:q5="http://schemas.datacontract.org/2004/07/Elli.EncompassPlatform.Common.DataContracts"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="SortField" nillable="true" type="tns:SortField"/>
+	<xs:element name="LoanTradePipelineGetRequest" nillable="true" type="tns:LoanTradePipelineGetRequestBody"/>
+	<xs:complexType name="LoanTradePipelineGetResponseBody">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="LoanTradeIds" nillable="true" type="tns:EmListOfint"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="LoanTradePipelineGetResponseBody" nillable="true" type="tns:LoanTradePipelineGetResponseBody"/>
+	<xs:element name="LoanTradePipelineGetResponse" nillable="true" type="tns:LoanTradePipelineGetResponseBody"/>
+</xs:schema>

@@ -1,0 +1,16 @@
+<xs:schema elementFormDefault="qualified" targetNamespace="http://www.elliemae.com/encompass/platform" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.elliemae.com/encompass/platform">
+		<xs:import schemaLocation="XMLSchema_-737497298.xsd" namespace="http://schemas.datacontract.org/2004/07/Elli.BusinessRules"/>
+	<xs:complexType name="EmListOfFieldValidationError3byRq2TM">
+		<xs:annotation>
+			<xs:appinfo>
+				<GenericType Name="EmListOf{0}{#}" Namespace="http://www.elliemae.com/encompass/platform" xmlns="http://schemas.microsoft.com/2003/10/Serialization/">
+					<GenericParameter Name="FieldValidationError" Namespace="http://schemas.datacontract.org/2004/07/Elli.BusinessRules"/>
+				</GenericType>
+			</xs:appinfo>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element minOccurs="0" maxOccurs="unbounded" name="Item" nillable="true" type="tns:FieldValidationError" xmlns:tns="http://schemas.datacontract.org/2004/07/Elli.BusinessRules"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="EmListOfFieldValidationError3byRq2TM" nillable="true" type="tns:EmListOfFieldValidationError3byRq2TM"/>
+</xs:schema>

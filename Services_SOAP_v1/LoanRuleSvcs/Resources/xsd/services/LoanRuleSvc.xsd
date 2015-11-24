@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.elliemae.com/services/LoanRuleSvc"
+	xmlns:tns="http://www.elliemae.com/services/LoanRuleSvc" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	elementFormDefault="qualified">
+
+	<xsd:element name="GetLoanAccessRequest" nillable="true"
+		type="tns:GetLoanAccessRequestType" />
+	<xsd:complexType name="GetLoanAccessRequestType">
+		<xsd:sequence>
+			<xsd:element name="LoanId" type="tns:guid" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:element name="GetLoanAccessResponse" nillable="true"
+		type="tns:GetLoanAccessResponseType" />
+	<xsd:complexType name="GetLoanAccessResponseType">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" name="LoanActivityRestrictions"
+				nillable="true" type="tns:ArrayLoanActivityRestrictionContract" />
+			<xsd:element minOccurs="0" name="ReadOnly" type="xsd:boolean" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+
+	<xsd:complexType name="ArrayLoanActivityRestrictionContract">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" maxOccurs="unbounded"
+				name="LoanActivityRestriction" nillable="true"
+				type="tns:LoanActivityRestrictionContractType" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="LoanActivityRestrictions" nillable="true"
+		type="tns:ArrayLoanActivityRestrictionContract" />
+
+	<xsd:complexType name="LoanActivityRestrictionContractType">
+		<xsd:sequence>
+			<xsd:element name="LoanActivity" type="tns:LoanActivityType" />
+			<xsd:element minOccurs="0" name="Message" nillable="true"
+				type="xsd:string" />
+			<xsd:element minOccurs="0" name="MissingFields" nillable="true"
+				type="tns:ArrayMissingFields" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="LoanActivityRestrictionContract"
+		nillable="true" type="tns:LoanActivityRestrictionContractType" />
+
+
+	<xsd:complexType name="ArrayMissingFields">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" maxOccurs="unbounded" name="Field"
+				nillable="true" type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:simpleType name="LoanActivityType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Unknown" />
+			<xsd:enumeration value="OrderCredit" />
+			<xsd:enumeration value="OrderFlood" />
+			<xsd:enumeration value="OrderFraud" />
+			<xsd:enumeration value="OrderTitle" />
+			<xsd:enumeration value="OrderAppraisal" />
+			<xsd:enumeration value="ViewCredit" />
+			<xsd:enumeration value="ImportLiabilities" />
+			<xsd:enumeration value="CopyFromBorrower" />
+			<xsd:enumeration value="AccessLenders" />
+			<xsd:enumeration value="ProductAndPricing" />
+			<xsd:enumeration value="CopyAddress" />
+			<xsd:enumeration value="EditRegistration" />
+			<xsd:enumeration value="AddRegistration" />
+			<xsd:enumeration value="Ratespread" />
+			<xsd:enumeration value="Geocode" />
+			<xsd:enumeration value="EditCheck" />
+			<xsd:enumeration value="DetailedLock" />
+			<xsd:enumeration value="GetPricing" />
+			<xsd:enumeration value="SubmitRequest" />
+			<xsd:enumeration value="RequestLock" />
+			<xsd:enumeration value="ExtendLock" />
+			<xsd:enumeration value="SubFinancing" />
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:element name="guid" nillable="true" type="tns:guid" />
+	<xsd:simpleType name="guid">
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern
+				value="[\da-fA-F]{8}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{12}" />
+		</xsd:restriction>
+	</xsd:simpleType>
+	<xsd:complexType name="GetRoleAssignableUserSettingRequestType">
+		<xsd:sequence>
+			<xsd:element name="RoleId" type="xsd:int" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="GetRoleAssignableUserSettingRequest"
+		nillable="true" type="tns:GetRoleAssignableUserSettingRequestType" />
+
+	<xsd:complexType name="GetRoleAssignableUserSettingResponseType">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" name="RoleAssignableUserGroups"
+				nillable="true" type="tns:ArrayGroupType" />
+			<xsd:element minOccurs="0" name="RoleAssignableUserProfiles"
+				nillable="true" type="tns:ArrayUserProfileType" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="GetRoleAssignableUserSettingResponse"
+		nillable="true" type="tns:GetRoleAssignableUserSettingResponseType" />
+
+	<xsd:complexType name="ArrayGroupType">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" maxOccurs="unbounded" name="Group"
+				nillable="true" type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="RoleAssignableUserGroups" nillable="true"
+		type="tns:ArrayGroupType" />
+
+	<xsd:complexType name="ArrayUserProfileType">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" maxOccurs="unbounded" name="UserProfile"
+				nillable="true" type="tns:UserProfileType" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="RoleAssignableUserProfiles" nillable="true"
+		type="tns:ArrayUserProfileType" />
+
+	<xsd:complexType name="UserProfileType">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" name="AccessMode" nillable="true"
+				type="xsd:string" />
+			<xsd:element minOccurs="0" name="CHUMId" nillable="true"
+				type="xsd:string" />
+			<xsd:element minOccurs="0" name="CellPhone" nillable="true"
+				type="xsd:string" />
+			<xsd:element minOccurs="0" name="Email" nillable="true"
+				type="xsd:string" />
+			<xsd:element minOccurs="0" name="EmailSignature"
+				nillable="true" type="xsd:string" />
+			<xsd:element minOccurs="0" name="EmployeeID" nillable="true"
+				type="xsd:string" />
+			<xsd:element minOccurs="0" name="EncompassVersion"
+				nillable="true" type="xsd:string" />
+			<xsd:element minOccurs="0" name="Fax" nillable="true"
+				type="xsd:string" />
+			<xsd:element minOccurs="0" name="FirstName" nillable="true"
+				type="xsd:string" />
+			<xsd:element minOccurs="0" name="FullName" nillable="true"
+				type="xsd:string" />
+			<xsd:element minOccurs="0" name="InheritParentCompPlan"
+				type="xsd:boolean" />
+			<xsd:element minOccurs="0" name="IsAdministrator" type="xsd:boolean" />
+			<xsd:element minOccurs="0" name="IsSuperAdministrator"
+				type="xsd:boolean" />
+			<xsd:element minOccurs="0" name="IsTopLevelUser" type="xsd:boolean" />
+			<xsd:element minOccurs="0" name="LastLogin" type="xsd:dateTime" />
+			<xsd:element minOccurs="0" name="LastName" nillable="true"
+				type="xsd:string" />
+			<xsd:element minOccurs="0" name="Locked" type="xsd:boolean" />
+			<xsd:element minOccurs="0" name="NMLSExpirationDate"
+				type="xsd:dateTime" />
+			<xsd:element minOccurs="0" name="NMLSOriginatorID"
+				nillable="true" type="xsd:string" />
+			<xsd:element minOccurs="0" name="OrgId" type="xsd:int" />
+			<xsd:element minOccurs="0" name="PeerView" nillable="true"
+				type="xsd:string" />
+			<xsd:element minOccurs="0" name="PersonalStatusOnline"
+				type="xsd:boolean" />
+			<xsd:element minOccurs="0" name="Phone" nillable="true"
+				type="xsd:string" />
+			<xsd:element minOccurs="0" name="Status" nillable="true"
+				type="xsd:string" />
+                        <xsd:element minOccurs="0" name="Title" nillable="true"
+				type="xsd:string" />
+			<xsd:element minOccurs="0" name="UserID" nillable="true"
+				type="xsd:string" />
+			<xsd:element minOccurs="0" name="WorkingFolder" nillable="true"
+				type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="UserProfile" nillable="true"
+		type="tns:UserProfileType" />
+</schema>

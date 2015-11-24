@@ -1,0 +1,360 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema elementFormDefault="qualified"
+	targetNamespace="http://www.elliemae.com/encompass/platform" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:tns="http://www.elliemae.com/encompass/platform">
+	<xs:complexType name="InputFormCreateRequest.InputFormCreateRequestBody">
+		<xs:sequence>
+			<xs:element name="InputFormData" nillable="true" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="InputFormCreateRequest.InputFormCreateRequestBody"
+		nillable="true" type="tns:InputFormCreateRequest.InputFormCreateRequestBody" />
+	<xs:element name="InputFormCreateRequest" nillable="true"
+		type="tns:InputFormCreateRequest.InputFormCreateRequestBody" />
+	<xs:complexType name="SecurityContext">
+		<xs:sequence>
+			<xs:element name="Created" nillable="true" type="xs:dateTime" />
+			<xs:element name="Realm" nillable="true" type="xs:string" />
+			<xs:element name="SessionId" nillable="true" type="xs:string" />
+			<xs:element minOccurs="0" name="TokenData" nillable="true"
+				type="xs:string">
+				<xs:annotation>
+					<xs:appinfo>
+						<DefaultValue EmitDefaultValue="false"
+							xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="TokenType" nillable="true"
+				type="xs:string">
+				<xs:annotation>
+					<xs:appinfo>
+						<DefaultValue EmitDefaultValue="false"
+							xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="UserName" nillable="true" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="SecurityContext" nillable="true"
+		type="tns:SecurityContext" />
+	<xs:complexType name="InputFormCreateResponse.InputFormCreateResponseBody">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="InputFormId" nillable="true"
+				type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="InputFormCreateResponse.InputFormCreateResponseBody"
+		nillable="true" type="tns:InputFormCreateResponse.InputFormCreateResponseBody" />
+	<xs:element name="InputFormCreateResponse" nillable="true"
+		type="tns:InputFormCreateResponse.InputFormCreateResponseBody" />
+	<xs:complexType name="InputFormUpdateRequest.InputFormUpdateRequestBody">
+		<xs:sequence>
+			<xs:element name="InputFormData" nillable="true" type="xs:string" />
+			<xs:element name="InputFormId" nillable="true" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="InputFormUpdateRequest.InputFormUpdateRequestBody"
+		nillable="true" type="tns:InputFormUpdateRequest.InputFormUpdateRequestBody" />
+	<xs:element name="InputFormUpdateRequest" nillable="true"
+		type="tns:InputFormUpdateRequest.InputFormUpdateRequestBody" />
+	<xs:complexType name="InputFormUpdateResponse.InputFormUpdateResponseBody">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="Result" type="xs:boolean" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="InputFormUpdateResponse.InputFormUpdateResponseBody"
+		nillable="true" type="tns:InputFormUpdateResponse.InputFormUpdateResponseBody" />
+	<xs:element name="InputFormUpdateResponse" nillable="true"
+		type="tns:InputFormUpdateResponse.InputFormUpdateResponseBody" />
+	<xs:complexType name="InputFormGetRequest.InputFormGetRequestBody">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="InputFormId" nillable="true"
+				type="xs:string" />
+			<xs:element minOccurs="0" name="InputFormName" nillable="true"
+				type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="InputFormGetRequest.InputFormGetRequestBody"
+		nillable="true" type="tns:InputFormGetRequest.InputFormGetRequestBody" />
+	<xs:element name="InputFormGetRequest" nillable="true"
+		type="tns:InputFormGetRequest.InputFormGetRequestBody" />
+	<xs:complexType name="InputFormGetResponse.InputFormGetResponseBody">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="InputFormId" nillable="true"
+				type="xs:string" />
+			<xs:element minOccurs="0" name="InputFormData" nillable="true"
+				type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="InputFormGetResponse.InputFormGetResponseBody"
+		nillable="true" type="tns:InputFormGetResponse.InputFormGetResponseBody" />
+	<xs:element name="InputFormGetResponse" nillable="true"
+		type="tns:InputFormGetResponse.InputFormGetResponseBody" />
+	<xs:complexType name="InputFormDeleteRequest.InputFormDeleteRequestBody">
+		<xs:sequence>
+			<xs:element name="InputFormId" nillable="true" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="InputFormDeleteRequest.InputFormDeleteRequestBody"
+		nillable="true" type="tns:InputFormDeleteRequest.InputFormDeleteRequestBody" />
+	<xs:element name="InputFormDeleteRequest" nillable="true"
+		type="tns:InputFormDeleteRequest.InputFormDeleteRequestBody" />
+	<xs:complexType name="InputFormDeleteResponse.InputFormDeleteResponseBody">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="Result" type="xs:boolean" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="InputFormDeleteResponse.InputFormDeleteResponseBody"
+		nillable="true" type="tns:InputFormDeleteResponse.InputFormDeleteResponseBody" />
+	<xs:element name="InputFormDeleteResponse" nillable="true"
+		type="tns:InputFormDeleteResponse.InputFormDeleteResponseBody" />
+	<xs:complexType name="InputFormsGetRequest.InputFormsGetRequestBody">
+		<xs:sequence />
+	</xs:complexType>
+	<xs:element name="InputFormsGetRequest.InputFormsGetRequestBody"
+		nillable="true" type="tns:InputFormsGetRequest.InputFormsGetRequestBody" />
+	<xs:element name="InputFormsGetRequest" nillable="true"
+		type="tns:InputFormsGetRequest.InputFormsGetRequestBody" />
+	<xs:complexType name="InputFormsGetResponse.InputFormsGetResponseBody">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="Items" nillable="true"
+				type="tns:ArrayOfInputFormItem" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="InputFormsGetResponse.InputFormsGetResponseBody"
+		nillable="true" type="tns:InputFormsGetResponse.InputFormsGetResponseBody" />
+	<xs:complexType name="ArrayOfInputFormItem">
+		<xs:sequence>
+			<xs:element minOccurs="0" maxOccurs="unbounded" name="InputFormItem"
+				nillable="true" type="tns:InputFormItem" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ArrayOfInputFormItem" nillable="true"
+		type="tns:ArrayOfInputFormItem" />
+	<xs:complexType name="InputFormItem">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="InputFormId" nillable="true"
+				type="xs:string" />
+			<xs:element minOccurs="0" name="InputFormData" nillable="true"
+				type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="InputFormItem" nillable="true"
+		type="tns:InputFormItem" />
+	<xs:element name="InputFormsGetResponse" nillable="true"
+		type="tns:InputFormsGetResponse.InputFormsGetResponseBody" />
+	<xs:complexType
+		name="InputFormsByAssetGetRequest.InputFormsByAssetGetRequestBody">
+		<xs:sequence>
+			<xs:element name="AssetId" nillable="true" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element
+		name="InputFormsByAssetGetRequest.InputFormsByAssetGetRequestBody"
+		nillable="true"
+		type="tns:InputFormsByAssetGetRequest.InputFormsByAssetGetRequestBody" />
+	<xs:element name="InputFormsByAssetGetRequest" nillable="true"
+		type="tns:InputFormsByAssetGetRequest.InputFormsByAssetGetRequestBody" />
+	<xs:complexType
+		name="InputFormsByAssetGetResponse.InputFormsByAssetGetResponseBody">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="Items" nillable="true"
+				type="tns:ArrayOfInputFormItem" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element
+		name="InputFormsByAssetGetResponse.InputFormsByAssetGetResponseBody"
+		nillable="true"
+		type="tns:InputFormsByAssetGetResponse.InputFormsByAssetGetResponseBody" />
+	<xs:element name="InputFormsByAssetGetResponse" nillable="true"
+		type="tns:InputFormsByAssetGetResponse.InputFormsByAssetGetResponseBody" />
+	<xs:complexType
+		name="InputFormAssetCreateRequest.InputFormAssetCreateRequestBody">
+		<xs:sequence>
+			<xs:element name="AssetData" nillable="true" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element
+		name="InputFormAssetCreateRequest.InputFormAssetCreateRequestBody"
+		nillable="true"
+		type="tns:InputFormAssetCreateRequest.InputFormAssetCreateRequestBody" />
+	<xs:element name="InputFormAssetCreateRequest" nillable="true"
+		type="tns:InputFormAssetCreateRequest.InputFormAssetCreateRequestBody" />
+	<xs:complexType
+		name="InputFormAssetCreateResponse.InputFormAssetCreateResponseBody">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="AssetId" nillable="true"
+				type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element
+		name="InputFormAssetCreateResponse.InputFormAssetCreateResponseBody"
+		nillable="true"
+		type="tns:InputFormAssetCreateResponse.InputFormAssetCreateResponseBody" />
+	<xs:element name="InputFormAssetCreateResponse" nillable="true"
+		type="tns:InputFormAssetCreateResponse.InputFormAssetCreateResponseBody" />
+	<xs:complexType name="InputFormAssetGetRequest.InputFormAssetGetRequestBody">
+		<xs:sequence>
+			<xs:element name="AssetId" nillable="true" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="InputFormAssetGetRequest.InputFormAssetGetRequestBody"
+		nillable="true" type="tns:InputFormAssetGetRequest.InputFormAssetGetRequestBody" />
+	<xs:element name="InputFormAssetGetRequest" nillable="true"
+		type="tns:InputFormAssetGetRequest.InputFormAssetGetRequestBody" />
+	<xs:complexType
+		name="InputFormAssetGetResponse.InputFormAssetGetResponseBody">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="AssetId" nillable="true"
+				type="xs:string" />
+			<xs:element minOccurs="0" name="AssetData" nillable="true"
+				type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="InputFormAssetGetResponse.InputFormAssetGetResponseBody"
+		nillable="true" type="tns:InputFormAssetGetResponse.InputFormAssetGetResponseBody" />
+	<xs:element name="InputFormAssetGetResponse" nillable="true"
+		type="tns:InputFormAssetGetResponse.InputFormAssetGetResponseBody" />
+	<xs:complexType
+		name="InputFormAssetUpdateRequest.InputFormAssetUpdateRequestBody">
+		<xs:sequence>
+			<xs:element name="AssetData" nillable="true" type="xs:string" />
+			<xs:element name="AssetId" nillable="true" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element
+		name="InputFormAssetUpdateRequest.InputFormAssetUpdateRequestBody"
+		nillable="true"
+		type="tns:InputFormAssetUpdateRequest.InputFormAssetUpdateRequestBody" />
+	<xs:element name="InputFormAssetUpdateRequest" nillable="true"
+		type="tns:InputFormAssetUpdateRequest.InputFormAssetUpdateRequestBody" />
+	<xs:complexType
+		name="InputFormAssetUpdateResponse.InputFormAssetUpdateResponseBody">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="Result" type="xs:boolean" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element
+		name="InputFormAssetUpdateResponse.InputFormAssetUpdateResponseBody"
+		nillable="true"
+		type="tns:InputFormAssetUpdateResponse.InputFormAssetUpdateResponseBody" />
+	<xs:element name="InputFormAssetUpdateResponse" nillable="true"
+		type="tns:InputFormAssetUpdateResponse.InputFormAssetUpdateResponseBody" />
+	<xs:complexType
+		name="InputFormAssetDeleteRequest.InputFormAssetDeleteRequestBody">
+		<xs:sequence>
+			<xs:element name="AssetId" nillable="true" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element
+		name="InputFormAssetDeleteRequest.InputFormAssetDeleteRequestBody"
+		nillable="true"
+		type="tns:InputFormAssetDeleteRequest.InputFormAssetDeleteRequestBody" />
+	<xs:element name="InputFormAssetDeleteRequest" nillable="true"
+		type="tns:InputFormAssetDeleteRequest.InputFormAssetDeleteRequestBody" />
+	<xs:complexType
+		name="InputFormAssetDeleteResponse.InputFormAssetDeleteResponseBody">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="Result" type="xs:boolean" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element
+		name="InputFormAssetDeleteResponse.InputFormAssetDeleteResponseBody"
+		nillable="true"
+		type="tns:InputFormAssetDeleteResponse.InputFormAssetDeleteResponseBody" />
+	<xs:element name="InputFormAssetDeleteResponse" nillable="true"
+		type="tns:InputFormAssetDeleteResponse.InputFormAssetDeleteResponseBody" />
+	<xs:complexType
+		name="InputFormAssetsGetRequest.InputFormAssetsGetRequestBody">
+		<xs:sequence />
+	</xs:complexType>
+	<xs:element name="InputFormAssetsGetRequest.InputFormAssetsGetRequestBody"
+		nillable="true" type="tns:InputFormAssetsGetRequest.InputFormAssetsGetRequestBody" />
+	<xs:element name="InputFormAssetsGetRequest" nillable="true"
+		type="tns:InputFormAssetsGetRequest.InputFormAssetsGetRequestBody" />
+	<xs:complexType
+		name="InputFormAssetsGetResponse.InputFormAssetsGetResponseBody">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="Items" nillable="true"
+				type="tns:ArrayOfInputFormAssetItem" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="InputFormAssetsGetResponse.InputFormAssetsGetResponseBody"
+		nillable="true"
+		type="tns:InputFormAssetsGetResponse.InputFormAssetsGetResponseBody" />
+	<xs:complexType name="ArrayOfInputFormAssetItem">
+		<xs:sequence>
+			<xs:element minOccurs="0" maxOccurs="unbounded" name="InputFormAssetItem"
+				nillable="true" type="tns:InputFormAssetItem" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ArrayOfInputFormAssetItem" nillable="true"
+		type="tns:ArrayOfInputFormAssetItem" />
+	<xs:complexType name="InputFormAssetItem">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="AssetId" nillable="true"
+				type="xs:string" />
+			<xs:element minOccurs="0" name="AssetData" nillable="true"
+				type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="InputFormAssetItem" nillable="true"
+		type="tns:InputFormAssetItem" />
+	<xs:element name="InputFormAssetsGetResponse" nillable="true"
+		type="tns:InputFormAssetsGetResponse.InputFormAssetsGetResponseBody" />
+	<xs:complexType
+		name="InputFormAssetsByTypeGetRequest.InputFormAssetsByTypeGetRequestBody">
+		<xs:sequence>
+			<xs:element name="Type" nillable="true" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element
+		name="InputFormAssetsByTypeGetRequest.InputFormAssetsByTypeGetRequestBody"
+		nillable="true"
+		type="tns:InputFormAssetsByTypeGetRequest.InputFormAssetsByTypeGetRequestBody" />
+	<xs:element name="InputFormAssetsByTypeGetRequest" nillable="true"
+		type="tns:InputFormAssetsByTypeGetRequest.InputFormAssetsByTypeGetRequestBody" />
+	<xs:complexType
+		name="InputFormAssetsByTypeGetResponse.InputFormAssetsByTypeGetResponseBody">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="Items" nillable="true"
+				type="tns:ArrayOfInputFormAssetItem" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element
+		name="InputFormAssetsByTypeGetResponse.InputFormAssetsByTypeGetResponseBody"
+		nillable="true"
+		type="tns:InputFormAssetsByTypeGetResponse.InputFormAssetsByTypeGetResponseBody" />
+	<xs:element name="InputFormAssetsByTypeGetResponse"
+		nillable="true"
+		type="tns:InputFormAssetsByTypeGetResponse.InputFormAssetsByTypeGetResponseBody" />
+	<xs:complexType
+		name="InputFormAssetsByInputFormGetRequest.InputFormAssetsByInputFormGetRequestBody">
+		<xs:sequence>
+			<xs:element name="InputFormId" nillable="true" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element
+		name="InputFormAssetsByInputFormGetRequest.InputFormAssetsByInputFormGetRequestBody"
+		nillable="true"
+		type="tns:InputFormAssetsByInputFormGetRequest.InputFormAssetsByInputFormGetRequestBody" />
+	<xs:element name="InputFormAssetsByInputFormGetRequest"
+		nillable="true"
+		type="tns:InputFormAssetsByInputFormGetRequest.InputFormAssetsByInputFormGetRequestBody" />
+	<xs:complexType
+		name="InputFormAssetsByInputFormGetResponse.InputFormAssetsByInputFormGetResponseBody">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="Items" nillable="true"
+				type="tns:ArrayOfInputFormAssetItem" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element
+		name="InputFormAssetsByInputFormGetResponse.InputFormAssetsByInputFormGetResponseBody"
+		nillable="true"
+		type="tns:InputFormAssetsByInputFormGetResponse.InputFormAssetsByInputFormGetResponseBody" />
+	<xs:element name="InputFormAssetsByInputFormGetResponse"
+		nillable="true"
+		type="tns:InputFormAssetsByInputFormGetResponse.InputFormAssetsByInputFormGetResponseBody" />
+</xs:schema>

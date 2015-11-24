@@ -1,0 +1,44 @@
+<xs:schema elementFormDefault="qualified" targetNamespace="http://www.elliemae.com/encompass/platform" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.elliemae.com/encompass/platform">
+	<xs:import schemaLocation="XMLSchema_-603483792.xsd" namespace="http://schemas.datacontract.org/2004/07/Elli.EncompassPlatform.Common.SoapMessages"/>
+	<xs:import schemaLocation="XMLSchema_-670490545.xsd" namespace="http://schemas.datacontract.org/2004/07/Elli.BusinessRules.Milestone"/>
+	<xs:import schemaLocation="XMLSchema_-737497298.xsd" namespace="http://schemas.datacontract.org/2004/07/Elli.BusinessRules"/>
+	<xs:complexType name="MilestoneCompleteRequest.MilestoneCompleteRequestBody">
+		<xs:sequence>
+			<xs:element name="LoanId" nillable="true" type="xs:string"/>
+			<xs:element minOccurs="0" name="NextMilestoneUserName" nillable="true" type="xs:string"/>
+			<xs:element name="UserType" type="q1:NextMilestoneUserType" xmlns:q1="http://schemas.datacontract.org/2004/07/Elli.EncompassPlatform.Common.SoapMessages"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="MilestoneCompleteRequest.MilestoneCompleteRequestBody" nillable="true" type="tns:MilestoneCompleteRequest.MilestoneCompleteRequestBody"/>
+	<xs:element name="MilestoneCompleteRequest" nillable="true" type="tns:MilestoneCompleteRequest.MilestoneCompleteRequestBody"/>
+	<xs:complexType name="SecurityContext">
+		<xs:sequence>
+			<xs:element name="Created" nillable="true" type="xs:dateTime"/>
+			<xs:element name="Realm" nillable="true" type="xs:string"/>
+			<xs:element name="SessionId" nillable="true" type="xs:string"/>
+			<xs:element minOccurs="0" name="TokenData" nillable="true" type="xs:string">
+				<xs:annotation>
+					<xs:appinfo>
+						<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="TokenType" nillable="true" type="xs:string">
+				<xs:annotation>
+					<xs:appinfo>
+						<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="UserName" nillable="true" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="SecurityContext" nillable="true" type="tns:SecurityContext"/>
+	<xs:complexType name="MilestoneCompleteResponse.MilestoneCompleteBody">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="ValidationError" nillable="true" type="q2:MilestoneValidationError" xmlns:q2="http://schemas.datacontract.org/2004/07/Elli.BusinessRules.Milestone"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="MilestoneCompleteResponse.MilestoneCompleteBody" nillable="true" type="tns:MilestoneCompleteResponse.MilestoneCompleteBody"/>
+	<xs:element name="MilestoneCompleteResponse" nillable="true" type="tns:MilestoneCompleteResponse.MilestoneCompleteBody"/>
+</xs:schema>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.elliemae.com/services/loanfolders"
+	xmlns:tns="http://www.elliemae.com/services/loanfolders"
+	elementFormDefault="qualified">
+
+
+	<!-- GetUserLoanFolders -->
+	<xsd:element name="IncludeTrash" type="xsd:boolean" />
+	<xsd:element name="GetUserLoanFoldersResponse" type="tns:GetUserLoanFoldersResponseType" />
+
+	<xsd:complexType name="GetUserLoanFoldersResponseType">
+		<xsd:sequence>
+			<xsd:element minOccurs="1" maxOccurs="1" name="LoanFolders" nillable="true" type="tns:ItemType" />
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="ItemType">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" maxOccurs="unbounded" name="Item" nillable="true" type="tns:ParentItemType" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="ParentItemType">
+		<xsd:sequence>
+			<xsd:element minOccurs="1" maxOccurs="1" name="ActivityRules" nillable="true" type="tns:ActivityRulesType" />
+			<xsd:element minOccurs="1" maxOccurs="1" name="FolderType" nillable="true" type="xsd:string" />
+			<xsd:element minOccurs="1" maxOccurs="1" name="Name" nillable="true" type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="ActivityRulesType">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" maxOccurs="unbounded" name="Item" nillable="true" type="tns:ChildItemType" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="ChildItemType">
+		<xsd:sequence>
+			<xsd:element minOccurs="1" maxOccurs="1" name="Action" nillable="true" type="xsd:string" />
+			<xsd:element minOccurs="1" maxOccurs="1" name="RuleValue" nillable="true" type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>
+	
+</xsd:schema>

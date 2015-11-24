@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema elementFormDefault="qualified"
+	targetNamespace="http://www.elliemae.com/services/trade/security"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.elliemae.com/services/trade/security">
+
+	<xs:complexType name="CreateSecurityTradeRequest">
+		<xs:sequence>
+			<xs:element name="SecurityTrade" nillable="true"
+				type="tns:SecurityTradeCreate" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="CreateSecurityTradeRequest" nillable="true"
+		type="tns:CreateSecurityTradeRequest" />
+
+	<xs:complexType name="SecurityTradeCreate">
+		<xs:complexContent mixed="false">
+			<xs:extension base="tns:SecurityTrade">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="PairOffs" nillable="true"
+						type="tns:ArrayOfPairOff" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="SecurityTradeCreate" nillable="true"
+		type="tns:SecurityTradeCreate" />
+
+	<xs:complexType name="ArrayOfPairOff">
+		<xs:sequence>
+			<xs:element minOccurs="0" maxOccurs="unbounded" name="PairOff"
+				nillable="true" type="tns:PairOff" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ArrayOfPairOff" nillable="true"
+		type="tns:ArrayOfPairOff" />
+	<xs:complexType name="PairOff">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="Date" type="xs:dateTime" />
+			<xs:element minOccurs="0" name="Fee" type="xs:decimal" />
+			<xs:element minOccurs="0" name="Locked" type="xs:boolean" />
+			<xs:element minOccurs="0" name="UndeliveredAmount" type="xs:decimal" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="PairOff" nillable="true" type="tns:PairOff" />
+
+	<xs:complexType name="SecurityTrade">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="CommitmentDate" type="xs:dateTime" />
+			<xs:element minOccurs="0" name="CommitmentType" nillable="true"
+				type="xs:string" />
+			<xs:element minOccurs="0" name="ConfirmDate" type="xs:dateTime" />
+			<xs:element minOccurs="0" name="Coupon" type="xs:decimal" />
+			<xs:element minOccurs="0" name="Dealer" nillable="true"
+				type="tns:ContactInformation" />
+			<xs:element minOccurs="0" name="Locked" type="xs:boolean" />
+			<xs:element name="Name" nillable="true" type="xs:string" />
+			<xs:element minOccurs="0" name="Notes" nillable="true"
+				type="xs:string" />
+			<xs:element minOccurs="0" name="NotificationDate" type="xs:dateTime" />
+			<xs:element minOccurs="0" name="Price" type="xs:decimal" />
+			<xs:element minOccurs="0" name="ProgramType" nillable="true"
+				type="xs:string" />
+			<xs:element minOccurs="0" name="SecurityType" nillable="true"
+				type="xs:string" />
+			<xs:element minOccurs="0" name="SettlementDate" type="xs:dateTime" />
+			<xs:element minOccurs="0" name="Term1" type="xs:int" />
+			<xs:element minOccurs="0" name="Term2" type="xs:int" />
+			<xs:element minOccurs="0" name="Tolerance" type="xs:decimal" />
+			<xs:element minOccurs="0" name="TradeAmount" type="xs:decimal" />
+			<xs:element minOccurs="0" name="TradeDescription"
+				nillable="true" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="SecurityTrade" nillable="true"
+		type="tns:SecurityTrade" />
+
+	<xs:complexType name="ContactInformation">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="Address" nillable="true"
+				type="tns:Address" />
+			<xs:element minOccurs="0" name="ContactName" nillable="true"
+				type="xs:string" />
+			<xs:element minOccurs="0" name="EmailAddress" nillable="true"
+				type="xs:string" />
+			<xs:element minOccurs="0" name="EntityName" nillable="true"
+				type="xs:string" />
+			<xs:element minOccurs="0" name="FaxNumber" nillable="true"
+				type="xs:string" />
+			<xs:element minOccurs="0" name="PhoneNumber" nillable="true"
+				type="xs:string" />
+			<xs:element minOccurs="0" name="WebSite" nillable="true"
+				type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ContactInformation" nillable="true"
+		type="tns:ContactInformation" />
+	<xs:complexType name="Address">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="City" nillable="true"
+				type="xs:string" />
+			<xs:element minOccurs="0" name="State" nillable="true"
+				type="xs:string" />
+			<xs:element minOccurs="0" name="Street1" nillable="true"
+				type="xs:string" />
+			<xs:element minOccurs="0" name="Street2" nillable="true"
+				type="xs:string" />
+			<xs:element minOccurs="0" name="Zip" nillable="true" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Address" nillable="true" type="tns:Address" />
+	<xs:complexType name="CreateSecurityTradeResponse">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="SecurityTradeID" type="xs:int" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="CreateSecurityTradeResponse" nillable="true"
+		type="tns:CreateSecurityTradeResponse" />
+	<xs:complexType name="GetSecurityTradeRequest">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="TradeId" type="xs:int" />
+			<xs:element minOccurs="0" name="TradeName" nillable="true"
+				type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="GetSecurityTradeRequest" nillable="true"
+		type="tns:GetSecurityTradeRequest" />
+	<xs:complexType name="GetSecurityTradeResponse">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="SecurityTrade" nillable="true"
+				type="tns:SecurityTradeGet" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="GetSecurityTradeResponse" nillable="true"
+		type="tns:GetSecurityTradeResponse" />
+	<xs:complexType name="SecurityTradeGet">
+		<xs:complexContent mixed="false">
+			<xs:extension base="tns:SecurityTrade">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="Archived" type="xs:boolean" />
+					<xs:element minOccurs="0" name="MaxAmount" type="xs:decimal" />
+					<xs:element minOccurs="0" name="MinAmount" type="xs:decimal" />
+					<xs:element minOccurs="0" name="PairOffsInfo" nillable="true"
+						type="tns:SecurityTradePairOffsInfo" />
+					<xs:element minOccurs="0" name="TradeID" type="xs:int" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="SecurityTradeGet" nillable="true"
+		type="tns:SecurityTradeGet" />
+	<xs:complexType name="SecurityTradePairOffsInfo">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="PairOffs" nillable="true"
+				type="tns:ArrayOfPairOffInfo" />
+			<xs:element minOccurs="0" name="UndelieveredAmount" type="xs:decimal" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="SecurityTradePairOffsInfo" nillable="true"
+		type="tns:SecurityTradePairOffsInfo" />
+	<xs:complexType name="ArrayOfPairOffInfo">
+		<xs:sequence>
+			<xs:element minOccurs="0" maxOccurs="unbounded" name="PairOffInfo"
+				nillable="true" type="tns:PairOffInfo" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ArrayOfPairOffInfo" nillable="true"
+		type="tns:ArrayOfPairOffInfo" />
+	<xs:complexType name="PairOffInfo">
+		<xs:complexContent mixed="false">
+			<xs:extension base="tns:PairOff">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="GainLoss" type="xs:decimal" />
+					<xs:element minOccurs="0" name="Index" type="xs:int" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="PairOffInfo" nillable="true" type="tns:PairOffInfo" />
+	<xs:complexType name="DeleteSecurityTradeRequest">
+		<xs:sequence>
+			<xs:element name="TradeId" type="xs:int" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="DeleteSecurityTradeRequest" nillable="true"
+		type="tns:DeleteSecurityTradeRequest" />
+	<xs:complexType name="DeleteSecurityTradeResponse">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="Result" type="xs:boolean" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="DeleteSecurityTradeResponse" nillable="true"
+		type="tns:DeleteSecurityTradeResponse" />
+	<xs:complexType name="UpdateSecurityTradeRequest">
+		<xs:sequence>
+			<xs:element name="SecurityTrade" nillable="true"
+				type="tns:SecurityTradeUpdate" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="UpdateSecurityTradeRequest" nillable="true"
+		type="tns:UpdateSecurityTradeRequest" />
+	<xs:complexType name="SecurityTradeUpdate">
+		<xs:complexContent mixed="false">
+			<xs:extension base="tns:SecurityTrade">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="PairOffs" nillable="true"
+						type="tns:ArrayOfPairOff" />
+					<xs:element minOccurs="0" name="TradeID" type="xs:int" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="SecurityTradeUpdate" nillable="true"
+		type="tns:SecurityTradeUpdate" />
+	<xs:complexType name="UpdateSecurityTradeResponse">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="Result" type="xs:boolean" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="UpdateSecurityTradeResponse" nillable="true"
+		type="tns:UpdateSecurityTradeResponse" />
+</xs:schema>

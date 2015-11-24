@@ -1,0 +1,29 @@
+<xsd:schema targetNamespace="http://www.elliemae.com/services/metadata/pipeline" elementFormDefault="qualified" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.elliemae.com/services/metadata/pipeline" xmlns:sn="http://www.elliemae.com/services/session" xmlns:sc="http://www.elliemae.com/services/security">
+
+	<xsd:import schemaLocation="../../../../../Security_SOAP_v1/Shared/SecuritySvc.xsd" namespace="http://www.elliemae.com/services/security"/>
+
+	<xsd:element name="GetPipelineColumnsRequest" type="xsd:string"/>
+	<xsd:element name="GetPipelineColumnsResponse" type="tns:GetPipelineColumnsResponseType"/>
+
+
+	<xsd:complexType name="GetPipelineColumnsResponseType">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" maxOccurs="1" name="PipelineColumns" nillable="true" type="tns:PipelineColumnsType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="PipelineColumnsType">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" maxOccurs="unbounded" name="PipelineColumn" nillable="true" type="tns:PipelineColumnType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="PipelineColumnType">
+		<xsd:sequence>
+                	<xsd:element minOccurs="0" maxOccurs="1" name="FieldId" nillable="true" type="xsd:string"/>
+			<xsd:element minOccurs="0" maxOccurs="1" name="Header" nillable="true" type="xsd:string"/>
+			<xsd:element minOccurs="0" maxOccurs="1" name="Name" nillable="true" type="xsd:string"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+</xsd:schema>

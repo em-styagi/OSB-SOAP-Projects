@@ -1,0 +1,64 @@
+<wsdl:definitions name="SecurityTradePipelineSvc" targetNamespace="http://www.elliemae.com/services/trade/security/pipeline" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.elliemae.com/services/trade/security/pipeline" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:sec="http://www.elliemae.com/services/security">
+	<wsdl:types>
+		<xsd:schema targetNamespace="http://www.elliemae.com/services/trade/security/pipeline" elementFormDefault="qualified">
+			<xsd:include schemaLocation="../../xsd/Services/SecurityTradePipelineSvc.xsd"/>
+			<xsd:import schemaLocation="../../../../../Security_SOAP_v1/Shared/SecuritySvc.xsd" namespace="http://www.elliemae.com/services/security"/>
+		</xsd:schema>
+	</wsdl:types>
+	
+	<wsdl:message name="GetSecurityTradePipelineDetailRequest">
+		<wsdl:part name="GetSecurityTradePipelineDetailRequest" element="tns:GetSecurityTradePipelineDetailRequest"/>
+	</wsdl:message>
+	<wsdl:message name="GetSecurityTradePipelineDetailResponse">
+		<wsdl:part name="GetSecurityTradePipelineDetailResponse" element="tns:GetSecurityTradePipelineDetailResponse"/>
+	</wsdl:message>
+	<wsdl:message name="GetSecurityTradePipelineRequest">
+		<wsdl:part name="GetSecurityTradePipelineRequest" element="tns:GetSecurityTradePipelineRequest"/>
+	</wsdl:message>
+	<wsdl:message name="GetSecurityTradePipelineResponse">
+		<wsdl:part name="GetSecurityTradePipelineResponse" element="tns:GetSecurityTradePipelineResponse"/>
+	</wsdl:message>
+	<wsdl:message name="SecurityContext_Header">
+		<wsdl:part name="header" element="sec:SecurityContext"/>
+	</wsdl:message>
+
+	<wsdl:portType name="SecurityTradePipelineServicePort">
+		<wsdl:operation name="GetSecurityTradePipelineDetail">
+			<wsdl:input name="GetSecurityTradePipelineDetailRequest" message="tns:GetSecurityTradePipelineDetailRequest"/>
+			<wsdl:output name="GetSecurityTradePipelineDetailResponse" message="tns:GetSecurityTradePipelineDetailResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="GetSecurityTradePipeline">
+			<wsdl:input name="GetSecurityTradePipelineRequest" message="tns:GetSecurityTradePipelineRequest"/>
+			<wsdl:output name="GetSecurityTradePipelineResponse" message="tns:GetSecurityTradePipelineResponse"/>
+		</wsdl:operation>
+	</wsdl:portType>
+
+	<wsdl:binding name="SecurityTradePipelineServiceSOAP11Binding" type="tns:SecurityTradePipelineServicePort">
+		<soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="GetSecurityTradePipelineDetail">
+			<soap:operation soapAction="http://www.elliemae.com/services/trade/security/pipeline/GetSecurityTradePipelineDetail" style="document"/>
+			<wsdl:input name="GetSecurityTradePipelineDetailRequest">
+				<soap:header message="tns:SecurityContext_Header" part="header" use="literal"/>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="GetSecurityTradePipelineDetailResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetSecurityTradePipeline">
+			<soap:operation soapAction="http://www.elliemae.com/services/trade/security/pipeline/GetSecurityTradePipeline" style="document"/>
+			<wsdl:input name="GetSecurityTradePipelineRequest">
+				<soap:header message="tns:SecurityContext_Header" part="header" use="literal"/>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="GetSecurityTradePipelineResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="SecurityTradePipelineService">
+		<wsdl:port name="SecurityTradePipelineServicePort" binding="tns:SecurityTradePipelineServiceSOAP11Binding">
+			<soap:address location="http://encompass-ia.dev.dco.elmae:11001/encompass_v1/trade/security/pipeline"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

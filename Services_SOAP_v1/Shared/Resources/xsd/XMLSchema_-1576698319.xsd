@@ -1,0 +1,207 @@
+<xs:schema elementFormDefault="qualified" targetNamespace="http://www.elliemae.com/encompass/platform" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.elliemae.com/encompass/platform">
+	<xs:import schemaLocation="XMLSchema_-1643705072.xsd" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays"/>
+	<xs:complexType name="SettingGetRequest.SettingGetRequestBody">
+		<xs:sequence>
+			<xs:element name="Category" nillable="true" type="xs:string"/>
+			<xs:element minOccurs="0" name="Setting" nillable="true" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="SettingGetRequest.SettingGetRequestBody" nillable="true" type="tns:SettingGetRequest.SettingGetRequestBody"/>
+	<xs:element name="SettingGetRequest" nillable="true" type="tns:SettingGetRequest.SettingGetRequestBody"/>
+	<xs:complexType name="SecurityContext">
+		<xs:sequence>
+			<xs:element name="Created" nillable="true" type="xs:dateTime"/>
+			<xs:element name="Realm" nillable="true" type="xs:string"/>
+			<xs:element name="SessionId" nillable="true" type="xs:string"/>
+			<xs:element minOccurs="0" name="TokenData" nillable="true" type="xs:string">
+				<xs:annotation>
+					<xs:appinfo>
+						<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="TokenType" nillable="true" type="xs:string">
+				<xs:annotation>
+					<xs:appinfo>
+						<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="UserName" nillable="true" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="SecurityContext" nillable="true" type="tns:SecurityContext"/>
+	<xs:complexType name="SettingGetResponse.SettingGetResponseBody">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="Category" nillable="true" type="xs:string"/>
+			<xs:element minOccurs="0" name="Settings" nillable="true" type="tns:ArrayOfSetting"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="SettingGetResponse.SettingGetResponseBody" nillable="true" type="tns:SettingGetResponse.SettingGetResponseBody"/>
+	<xs:complexType name="ArrayOfSetting">
+		<xs:sequence>
+			<xs:element minOccurs="0" maxOccurs="unbounded" name="Setting" nillable="true" type="tns:Setting"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ArrayOfSetting" nillable="true" type="tns:ArrayOfSetting"/>
+	<xs:complexType name="Setting">
+		<xs:complexContent mixed="false">
+			<xs:extension base="tns:EntityContractBase">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="Id" nillable="true" type="xs:string">
+						<xs:annotation>
+							<xs:appinfo>
+								<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="Name" nillable="true" type="xs:string">
+						<xs:annotation>
+							<xs:appinfo>
+								<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="Value" nillable="true" type="xs:string">
+						<xs:annotation>
+							<xs:appinfo>
+								<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="Setting" nillable="true" type="tns:Setting"/>
+	<xs:complexType name="EntityContractBase">
+		<xs:sequence/>
+	</xs:complexType>
+	<xs:element name="EntityContractBase" nillable="true" type="tns:EntityContractBase"/>
+	<xs:element name="SettingGetResponse" nillable="true" type="tns:SettingGetResponse.SettingGetResponseBody"/>
+	<xs:complexType name="UserSettingGetRequest.UserSettingGetRequestBody">
+		<xs:sequence>
+			<xs:element name="Category" nillable="true" type="xs:string"/>
+			<xs:element minOccurs="0" name="Setting" nillable="true" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="UserSettingGetRequest.UserSettingGetRequestBody" nillable="true" type="tns:UserSettingGetRequest.UserSettingGetRequestBody"/>
+	<xs:element name="UserSettingGetRequest" nillable="true" type="tns:UserSettingGetRequest.UserSettingGetRequestBody"/>
+	<xs:complexType name="UserSettingGetResponse.UserSettingGetResponseBody">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="Category" nillable="true" type="xs:string"/>
+			<xs:element minOccurs="0" name="Settings" nillable="true" type="tns:ArrayOfSetting"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="UserSettingGetResponse.UserSettingGetResponseBody" nillable="true" type="tns:UserSettingGetResponse.UserSettingGetResponseBody"/>
+	<xs:element name="UserSettingGetResponse" nillable="true" type="tns:UserSettingGetResponse.UserSettingGetResponseBody"/>
+	<xs:complexType name="UserSettingSetRequest.UserSettingSetRequestBody">
+		<xs:sequence>
+			<xs:element name="Category" nillable="true" type="xs:string"/>
+			<xs:element name="Settings" nillable="true" type="tns:ArrayOfSetting"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="UserSettingSetRequest.UserSettingSetRequestBody" nillable="true" type="tns:UserSettingSetRequest.UserSettingSetRequestBody"/>
+	<xs:element name="UserSettingSetRequest" nillable="true" type="tns:UserSettingSetRequest.UserSettingSetRequestBody"/>
+	<xs:complexType name="ProductPricingSettingGetRequest.ProductPricingSettingGetRequestBody">
+		<xs:sequence>
+			<xs:element name="Active" type="xs:boolean"/>
+			<xs:element minOccurs="0" name="PartnerID" nillable="true" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ProductPricingSettingGetRequest.ProductPricingSettingGetRequestBody" nillable="true" type="tns:ProductPricingSettingGetRequest.ProductPricingSettingGetRequestBody"/>
+	<xs:element name="ProductPricingSettingGetRequest" nillable="true" type="tns:ProductPricingSettingGetRequest.ProductPricingSettingGetRequestBody"/>
+	<xs:complexType name="ProductPricingSettingGetResponse.ProductPricingSettingGetResponseBody">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="ProductPricingSettings" nillable="true" type="tns:ProductPricingSetting"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ProductPricingSettingGetResponse.ProductPricingSettingGetResponseBody" nillable="true" type="tns:ProductPricingSettingGetResponse.ProductPricingSettingGetResponseBody"/>
+	<xs:complexType name="ProductPricingSetting">
+		<xs:complexContent mixed="false">
+			<xs:extension base="tns:EntityContractBase">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="Active" nillable="true" type="xs:boolean"/>
+					<xs:element minOccurs="0" name="AdminURL" nillable="true" type="xs:string"/>
+					<xs:element minOccurs="0" name="Id" nillable="true" type="xs:string">
+						<xs:annotation>
+							<xs:appinfo>
+								<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="ImportToLoan" nillable="true" type="xs:boolean"/>
+					<xs:element minOccurs="0" name="IsCustomizeInvestorName" nillable="true" type="xs:boolean"/>
+					<xs:element minOccurs="0" name="MoreInfoURL" nillable="true" type="xs:string"/>
+					<xs:element minOccurs="0" name="PartnerID" nillable="true" type="xs:string"/>
+					<xs:element minOccurs="0" name="PartnerLockConfirm" nillable="true" type="xs:boolean"/>
+					<xs:element minOccurs="0" name="PartnerName" nillable="true" type="xs:string"/>
+					<xs:element minOccurs="0" name="PartnerRequestLock" nillable="true" type="xs:boolean"/>
+					<xs:element minOccurs="0" name="RequestLockOnlyWOCurrentLock" nillable="true" type="xs:boolean"/>
+					<xs:element minOccurs="0" name="SettingsSection" nillable="true" type="xs:string"/>
+					<xs:element minOccurs="0" name="ShowSellSide" nillable="true" type="xs:boolean"/>
+					<xs:element minOccurs="0" name="SupportsImportToLoan" nillable="true" type="xs:boolean"/>
+					<xs:element minOccurs="0" name="SupportsPartnerLockConfirm" nillable="true" type="xs:boolean"/>
+					<xs:element minOccurs="0" name="SupportsPartnerRequestLock" nillable="true" type="xs:boolean"/>
+					<xs:element minOccurs="0" name="UseCustomizedInvestorName" nillable="true" type="xs:boolean"/>
+					<xs:element minOccurs="0" name="UseInvestorAndLenderName" nillable="true" type="xs:boolean"/>
+					<xs:element minOccurs="0" name="UseOnlyInvestorName" nillable="true" type="xs:boolean"/>
+					<xs:element minOccurs="0" name="UseOnlyLenderName" nillable="true" type="xs:boolean"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="ProductPricingSetting" nillable="true" type="tns:ProductPricingSetting"/>
+	<xs:element name="ProductPricingSettingGetResponse" nillable="true" type="tns:ProductPricingSettingGetResponse.ProductPricingSettingGetResponseBody"/>
+	<xs:complexType name="RoleAssignableUserSettingGetRequest.RoleAssignableUserSettingGetRequestBody">
+		<xs:sequence>
+			<xs:element name="RoleId" type="xs:int"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="RoleAssignableUserSettingGetRequest.RoleAssignableUserSettingGetRequestBody" nillable="true" type="tns:RoleAssignableUserSettingGetRequest.RoleAssignableUserSettingGetRequestBody"/>
+	<xs:element name="RoleAssignableUserSettingGetRequest" nillable="true" type="tns:RoleAssignableUserSettingGetRequest.RoleAssignableUserSettingGetRequestBody"/>
+	<xs:complexType name="RoleAssignableUserSettingGetResponse.RoleAssignableUserSettingGetBody">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="RoleAssignableGroupSetting" nillable="true" type="q1:ArrayOfstring" xmlns:q1="http://schemas.microsoft.com/2003/10/Serialization/Arrays"/>
+			<xs:element minOccurs="0" name="RoleAssignableUserSetting" nillable="true" type="tns:ArrayOfUserProfile"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="RoleAssignableUserSettingGetResponse.RoleAssignableUserSettingGetBody" nillable="true" type="tns:RoleAssignableUserSettingGetResponse.RoleAssignableUserSettingGetBody"/>
+	<xs:complexType name="ArrayOfUserProfile">
+		<xs:sequence>
+			<xs:element minOccurs="0" maxOccurs="unbounded" name="UserProfile" nillable="true" type="tns:UserProfile"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ArrayOfUserProfile" nillable="true" type="tns:ArrayOfUserProfile"/>
+	<xs:complexType name="UserProfile">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="AccessMode" nillable="true" type="xs:string"/>
+			<xs:element minOccurs="0" name="CHUMId" nillable="true" type="xs:string"/>
+			<xs:element minOccurs="0" name="CellPhone" nillable="true" type="xs:string"/>
+			<xs:element minOccurs="0" name="Email" nillable="true" type="xs:string"/>
+			<xs:element minOccurs="0" name="EmailSignature" nillable="true" type="xs:string"/>
+			<xs:element minOccurs="0" name="EmployeeID" nillable="true" type="xs:string"/>
+			<xs:element minOccurs="0" name="EncompassVersion" nillable="true" type="xs:string"/>
+			<xs:element minOccurs="0" name="Fax" nillable="true" type="xs:string"/>
+			<xs:element minOccurs="0" name="FirstName" nillable="true" type="xs:string"/>
+			<xs:element minOccurs="0" name="FullName" nillable="true" type="xs:string"/>
+			<xs:element minOccurs="0" name="InheritParentCompPlan" nillable="true" type="xs:boolean"/>
+			<xs:element minOccurs="0" name="IsTopLevelUser" nillable="true" type="xs:boolean"/>
+			<xs:element minOccurs="0" name="LastLogin" nillable="true" type="xs:dateTime"/>
+			<xs:element minOccurs="0" name="LastName" nillable="true" type="xs:string"/>
+			<xs:element minOccurs="0" name="Locked" nillable="true" type="xs:boolean"/>
+			<xs:element minOccurs="0" name="NMLSExpirationDate" nillable="true" type="xs:dateTime"/>
+			<xs:element minOccurs="0" name="NMLSOriginatorID" nillable="true" type="xs:string"/>
+			<xs:element minOccurs="0" name="OrgId" nillable="true" type="xs:int"/>
+			<xs:element minOccurs="0" name="PeerView" nillable="true" type="xs:string"/>
+			<xs:element minOccurs="0" name="PersonalStatusOnline" nillable="true" type="xs:boolean"/>
+			<xs:element minOccurs="0" name="Phone" nillable="true" type="xs:string"/>
+			<xs:element minOccurs="0" name="Status" nillable="true" type="xs:string"/>
+			<xs:element minOccurs="0" name="Title" nillable="true" type="xs:string"/>
+			<xs:element minOccurs="0" name="UserID" nillable="true" type="xs:string"/>
+			<xs:element minOccurs="0" name="WorkingFolder" nillable="true" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="UserProfile" nillable="true" type="tns:UserProfile"/>
+	<xs:element name="RoleAssignableUserSettingGetResponse" nillable="true" type="tns:RoleAssignableUserSettingGetResponse.RoleAssignableUserSettingGetBody"/>
+</xs:schema>

@@ -1,0 +1,315 @@
+<xsd:schema elementFormDefault="qualified"
+	targetNamespace="http://www.elliemae.com/services/pipelinetradecursor"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.elliemae.com/services/pipelinetradecursor">
+
+	<xsd:element name="CreateSecurityTradeCursorRequest"
+		type="tns:CreateSecurityTradeCursorRequestType" />
+	<xsd:element name="CreateSecurityTradeCursorResponse"
+		type="tns:CreateSecurityTradeCursorResponseType" />
+
+	<xsd:element name="ReadSecurityTradeCursorRequest" type="tns:ReadSecurityTradeCursorRequestType" />
+	<xsd:element name="ReadSecurityTradeCursorResponse" type="tns:ReadSecurityTradeCursorResponseType" />
+
+	<xsd:element name="DeleteSecurityTradeCursorRequest"
+		type="tns:DeleteSecurityTradeCursorRequestType" />
+	<xsd:element name="DeleteSecurityTradeCursorResponse"
+		type="tns:DeleteSecurityTradeCursorResponseType" />
+
+	<xsd:element name="GetSecurityTradeCursorsListRequest"
+		type="tns:GetSecurityTradeCursorsListRequestType" />
+	<xsd:element name="GetSecurityTradeCursorsListResponse"
+		type="tns:GetSecurityTradeCursorsListResponseType" />
+
+	<!-- Start Create Cursor -->
+	<xsd:complexType name="CreateSecurityTradeCursorRequestType">
+		<xsd:sequence>
+			<xsd:element name="Fields" nillable="true" type="tns:EmListOfstring" />
+			<xsd:element name="FieldFilters" nillable="true"
+				type="tns:ArrayOfTradePipelineFieldFilter" />
+			<xsd:element name="SortFields" nillable="true"
+				type="tns:ArrayOfSortField" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="EmListOfstring">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" maxOccurs="unbounded" name="Item"
+				nillable="true" type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="ArrayOfTradePipelineFieldFilter">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" maxOccurs="unbounded"
+				name="TradePipelineFieldFilter" nillable="true"
+				type="tns:TradePipelineFieldFilter" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="TradePipelineFieldFilter">
+		<xsd:complexContent mixed="false">
+			<xsd:extension base="tns:FieldFilterBase">
+				<xsd:sequence />
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+
+	<xsd:complexType name="FieldFilterBase">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" name="CriterionName" nillable="true"
+				type="xsd:string" />
+			<xsd:element minOccurs="0" name="DataSource" type="tns:FilterDataSource" />
+			<xsd:element minOccurs="0" name="FieldDescription"
+				nillable="true" type="xsd:string" />
+			<xsd:element minOccurs="0" name="FieldID" nillable="true"
+				type="xsd:string" />
+			<xsd:element minOccurs="0" name="FieldType" type="tns:FieldTypes" />
+			<xsd:element minOccurs="0" name="ForceDataConversion" type="xsd:boolean" />
+			<xsd:element minOccurs="0" name="IsVolatile" type="xsd:boolean" />
+			<xsd:element minOccurs="0" name="JointToken" type="tns:JointTokens" />
+			<xsd:element minOccurs="0" name="LeftParentheses" type="xsd:int" />
+			<xsd:element minOccurs="0" name="OpDesc" nillable="true"
+				type="xsd:string" />
+			<xsd:element minOccurs="0" name="OpType" type="tns:OperatorTypes" />
+			<xsd:element minOccurs="0" name="RightParentheses" type="xsd:int" />
+			<xsd:element minOccurs="0" name="ValueDescription"
+				nillable="true" type="xsd:string" />
+			<xsd:element minOccurs="0" name="ValueFrom" nillable="true"
+				type="xsd:string" />
+			<xsd:element minOccurs="0" name="ValueTo" nillable="true"
+				type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:simpleType name="FilterDataSource">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Unknown" />
+			<xsd:enumeration value="Loan" />
+			<xsd:enumeration value="BorrowerContact" />
+			<xsd:enumeration value="BizContact" />
+			<xsd:enumeration value="MasterContract" />
+			<xsd:enumeration value="Trade" />
+			<xsd:enumeration value="CorrespondentMasterCommitment" />
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="FieldTypes">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="IsNothing" />
+			<xsd:enumeration value="IsString" />
+			<xsd:enumeration value="IsNumeric" />
+			<xsd:enumeration value="IsDate" />
+			<xsd:enumeration value="IsPhone" />
+			<xsd:enumeration value="IsMonthDay" />
+			<xsd:enumeration value="IsOptionList" />
+			<xsd:enumeration value="IsYesNo" />
+			<xsd:enumeration value="IsCheckbox" />
+			<xsd:enumeration value="IsDateTime" />
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="JointTokens">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Nothing" />
+			<xsd:enumeration value="And" />
+			<xsd:enumeration value="Or" />
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="OperatorTypes">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="None" />
+			<xsd:enumeration value="IsExact" />
+			<xsd:enumeration value="IsNot" />
+			<xsd:enumeration value="StartsWith" />
+			<xsd:enumeration value="DoesnotStartWith" />
+			<xsd:enumeration value="Contains" />
+			<xsd:enumeration value="DoesnotContain" />
+			<xsd:enumeration value="Equals" />
+			<xsd:enumeration value="NotEqual" />
+			<xsd:enumeration value="GreaterThan" />
+			<xsd:enumeration value="NotGreaterThan" />
+			<xsd:enumeration value="LessThan" />
+			<xsd:enumeration value="NotLessThan" />
+			<xsd:enumeration value="Between" />
+			<xsd:enumeration value="NotBetween" />
+			<xsd:enumeration value="CurrentWeek" />
+			<xsd:enumeration value="CurrentMonth" />
+			<xsd:enumeration value="YearToDate" />
+			<xsd:enumeration value="PreviousWeek" />
+			<xsd:enumeration value="PreviousMonth" />
+			<xsd:enumeration value="PreviousYear" />
+			<xsd:enumeration value="Last7Days" />
+			<xsd:enumeration value="Last30Days" />
+			<xsd:enumeration value="Last90Days" />
+			<xsd:enumeration value="Last365Days" />
+			<xsd:enumeration value="DateBetween" />
+			<xsd:enumeration value="DateNotBetween" />
+			<xsd:enumeration value="EmptyDate" />
+			<xsd:enumeration value="NotEmptyDate" />
+			<xsd:enumeration value="DateAfter" />
+			<xsd:enumeration value="DateOnOrAfter" />
+			<xsd:enumeration value="DateBefore" />
+			<xsd:enumeration value="DateOnOrBefore" />
+			<xsd:enumeration value="IsAnyOf" />
+			<xsd:enumeration value="IsNotAnyOf" />
+			<xsd:enumeration value="IsYes" />
+			<xsd:enumeration value="IsNotYes" />
+			<xsd:enumeration value="IsChecked" />
+			<xsd:enumeration value="IsNotChecked" />
+			<xsd:enumeration value="Today" />
+			<xsd:enumeration value="NextWeek" />
+			<xsd:enumeration value="NextMonth" />
+			<xsd:enumeration value="NextYear" />
+			<xsd:enumeration value="Last15Days" />
+			<xsd:enumeration value="Last60Days" />
+			<xsd:enumeration value="Last180Days" />
+			<xsd:enumeration value="Next7Days" />
+			<xsd:enumeration value="Next15Days" />
+			<xsd:enumeration value="Next30Days" />
+			<xsd:enumeration value="Next60Days" />
+			<xsd:enumeration value="Next90Days" />
+			<xsd:enumeration value="Next180Days" />
+			<xsd:enumeration value="Next365Days" />
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:complexType name="ArrayOfSortField">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" maxOccurs="unbounded" name="SortField"
+				nillable="true" type="tns:SortField" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="SortField">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" name="FieldName" nillable="true"
+				type="xsd:string" />
+			<xsd:element minOccurs="0" name="FieldSortOrder" type="tns:SortOrderOption" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:simpleType name="SortOrderOption">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="None" />
+			<xsd:enumeration value="Ascending" />
+			<xsd:enumeration value="Descending" />
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:complexType name="CreateSecurityTradeCursorResponseType">
+		<xsd:sequence>
+			<xsd:element name="CursorId" nillable="true" type="tns:guid" />
+			<xsd:element name="Details" nillable="true"
+				type="tns:ArrayOfCursorMetaData" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:simpleType name="guid">
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern
+				value="[\da-fA-F]{8}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{12}" />
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:complexType name="ArrayOfCursorMetaData">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" maxOccurs="unbounded" name="Item"
+				nillable="true" type="tns:MapType" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="MapType">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" name="Key" nillable="true"
+				type="xsd:string" />
+			<xsd:element minOccurs="0" name="Value" nillable="true"
+				type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="ReadSecurityTradeCursorRequestType">
+		<xsd:sequence>
+			<xsd:element name="CursorId" nillable="false" type="tns:guid" />
+			<xsd:element name="StartIndex" nillable="false" type="xsd:int" />
+			<xsd:element name="EndIndex" nillable="false" type="xsd:int" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="ReadSecurityTradeCursorResponseType">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" name="SecurityTradePipelineDetail"
+				nillable="true" type="tns:ArrayOfSecurityTradePipelineView" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="ArrayOfSecurityTradePipelineView">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" maxOccurs="unbounded"
+				name="SecurityTradePipelineView" nillable="true"
+				type="tns:SecurityTradePipelineView" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="SecurityTradePipelineView">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" name="TradeId" type="xsd:int" />
+			<xsd:element minOccurs="0" name="TradePipelineFields"
+				nillable="true" type="tns:ArrayOfTradePipelineField" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="ArrayOfTradePipelineField">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" maxOccurs="unbounded" name="TradePipelineField"
+				nillable="true" type="tns:TradePipelineField" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="TradePipelineField">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" name="Name" nillable="true"
+				type="xsd:string" />
+			<xsd:element minOccurs="0" name="Value" nillable="true"
+				type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<!-- Start Delete Cursor -->
+	<xsd:complexType name="DeleteSecurityTradeCursorRequestType">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" name="CursorId" nillable="false"
+				type="tns:guid" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+
+	<xsd:complexType name="DeleteSecurityTradeCursorResponseType">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" name="Status" nillable="true"
+				type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<!-- End Delete Cursor -->
+
+	<!-- Start Get Cursor List -->
+	<xsd:complexType name="GetSecurityTradeCursorsListRequestType">
+		<xsd:sequence />
+	</xsd:complexType>
+
+	<xsd:complexType name="ArrayOfCursor">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" maxOccurs="unbounded" name="CursorId"
+				nillable="true" type="tns:guid" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="GetSecurityTradeCursorsListResponseType">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" name="Cursors" nillable="false"
+				type="tns:ArrayOfCursor" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<!-- End Get Cursor List -->
+
+</xsd:schema>

@@ -1,0 +1,82 @@
+<xsd:schema targetNamespace="http://www.elliemae.com/services/metadata" elementFormDefault="qualified" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.elliemae.com/services/metadata" xmlns:sn="http://www.elliemae.com/services/session" xmlns:sc="http://www.elliemae.com/services/security">
+
+	<xsd:import schemaLocation="../../../../../Security_SOAP_v1/Shared/SecuritySvc.xsd" namespace="http://www.elliemae.com/services/security"/>
+
+	<xsd:element name="GetFieldInfoRequest" nillable="true" type="tns:GetFieldInfoRequestType"/>
+	<xsd:element name="GetFieldInfoResponse" type="tns:GetFieldInfoResponseType"/>
+
+	<xsd:element name="GetCurrentVersionRequest" type="tns:GetCurrentVersionRequestType"/>
+	<xsd:element name="GetCurrentVersionResponse" type="tns:GetCurrentVersionResponseType"/>
+
+	<xsd:complexType name="GetFieldInfoRequestType">
+		<xsd:sequence>
+			<xsd:element minOccurs="1" name="EncompassFieldIDs" nillable="true" type="tns:EmListOfstring"/>
+		</xsd:sequence>
+	</xsd:complexType>
+		
+	<xsd:complexType name="GetFieldInfoResponseType">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" name="EncompassFields" nillable="true" type="tns:ArrayOfField"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="ArrayOfField">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" maxOccurs="unbounded" name="Field" nillable="true" type="tns:Field"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:element name="ArrayOfField" nillable="true" type="tns:ArrayOfField"/>
+	
+	<xsd:complexType name="Field">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" name="AllowEdit" type="xsd:boolean"/>
+			<xsd:element minOccurs="0" name="AllowReporting" type="xsd:boolean"/>
+			<xsd:element minOccurs="0" name="Category" nillable="true" type="xsd:string"/>
+			<xsd:element minOccurs="0" name="DbField" nillable="true" type="xsd:string"/>
+			<xsd:element minOccurs="0" name="Description" nillable="true" type="xsd:string"/>
+			<xsd:element minOccurs="0" name="Format" nillable="true" type="xsd:string"/>
+			<xsd:element minOccurs="0" name="ID" nillable="true" type="xsd:string"/>
+			<xsd:element minOccurs="0" name="MaxLength" type="xsd:int"/>
+			<xsd:element minOccurs="0" name="ModelPath" nillable="true" type="xsd:string"/>
+			<xsd:element minOccurs="0" name="ModelProperty" nillable="true" type="xsd:string"/>
+			<xsd:element minOccurs="0" name="MultiInstance" type="xsd:boolean"/>
+			<xsd:element minOccurs="0" name="Options" nillable="true" type="tns:ArrayOfOption"/>
+			<xsd:element minOccurs="0" name="OptionsRequired" type="xsd:boolean"/>
+			<xsd:element minOccurs="0" name="XPath" nillable="true" type="xsd:string"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="Field" nillable="true" type="tns:Field"/>
+	
+	<xsd:complexType name="ArrayOfOption">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" maxOccurs="unbounded" name="Option" nillable="true" type="tns:Option"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="ArrayOfOption" nillable="true" type="tns:ArrayOfOption"/>
+	
+	<xsd:complexType name="Option">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" name="Description" nillable="true" type="xsd:string"/>
+			<xsd:element minOccurs="0" name="Value" nillable="true" type="xsd:string"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	
+		<xsd:complexType name="EmListOfstring">		
+		<xsd:sequence>
+			<xsd:element minOccurs="1" maxOccurs="unbounded" name="Item" nillable="true" type="xsd:string"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="EmListOfstring" nillable="true" type="tns:EmListOfstring"/>
+
+	<xsd:complexType name="GetCurrentVersionRequestType">
+		<xsd:sequence>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="GetCurrentVersionResponseType">
+		<xsd:sequence>
+		</xsd:sequence>
+	</xsd:complexType>
+	
+</xsd:schema>

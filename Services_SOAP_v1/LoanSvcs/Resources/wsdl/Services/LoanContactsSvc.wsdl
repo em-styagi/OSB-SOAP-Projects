@@ -1,0 +1,46 @@
+<wsdl:definitions name="LoanContactsSvc" targetNamespace="http://www.elliemae.com/services/loancontacts" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.elliemae.com/services/loancontacts" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:sec="http://www.elliemae.com/services/security">
+	
+	<wsdl:types>
+		<xsd:schema targetNamespace="http://www.elliemae.com/services/loancontacts" elementFormDefault="qualified">
+			<xsd:include schemaLocation="../../xsd/Services/LoanContactsSvc.xsd"/>
+			<xsd:import schemaLocation="../../../../../Security_SOAP_v1/Shared/SecuritySvc.xsd" namespace="http://www.elliemae.com/services/security"/>
+		</xsd:schema>
+	</wsdl:types>
+	
+	<!--  get loan Contacts-->
+	<wsdl:message name="GetLoanContactsRequest">
+		<wsdl:part name="GetLoanContactsRequest" element="tns:GetLoanContactsRequest"/>
+	</wsdl:message>
+	<wsdl:message name="GetLoanContactsRequest_Headers">
+		<wsdl:part name="header" element="sec:SecurityContext"/>
+	</wsdl:message>
+	<wsdl:message name="GetLoanContactsResponse">
+		<wsdl:part name="GetLoanContactsResponse" element="tns:GetLoanContactsResponse"/>
+	</wsdl:message>
+		
+	<wsdl:portType name="LoanContactsSvc">
+		<wsdl:operation name="GetLoanContacts">
+			<wsdl:input message="tns:GetLoanContactsRequest"/>
+			<wsdl:output message="tns:GetLoanContactsResponse"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	
+	<wsdl:binding name="LoanContactsSvcSOAP" type="tns:LoanContactsSvc">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="GetLoanContacts">
+			<soap:operation soapAction="http://www.elliemae.com/services/loancontacts/GetLoanContacts"/>
+			<wsdl:input>
+			<soap:header message="tns:GetLoanContactsRequest_Headers" part="header" use="literal"/>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="LoanContactsSvc">
+		<wsdl:port binding="tns:LoanContactsSvcSOAP" name="LoanContactsSvcSOAP">
+			<soap:address location="http://encompass-ib.dev.dco.elmae:11001/encompass_v1/loan/contacts"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

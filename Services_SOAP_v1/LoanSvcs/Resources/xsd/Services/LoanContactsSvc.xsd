@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.elliemae.com/services/loancontacts"
+	xmlns:tns="http://www.elliemae.com/services/loancontacts"
+	elementFormDefault="qualified">
+	
+	<xsd:element name="GetLoanContactsRequest" 		nillable="true" type="tns:GetLoanContactsRequestType" />
+	<xsd:element name="GetLoanContactsResponse" 	nillable="true" type="tns:GetLoanContactsResponseType" />
+	
+    <xsd:simpleType name="guid">
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern
+				value="[\da-fA-F]{8}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{12}" />
+		</xsd:restriction>
+	</xsd:simpleType>
+	
+	<xsd:complexType name="GetLoanContactsRequestType">
+		<xsd:sequence>
+			<xsd:element name="LoanId" type="tns:guid"/>
+		</xsd:sequence>
+	</xsd:complexType>
+		
+	<xsd:complexType name="GetLoanContactsResponseType">
+		<xsd:sequence>
+			<xsd:element  name="Contacts" nillable="true" type="tns:ArrayListofContacts"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="ArrayListofContacts">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" maxOccurs="unbounded" name="Contact" nillable="true" type="tns:ContactType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="ArrayListofContacts" nillable="true" type="tns:ArrayListofContacts"/>
+	
+	<xsd:complexType name="ContactType">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" name="ABA" nillable="true" type="xsd:string"/>
+			<xsd:element minOccurs="0" name="AccountName" nillable="true" type="xsd:string"/>
+			<xsd:element minOccurs="0" name="Address" nillable="true" type="xsd:string"/>
+			<xsd:element minOccurs="0" name="AddToCdContactInfo" nillable="true" type="xsd:boolean"/>
+			<xsd:element minOccurs="0" name="BizLicenseAuthDate" nillable="true" type="xsd:string"/>
+			<xsd:element minOccurs="0" name="BizLicenseAuthName" nillable="true" type="xsd:string"/>
+			<xsd:element minOccurs="0" name="BizLicenseAuthStateCode" nillable="true" type="xsd:string"/>
+			<xsd:element minOccurs="0" name="BizLicenseAuthType" nillable="true" type="xsd:string"/>
+			<xsd:element minOccurs="0" name="BizLicenseNumber" nillable="true" type="xsd:string"/>
+			<xsd:element minOccurs="0" name="BorrowerPairId" nillable="true" type="xsd:int"/>
+			<xsd:element minOccurs="0" name="BusinessPhone" nillable="true" type="xsd:string"/>
+			<xsd:element minOccurs="0" name="CategoryName" nillable="true" type="xsd:string"/>
+			<xsd:element minOccurs="0" name="Cell" nillable="true" type="xsd:string"/>
+			<xsd:element minOccurs="0" name="City" nillable="true" type="xsd:string"/>
+			<xsd:element minOccurs="0" name="Comments" nillable="true" type="xsd:string"/>
+			<xsd:element minOccurs="0" name="CompanyId" nillable="true" type="xsd:string"/>
+			<xsd:element minOccurs="0" name="ContactId" nillable="true" type="xsd:string"/>
+			<xsd:element minOccurs="0" name="ContactName" nillable="true" type="xsd:string"/>
+			<xsd:element minOccurs="0" name="ContactNMLSNo" nillable="true" type="xsd:string"/>
+			<xsd:element minOccurs="0" name="ContactTitle" nillable="true" type="xsd:string"/>
+			<xsd:element minOccurs="0" name="ContactType" nillable="true" type="xsd:string"/>
+			<xsd:element minOccurs="0" name="ContactTypeName" nillable="true" type="xsd:string"/>
+			<xsd:element minOccurs="0" name="Email" nillable="true" type="xsd:string"/>
+			<xsd:element minOccurs="0" name="Fax" nillable="true" type="xsd:string"/>
+			<xsd:element minOccurs="0" name="FirstName" nillable="true" type="xsd:string"/>
+			<xsd:element minOccurs="0" name="FullName" nillable="true" type="xsd:string"/>
+			<xsd:element minOccurs="0" name="HomePhone" nillable="true" type="xsd:string"/>
+			<xsd:element minOccurs="0" name="LastName" nillable="true" type="xsd:string"/>
+			<xsd:element minOccurs="0" name="License" nillable="true" type="xsd:string"/>
+			<xsd:element minOccurs="0" name="LineItemNumber" nillable="true" type="xsd:string"/>
+			<xsd:element minOccurs="0" name="MiddleName" nillable="true" type="xsd:string"/>
+			<xsd:element minOccurs="0" name="NmlsLicense" nillable="true" type="xsd:string"/>
+			<xsd:element minOccurs="0" name="No3rdPartyEmailIndicator" nillable="true" type="xsd:boolean"/>
+			<xsd:element minOccurs="0" name="OrganizationState" nillable="true" type="xsd:string"/>
+			<xsd:element minOccurs="0" name="OrganizationType" nillable="true" type="xsd:string"/>
+			<xsd:element minOccurs="0" name="PersonalLicenseAuthDate" nillable="true" type="xsd:string"/>
+			<xsd:element minOccurs="0" name="PersonalLicenseAuthName" nillable="true" type="xsd:string"/>
+			<xsd:element minOccurs="0" name="PersonalLicenseAuthStateCode" nillable="true" type="xsd:string"/>
+			<xsd:element minOccurs="0" name="PersonalLicenseAuthType" nillable="true" type="xsd:string"/>
+			<xsd:element minOccurs="0" name="PersonalLicenseNumber" nillable="true" type="xsd:string"/>
+			<xsd:element minOccurs="0" name="Phone" nillable="true" type="xsd:string"/>
+			<xsd:element minOccurs="0" name="Phone2" nillable="true" type="xsd:string"/>
+			<xsd:element minOccurs="0" name="PostalCode" nillable="true" type="xsd:string"/>
+			<xsd:element minOccurs="0" name="RecCity" nillable="true" type="xsd:string"/>
+			<xsd:element minOccurs="0" name="ReferenceNumber" nillable="true" type="xsd:string"/>
+			<xsd:element minOccurs="0" name="Relationship" nillable="true" type="xsd:string"/>
+			<xsd:element minOccurs="0" name="RoleName" nillable="true" type="xsd:string"/>
+			<xsd:element minOccurs="0" name="SettlementAgent" nillable="true" type="xsd:boolean"/>
+			<xsd:element minOccurs="0" name="Stage" nillable="true" type="xsd:string"/>
+			<xsd:element minOccurs="0" name="State" nillable="true" type="xsd:string"/>
+			<xsd:element minOccurs="0" name="SuffixToName" nillable="true" type="xsd:string"/>
+			<xsd:element minOccurs="0" name="TaxID" nillable="true" type="xsd:string"/>
+			<xsd:element minOccurs="0" name="WriteAccess" nillable="true" type="xsd:boolean"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	
+</xsd:schema>

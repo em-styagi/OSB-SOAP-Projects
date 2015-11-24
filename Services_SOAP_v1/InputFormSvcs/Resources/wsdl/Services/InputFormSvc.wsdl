@@ -1,0 +1,154 @@
+<wsdl:definitions name="FieldSearch" targetNamespace="http://www.elliemae.com/services/inputform" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.elliemae.com/services/inputform" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:sec="http://www.elliemae.com/services/security" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+	<wsdl:types>
+		<xsd:schema targetNamespace="http://www.elliemae.com/services/inputform" elementFormDefault="qualified">
+			<xsd:include schemaLocation="../../xsd/Services/InputForm.xsd"/>
+			<xsd:import schemaLocation="../../../../../Security_SOAP_v1/Shared/SecuritySvc.xsd" namespace="http://www.elliemae.com/services/security"/>
+		</xsd:schema>
+	</wsdl:types>
+
+	<wsdl:message name="CreateInputFormRequestMsg">
+		<wsdl:part element="tns:CreateInputFormRequest" name="body"/>
+	</wsdl:message>
+	<wsdl:message name="CreateInputFormResponseMsg">
+		<wsdl:part element="tns:CreateInputFormResponse" name="body"/>
+	</wsdl:message>
+	
+	<wsdl:message name="UpdateInputFormRequestMsg">
+		<wsdl:part element="tns:UpdateInputFormRequest" name="body"/>
+	</wsdl:message>
+	<wsdl:message name="UpdateInputFormResponseMsg">
+		<wsdl:part element="tns:UpdateInputFormResponse" name="body"/>
+	</wsdl:message>
+
+	<wsdl:message name="DeleteInputFormRequestMsg">
+		<wsdl:part element="tns:DeleteInputFormRequest" name="body"/>
+	</wsdl:message>
+	<wsdl:message name="DeleteInputFormResponseMsg">
+		<wsdl:part element="tns:DeleteInputFormResponse" name="body"/>
+	</wsdl:message>
+
+	<wsdl:message name="GetInputFormRequestMsg">
+		<wsdl:part element="tns:GetInputFormRequest" name="body"/>
+	</wsdl:message>
+	<wsdl:message name="GetInputFormResponseMsg">
+		<wsdl:part element="tns:GetInputFormResponse" name="body"/>
+	</wsdl:message>
+
+	<wsdl:message name="GetInputFormsRequestMsg">
+		<wsdl:part element="tns:GetInputFormsRequest" name="body"/>
+	</wsdl:message>
+	<wsdl:message name="GetInputFormsResponseMsg">
+		<wsdl:part element="tns:GetInputFormsResponse" name="body"/>
+	</wsdl:message>
+	
+	<wsdl:message name="GetInputFormsByAssetRequestMsg">
+		<wsdl:part element="tns:GetInputFormsByAssetRequest" name="body"/>
+	</wsdl:message>
+	<wsdl:message name="GetInputFormsByAssetResponseMsg">
+		<wsdl:part element="tns:GetInputFormsByAssetResponse" name="body"/>
+	</wsdl:message>
+	
+	<wsdl:message name="SecurityContextHeader">
+		<wsdl:part name="header" element="sec:SecurityContext"/>
+	</wsdl:message>
+
+	<wsdl:portType name="InputFormSvcPort">
+		<wsdl:operation name="CreateInputForm">
+			<wsdl:input message="tns:CreateInputFormRequestMsg"/>
+			<wsdl:output message="tns:CreateInputFormResponseMsg"/>
+		</wsdl:operation>
+		<wsdl:operation name="UpdateInputForm">
+			<wsdl:input message="tns:UpdateInputFormRequestMsg"/>
+			<wsdl:output message="tns:UpdateInputFormResponseMsg"/>
+		</wsdl:operation>
+		<wsdl:operation name="DeleteInputForm">
+			<wsdl:input message="tns:DeleteInputFormRequestMsg"/>
+			<wsdl:output message="tns:DeleteInputFormResponseMsg"/>
+		</wsdl:operation>		
+		<wsdl:operation name="GetInputForm">
+			<wsdl:input message="tns:GetInputFormRequestMsg"/>
+			<wsdl:output message="tns:GetInputFormResponseMsg"/>
+		</wsdl:operation>
+		<wsdl:operation name="GetInputForms">
+			<wsdl:input message="tns:GetInputFormsRequestMsg"/>
+			<wsdl:output message="tns:GetInputFormsResponseMsg"/>
+		</wsdl:operation>
+		<wsdl:operation name="GetInputFormsByAsset">
+			<wsdl:input message="tns:GetInputFormsByAssetRequestMsg"/>
+			<wsdl:output message="tns:GetInputFormsByAssetResponseMsg"/>
+		</wsdl:operation>		
+	</wsdl:portType>
+
+	<wsdl:binding name="InputFormSvcPortSOAP11Binding" type="tns:InputFormSvcPort">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="CreateInputForm">
+			<soap:operation style="document" soapAction="http://www.elliemae.com/services/inputforms/CreateInputForm"/>
+			<wsdl:input>
+				<soap:header message="tns:SecurityContextHeader" part="header" use="literal"/>
+				<soap:body use="literal" parts="body"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" parts="body"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="UpdateInputForm">
+			<soap:operation style="document" soapAction="http://www.elliemae.com/services/inputforms/UpdateInputForm"/>
+			<wsdl:input>
+				<soap:header message="tns:SecurityContextHeader" part="header" use="literal"/>
+				<soap:body use="literal" parts="body"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" parts="body"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="DeleteInputForm">
+			<soap:operation style="document" soapAction="http://www.elliemae.com/services/inputforms/DeleteInputForm"/>
+			<wsdl:input>
+				<soap:header message="tns:SecurityContextHeader" part="header" use="literal"/>
+				<soap:body use="literal" parts="body"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" parts="body"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetInputForm">
+			<soap:operation style="document" soapAction="http://www.elliemae.com/services/inputforms/GetInputForm"/>
+			<wsdl:input>
+				<soap:header message="tns:SecurityContextHeader" part="header" use="literal"/>
+				<soap:body use="literal" parts="body"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" parts="body"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetInputForms">
+			<soap:operation style="document" soapAction="http://www.elliemae.com/services/inputforms/GetInputForms"/>
+			<wsdl:input>
+				<soap:header message="tns:SecurityContextHeader" part="header" use="literal"/>
+				<soap:body use="literal" parts="body"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" parts="body"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetInputFormsByAsset">
+			<soap:operation style="document" soapAction="http://www.elliemae.com/services/inputforms/GetInputFormsByAsset"/>
+			<wsdl:input>
+				<soap:header message="tns:SecurityContextHeader" part="header" use="literal"/>
+				<soap:body use="literal" parts="body"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" parts="body"/>
+			</wsdl:output>
+		</wsdl:operation>
+		
+	</wsdl:binding>
+
+	<wsdl:service name="InputFormService">
+		<wsdl:port name="BasicHttpBinding_IInputFormService" binding="tns:InputFormSvcPortSOAP11Binding">
+			<soap:address location="http://encompass-ia.qa.dco.elmae:11001/encompass_v1/inputforms"/>
+		</wsdl:port>
+	</wsdl:service>
+
+</wsdl:definitions>

@@ -1,0 +1,139 @@
+<xsd:schema targetNamespace="http://www.elliemae.com/services/inputform"
+	elementFormDefault="qualified" 
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:tns="http://www.elliemae.com/services/inputform" >
+	
+	
+<!-- ####################### -->
+	<!-- CREATE InputForm -->
+<!-- ####################### -->
+
+	<xsd:complexType name="CreateInputFormRequestType">
+		<xsd:sequence>
+			<xsd:element name="InputFormData" 	nillable="false" minOccurs="1" maxOccurs="1" type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="CreateInputFormResponseType">
+		<xsd:sequence>
+			<xsd:element name="InputFormID" 	nillable="false" minOccurs="1" maxOccurs="1" type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:element name="CreateInputFormRequest" 	type="tns:CreateInputFormRequestType" />
+	<xsd:element name="CreateInputFormResponse" type="tns:CreateInputFormResponseType" />
+
+<!-- ####################### -->
+	<!-- UPDATE InputForm -->
+<!-- ####################### -->
+
+	<xsd:complexType name="UpdateInputFormRequestType">
+		<xsd:sequence>
+			<xsd:element name="InputFormData" 	nillable="false" minOccurs="1" maxOccurs="1" type="xsd:string" />
+			<xsd:element name="InputFormID" 	nillable="false" minOccurs="1" maxOccurs="1" type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="UpdateInputFormResponseType">
+		<xsd:sequence>
+			<xsd:element name="Result" 	nillable="false" minOccurs="1" maxOccurs="1" type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>	
+	
+	<xsd:element name="UpdateInputFormRequest" 	type="tns:UpdateInputFormRequestType" />
+	<xsd:element name="UpdateInputFormResponse" type="tns:UpdateInputFormResponseType" />
+	
+	
+<!-- ####################### -->
+	<!-- GET InputForm -->
+<!-- ####################### -->
+
+	<xsd:complexType name="GetInputFormRequestType">
+		<xsd:sequence>
+			<xsd:element name="InputFormID" 	nillable="false" minOccurs="0" maxOccurs="1" type="xsd:string" />
+			<xsd:element name="InputFormName" 	nillable="false" minOccurs="0" maxOccurs="1" type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="GetInputFormResponseType">
+		<xsd:sequence>
+			<xsd:element name="InputFormID" 	nillable="false" minOccurs="1" maxOccurs="1" type="xsd:string" />
+			<xsd:element name="InputFormData" 	nillable="false" minOccurs="1" maxOccurs="1" type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>	
+	
+	<xsd:element name="GetInputFormRequest" 	type="tns:GetInputFormRequestType" />
+	<xsd:element name="GetInputFormResponse" 	type="tns:GetInputFormResponseType" />
+		
+
+<!-- ####################### -->
+	<!-- DELETE InputForm -->
+<!-- ####################### -->
+
+	<xsd:complexType name="DeleteInputFormRequestType">
+		<xsd:sequence>
+			<xsd:element name="InputFormID"		nillable="false" minOccurs="1" maxOccurs="1" type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="DeleteInputFormResponseType">
+		<xsd:sequence>
+			<xsd:element name="Result"			nillable="false" minOccurs="1" maxOccurs="1" type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>	
+	
+	<xsd:element name="DeleteInputFormRequest" 		type="tns:DeleteInputFormRequestType" />
+	<xsd:element name="DeleteInputFormResponse" 	type="tns:DeleteInputFormResponseType" />
+	
+	
+<!-- ####################### -->
+	<!-- GET InputForms -->
+<!-- ####################### -->
+
+	<xsd:complexType name="GetInputFormsRequestType">
+		<xsd:sequence/>
+	</xsd:complexType>
+	
+	<xsd:complexType name="GetInputFormsResponseType">
+		<xsd:sequence>
+			<xsd:element name="InputForms"			nillable="false" minOccurs="1" maxOccurs="1" type="tns:InputFormsType" />
+		</xsd:sequence>
+	</xsd:complexType>	
+	
+	<xsd:complexType name="InputFormsType">
+		<xsd:sequence>
+			<xsd:element name="InputForm" 	nillable="false" minOccurs="0" maxOccurs="unbounded" type="tns:InputFormType" />
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="InputFormType">
+		<xsd:sequence>
+			<xsd:element name="InputFormID" 	nillable="false" minOccurs="1" maxOccurs="1" type="xsd:string" />
+			<xsd:element name="InputFormData" 	nillable="false" minOccurs="1" maxOccurs="1" type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:element name="GetInputFormsRequest" 		type="tns:GetInputFormsRequestType" />
+	<xsd:element name="GetInputFormsResponse" 		type="tns:GetInputFormsResponseType" />
+
+
+<!-- ############################## -->
+	<!-- GET InputForms By Asset -->
+<!-- ############################## -->
+
+	<xsd:complexType name="GetInputFormsByAssetRequestType">
+		<xsd:sequence>
+			<xsd:element name="AssetID"			nillable="false" minOccurs="1" maxOccurs="1" type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="GetInputFormsByAssetResponseType">
+		<xsd:sequence>
+			<xsd:element name="InputFormsData"			nillable="false" minOccurs="1" maxOccurs="1" type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>	
+	
+	<xsd:element name="GetInputFormsByAssetRequest" 		type="tns:GetInputFormsByAssetRequestType" />
+	<xsd:element name="GetInputFormsByAssetResponse" 		type="tns:GetInputFormsByAssetResponseType" />
+
+</xsd:schema>

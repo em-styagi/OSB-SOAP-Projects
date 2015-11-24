@@ -1,0 +1,10 @@
+<xs:schema elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Elli.BusinessRules" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://schemas.datacontract.org/2004/07/Elli.BusinessRules">
+	<xs:import schemaLocation="XMLSchema_999999999.xsd" namespace="http://www.elliemae.com/encompass/platform"/>
+	<xs:complexType name="FieldValidationError">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="PrerequisiteFieldsNotCompleted" nillable="true" type="q1:EmListOfstring" xmlns:q1="http://www.elliemae.com/encompass/platform"/>
+			<xs:element minOccurs="0" name="ValidValues" nillable="true" type="q2:EmListOfstring" xmlns:q2="http://www.elliemae.com/encompass/platform"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="FieldValidationError" nillable="true" type="tns:FieldValidationError"/>
+</xs:schema>

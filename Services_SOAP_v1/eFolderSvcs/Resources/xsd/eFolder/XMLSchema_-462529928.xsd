@@ -1,0 +1,762 @@
+<xs:schema elementFormDefault="qualified" targetNamespace="http://www.elliemae.com/encompass/platform" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ser="http://schemas.microsoft.com/2003/10/Serialization/">
+	<xs:import schemaLocation="XMLSchema_43028697.xsd" namespace="http://schemas.microsoft.com/2003/10/Serialization/"/>
+	<xs:element name="LoanGuid" type="ser:guid"/>
+	<xs:complexType name="SecurityContext">
+		<xs:sequence>
+			<xs:element name="Created" nillable="true" type="xs:dateTime"/>
+			<xs:element name="Realm" nillable="true" type="xs:string"/>
+			<xs:element name="SessionId" nillable="true" type="xs:string"/>
+			<xs:element minOccurs="0" name="TokenData" nillable="true" type="xs:string">
+				<xs:annotation>
+					<xs:appinfo>
+						<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="TokenType" nillable="true" type="xs:string">
+				<xs:annotation>
+					<xs:appinfo>
+						<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="UserName" nillable="true" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="SecurityContext" nillable="true" type="q1:SecurityContext" xmlns:q1="http://www.elliemae.com/encompass/platform"/>
+	<xs:complexType name="LoanFolderLocationResponse.LoanFolderLocationResponseBody">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="Location" nillable="true" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="LoanFolderLocationResponse.LoanFolderLocationResponseBody" nillable="true" type="q2:LoanFolderLocationResponse.LoanFolderLocationResponseBody" xmlns:q2="http://www.elliemae.com/encompass/platform"/>
+	<xs:element name="LoanFolderLocationResponse" nillable="true" type="q3:LoanFolderLocationResponse.LoanFolderLocationResponseBody" xmlns:q3="http://www.elliemae.com/encompass/platform"/>
+	<xs:complexType name="FileLocationRequest.FileLocationRequestBody">
+		<xs:sequence>
+			<xs:element name="AutoCreateFileName" type="xs:boolean"/>
+			<xs:element name="Extension" nillable="true" type="xs:string"/>
+			<xs:element minOccurs="0" name="FileName" nillable="true" type="xs:string"/>
+			<xs:element name="LoanId" type="ser:guid"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="FileLocationRequest.FileLocationRequestBody" nillable="true" type="q4:FileLocationRequest.FileLocationRequestBody" xmlns:q4="http://www.elliemae.com/encompass/platform"/>
+	<xs:element name="FileLocationRequest" nillable="true" type="q5:FileLocationRequest.FileLocationRequestBody" xmlns:q5="http://www.elliemae.com/encompass/platform"/>
+	<xs:complexType name="FileLocationResponse.FileLocationResponseBody">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="FullFilePath" nillable="true" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="FileLocationResponse.FileLocationResponseBody" nillable="true" type="q6:FileLocationResponse.FileLocationResponseBody" xmlns:q6="http://www.elliemae.com/encompass/platform"/>
+	<xs:element name="FileLocationResponse" nillable="true" type="q7:FileLocationResponse.FileLocationResponseBody" xmlns:q7="http://www.elliemae.com/encompass/platform"/>
+	<xs:complexType name="AttachmentAssociateRequest.AttachmentAssociateRequestBody">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="BorrowerPairId" nillable="true" type="xs:string"/>
+			<xs:element minOccurs="0" name="DocId" nillable="true" type="xs:string"/>
+			<xs:element minOccurs="0" name="DocTitle" nillable="true" type="xs:string"/>
+			<xs:element name="FileId" nillable="true" type="xs:string"/>
+			<xs:element minOccurs="0" name="FileTitle" nillable="true" type="xs:string"/>
+			<xs:element name="LoanId" type="ser:guid"/>
+			<xs:element minOccurs="0" name="RequestedFrom" nillable="true" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="AttachmentAssociateRequest.AttachmentAssociateRequestBody" nillable="true" type="q8:AttachmentAssociateRequest.AttachmentAssociateRequestBody" xmlns:q8="http://www.elliemae.com/encompass/platform"/>
+	<xs:element name="AttachmentAssociateRequest" nillable="true" type="q9:AttachmentAssociateRequest.AttachmentAssociateRequestBody" xmlns:q9="http://www.elliemae.com/encompass/platform"/>
+	<xs:complexType name="AttachmentAssociateResponse.AttachmentAssociateResponseBody">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="DocumentId" nillable="true" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="AttachmentAssociateResponse.AttachmentAssociateResponseBody" nillable="true" type="q10:AttachmentAssociateResponse.AttachmentAssociateResponseBody" xmlns:q10="http://www.elliemae.com/encompass/platform"/>
+	<xs:element name="AttachmentAssociateResponse" nillable="true" type="q11:AttachmentAssociateResponse.AttachmentAssociateResponseBody" xmlns:q11="http://www.elliemae.com/encompass/platform"/>
+	<xs:complexType name="DocumentLogListGetRequest.DocumentLogListGetRequestBody">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="FileFilterText" nillable="true" type="xs:string"/>
+			<xs:element name="LoanId" type="ser:guid"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="DocumentLogListGetRequest.DocumentLogListGetRequestBody" nillable="true" type="q12:DocumentLogListGetRequest.DocumentLogListGetRequestBody" xmlns:q12="http://www.elliemae.com/encompass/platform"/>
+	<xs:element name="DocumentLogListGetRequest" nillable="true" type="q13:DocumentLogListGetRequest.DocumentLogListGetRequestBody" xmlns:q13="http://www.elliemae.com/encompass/platform"/>
+	<xs:complexType name="ArrayOfDocumentLogAttachments">
+		<xs:sequence>
+			<xs:element minOccurs="0" maxOccurs="unbounded" name="DocumentLogAttachments" nillable="true" type="q14:DocumentLogAttachments" xmlns:q14="http://www.elliemae.com/encompass/platform"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ArrayOfDocumentLogAttachments" nillable="true" type="q15:ArrayOfDocumentLogAttachments" xmlns:q15="http://www.elliemae.com/encompass/platform"/>
+	<xs:complexType name="DocumentLogAttachments">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="DocumentLogContract" nillable="true" type="q16:DocumentLog" xmlns:q16="http://www.elliemae.com/encompass/platform">
+				<xs:annotation>
+					<xs:appinfo>
+						<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="EFolderAttachmentContract" nillable="true" type="q17:ArrayOfAttachment" xmlns:q17="http://www.elliemae.com/encompass/platform">
+				<xs:annotation>
+					<xs:appinfo>
+						<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="DocumentLogAttachments" nillable="true" type="q18:DocumentLogAttachments" xmlns:q18="http://www.elliemae.com/encompass/platform"/>
+	<xs:complexType name="DocumentLog">
+		<xs:complexContent mixed="false">
+			<xs:extension base="q19:EntityContractBase" xmlns:q19="http://www.elliemae.com/encompass/platform">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="AccessedBy" nillable="true" type="xs:string">
+						<xs:annotation>
+							<xs:appinfo>
+								<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="AccessedDateUtc" nillable="true" type="xs:dateTime">
+						<xs:annotation>
+							<xs:appinfo>
+								<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="AddedBy" nillable="true" type="xs:string">
+						<xs:annotation>
+							<xs:appinfo>
+								<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="Alerts" nillable="true" type="q19:ArrayOfLogAlert">
+						<xs:annotation>
+							<xs:appinfo>
+								<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="AllowedRoles" nillable="true" type="q19:ArrayOfEntityReference">
+						<xs:annotation>
+							<xs:appinfo>
+								<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="ArchiveDateUtc" nillable="true" type="xs:dateTime">
+						<xs:annotation>
+							<xs:appinfo>
+								<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="ArchivedBy" nillable="true" type="xs:string">
+						<xs:annotation>
+							<xs:appinfo>
+								<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="ClosingDocumentIndicator" type="xs:boolean">
+						<xs:annotation>
+							<xs:appinfo>
+								<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="CommentList" nillable="true" type="q19:ArrayOfLogComment">
+						<xs:annotation>
+							<xs:appinfo>
+								<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="Comments" nillable="true" type="xs:string">
+						<xs:annotation>
+							<xs:appinfo>
+								<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="Company" nillable="true" type="xs:string">
+						<xs:annotation>
+							<xs:appinfo>
+								<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="Conditions" nillable="true" type="q19:ArrayOfEntityReference">
+						<xs:annotation>
+							<xs:appinfo>
+								<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="DateAddedUtc" nillable="true" type="xs:dateTime">
+						<xs:annotation>
+							<xs:appinfo>
+								<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="DateUtc" nillable="true" type="xs:dateTime">
+						<xs:annotation>
+							<xs:appinfo>
+								<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="DaysDue" type="xs:short">
+						<xs:annotation>
+							<xs:appinfo>
+								<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="DaysTillExpire" type="xs:short">
+						<xs:annotation>
+							<xs:appinfo>
+								<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="EDisclosureIndicator" type="xs:boolean">
+						<xs:annotation>
+							<xs:appinfo>
+								<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="EPassSignature" nillable="true" type="xs:string">
+						<xs:annotation>
+							<xs:appinfo>
+								<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="FileAttachmentReferences" nillable="true" type="q19:ArrayOfFileAttachmentReference">
+						<xs:annotation>
+							<xs:appinfo>
+								<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="FileAttachmentsMigrated" type="xs:boolean">
+						<xs:annotation>
+							<xs:appinfo>
+								<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="Guid" type="ser:guid">
+						<xs:annotation>
+							<xs:appinfo>
+								<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="Id" nillable="true" type="xs:string">
+						<xs:annotation>
+							<xs:appinfo>
+								<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="IsEPassIndicator" type="xs:boolean">
+						<xs:annotation>
+							<xs:appinfo>
+								<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="IsExternalIndicator" type="xs:boolean">
+						<xs:annotation>
+							<xs:appinfo>
+								<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="IsSystemSpecificIndicator" type="xs:boolean">
+						<xs:annotation>
+							<xs:appinfo>
+								<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="IsTPOWebcenterPortalIndicator" type="xs:boolean">
+						<xs:annotation>
+							<xs:appinfo>
+								<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="IsThirdPartyDocIndicator" type="xs:boolean">
+						<xs:annotation>
+							<xs:appinfo>
+								<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="IsWebCenterIndicator" type="xs:boolean">
+						<xs:annotation>
+							<xs:appinfo>
+								<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="LogRecordIndex" type="xs:int">
+						<xs:annotation>
+							<xs:appinfo>
+								<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="OrderDateUtc" nillable="true" type="xs:dateTime">
+						<xs:annotation>
+							<xs:appinfo>
+								<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="PairId" nillable="true" type="xs:string">
+						<xs:annotation>
+							<xs:appinfo>
+								<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="ReceiveDateUtc" nillable="true" type="xs:dateTime">
+						<xs:annotation>
+							<xs:appinfo>
+								<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="ReceivedBy" nillable="true" type="xs:string">
+						<xs:annotation>
+							<xs:appinfo>
+								<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="ReorderDateUtc" nillable="true" type="xs:dateTime">
+						<xs:annotation>
+							<xs:appinfo>
+								<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="RequestedBy" nillable="true" type="xs:string">
+						<xs:annotation>
+							<xs:appinfo>
+								<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="RerequestedBy" nillable="true" type="xs:string">
+						<xs:annotation>
+							<xs:appinfo>
+								<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="ReviewedBy" nillable="true" type="xs:string">
+						<xs:annotation>
+							<xs:appinfo>
+								<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="ReviewedDateUtc" nillable="true" type="xs:dateTime">
+						<xs:annotation>
+							<xs:appinfo>
+								<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="ShippingReadyBy" nillable="true" type="xs:string">
+						<xs:annotation>
+							<xs:appinfo>
+								<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="ShippingReadyDateUtc" nillable="true" type="xs:dateTime">
+						<xs:annotation>
+							<xs:appinfo>
+								<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="Stage" nillable="true" type="xs:string">
+						<xs:annotation>
+							<xs:appinfo>
+								<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="SystemId" nillable="true" type="ser:guid">
+						<xs:annotation>
+							<xs:appinfo>
+								<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="Title" nillable="true" type="xs:string">
+						<xs:annotation>
+							<xs:appinfo>
+								<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="UnderwritingReadyBy" nillable="true" type="xs:string">
+						<xs:annotation>
+							<xs:appinfo>
+								<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="UnderwritingReadyDateUtc" nillable="true" type="xs:dateTime">
+						<xs:annotation>
+							<xs:appinfo>
+								<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="DocumentLog" nillable="true" type="q20:DocumentLog" xmlns:q20="http://www.elliemae.com/encompass/platform"/>
+	<xs:complexType name="EntityContractBase">
+		<xs:sequence/>
+	</xs:complexType>
+	<xs:element name="EntityContractBase" nillable="true" type="q21:EntityContractBase" xmlns:q21="http://www.elliemae.com/encompass/platform"/>
+	<xs:complexType name="ArrayOfLogAlert">
+		<xs:sequence>
+			<xs:element minOccurs="0" maxOccurs="unbounded" name="LogAlert" nillable="true" type="q22:LogAlert" xmlns:q22="http://www.elliemae.com/encompass/platform"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ArrayOfLogAlert" nillable="true" type="q23:ArrayOfLogAlert" xmlns:q23="http://www.elliemae.com/encompass/platform"/>
+	<xs:complexType name="LogAlert">
+		<xs:complexContent mixed="false">
+			<xs:extension base="q24:EntityContractBase" xmlns:q24="http://www.elliemae.com/encompass/platform">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="DueDate" nillable="true" type="xs:dateTime">
+						<xs:annotation>
+							<xs:appinfo>
+								<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="FollowedUpDate" nillable="true" type="xs:dateTime">
+						<xs:annotation>
+							<xs:appinfo>
+								<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="Id" nillable="true" type="xs:string">
+						<xs:annotation>
+							<xs:appinfo>
+								<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="LogRecord" nillable="true" type="q24:LogRecord">
+						<xs:annotation>
+							<xs:appinfo>
+								<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="RoleId" type="xs:int">
+						<xs:annotation>
+							<xs:appinfo>
+								<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="SystemId" nillable="true" type="ser:guid">
+						<xs:annotation>
+							<xs:appinfo>
+								<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="UserId" nillable="true" type="xs:string">
+						<xs:annotation>
+							<xs:appinfo>
+								<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="LogAlert" nillable="true" type="q25:LogAlert" xmlns:q25="http://www.elliemae.com/encompass/platform"/>
+	<xs:complexType name="LogRecord">
+		<xs:complexContent mixed="false">
+			<xs:extension base="q26:EntityContractBase" xmlns:q26="http://www.elliemae.com/encompass/platform">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="CommentList" nillable="true" type="q26:ArrayOfLogComment">
+						<xs:annotation>
+							<xs:appinfo>
+								<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="Comments" nillable="true" type="xs:string">
+						<xs:annotation>
+							<xs:appinfo>
+								<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="DateUtc" nillable="true" type="xs:dateTime">
+						<xs:annotation>
+							<xs:appinfo>
+								<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="FileAttachmentsMigrated" nillable="true" type="xs:boolean">
+						<xs:annotation>
+							<xs:appinfo>
+								<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="Guid" type="ser:guid">
+						<xs:annotation>
+							<xs:appinfo>
+								<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="Id" nillable="true" type="xs:string">
+						<xs:annotation>
+							<xs:appinfo>
+								<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="IsSystemSpecificIndicator" type="xs:boolean">
+						<xs:annotation>
+							<xs:appinfo>
+								<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="LogRecordIndex" type="xs:int">
+						<xs:annotation>
+							<xs:appinfo>
+								<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="SystemId" nillable="true" type="ser:guid">
+						<xs:annotation>
+							<xs:appinfo>
+								<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="LogRecord" nillable="true" type="q27:LogRecord" xmlns:q27="http://www.elliemae.com/encompass/platform"/>
+	<xs:complexType name="ArrayOfLogComment">
+		<xs:sequence>
+			<xs:element minOccurs="0" maxOccurs="unbounded" name="LogComment" nillable="true" type="q28:LogComment" xmlns:q28="http://www.elliemae.com/encompass/platform"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ArrayOfLogComment" nillable="true" type="q29:ArrayOfLogComment" xmlns:q29="http://www.elliemae.com/encompass/platform"/>
+	<xs:complexType name="LogComment">
+		<xs:complexContent mixed="false">
+			<xs:extension base="q30:EntityContractBase" xmlns:q30="http://www.elliemae.com/encompass/platform">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="AddedBy" nillable="true" type="xs:string">
+						<xs:annotation>
+							<xs:appinfo>
+								<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="Comments" nillable="true" type="xs:string">
+						<xs:annotation>
+							<xs:appinfo>
+								<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="Date" nillable="true" type="xs:dateTime">
+						<xs:annotation>
+							<xs:appinfo>
+								<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="ForRoleId" type="xs:int">
+						<xs:annotation>
+							<xs:appinfo>
+								<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="Guid" type="ser:guid">
+						<xs:annotation>
+							<xs:appinfo>
+								<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="Id" nillable="true" type="xs:string">
+						<xs:annotation>
+							<xs:appinfo>
+								<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="IsInternal" type="xs:boolean">
+						<xs:annotation>
+							<xs:appinfo>
+								<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="ReviewedBy" nillable="true" type="xs:string">
+						<xs:annotation>
+							<xs:appinfo>
+								<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="ReviewedDate" nillable="true" type="xs:dateTime">
+						<xs:annotation>
+							<xs:appinfo>
+								<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="LogComment" nillable="true" type="q31:LogComment" xmlns:q31="http://www.elliemae.com/encompass/platform"/>
+	<xs:complexType name="ArrayOfEntityReference">
+		<xs:sequence>
+			<xs:element minOccurs="0" maxOccurs="unbounded" name="EntityReference" nillable="true" type="q32:EntityReference" xmlns:q32="http://www.elliemae.com/encompass/platform"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ArrayOfEntityReference" nillable="true" type="q33:ArrayOfEntityReference" xmlns:q33="http://www.elliemae.com/encompass/platform"/>
+	<xs:complexType name="EntityReference">
+		<xs:complexContent mixed="false">
+			<xs:extension base="q34:EntityContractBase" xmlns:q34="http://www.elliemae.com/encompass/platform">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="Id" nillable="true" type="xs:string">
+						<xs:annotation>
+							<xs:appinfo>
+								<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="RefId" nillable="true" type="xs:string">
+						<xs:annotation>
+							<xs:appinfo>
+								<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="EntityReference" nillable="true" type="q35:EntityReference" xmlns:q35="http://www.elliemae.com/encompass/platform"/>
+	<xs:complexType name="ArrayOfFileAttachmentReference">
+		<xs:sequence>
+			<xs:element minOccurs="0" maxOccurs="unbounded" name="FileAttachmentReference" nillable="true" type="q36:FileAttachmentReference" xmlns:q36="http://www.elliemae.com/encompass/platform"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ArrayOfFileAttachmentReference" nillable="true" type="q37:ArrayOfFileAttachmentReference" xmlns:q37="http://www.elliemae.com/encompass/platform"/>
+	<xs:complexType name="FileAttachmentReference">
+		<xs:complexContent mixed="false">
+			<xs:extension base="q38:EntityContractBase" xmlns:q38="http://www.elliemae.com/encompass/platform">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="Id" nillable="true" type="xs:string">
+						<xs:annotation>
+							<xs:appinfo>
+								<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="IsActive" nillable="true" type="xs:boolean">
+						<xs:annotation>
+							<xs:appinfo>
+								<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="RefId" nillable="true" type="xs:string">
+						<xs:annotation>
+							<xs:appinfo>
+								<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="FileAttachmentReference" nillable="true" type="q39:FileAttachmentReference" xmlns:q39="http://www.elliemae.com/encompass/platform"/>
+	<xs:complexType name="ArrayOfAttachment">
+		<xs:sequence>
+			<xs:element minOccurs="0" maxOccurs="unbounded" name="Attachment" nillable="true" type="q40:Attachment" xmlns:q40="http://www.elliemae.com/encompass/platform"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ArrayOfAttachment" nillable="true" type="q41:ArrayOfAttachment" xmlns:q41="http://www.elliemae.com/encompass/platform"/>
+	<xs:complexType name="Attachment">
+		<xs:complexContent mixed="false">
+			<xs:extension base="q42:EntityContractBase" xmlns:q42="http://www.elliemae.com/encompass/platform">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="AttachmentId" nillable="true" type="xs:string">
+						<xs:annotation>
+							<xs:appinfo>
+								<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="Date" nillable="true" type="xs:dateTime">
+						<xs:annotation>
+							<xs:appinfo>
+								<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="IsActive" type="xs:boolean">
+						<xs:annotation>
+							<xs:appinfo>
+								<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="Title" nillable="true" type="xs:string">
+						<xs:annotation>
+							<xs:appinfo>
+								<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+					<xs:element minOccurs="0" name="Type" nillable="true" type="xs:string">
+						<xs:annotation>
+							<xs:appinfo>
+								<DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/"/>
+							</xs:appinfo>
+						</xs:annotation>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="Attachment" nillable="true" type="q43:Attachment" xmlns:q43="http://www.elliemae.com/encompass/platform"/>
+	<xs:element name="DocumentLogList" nillable="true" type="q44:ArrayOfDocumentLogAttachments" xmlns:q44="http://www.elliemae.com/encompass/platform"/>
+</xs:schema>

@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.elliemae.com/services/entitlements"
+	xmlns:tns="http://www.elliemae.com/services/entitlements"
+	elementFormDefault="qualified">
+
+	<xsd:element name="GetUserAccessRightsRequest" type="tns:GetUserAccessRightsRequestType" />
+	<xsd:element name="GetUserAccessRightsResponse" nillable="true"
+		type="tns:GetUserAccessRightsResponseType" />
+	<xsd:element name="GetUserPersonaRightsRequest" type="tns:GetUserPersonaRightsRequestType" />
+	<xsd:element name="GetUserPersonaRightsResponse" nillable="true"
+		type="tns:GetUserPersonaRightsResponseType" />
+	<xsd:element name="GetUserGroupsRequest" type="tns:GetUserGroupsRequestType" />
+	<xsd:element name="GetUserGroupsResponse" nillable="true"
+		type="tns:GetUserGroupsResponseType" />
+
+
+	<xsd:complexType name="GetUserAccessRightsRequestType">
+		<xsd:sequence>
+			<xsd:element name="UserName" nillable="true" type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="GetUserAccessRightsResponseType">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" name="FeatureSets" nillable="true"
+				type="tns:ListOfFeatureSetAccessRights" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="ListOfFeatureSetAccessRights">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" maxOccurs="unbounded" name="Item"
+				nillable="true" type="tns:FeatureSetAccessRights" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:element name="ListOfFeatureSetAccessRights" nillable="true"
+		type="tns:ListOfFeatureSetAccessRights" />
+
+	<xsd:complexType name="FeatureSetAccessRights">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" name="AccessRights" nillable="true"
+				type="tns:DictionaryOfstringboolean" />
+			<xsd:element name="Name" nillable="true" type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:element name="FeatureSetAccessRights" nillable="true"
+		type="tns:FeatureSetAccessRights" />
+
+	<xsd:complexType name="DictionaryOfstringboolean">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" maxOccurs="unbounded" name="Item">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="Key" nillable="true" type="xsd:string" />
+						<xsd:element name="Value" type="xsd:boolean" />
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:element name="DictionaryOfstringboolean" nillable="true"
+		type="tns:DictionaryOfstringboolean" />
+	<xsd:element name="UserAccessRightsRequest" nillable="true"
+		type="tns:GetUserAccessRightsResponseType" />
+
+	<xsd:complexType name="GetUserPersonaRightsRequestType">
+		<xsd:sequence>
+			<xsd:element name="UserName" nillable="true" type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="GetUserPersonaRightsResponseType">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" name="UserProfile" nillable="true"
+				type="tns:UserProfile" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="UserProfile">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" name="AccessMode" nillable="true"
+				type="xsd:string" />
+			<xsd:element minOccurs="0" name="CHUMId" nillable="true"
+				type="xsd:string" />
+			<xsd:element minOccurs="0" name="CellPhone" nillable="true"
+				type="xsd:string" />
+			<xsd:element minOccurs="0" name="Email" nillable="true"
+				type="xsd:string" />
+			<xsd:element minOccurs="0" name="EmailSignature"
+				nillable="true" type="xsd:string" />
+			<xsd:element minOccurs="0" name="EmployeeID" nillable="true"
+				type="xsd:string" />
+			<xsd:element minOccurs="0" name="EncompassVersion"
+				nillable="true" type="xsd:string" />
+			<xsd:element minOccurs="0" name="Fax" nillable="true"
+				type="xsd:string" />
+			<xsd:element minOccurs="0" name="FirstName" nillable="true"
+				type="xsd:string" />
+			<xsd:element minOccurs="0" name="FullName" nillable="true"
+				type="xsd:string" />
+			<xsd:element minOccurs="0" name="InheritParentCompPlan"
+				nillable="true" type="xsd:boolean" />
+			<xsd:element minOccurs="0" name="IsAdministrator" type="xsd:boolean" />
+			<xsd:element minOccurs="0" name="IsSuperAdministrator"
+				type="xsd:boolean" />
+			<xsd:element minOccurs="0" name="IsTopLevelUser"
+				nillable="true" type="xsd:boolean" />
+			<xsd:element minOccurs="0" name="LastLogin" nillable="true"
+				type="xsd:dateTime" />
+			<xsd:element minOccurs="0" name="LastName" nillable="true"
+				type="xsd:string" />
+			<xsd:element minOccurs="0" name="Locked" nillable="true"
+				type="xsd:boolean" />
+			<xsd:element minOccurs="0" name="NMLSExpirationDate"
+				nillable="true" type="xsd:dateTime" />
+			<xsd:element minOccurs="0" name="NMLSOriginatorID"
+				nillable="true" type="xsd:string" />
+			<xsd:element minOccurs="0" name="OrgId" nillable="true"
+				type="xsd:int" />
+			<xsd:element minOccurs="0" name="PeerView" nillable="true"
+				type="xsd:string" />
+			<xsd:element minOccurs="0" name="PersonalStatusOnline"
+				nillable="true" type="xsd:boolean" />
+			<xsd:element minOccurs="0" name="Phone" nillable="true"
+				type="xsd:string" />
+			<xsd:element minOccurs="0" name="Status" nillable="true"
+				type="xsd:string" />
+			<xsd:element minOccurs="0" name="Title" nillable="true"
+				type="xsd:string" />
+			<xsd:element minOccurs="0" name="UserID" nillable="true"
+				type="xsd:string" />
+			<xsd:element minOccurs="0" name="WorkingFolder" nillable="true"
+				type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="UserProfile" nillable="true" type="tns:UserProfile" />
+	<xsd:complexType name="GetUserGroupsRequestType">
+		<xsd:sequence>
+			<xsd:element name="UserName" nillable="true" type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="GetUserGroupsResponseType">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" name="UserGroups" nillable="true"
+				type="tns:ListOfUserGroup" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="ListOfUserGroup">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" maxOccurs="unbounded" name="Item"
+				nillable="true" type="tns:UserGroups" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+
+	<xsd:complexType name="UserGroups">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" name="ContactAccess" nillable="true"
+				type="tns:AclResourceAccess" />
+			<xsd:element minOccurs="0" name="DisplayOrder" nillable="true"
+				type="xsd:int" />
+			<xsd:element minOccurs="0" name="GroupId" nillable="true"
+				type="xsd:int" />
+			<xsd:element minOccurs="0" name="GroupName" nillable="true"
+				type="xsd:string" />
+			<xsd:element minOccurs="0" name="ViewSubordContacts"
+				nillable="true" type="xsd:boolean" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:simpleType name="AclResourceAccess">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="None">
+				<xsd:annotation>
+					<xsd:appinfo>
+						<EnumerationValue>-1</EnumerationValue>
+					</xsd:appinfo>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="ReadOnly">
+				<xsd:annotation>
+					<xsd:appinfo>
+						<EnumerationValue>0</EnumerationValue>
+					</xsd:appinfo>
+				</xsd:annotation>
+			</xsd:enumeration>
+			<xsd:enumeration value="ReadWrite">
+				<xsd:annotation>
+					<xsd:appinfo>
+						<EnumerationValue>1</EnumerationValue>
+					</xsd:appinfo>
+				</xsd:annotation>
+			</xsd:enumeration>
+		</xsd:restriction>
+	</xsd:simpleType>
+</xsd:schema>

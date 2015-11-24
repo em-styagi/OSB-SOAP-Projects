@@ -1,0 +1,52 @@
+<xsd:schema targetNamespace="http://www.elliemae.com/services/login" elementFormDefault="qualified" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.elliemae.com/services/login" xmlns:sn="http://www.elliemae.com/services/session" xmlns:sc="http://www.elliemae.com/services/security">
+	<xsd:import schemaLocation="../../../../SessionSvcs/Resources/xsd/Services/SessionSvc.xsd" namespace="http://www.elliemae.com/services/session"/>
+	<xsd:import schemaLocation="../../../../../Security_SOAP_v1/Shared/SecuritySvc.xsd" namespace="http://www.elliemae.com/services/security"/>
+
+	<xsd:element name="LoginRequest" type="tns:LoginRequestType"/>
+	<xsd:element name="LoginResponse" type="tns:LoginResponseType"/>
+	<xsd:element name="LogoutRequest" type="tns:LogoutRequestType"/>
+	<xsd:element name="LogoutResponse" type="tns:LogoutResponseType"/>
+	<xsd:element name="SessionKeepAliveRequest" type="tns:SessionKeepAliveRequestType"/>
+	<xsd:element name="SessionKeepAliveResponse" type="tns:SessionKeepAliveResponseType"/>
+
+	<xsd:complexType name="LoginRequestType">
+		<xsd:sequence>
+			<xsd:element name="ClientCredentials" type="sc:ClientCredentialsType"/>
+			<xsd:element name="detail" type="xsd:string"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="LoginResponseType">
+		<xsd:sequence>
+			<xsd:element name="SecurityContext" type="sc:SecurityContextType"/>
+			<xsd:element minOccurs="0" name="UserProfile" type="sc:UserProfileType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="LogoutRequestType">
+		<xsd:sequence>
+			<xsd:element name="Realm" type="xsd:string"/>
+			<xsd:element name="SessionId" type="xsd:string"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="LogoutResponseType">
+		<xsd:sequence>
+		<!--<xsd:element name="Realm" type="xsd:string" />
+			<xsd:element name="SessionId" type="xsd:string" /> -->
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="SessionKeepAliveRequestType">
+		<xsd:sequence>
+			<xsd:element name="Realm" type="xsd:string"/>
+			<xsd:element name="SessionId" type="xsd:string"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="SessionKeepAliveResponseType">
+		<xsd:sequence>
+		    <xsd:element name="SecurityContext" type="sc:SecurityContextType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:schema>

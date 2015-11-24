@@ -1,0 +1,195 @@
+<xsd:schema targetNamespace="http://www.elliemae.com/services/assetlibrary"
+	elementFormDefault="qualified" 
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:tns="http://www.elliemae.com/services/assetlibrary" >
+	
+	
+<!-- ####################### -->
+	<!-- CREATE Asset -->
+<!-- ####################### -->
+
+	<xsd:complexType name="CreateAssetRequestType">
+		<xsd:sequence>
+			<xsd:element name="AssetData" 			nillable="false" minOccurs="1" maxOccurs="1" type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="CreateAssetResponseType">
+		<xsd:sequence>
+			<xsd:element name="AssetID" 	nillable="false" minOccurs="1" maxOccurs="1" type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:element name="CreateAssetRequest" 	type="tns:CreateAssetRequestType" />
+	<xsd:element name="CreateAssetResponse" type="tns:CreateAssetResponseType" />
+
+
+<!-- ####################### -->
+	<!-- GET Asset -->
+<!-- ####################### -->
+
+	<xsd:complexType name="GetAssetRequestType">
+		<xsd:sequence>
+			<xsd:element name="AssetID" 	nillable="false" minOccurs="1" maxOccurs="1" type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="GetAssetResponseType">
+		<xsd:sequence>
+			<xsd:element name="AssetID" 	nillable="false" minOccurs="1" maxOccurs="1" type="xsd:string" />
+			<xsd:element name="AssetData" 	nillable="false" minOccurs="1" maxOccurs="1" type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>	
+	
+	<xsd:element name="GetAssetRequest" 	type="tns:GetAssetRequestType" />
+	<xsd:element name="GetAssetResponse" 	type="tns:GetAssetResponseType" />
+		
+<!-- ############################## -->
+	<!-- GET InputForms By Asset -->
+<!-- ############################## -->
+
+	<xsd:complexType name="GetInputFormsByAssetRequestType">
+		<xsd:sequence>
+			<xsd:element name="AssetID"	nillable="false" minOccurs="1" maxOccurs="1" type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="GetInputFormsByAssetResponseType">
+		<xsd:sequence>
+			<xsd:element name="InputForms"	nillable="false" minOccurs="1" maxOccurs="1" type="tns:InputFormsType" />
+		</xsd:sequence>
+	</xsd:complexType>	
+	
+	<xsd:complexType name="InputFormsType">
+		<xsd:sequence>
+			<xsd:element name="InputForm" 	nillable="false" minOccurs="0" maxOccurs="unbounded" type="tns:InputFormType" />
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="InputFormType">
+		<xsd:sequence>
+			<xsd:element name="InputFormID" 	nillable="false" minOccurs="1" maxOccurs="1" type="xsd:string" />
+			<xsd:element name="InputFormData" 	nillable="false" minOccurs="1" maxOccurs="1" type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:element name="GetInputFormsByAssetRequest" 		type="tns:GetInputFormsByAssetRequestType" />
+	<xsd:element name="GetInputFormsByAssetResponse" 		type="tns:GetInputFormsByAssetResponseType" />
+
+<!-- ############################## -->
+		<!-- UPDATE Asset -->
+<!-- ############################## -->
+
+	<xsd:complexType name="UpdateAssetRequestType">
+		<xsd:sequence>
+			<xsd:element name="AssetID"		nillable="true" minOccurs="0" maxOccurs="1" type="xsd:string" />
+			<xsd:element name="AssetData"	nillable="true" minOccurs="0" maxOccurs="1" type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="UpdateAssetResponseType">
+		<xsd:sequence>
+			<xsd:element name="Result"	nillable="false" minOccurs="1" maxOccurs="1" type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>	
+	
+	<xsd:element name="UpdateAssetRequest" 		type="tns:UpdateAssetRequestType" />
+	<xsd:element name="UpdateAssetResponse" 	type="tns:UpdateAssetResponseType" />
+	
+<!-- ############################## -->
+		<!-- DELETE Asset -->
+<!-- ############################## -->
+
+	<xsd:complexType name="DeleteAssetRequestType">
+		<xsd:sequence>
+			<xsd:element name="AssetID"				nillable="false" minOccurs="1" maxOccurs="1" type="xsd:string" />
+			<xsd:element name="FileGuid" 			nillable="false" minOccurs="1" maxOccurs="1" type="xsd:string" />
+			<xsd:element name="FileExpirationDate" 	nillable="true" minOccurs="0" maxOccurs="1" type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="DeleteAssetResponseType">
+		<xsd:sequence>
+			<xsd:element name="Result"	nillable="false" minOccurs="1" maxOccurs="1" type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>	
+	
+	<xsd:element name="DeleteAssetRequest" 		type="tns:DeleteAssetRequestType" />
+	<xsd:element name="DeleteAssetResponse" 	type="tns:DeleteAssetResponseType" />
+
+<!-- ############################## -->
+		<!-- GET Assets -->
+<!-- ############################## -->
+
+	<xsd:complexType name="GetAssetsRequestType">
+		<xsd:sequence>
+			<xsd:element name="AssetType"	nillable="true" minOccurs="0" maxOccurs="1" type="xsd:string" />
+			<xsd:element name="InputFormID"	nillable="true" minOccurs="0" maxOccurs="1" type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="GetAssetsResponseType">
+		<xsd:sequence>
+			<xsd:element name="Assets"	nillable="false" minOccurs="1" maxOccurs="1" type="tns:AssetsType" />
+		</xsd:sequence>
+	</xsd:complexType>	
+	
+	<xsd:complexType name="AssetsType">
+		<xsd:sequence>
+			<xsd:element name="Asset" 	nillable="false" minOccurs="0" maxOccurs="unbounded" type="tns:AssetType" />
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="AssetType">
+		<xsd:sequence>
+			<xsd:element name="AssetID" 	nillable="false" minOccurs="1" maxOccurs="1" type="xsd:string" />
+			<xsd:element name="AssetData" 	nillable="false" minOccurs="1" maxOccurs="1" type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:element name="GetAssetsRequest" 	type="tns:GetAssetsRequestType" />
+	<xsd:element name="GetAssetsResponse" 	type="tns:GetAssetsResponseType" />
+
+
+<!-- ############################## -->
+		<!-- Overwrite Asset -->
+<!-- ############################## -->
+
+	<xsd:complexType name="OverwriteAssetRequestType">
+		<xsd:sequence>
+			<xsd:element name="AssetToOverwrite"	nillable="false" minOccurs="1" maxOccurs="1" type="tns:AssetToOverwriteType" />
+			<xsd:element name="CurrentAssetDetails"	nillable="false" minOccurs="1" maxOccurs="1" type="tns:CurrentAssetDetailsType" />
+			<xsd:element name="NewAssetDetails"		nillable="false" minOccurs="1" maxOccurs="1" type="tns:NewAssetDetailsType" />
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="AssetToOverwriteType">
+		<xsd:sequence>
+			<xsd:element name="AssetID"	nillable="false" minOccurs="1" maxOccurs="1" type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>	
+	
+	<xsd:complexType name="CurrentAssetDetailsType">
+		<xsd:sequence>
+			<xsd:element name="FileGuid" 	nillable="false" minOccurs="1" maxOccurs="1" type="xsd:string" />
+			<xsd:element name="FileExpirationDate" 	nillable="true" minOccurs="0" maxOccurs="1" type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="NewAssetDetailsType">
+		<xsd:sequence>
+			<xsd:element name="FileGuid" 	nillable="false" minOccurs="1" maxOccurs="1" type="xsd:string" />
+			<xsd:element name="AssetData" 	nillable="false" minOccurs="1" maxOccurs="1" type="xsd:string" />
+			<xsd:element name="FileExpirationDate" 	nillable="true" minOccurs="0" maxOccurs="1" type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>
+	
+		<xsd:complexType name="OverwriteAssetResponseType">
+		<xsd:sequence>
+			<xsd:element name="Result"	nillable="false" minOccurs="1" maxOccurs="1" type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>	
+	
+	<xsd:element name="OverwriteAssetRequest" 	type="tns:OverwriteAssetRequestType" />
+	<xsd:element name="OverwriteAssetResponse" 	type="tns:OverwriteAssetResponseType" />
+</xsd:schema>

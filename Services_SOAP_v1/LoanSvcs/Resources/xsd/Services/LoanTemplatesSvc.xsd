@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.elliemae.com/services/loantemplates"
+	xmlns:tns="http://www.elliemae.com/services/loantemplates"
+	elementFormDefault="qualified">
+	
+	<xsd:element name="GetDuplicateLoanTemplatesRequest" 		nillable="true" type="tns:GetDuplicateLoanTemplatesRequestType" />
+	<xsd:element name="GetDuplicateLoanTemplatesResponse" 	nillable="true" type="tns:GetDuplicateLoanTemplatesResponseType" />
+	
+    <xsd:simpleType name="guid">
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern
+				value="[\da-fA-F]{8}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{12}" />
+		</xsd:restriction>
+	</xsd:simpleType>
+	
+	<xsd:simpleType name="PayloadFormatType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Xml"/>
+			<xsd:enumeration value="Json"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	
+	<xsd:complexType name="GetDuplicateLoanTemplatesRequestType">
+		<xsd:sequence></xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="GetDuplicateLoanTemplatesResponseType">
+		<xsd:sequence>
+			<xsd:element  name="TemplateList" nillable="true" type="tns:ArrayListOfTemplates"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="ArrayListOfTemplates">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" maxOccurs="unbounded" name="Template" nillable="true" type="xsd:string"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="ArrayListOfTemplates" nillable="true" type="tns:ArrayListOfTemplates"/>
+	
+</xsd:schema>

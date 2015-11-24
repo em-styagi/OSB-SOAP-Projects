@@ -1,0 +1,30 @@
+<xsd:schema targetNamespace="http://www.elliemae.com/services/replicateFile"
+	elementFormDefault="qualified" 
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:tns="http://www.elliemae.com/services/replicateFile" >
+	
+	
+<!-- ####################### -->
+	<!-- Replicate File -->
+<!-- ####################### -->
+
+	<xsd:complexType name="ReplicateFileRequestType">
+		<xsd:sequence>
+			<xsd:element name="Type"		nillable="false"	minOccurs="1" maxOccurs="1" type="xsd:string" />
+			<xsd:element name="FileGuid"	nillable="true"		minOccurs="0" maxOccurs="1" type="xsd:string" />
+			<xsd:element name="FileID" 		nillable="false" 	minOccurs="1" maxOccurs="1" type="xsd:string" />
+			<xsd:element name="NewName"		nillable="true" 	minOccurs="0" maxOccurs="1" type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="ReplicateFileResponseType">
+		<xsd:sequence>
+			<xsd:element name="FileID" 		nillable="false" minOccurs="1" maxOccurs="1" type="xsd:string" />
+			<xsd:element name="FileGuid" 	nillable="true" minOccurs="0" maxOccurs="1" type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:element name="ReplicateFileRequest" 	type="tns:ReplicateFileRequestType" />
+	<xsd:element name="ReplicateFileResponse" 	type="tns:ReplicateFileResponseType" />
+
+</xsd:schema>

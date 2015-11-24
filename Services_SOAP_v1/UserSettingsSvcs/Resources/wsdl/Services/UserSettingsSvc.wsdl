@@ -1,0 +1,87 @@
+<wsdl:definitions name="UserSettingsSvc" targetNamespace="http://www.elliemae.com/services/usersettings" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.elliemae.com/services/usersettings" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:sec="http://www.elliemae.com/services/security">
+
+	<wsdl:types>
+		<xsd:schema targetNamespace="http://www.elliemae.com/services/usersettings" elementFormDefault="qualified">
+			<xsd:include schemaLocation="../../xsd/Services/UserSettingsSvc.xsd"/>
+			<xsd:import schemaLocation="../../../../../Security_SOAP_v1/Shared/SecuritySvc.xsd" namespace="http://www.elliemae.com/services/security"/>
+		</xsd:schema>
+	</wsdl:types>
+
+	<wsdl:message name="SetWorkingFolderRequestMsg">
+		<wsdl:part element="tns:WorkingFolder" name="body"/>
+	</wsdl:message>
+	<wsdl:message name="SetWorkingFolderResponseMsg">
+		<wsdl:part element="tns:SetWorkingFolderResponse" name="body"/>
+	</wsdl:message>
+	<wsdl:message name="GetUserSettingsRequestMsg">
+		<wsdl:part element="tns:GetUserSettingsRequest" name="body"/>
+	</wsdl:message>
+	<wsdl:message name="GetUserSettingsResponseMsg">
+		<wsdl:part element="tns:GetUserSettingsResponse" name="body"/>
+	</wsdl:message>
+	<wsdl:message name="SetUserSettingsRequestMsg">
+		<wsdl:part element="tns:SetUserSettingsRequest" name="body"/>
+	</wsdl:message>
+	<wsdl:message name="SetUserSettingsResponseMsg">
+		<wsdl:part element="tns:SetUserSettingsResponse" name="body"/>
+	</wsdl:message>
+	<wsdl:message name="SecurityContextHeader">
+		<wsdl:part name="header" element="sec:SecurityContext"/>
+	</wsdl:message>
+
+	<wsdl:portType name="UserSettingsSvc">
+		<wsdl:operation name="SetWorkingFolder">
+			<wsdl:input message="tns:SetWorkingFolderRequestMsg"/>
+			<wsdl:output message="tns:SetWorkingFolderResponseMsg"/>
+		</wsdl:operation>
+		<wsdl:operation name="GetUserSettings">
+			<wsdl:input message="tns:GetUserSettingsRequestMsg"/>
+			<wsdl:output message="tns:GetUserSettingsResponseMsg"/>
+		</wsdl:operation>
+		<wsdl:operation name="SetUserSettings">
+			<wsdl:input message="tns:SetUserSettingsRequestMsg"/>
+			<wsdl:output message="tns:SetUserSettingsResponseMsg"/>
+		</wsdl:operation>
+	</wsdl:portType>
+
+	<wsdl:binding name="UserSettingsSvcSOAP" type="tns:UserSettingsSvc">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="SetWorkingFolder">
+			<soap:operation soapAction="http://www.elliemae.com/services/UserSettingsSvc/SetWorkingFolder"/>
+			<wsdl:input>
+				<soap:header message="tns:SecurityContextHeader" part="header" use="literal"/>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetUserSettings">
+			<soap:operation soapAction="http://www.elliemae.com/services/UserSettingsSvc/GetUserSettings"/>
+			<wsdl:input>
+				<soap:header message="tns:SecurityContextHeader" part="header" use="literal"/>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="SetUserSettings">
+			<soap:operation soapAction="http://www.elliemae.com/services/UserSettingsSvc/SetUserSettings"/>
+			<wsdl:input>
+				<soap:header message="tns:SecurityContextHeader" part="header" use="literal"/>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>		
+	</wsdl:binding>
+
+	<wsdl:service name="UserSettingsSvc">
+		<wsdl:port binding="tns:UserSettingsSvcSOAP" name="UserSettingsSvcSOAP">
+			<soap:address location="http://encompass-ib.qa.dco.elmae:11001/encompass_v1/users/settings"/>
+		</wsdl:port>
+	</wsdl:service>
+
+</wsdl:definitions>

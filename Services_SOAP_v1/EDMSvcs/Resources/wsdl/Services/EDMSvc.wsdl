@@ -1,0 +1,140 @@
+<wsdl:definitions name="EDMSvc" targetNamespace="http://www.elliemae.com/services/edm" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.elliemae.com/services/edm" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:sec="http://www.elliemae.com/services/security">
+	<wsdl:types>
+		<xsd:schema targetNamespace="http://www.elliemae.com/services/edm" elementFormDefault="qualified">
+			<xsd:include schemaLocation="../../xsd/Services/edmSvc.xsd"/>
+			<xsd:import schemaLocation="../../../../../Security_SOAP_v1/Shared/SecuritySvc.xsd" namespace="http://www.elliemae.com/services/security"/>
+		</xsd:schema>
+	</wsdl:types>
+   <!--  Get Attachment -->
+	<wsdl:message name="GetAttachmentRequest">
+		<wsdl:part name="GetAttachmentRequest" element="tns:GetAttachmentRequest"/>
+	</wsdl:message>
+	<wsdl:message name="GetAttachmentRequest_Headers">
+		<wsdl:part name="SecurityContext" element="sec:SecurityContext"/>
+	</wsdl:message>
+	<wsdl:message name="GetAttachmentResponse">
+		<wsdl:part name="GetAttachmentResponse" element="tns:GetAttachmentResponse"/>
+	</wsdl:message>
+	 <!--  Get DocumentLogList -->
+	<wsdl:message name="GetDocumentLogListRequest">
+		<wsdl:part name="GetDocumentLogListRequest" element="tns:GetDocumentLogListRequest"/>
+	</wsdl:message>
+	<wsdl:message name="GetDocumentLogListRequest_Headers">
+		<wsdl:part name="SecurityContext" element="sec:SecurityContext"/>
+	</wsdl:message>
+	<wsdl:message name="GetDocumentLogListResponse">
+		<wsdl:part name="GetDocumentLogListResponse" element="tns:GetDocumentLogListResponse"/>
+	</wsdl:message>
+	<!--  Create Attachment -->
+	<wsdl:message name="CreateAttachmentRequest">
+		<wsdl:part name="CreateAttachmentRequest" element="tns:CreateAttachmentRequest"/>
+	</wsdl:message>
+	<wsdl:message name="CreateAttachmentRequest_Headers">
+		<wsdl:part name="SecurityContext" element="sec:SecurityContext"/>
+	</wsdl:message>
+	<wsdl:message name="CreateAttachmentResponse">
+		<wsdl:part name="CreateAttachmentResponse" element="tns:CreateAttachmentResponse"/>
+	</wsdl:message>
+	<!--  Get Supporting data  -->
+	<wsdl:message name="GetSupportingDataRequest">
+		<wsdl:part name="GetSupportingDataRequest" element="tns:GetSupportingDataRequest"/>
+	</wsdl:message>
+	<wsdl:message name="GetSupportingDataRequest_Headers">
+		<wsdl:part name="SecurityContext" element="sec:SecurityContext"/>
+	</wsdl:message>
+	<wsdl:message name="GetSupportingDataResponse">
+		<wsdl:part name="GetSupportingDataResponse" element="tns:GetSupportingDataResponse"/>
+	</wsdl:message>
+		<!--  Get Supporting data  -->
+	<wsdl:message name="SaveSupportingDataRequest">
+		<wsdl:part name="SaveSupportingDataRequest" element="tns:SaveSupportingDataRequest"/>
+	</wsdl:message>
+	<wsdl:message name="SaveSupportingDataRequest_Headers">
+		<wsdl:part name="SecurityContext" element="sec:SecurityContext"/>
+	</wsdl:message>
+	<wsdl:message name="SaveSupportingDataResponse">
+		<wsdl:part name="SaveSupportingDataResponse" element="tns:SaveSupportingDataResponse"/>
+	</wsdl:message>
+	
+	<wsdl:portType name="edmServicesPort">
+		<wsdl:operation name="GetAttachment">
+			<wsdl:input name="GetAttachmentRequest" message="tns:GetAttachmentRequest"/>
+			<wsdl:output name="GetAttachmentResponse" message="tns:GetAttachmentResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="GetDocumentLogList">
+			<wsdl:input name="GetDocumentLogListRequest" message="tns:GetDocumentLogListRequest"/>
+			<wsdl:output name="GetDocumentLogListResponse" message="tns:GetDocumentLogListResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="CreateAttachment">
+			<wsdl:input name="CreateAttachmentRequest" message="tns:CreateAttachmentRequest"/>
+			<wsdl:output name="CreateAttachmentResponse" message="tns:CreateAttachmentResponse"/>
+		</wsdl:operation>
+	    <wsdl:operation name="GetSupportingData">
+			<wsdl:input name="GetSupportingDataRequest" message="tns:GetSupportingDataRequest"/>
+			<wsdl:output name="GetSupportingDataResponse" message="tns:GetSupportingDataResponse"/>
+		</wsdl:operation>
+	    <wsdl:operation name="SaveSupportingData">
+			<wsdl:input name="SaveSupportingDataRequest" message="tns:SaveSupportingDataRequest"/>
+			<wsdl:output name="SaveSupportingDataResponse" message="tns:SaveSupportingDataResponse"/>
+		</wsdl:operation>
+	</wsdl:portType>
+
+	<wsdl:binding name="edmServicesSOAP11Binding" type="tns:edmServicesPort">
+		<soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="GetAttachment">
+			<soap:operation soapAction="http://www.elliemae.com/services/edm/GetAttachment" style="document"/>
+			<wsdl:input name="GetAttachmentRequest">
+				<soap:header message="tns:GetAttachmentRequest_Headers" part="SecurityContext" use="literal"/>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="GetAttachmentResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetDocumentLogList">
+			<soap:operation soapAction="http://www.elliemae.com/services/edm/GetDocumentLogList" style="document"/>
+			<wsdl:input name="GetDocumentLogListRequest">
+				<soap:header message="tns:GetDocumentLogListRequest_Headers" part="SecurityContext" use="literal"/>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="GetDocumentLogListResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="CreateAttachment">
+			<soap:operation soapAction="http://www.elliemae.com/services/edm/CreateAttachment" style="document"/>
+			<wsdl:input name="CreateAttachmentRequest">
+				<soap:header message="tns:CreateAttachmentRequest_Headers" part="SecurityContext" use="literal"/>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="CreateAttachmentResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetSupportingData">
+			<soap:operation soapAction="http://www.elliemae.com/services/edm/GetSupportingData" style="document"/>
+			<wsdl:input name="GetSupportingDataRequest">
+				<soap:header message="tns:GetSupportingDataRequest_Headers" part="SecurityContext" use="literal"/>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="GetSupportingDataResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="SaveSupportingData">
+			<soap:operation soapAction="http://www.elliemae.com/services/edm/SaveSupportingData" style="document"/>
+			<wsdl:input name="SaveSupportingDataRequest">
+				<soap:header message="tns:SaveSupportingDataRequest_Headers" part="SecurityContext" use="literal"/>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="SaveSupportingDataResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="edmService">
+		<wsdl:port name="edmServices" binding="tns:edmServicesSOAP11Binding">
+			<soap:address location="http://encompass-ia.qa.dco.elmae:11001/encompass_v1/edm"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

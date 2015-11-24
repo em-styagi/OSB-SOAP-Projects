@@ -1,0 +1,63 @@
+<wsdl:definitions name="LoanRuleSvc" targetNamespace="http://www.elliemae.com/services/LoanRuleSvc" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.elliemae.com/services/LoanRuleSvc" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:sec="http://www.elliemae.com/services/security">
+	<wsdl:types>
+		<xsd:schema targetNamespace="http://www.elliemae.com/services/LoanRuleSvc" elementFormDefault="qualified">
+			<xsd:include schemaLocation="../../xsd/services/LoanRuleSvc.xsd"/>
+			<xsd:import schemaLocation="../../../../../Security_SOAP_v1/Shared/SecuritySvc.xsd" namespace="http://www.elliemae.com/services/security"/>
+		</xsd:schema>
+	</wsdl:types>
+	<wsdl:message name="GetLoanAccessRequestMsg">
+		<wsdl:part name="GetLoanAccessRequest" element="tns:GetLoanAccessRequest"/>
+	</wsdl:message>
+	<wsdl:message name="GetLoanAccessResponseMsg">
+		<wsdl:part name="GetLoanAccessResponse" element="tns:GetLoanAccessResponse"/>
+	</wsdl:message>
+	<wsdl:message name="GetRoleAssignableUserSettingRequestMsg">
+		<wsdl:part name="GetRoleAssignableUserSettingRequest" element="tns:GetRoleAssignableUserSettingRequest"/>
+	</wsdl:message>
+	<wsdl:message name="GetRoleAssignableUserSettingResponseMsg">
+		<wsdl:part name="GetRoleAssignableUserSettingResponse" element="tns:GetRoleAssignableUserSettingResponse"/>
+	</wsdl:message>
+	<wsdl:message name="RoleAssignableUserSettingGetRequest_Headers">
+		<wsdl:part name="header" element="sec:SecurityContext"/>
+	</wsdl:message>
+	
+	<wsdl:portType name="LoanRuleSvc">
+		<wsdl:operation name="GetLoanAccess">
+			<wsdl:input message="tns:GetLoanAccessRequestMsg"/>
+			<wsdl:output message="tns:GetLoanAccessResponseMsg"/>
+		</wsdl:operation>
+		<wsdl:operation name="GetRoleAssignableUserSetting">
+			<wsdl:input message="tns:GetRoleAssignableUserSettingRequestMsg"/>
+			<wsdl:output message="tns:GetRoleAssignableUserSettingResponseMsg"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	
+	<wsdl:binding name="LoanRuleSvcSOAP" type="tns:LoanRuleSvc">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="GetLoanAccess">
+			<soap:operation soapAction="http://www.elliemae.com/services/LoanRuleSvc/GetLoanAccess"/>
+			<wsdl:input>
+			<soap:header message="tns:RoleAssignableUserSettingGetRequest_Headers" part="header" use="literal"/>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	 	<wsdl:operation name="GetRoleAssignableUserSetting">
+			<soap:operation soapAction="http://www.elliemae.com/services/LoanRuleSvc/GetRoleAssignableUserSetting"/>
+			<wsdl:input>
+			<soap:header message="tns:RoleAssignableUserSettingGetRequest_Headers" part="header" use="literal"/>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="LoanRuleSvc">
+		<wsdl:port binding="tns:LoanRuleSvcSOAP" name="LoanRuleSvcSOAP">
+			<soap:address location="http://encompass-ib.dev.dco.elmae:11001/encompass_v1/loans/rules"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

@@ -1,0 +1,365 @@
+<wsdl:definitions name="LoanPipelineSvc" targetNamespace="http://www.elliemae.com/services/loanpipeline" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.elliemae.com/services/loanpipeline" xmlns:sec="http://www.elliemae.com/services/security" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+	<wsdl:types>
+		<xsd:schema targetNamespace="http://www.elliemae.com/services/loanpipeline" elementFormDefault="qualified">
+			<xsd:include schemaLocation="../../xsd/Services/LoanPipelineSvc.xsd"/>
+			<xsd:import namespace="http://www.elliemae.com/services/security" schemaLocation="../../../../../Security_SOAP_v1/Shared/SecuritySvc.xsd"/>
+		</xsd:schema>
+	</wsdl:types>
+	
+	<!-- Old pipeline -->
+	<wsdl:message name="GetLoanPipelineRequest_Headers">
+		<wsdl:part name="SecurityContext" element="sec:SecurityContext"/>
+	</wsdl:message>
+	<wsdl:message name="GetLoanPipelineRequestMsg">
+		<wsdl:part name="body" element="tns:GetLoanPipelineRequest"/>
+	</wsdl:message>
+	<wsdl:message name="GetLoanPipelineResponseMsg">
+		<wsdl:part name="body" element="tns:GetLoanPipelineResponse"/>
+	</wsdl:message>
+	<wsdl:message name="GetLoanPipelineDetailsRequest_Headers">
+		<wsdl:part name="SecurityContext" element="sec:SecurityContext"/>
+	</wsdl:message>
+    <wsdl:message name="GetLoanPipelineDetailsRequestMsg">
+		<wsdl:part name="body" element="tns:GetLoanPipelineDetailsRequest"/>
+	</wsdl:message>
+	<wsdl:message name="GetLoanPipelineDetailsResponseMsg">
+		<wsdl:part name="body" element="tns:GetLoanPipelineDetailsResponse"/>
+	</wsdl:message>
+	<wsdl:message name="GetLoanPipelinePagedRequest_Headers">
+		<wsdl:part name="SecurityContext" element="sec:SecurityContext"/>
+	</wsdl:message>
+	<wsdl:message name="GetLoanPipelinePagedRequestMsg">
+		<wsdl:part name="body" element="tns:GetLoanPipelinePagedRequest"/>
+	</wsdl:message>
+	<wsdl:message name="GetLoanPipelinePagedResponseMsg">
+		<wsdl:part name="body" element="tns:GetLoanPipelinePagedResponse"/>
+	</wsdl:message>
+<!-- end of old pipeline messages -->
+	
+	<wsdl:message name="LoanPipelineRequest_Header">
+		<wsdl:part name="SecurityContext" element="sec:SecurityContext"/>
+	</wsdl:message>
+
+	<wsdl:message name="GetPipelineViewsRequestMsg">
+		<wsdl:part name="body" element="tns:GetPipelineViewsRequest"/>
+	</wsdl:message>
+	<wsdl:message name="GetPipelineViewsResponseMsg">
+		<wsdl:part name="body" element="tns:GetPipelineViewsResponse"/>
+	</wsdl:message>
+
+	<wsdl:message name="SavePipelineViewsRequestMsg">
+		<wsdl:part name="body" element="tns:SavePipelineViewsRequest"/>
+	</wsdl:message>
+	<wsdl:message name="SavePipelineViewsResponseMsg">
+		<wsdl:part name="body" element="tns:SavePipelineViewsResponse"/>
+	</wsdl:message>
+
+	<wsdl:message name="DuplicatePipelineViewRequestMsg">
+		<wsdl:part name="body" element="tns:DuplicatePipelineViewRequest"/>
+	</wsdl:message>
+	<wsdl:message name="DuplicatePipelineViewResponseMsg">
+		<wsdl:part name="body" element="tns:DuplicatePipelineViewResponse"/>
+	</wsdl:message>
+
+	<wsdl:message name="RenamePipelineViewRequestMsg">
+		<wsdl:part name="body" element="tns:RenamePipelineViewRequest"/>
+	</wsdl:message>
+	<wsdl:message name="RenamePipelineViewResponseMsg">
+		<wsdl:part name="body" element="tns:RenamePipelineViewResponse"/>
+	</wsdl:message>
+
+	<wsdl:message name="SetPipelineViewAsDefaultRequestMsg">
+		<wsdl:part name="body" element="tns:SetPipelineViewAsDefaultRequest"/>
+	</wsdl:message>
+	<wsdl:message name="SetPipelineViewAsDefaultResponseMsg">
+		<wsdl:part name="body" element="tns:SetPipelineViewAsDefaultResponse"/>
+	</wsdl:message>
+
+	<wsdl:message name="GetPipelineLoanMailboxMsgsCountRequestMsg">
+		<wsdl:part name="body" element="tns:GetPipelineLoanMailboxMsgsCountRequest"/>
+	</wsdl:message>
+	<wsdl:message name="GetPipelineLoanMailboxMsgsCountResponseMsg">
+		<wsdl:part name="body" element="tns:GetPipelineLoanMailboxMsgsCountResponse"/>
+	</wsdl:message>
+	
+	<wsdl:message name="DeletePipelineViewRequestMsg">
+		<wsdl:part name="body" element="tns:DeletePipelineViewRequest"/>
+	</wsdl:message>
+	<wsdl:message name="DeletePipelineViewResponseMsg">
+		<wsdl:part name="body" element="tns:DeletePipelineViewResponse"/>
+	</wsdl:message>
+	
+	<wsdl:message name="GetPipelineDefaultViewNameRequestMsg">
+		<wsdl:part name="body" element="tns:GetPipelineDefaultViewNameRequest"/>
+	</wsdl:message>
+	<wsdl:message name="GetPipelineDefaultViewNameResponseMsg">
+		<wsdl:part name="body" element="tns:GetPipelineDefaultViewNameResponse"/>
+	</wsdl:message>
+	
+	<wsdl:message name="GetPipelineViewByNameRequestMsg">
+		<wsdl:part name="body" element="tns:GetPipelineViewByNameRequest"/>
+	</wsdl:message>
+	<wsdl:message name="GetPipelineViewByNameResponseMsg">
+		<wsdl:part name="body" element="tns:GetPipelineViewByNameResponse"/>
+	</wsdl:message>
+	
+	<wsdl:message name="CreatePipelineCustomViewRequestMsg">
+		<wsdl:part name="body" element="tns:CreatePipelineCustomViewRequest"/>
+	</wsdl:message>
+	<wsdl:message name="CreatePipelineCustomViewResponseMsg">
+		<wsdl:part name="body" element="tns:CreatePipelineCustomViewResponse"/>
+	</wsdl:message>
+	
+	<wsdl:message name="GetFoldersListForPipelineMoveLoansRequestMsg">
+		<wsdl:part name="body" element="tns:GetFoldersListForPipelineMoveLoansRequest"/>
+	</wsdl:message>
+	<wsdl:message name="GetFoldersListForPipelineMoveLoansResponseMsg">
+		<wsdl:part name="body" element="tns:GetFoldersListForPipelineMoveLoansResponse"/>
+	</wsdl:message>
+	
+	<wsdl:message name="GetFoldersListForPipelineMoveLoansFromRequestMsg">
+		<wsdl:part name="body" element="tns:GetFoldersListForPipelineMoveLoansFromRequest"/>
+	</wsdl:message>
+	<wsdl:message name="GetFoldersListForPipelineMoveLoansFromResponseMsg">
+		<wsdl:part name="body" element="tns:GetFoldersListForPipelineMoveLoansFromResponse"/>
+	</wsdl:message>
+	
+	<wsdl:portType name="LoanPipelineServicesPort">
+<!-- old pipeline operations -->
+		<wsdl:operation name="GetLoanPipeline">
+			<wsdl:input message="tns:GetLoanPipelineRequestMsg"/>
+			<wsdl:output message="tns:GetLoanPipelineResponseMsg"/>
+		</wsdl:operation>
+		<wsdl:operation name="GetLoanPipelineDetails">
+			<wsdl:input message="tns:GetLoanPipelineDetailsRequestMsg"/>
+			<wsdl:output message="tns:GetLoanPipelineDetailsResponseMsg"/>
+		</wsdl:operation>
+	    <wsdl:operation name="GetLoanPipelinePaged">
+			<wsdl:input message="tns:GetLoanPipelinePagedRequestMsg"/>
+			<wsdl:output message="tns:GetLoanPipelinePagedResponseMsg"/>
+		</wsdl:operation>
+<!-- end of old pipeline operations -->
+
+		<wsdl:operation name="GetPipelineViews">
+			<wsdl:input message="tns:GetPipelineViewsRequestMsg"/>
+			<wsdl:output message="tns:GetPipelineViewsResponseMsg"/>
+		</wsdl:operation>
+		<wsdl:operation name="SavePipelineViews">
+			<wsdl:input message="tns:SavePipelineViewsRequestMsg"/>
+			<wsdl:output message="tns:SavePipelineViewsResponseMsg"/>
+		</wsdl:operation>
+		<wsdl:operation name="DuplicatePipelineView">
+			<wsdl:input message="tns:DuplicatePipelineViewRequestMsg"/>
+			<wsdl:output message="tns:DuplicatePipelineViewResponseMsg"/>
+		</wsdl:operation>
+		<wsdl:operation name="RenamePipelineView">
+			<wsdl:input message="tns:RenamePipelineViewRequestMsg"/>
+			<wsdl:output message="tns:RenamePipelineViewResponseMsg"/>
+		</wsdl:operation>
+		<wsdl:operation name="SetPipelineViewAsDefault">
+			<wsdl:input message="tns:SetPipelineViewAsDefaultRequestMsg"/>
+			<wsdl:output message="tns:SetPipelineViewAsDefaultResponseMsg"/>
+		</wsdl:operation>
+		<wsdl:operation name="GetPipelineLoanMailboxMsgsCount">
+			<wsdl:input message="tns:GetPipelineLoanMailboxMsgsCountRequestMsg"/>
+			<wsdl:output message="tns:GetPipelineLoanMailboxMsgsCountResponseMsg"/>
+		</wsdl:operation>	
+		<wsdl:operation name="DeletePipelineView">
+			<wsdl:input message="tns:DeletePipelineViewRequestMsg"/>
+			<wsdl:output message="tns:DeletePipelineViewResponseMsg"/>
+		</wsdl:operation>	
+	    <wsdl:operation name="GetPipelineDefaultViewName">
+			<wsdl:input message="tns:GetPipelineDefaultViewNameRequestMsg"/>
+			<wsdl:output message="tns:GetPipelineDefaultViewNameResponseMsg"/>
+		</wsdl:operation>
+	    <wsdl:operation name="GetPipelineViewByName">
+			<wsdl:input message="tns:GetPipelineViewByNameRequestMsg"/>
+			<wsdl:output message="tns:GetPipelineViewByNameResponseMsg"/>
+		</wsdl:operation>
+		
+		 <wsdl:operation name="CreatePipelineCustomView">
+			<wsdl:input message="tns:CreatePipelineCustomViewRequestMsg"/>
+			<wsdl:output message="tns:CreatePipelineCustomViewResponseMsg"/>
+		</wsdl:operation>
+		
+		<wsdl:operation name="GetFoldersListForPipelineMoveLoans">
+			<wsdl:input message="tns:GetFoldersListForPipelineMoveLoansRequestMsg"/>
+			<wsdl:output message="tns:GetFoldersListForPipelineMoveLoansResponseMsg"/>
+		</wsdl:operation>		
+		
+		<wsdl:operation name="GetFoldersListForPipelineMoveLoansFrom">
+			<wsdl:input message="tns:GetFoldersListForPipelineMoveLoansFromRequestMsg"/>
+			<wsdl:output message="tns:GetFoldersListForPipelineMoveLoansFromResponseMsg"/>
+		</wsdl:operation>
+		
+	</wsdl:portType>
+
+	<wsdl:binding name="LoanPipelineServicesSOAP11Binding" type="tns:LoanPipelineServicesPort">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+<!-- old pipeline bindings -->
+		<wsdl:operation name="GetLoanPipeline">
+			<soap:operation soapAction="http://www.elliemae.com/services/loanpipeline/GetLoanPipeline" style="document"/>
+			<wsdl:input>
+			    <soap:header message="tns:GetLoanPipelineRequest_Headers" part="SecurityContext" use="literal"/>
+				<soap:body use="literal" parts="body"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" parts="body"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetLoanPipelineDetails">
+			<soap:operation soapAction="http://www.elliemae.com/services/loanpipeline/GetLoanPipelineDetails" style="document"/>
+			<wsdl:input>
+			    <soap:header message="tns:GetLoanPipelineDetailsRequest_Headers" part="SecurityContext" use="literal"/>
+				<soap:body use="literal" parts="body"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" parts="body"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetLoanPipelinePaged">
+			<soap:operation soapAction="http://www.elliemae.com/services/loanpipeline/GetLoanPipelinePaged" style="document"/>
+			<wsdl:input>
+			    <soap:header message="tns:GetLoanPipelinePagedRequest_Headers" part="SecurityContext" use="literal"/>
+				<soap:body use="literal" parts="body"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+<!-- end of old pipeline bindings -->
+		
+		<wsdl:operation name="GetPipelineViews">
+			<soap:operation soapAction="http://www.elliemae.com/services/loanpipeline/GetPipelineViews" style="document"/>
+			<wsdl:input>
+				<soap:header message="tns:LoanPipelineRequest_Header" part="SecurityContext" use="literal"/>
+				<soap:body use="literal" parts="body"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="SavePipelineViews">
+			<soap:operation soapAction="http://www.elliemae.com/services/loanpipeline/SavePipelineViews" style="document"/>
+			<wsdl:input>
+				<soap:header message="tns:LoanPipelineRequest_Header" part="SecurityContext" use="literal"/>
+				<soap:body use="literal" parts="body"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="DuplicatePipelineView">
+			<soap:operation soapAction="http://www.elliemae.com/services/loanpipeline/DuplicatePipelineView" style="document"/>
+			<wsdl:input>
+				<soap:header message="tns:LoanPipelineRequest_Header" part="SecurityContext" use="literal"/>
+				<soap:body use="literal" parts="body"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="RenamePipelineView">
+			<soap:operation soapAction="http://www.elliemae.com/services/loanpipeline/RenamePipelineView" style="document"/>
+			<wsdl:input>
+				<soap:header message="tns:LoanPipelineRequest_Header" part="SecurityContext" use="literal"/>
+				<soap:body use="literal" parts="body"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="SetPipelineViewAsDefault">
+			<soap:operation soapAction="http://www.elliemae.com/services/loanpipeline/SetPipelineViewAsDefault" style="document"/>
+			<wsdl:input>
+				<soap:header message="tns:LoanPipelineRequest_Header" part="SecurityContext" use="literal"/>
+				<soap:body use="literal" parts="body"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetPipelineLoanMailboxMsgsCount">
+			<soap:operation soapAction="http://www.elliemae.com/services/loanpipeline/GetPipelineLoanMailboxMsgsCount" style="document"/>
+			<wsdl:input>
+				<soap:header message="tns:LoanPipelineRequest_Header" part="SecurityContext" use="literal"/>
+				<soap:body use="literal" parts="body"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>	
+		<wsdl:operation name="DeletePipelineView">
+			<soap:operation soapAction="http://www.elliemae.com/services/loanpipeline/DeletePipelineView" style="document"/>
+			<wsdl:input>
+				<soap:header message="tns:LoanPipelineRequest_Header" part="SecurityContext" use="literal"/>
+				<soap:body use="literal" parts="body"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetPipelineDefaultViewName">
+			<soap:operation soapAction="http://www.elliemae.com/services/loanpipeline/GetPipelineDefaultViewName" style="document"/>
+			<wsdl:input>
+				<soap:header message="tns:LoanPipelineRequest_Header" part="SecurityContext" use="literal"/>
+				<soap:body use="literal" parts="body"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetPipelineViewByName">
+			<soap:operation soapAction="http://www.elliemae.com/services/loanpipeline/GetPipelineViewByName" style="document"/>
+			<wsdl:input>
+				<soap:header message="tns:LoanPipelineRequest_Header" part="SecurityContext" use="literal"/>
+				<soap:body use="literal" parts="body"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>	
+		
+		<wsdl:operation name="CreatePipelineCustomView">
+			<soap:operation soapAction="http://www.elliemae.com/services/loanpipeline/CreatePipelineCustomView" style="document"/>
+			<wsdl:input>
+				<soap:header message="tns:LoanPipelineRequest_Header" part="SecurityContext" use="literal"/>
+				<soap:body use="literal" parts="body"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>	
+					
+		<wsdl:operation name="GetFoldersListForPipelineMoveLoans">
+			<soap:operation soapAction="http://www.elliemae.com/services/loanpipeline/GetFoldersListForPipelineMoveLoans" style="document"/>
+			<wsdl:input>
+				<soap:header message="tns:LoanPipelineRequest_Header" part="SecurityContext" use="literal"/>
+				<soap:body use="literal" parts="body"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		
+		<wsdl:operation name="GetFoldersListForPipelineMoveLoansFrom">
+			<soap:operation soapAction="http://www.elliemae.com/services/loanpipeline/GetFoldersListForPipelineMoveLoansFrom" style="document"/>
+			<wsdl:input>
+				<soap:header message="tns:LoanPipelineRequest_Header" part="SecurityContext" use="literal"/>
+				<soap:body use="literal" parts="body"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>	
+		
+	</wsdl:binding>
+	
+	<wsdl:service name="LoanPipelineService">
+		<wsdl:port name="LoanPipelineServices" binding="tns:LoanPipelineServicesSOAP11Binding">
+			<soap:address location="http://encompass-ib.qa.dco.elmae:11001/encompass_v1/loan/pipeline"/>
+		</wsdl:port>
+	</wsdl:service>
+	
+</wsdl:definitions>

@@ -1,0 +1,365 @@
+<xsd:schema elementFormDefault="qualified" targetNamespace="http://www.elliemae.com/services/edm" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.elliemae.com/services/edm" >
+
+	<xsd:element name="GetAttachmentRequest" type="tns:GetAttachmentRequestType" />
+	<xsd:element name="GetAttachmentResponse" type="tns:GetAttachmentResponseType" />
+	<xsd:element name="GetDocumentLogListRequest" type="tns:GetDocumentLogListRequestType" />
+	<xsd:element name="GetDocumentLogListResponse" type="tns:GetDocumentLogListResponseType" />
+	<xsd:element name="CreateAttachmentRequest" type="tns:CreateAttachmentRequestType" />
+	<xsd:element name="CreateAttachmentResponse" type="tns:CreateAttachmentResponseType" />
+	<xsd:element name="GetSupportingDataRequest" type="tns:GetSupportingDataRequestType" />
+	<xsd:element name="GetSupportingDataResponse" type="tns:GetSupportingDataResponseType" />
+	<xsd:element name="SaveSupportingDataRequest" type="tns:SaveSupportingDataRequestType" />
+	<xsd:element name="SaveSupportingDataResponse" type="tns:SaveSupportingDataResponseType" />
+	
+    <xsd:simpleType name="DateTimeType">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="Calendar" />
+			<xsd:enumeration value="Business" />
+			<xsd:enumeration value="Company" />
+	   </xsd:restriction>
+	</xsd:simpleType>
+	<xsd:element name="DateTimeType" nillable="true" type="tns:DateTimeType" />			
+			
+	<xsd:simpleType name="guid">
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern
+				value="[\da-fA-F]{8}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{12}" />
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:element name="LoanGuid" type="tns:guid" />
+	
+	<xsd:complexType name="ArrayOfstring">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" maxOccurs="unbounded" name="string" nillable="true" type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>
+	<xsd:element name="ArrayOfstring" nillable="true" type="tns:ArrayOfstring" />
+	
+	
+	
+	<xsd:complexType name = "GetAttachmentRequestType">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" name="LoanId" type="tns:guid" />
+			<xsd:element minOccurs="0" name="AttachmentId" nillable="true" type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="GetAttachmentResponseType">
+			<xsd:sequence>
+				<xsd:element minOccurs="0" name="Attachment" nillable="true" type="tns:Attachment" />
+			</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="Attachment">
+		<xsd:complexContent mixed="false">
+			<xsd:extension base="tns:EntityContractBase">
+				<xsd:sequence>
+					<xsd:element minOccurs="0" name="AttachmentId" nillable="true" type="xsd:string" />
+					<xsd:element minOccurs="0" name="AttachmentSources" nillable="true" type="tns:ArrayOfstring" />
+					<xsd:element minOccurs="0" name="Data" nillable="true" type="xsd:base64Binary" />
+					<xsd:element minOccurs="0" name="DataLoaded" nillable="true" type="xsd:boolean" />
+					<xsd:element minOccurs="0" name="Date" nillable="true" type="xsd:dateTime" />
+					<xsd:element minOccurs="0" name="FileSize" nillable="true" type="xsd:long" />
+					<xsd:element minOccurs="0" name="Id" nillable="true" type="xsd:string" />
+					<xsd:element minOccurs="0" name="IsActive" type="xsd:boolean" />
+					<xsd:element minOccurs="0" name="IsDirty" type="xsd:boolean" />
+					<xsd:element minOccurs="0" name="IsNew" type="xsd:boolean" />
+					<xsd:element minOccurs="0" name="IsRemoved" type="xsd:boolean" />
+					<xsd:element minOccurs="0" name="Title" nillable="true" type="xsd:string" />
+				</xsd:sequence>
+		   </xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	
+	<xsd:element name="Attachment" nillable="true" type="tns:Attachment" />
+	<xsd:complexType name="EntityContractBase">
+		<xsd:sequence />
+	</xsd:complexType>
+	<xsd:element name="EntityContractBase" nillable="true"  type="tns:EntityContractBase" />
+	
+	<xsd:complexType name="GetDocumentLogListRequestType">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" name="FileFilterText" nillable="true" type="xsd:string" />
+			<xsd:element name="LoanId" type="tns:guid" />
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="GetDocumentLogListResponseType">
+			<xsd:sequence>
+				<xsd:element minOccurs="0" name="DocumentLogList" nillable="true" type="tns:ArrayOfDocumentLogAttachments" />
+			</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="ArrayOfDocumentLogAttachments">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" maxOccurs="unbounded" name="DocumentLogAttachments" nillable="true" type="tns:DocumentLogAttachments" />
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="DocumentLogAttachments">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" name="DocumentLogContract" nillable="true" type="tns:DocumentLog" />
+			<xsd:element minOccurs="0" name="FileAttachmentContracts" nillable="true" type="tns:ArrayOfAttachment" />
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:element name="DocumentLogAttachments" nillable="true" type="tns:DocumentLogAttachments" />
+	
+	<xsd:complexType name="DocumentLog">
+		<xsd:complexContent mixed="false">
+			<xsd:extension base="tns:EntityContractBase">
+				<xsd:sequence>
+					<xsd:element minOccurs="0" name="AccessedBy" nillable="true" type="xsd:string" />
+					<xsd:element minOccurs="0" name="AccessedDateUtc" nillable="true" type="xsd:dateTime" />
+                    <xsd:element minOccurs="0" name="AddedBy" nillable="true" type="xsd:string" />
+                    <xsd:element minOccurs="0" name="Alerts" nillable="true" type="tns:ArrayOfLogAlert" />
+                    <xsd:element minOccurs="0" name="AlertsXml" nillable="true" type="xsd:string" />
+                    <xsd:element minOccurs="0" name="AllowedRoleDelimitedList" nillable="true" type="xsd:string" />
+                    <xsd:element minOccurs="0" name="AllowedRoles" nillable="true" type="tns:ArrayOfEntityReference" />
+                    <xsd:element minOccurs="0" name="AllowedRolesXml" nillable="true" type="xsd:string" />
+					<xsd:element minOccurs="0" name="ArchiveDateUtc" nillable="true" type="xsd:dateTime" />
+					<xsd:element minOccurs="0" name="ArchivedBy" nillable="true" type="xsd:string" />
+					<xsd:element minOccurs="0" name="ClosingDocumentIndicator" type="xsd:boolean" />
+					<xsd:element minOccurs="0" name="CommentList" nillable="true" type="tns:ArrayOfLogComment" />
+					<xsd:element minOccurs="0" name="CommentListXml" nillable="true" type="xsd:string" />
+					<xsd:element minOccurs="0" name="Comments" nillable="true" type="xsd:string" />
+					<xsd:element minOccurs="0" name="Company" nillable="true" type="xsd:string" />
+					<xsd:element minOccurs="0" name="Conditions" nillable="true" type="tns:ArrayOfEntityReference" />
+					<xsd:element minOccurs="0" name="ConditionsXml" nillable="true" type="xsd:string" />
+					<xsd:element minOccurs="0" name="DateAddedUtc" nillable="true" type="xsd:dateTime" />
+					<xsd:element minOccurs="0" name="DateExpected" nillable="true" type="xsd:dateTime" />
+					<xsd:element minOccurs="0" name="DateExpires" nillable="true" type="xsd:dateTime" />
+					<xsd:element minOccurs="0" name="DateReceived" nillable="true" type="xsd:dateTime" />
+					<xsd:element minOccurs="0" name="DateRequested" nillable="true" type="xsd:dateTime" />
+					<xsd:element minOccurs="0" name="DateRerequested" nillable="true" type="xsd:dateTime" />
+					<xsd:element minOccurs="0" name="DateUtc" nillable="true" type="xsd:dateTime" />
+                    <xsd:element minOccurs="0" name="DaysDue" type="xsd:short" />
+					<xsd:element minOccurs="0" name="DaysTillExpire" type="xsd:short" />
+				    <xsd:element minOccurs="0" name="DocumentDateTimeType" type="tns:DateTimeType" /> 
+					<xsd:element minOccurs="0" name="EDisclosureIndicator" type="xsd:boolean" />
+					<xsd:element minOccurs="0" name="EPassSignature" nillable="true" type="xsd:string" />
+					<xsd:element minOccurs="0" name="Expected" type="xsd:boolean" />
+					<xsd:element minOccurs="0" name="Expires" type="xsd:boolean" />
+					<xsd:element minOccurs="0" name="FileAttachmentReferences" nillable="true" type="tns:ArrayOfFileAttachmentReference" />
+					<xsd:element minOccurs="0" name="FileAttachmentsMigrated" type="xsd:boolean" />
+					<xsd:element minOccurs="0" name="FileAttachmentsXml" nillable="true" type="xsd:string" />
+					<xsd:element minOccurs="0" name="Guid" type="tns:guid" />
+					<xsd:element minOccurs="0" name="Id" nillable="true" type="xsd:string" />
+					<xsd:element minOccurs="0" name="IsEPassIndicator" type="xsd:boolean" />
+					<xsd:element minOccurs="0" name="IsExpired" type="xsd:boolean" />
+					<xsd:element minOccurs="0" name="IsExternalIndicator" type="xsd:boolean" />
+					<xsd:element minOccurs="0" name="IsPastDue" type="xsd:boolean" />
+                    <xsd:element minOccurs="0" name="IsSystemSpecificIndicator" type="xsd:boolean" />
+					<xsd:element minOccurs="0" name="IsTPOWebcenterPortalIndicator" type="xsd:boolean" />
+					<xsd:element minOccurs="0" name="IsThirdPartyDocIndicator" type="xsd:boolean" />
+					<xsd:element minOccurs="0" name="IsWebCenterIndicator" type="xsd:boolean" />
+					<xsd:element minOccurs="0" name="LogRecordIndex" type="xsd:int" />
+					<xsd:element minOccurs="0" name="OrderDateUtc" nillable="true" type="xsd:dateTime" />
+					<xsd:element minOccurs="0" name="PairId" nillable="true" type="xsd:string" />
+					<xsd:element minOccurs="0" name="PreClosingDocumentIndicator" type="xsd:boolean" />
+					<xsd:element minOccurs="0" name="ReceiveDateUtc" nillable="true" type="xsd:dateTime" />
+					<xsd:element minOccurs="0" name="Received" type="xsd:boolean" />
+					<xsd:element minOccurs="0" name="ReceivedBy" nillable="true" type="xsd:string" />
+					<xsd:element minOccurs="0" name="ReorderDateUtc" nillable="true" type="xsd:dateTime" />
+				    <xsd:element minOccurs="0" name="Requested" type="xsd:boolean" />
+					<xsd:element minOccurs="0" name="RequestedBy" nillable="true" type="xsd:string" />
+					<xsd:element minOccurs="0" name="RequestedFrom" nillable="true" type="xsd:string" />
+				    <xsd:element minOccurs="0" name="Rerequested" type="xsd:boolean" />
+					<xsd:element minOccurs="0" name="RerequestedBy" nillable="true" type="xsd:string" />
+					<xsd:element minOccurs="0" name="Reviewed" type="xsd:boolean" />
+					<xsd:element minOccurs="0" name="ReviewedBy" nillable="true" type="xsd:string" />
+					<xsd:element minOccurs="0" name="ReviewedDateUtc" nillable="true" type="xsd:dateTime" />
+					<xsd:element minOccurs="0" name="ShippingReady" type="xsd:boolean" />
+					<xsd:element minOccurs="0" name="ShippingReadyBy" nillable="true" type="xsd:string" />
+					<xsd:element minOccurs="0" name="ShippingReadyDateUtc" nillable="true" type="xsd:dateTime" />
+					<xsd:element minOccurs="0" name="Stage" nillable="true" type="xsd:string" />
+					<xsd:element minOccurs="0" name="Status" nillable="true" type="xsd:string" />
+					<xsd:element minOccurs="0" name="SystemId" nillable="true" type="tns:guid" />
+					<xsd:element minOccurs="0" name="Title" nillable="true" type="xsd:string" />
+					<xsd:element minOccurs="0" name="UnderwritingReady" type="xsd:boolean" />
+					<xsd:element minOccurs="0" name="UnderwritingReadyBy" nillable="true" type="xsd:string" />
+					<xsd:element minOccurs="0" name="UnderwritingReadyDateUtc" nillable="true" type="xsd:dateTime" />
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	
+	<xsd:element name="DocumentLog" nillable="true" type="tns:DocumentLog" />
+	<xsd:complexType name="ArrayOfLogAlert">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" maxOccurs="unbounded" name="LogAlert" nillable="true" type="tns:LogAlert" />
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:element name="ArrayOfLogAlert" nillable="true" type="tns:ArrayOfLogAlert" />
+	<xsd:complexType name="LogAlert">
+		<xsd:complexContent mixed="false">
+			<xsd:extension base="tns:EntityContractBase">
+				<xsd:sequence>
+					<xsd:element minOccurs="0" name="DueDate" nillable="true" type="xsd:dateTime" />
+					<xsd:element minOccurs="0" name="FollowedUpDate" nillable="true" type="xsd:dateTime" />
+					<xsd:element minOccurs="0" name="Id" nillable="true" type="xsd:string" />
+					<xsd:element minOccurs="0" name="LogRecord" nillable="true" type="tns:LogRecord" />
+					<xsd:element minOccurs="0" name="RoleId" type="xsd:int" />
+					<xsd:element minOccurs="0" name="SystemId" nillable="true" type="tns:guid" />
+					<xsd:element minOccurs="0" name="UserId" nillable="true" type="xsd:string" />
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	
+	<xsd:element name="LogAlert" nillable="true" type="tns:LogAlert" />
+		
+	<xsd:complexType name="LogRecord">
+		<xsd:complexContent mixed="false">
+			<xsd:extension base="tns:EntityContractBase">
+				<xsd:sequence>
+					<xsd:element minOccurs="0" name="CommentList" nillable="true" type="tns:ArrayOfLogComment" />
+					<xsd:element minOccurs="0" name="Comments" nillable="true" type="xsd:string" />
+					<xsd:element minOccurs="0" name="DateUtc" nillable="true" type="xsd:dateTime" />
+					<xsd:element minOccurs="0" name="FileAttachmentsMigrated" nillable="true" type="xsd:boolean" />
+					<xsd:element minOccurs="0" name="Guid" type="tns:guid" />
+					<xsd:element minOccurs="0" name="Id" nillable="true" type="xsd:string" />
+					<xsd:element minOccurs="0" name="IsSystemSpecificIndicator" type="xsd:boolean" />
+					<xsd:element minOccurs="0" name="LogRecordIndex" type="xsd:int" />
+					<xsd:element minOccurs="0" name="SystemId" nillable="true" type="tns:guid" />
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	
+	<xsd:element name="LogRecord" nillable="true" type="tns:LogRecord" />
+	<xsd:complexType name="ArrayOfLogComment">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" maxOccurs="unbounded" name="LogComment" nillable="true" type="tns:LogComment" />
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:element name="ArrayOfLogComment" nillable="true" type="tns:ArrayOfLogComment" />
+	<xsd:complexType name="LogComment">
+		<xsd:complexContent mixed="false">
+			<xsd:extension base="tns:EntityContractBase">
+				<xsd:sequence>
+					<xsd:element minOccurs="0" name="AddedBy" nillable="true" type="xsd:string" />
+					<xsd:element minOccurs="0" name="Comments" nillable="true" type="xsd:string" />
+					<xsd:element minOccurs="0" name="Date" nillable="true" type="xsd:dateTime" />
+					<xsd:element minOccurs="0" name="ForRoleId" type="xsd:int" />
+					<xsd:element minOccurs="0" name="Guid" type="tns:guid" />
+					<xsd:element minOccurs="0" name="Id" nillable="true" type="xsd:string" />
+					<xsd:element minOccurs="0" name="IsInternal" type="xsd:boolean" />
+					<xsd:element minOccurs="0" name="ReviewedBy" nillable="true" type="xsd:string" />
+					<xsd:element minOccurs="0" name="ReviewedDate" nillable="true" type="xsd:dateTime" />
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	
+	<xsd:element name="LogComment" nillable="true" type="tns:LogComment" />
+	<xsd:complexType name="ArrayOfEntityReference">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" maxOccurs="unbounded" name="EntityReference" nillable="true" type="tns:EntityReference" />
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:element name="ArrayOfEntityReference" nillable="true" type="tns:ArrayOfEntityReference" />
+	<xsd:complexType name="EntityReference">
+		<xsd:complexContent mixed="false">
+			<xsd:extension base="tns:EntityContractBase">
+				<xsd:sequence>
+					<xsd:element minOccurs="0" name="Id" nillable="true" type="xsd:string" />
+					<xsd:element minOccurs="0" name="RefId" nillable="true" type="xsd:string" />
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	
+	<xsd:element name="EntityReference" nillable="true" type="tns:EntityReference" />
+	<xsd:complexType name="ArrayOfFileAttachmentReference">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" maxOccurs="unbounded" name="FileAttachmentReference" nillable="true" type="tns:FileAttachmentReference" />
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:element name="ArrayOfFileAttachmentReference" nillable="true" type="tns:ArrayOfFileAttachmentReference" />
+	<xsd:complexType name="FileAttachmentReference">
+		<xsd:complexContent mixed="false">
+			<xsd:extension base="tns:EntityContractBase">
+				<xsd:sequence>
+					<xsd:element minOccurs="0" name="Id" nillable="true" type="xsd:string" />
+					<xsd:element minOccurs="0" name="IsActive" nillable="true" type="xsd:boolean" />
+					<xsd:element minOccurs="0" name="RefId" nillable="true" type="xsd:string" />
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	
+	<xsd:element name="FileAttachmentReference" nillable="true" type="tns:FileAttachmentReference" />
+	<xsd:complexType name="ArrayOfAttachment">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" maxOccurs="unbounded" name="Attachment" nillable="true" type="tns:Attachment" />
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:element name="ArrayOfAttachment" nillable="true" type="tns:ArrayOfAttachment" />
+	
+	<xsd:complexType name="CreateAttachmentRequestType">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" name="BorrowerPairId" nillable="true"
+				type="xsd:string" />
+			<xsd:element minOccurs="0" name="Comments" nillable="true"
+				type="xsd:string" />
+			<xsd:element minOccurs="0" name="DateExpected" nillable="true"
+				type="xsd:string" />
+			<xsd:element minOccurs="0" name="DateReceived" nillable="true"
+				type="xsd:string" />
+			<xsd:element minOccurs="0" name="DateRequested" nillable="true"
+				type="xsd:string" />
+			<xsd:element minOccurs="0" name="DocumentContainerTitle"
+				nillable="true" type="xsd:string" />
+			<xsd:element name="FileContent" nillable="true" type="xsd:base64Binary" />
+			<xsd:element name="FileName" nillable="true" type="xsd:string" />
+			<xsd:element name="LoanId" type="tns:guid" />
+			<xsd:element minOccurs="0" name="RequestedFrom" nillable="true"
+				type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="CreateAttachmentResponseType">
+		<xsd:sequence>
+		   <xsd:element minOccurs="0" name="AttachmentId" nillable="true" type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="GetSupportingDataRequestType">
+		<xsd:sequence>
+		   <xsd:element minOccurs="0" name="LoanId" type="tns:guid" />
+		   <xsd:element minOccurs="0" name="DataKey" nillable="true"
+					type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="GetSupportingDataResponseType">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" name="Data" nillable="true"
+					type="xsd:base64Binary" />
+			</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="SaveSupportingDataRequestType">
+			<xsd:sequence>
+				<xsd:element minOccurs="0" name="LoanId" type="tns:guid" />
+				<xsd:element minOccurs="0" name="DataKey" nillable="true"
+					type="xsd:string" />
+				<xsd:element minOccurs="0" name="Data" nillable="true"
+					type="xsd:base64Binary" />
+			</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name = "SaveSupportingDataResponseType">
+		<xsd:sequence>
+			<xsd:element name="Status" nillable="true" type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>
+		
+</xsd:schema>

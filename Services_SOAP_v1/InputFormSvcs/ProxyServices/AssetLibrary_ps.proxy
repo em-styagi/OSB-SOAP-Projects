@@ -1,0 +1,2969 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml-fragment xmlns:con="http://www.bea.com/wli/sb/typesystem/config" xmlns:con1="http://www.bea.com/wli/sb/stages/config" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con3="http://www.bea.com/wli/sb/stages/logging/config" xmlns:con4="http://www.bea.com/wli/sb/pipeline/config" xmlns:env="http://www.bea.com/wli/config/env" xmlns:http="http://www.bea.com/wli/sb/transports/http" xmlns:ser="http://www.bea.com/wli/sb/services" xmlns:tran="http://www.bea.com/wli/sb/transports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con5="http://www.bea.com/wli/sb/stages/alert/config" xmlns:con6="http://www.bea.com/wli/sb/stages/routing/config">
+  <ser:coreEntry isAutoPublish="false" isEnabled="true" isProxy="true" isTracingEnabled="false">
+    <ser:description/>
+    <ser:binding type="SOAP" isSoap12="false" xsi:type="con7:SoapBindingType" xmlns:con7="http://www.bea.com/wli/sb/services/bindings/config">
+      <con7:wsdl ref="Services_SOAP_v1/InputFormSvcs/Resources/wsdl/Services/AssetLibrarySvc"/>
+      <con7:port>
+        <con7:name>BasicHttpBinding_IAssetLibraryService</con7:name>
+        <con7:namespace>http://www.elliemae.com/services/assetlibrary</con7:namespace>
+      </con7:port>
+      <con7:selector type="SOAP action"/>
+      <con7:WSI-compliant>false</con7:WSI-compliant>
+    </ser:binding>
+    <ser:monitoring isEnabled="false">
+      <ser:aggregationInterval>10</ser:aggregationInterval>
+      <ser:pipelineMonitoringLevel>Pipeline</ser:pipelineMonitoringLevel>
+    </ser:monitoring>
+    <ser:reporting>true</ser:reporting>
+    <ser:logging isEnabled="true">
+      <ser:logLevel>debug</ser:logLevel>
+    </ser:logging>
+    <ser:sla-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:sla-alerting>
+    <ser:pipeline-alerting isEnabled="true">
+      <ser:alertLevel>normal</ser:alertLevel>
+    </ser:pipeline-alerting>
+    <ser:ws-policy>
+      <ser:binding-mode>wsdl-policy-attachments</ser:binding-mode>
+    </ser:ws-policy>
+    <ser:pageAttachments isEnabled="false"/>
+    <ser:transactions isRequired="false" sameTxForResponse="false"/>
+  </ser:coreEntry>
+  <ser:endpointConfig>
+    <tran:provider-id>http</tran:provider-id>
+    <tran:inbound>true</tran:inbound>
+    <tran:URI>
+      <env:value>encompass_v1/assetlibrary</env:value>
+    </tran:URI>
+    <tran:inbound-properties/>
+    <tran:all-headers>true</tran:all-headers>
+    <tran:provider-specific>
+      <http:inbound-properties/>
+    </tran:provider-specific>
+  </ser:endpointConfig>
+  <ser:router errorHandler="_onErrorHandler-6673855215477373904--6255a661.1403aeac08c.-7e01">
+    <con4:pipeline type="error" name="_onErrorHandler-8827088423971146351-692099dc.150c93d82e1.-7ec1">
+      <con4:stage name="OverwriteAsset-Errorhandler">
+        <con4:comment>If SetFileExpiration fails for any reason</con4:comment>
+        <con4:context>
+          <con1:userNsDecl namespace="http://www.elliemae.com/edm/platform" prefix="edm"/>
+          <con1:userNsDecl namespace="http://www.elliemae.com/encompass/platform" prefix="plat"/>
+          <con1:varNsDecl namespace="http://www.elliemae.com/services/assetlibrary" prefix="ass"/>
+        </con4:context>
+        <con4:actions>
+          <con2:ifThenElse>
+            <con1:id>_ActionId-9027735848476100005--16a91c9d.151124df2a7.-7fd5</con1:id>
+            <con2:case>
+              <con2:condition>
+                <con1:xqueryText>fn:exists($varResponse/soap-env:Fault)</con1:xqueryText>
+              </con2:condition>
+              <con2:actions>
+                <con7:transport-headers copy-all="true" xmlns:con6="http://www.bea.com/wli/sb/stages/publish/config" xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:con7="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con4="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                  <con2:id>_ActionId-9027735848476100005--16a91c9d.151124df2a7.-7fd3</con2:id>
+                  <con7:header-set>inbound-response</con7:header-set>
+                  <con7:header name="CorrelationID" value="expression">
+                    <con6:xqueryText xmlns:con6="http://www.bea.com/wli/sb/stages/config">$CorrelationID</con6:xqueryText>
+                  </con7:header>
+                </con7:transport-headers>
+                <con4:assign varName="faultCode" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con6="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con4="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con5="http://www.bea.com/wli/sb/pipeline/config">
+                  <con7:id xmlns:con7="http://www.bea.com/wli/sb/stages/config">_ActionId-9027735848476100005--16a91c9d.151124df2a7.-7fd1</con7:id>
+                  <con4:expr>
+                    <con7:xqueryText xmlns:con7="http://www.bea.com/wli/sb/stages/config">if (fn:contains($varResponse/soap-env:Fault/faultcode/text(),':'))
+then fn:substring-after($varResponse/soap-env:Fault/faultcode/text(),':') 
+else fn:substring-after($body/soap-env:Fault/faultcode/text(),':')</con7:xqueryText>
+                  </con4:expr>
+                </con4:assign>
+                <con2:assign varName="strErrorMsg">
+                  <con1:id>_ActionId-9027735848476100005--16a91c9d.151124df2a7.-7fcf</con1:id>
+                  <con2:expr>
+                    <con1:xqueryText><![CDATA[<soap-env:Fault>
+	<faultcode>{$faultCode}</faultcode>
+	<faultstring>{if(fn:exists($varResponse/soap-env:Fault/faultstring)) then $varResponse/soap-env:Fault/faultstring/text()
+				  else $body/soap-env:Fault/faultstring/text()}</faultstring>
+	<detail>
+		<ErrorMessage>
+			{if(fn:exists($body/soap-env:Fault/detail/plat:PlatformError/plat:ErrorMessage)) then
+				$body/soap-env:Fault/detail/plat:PlatformError/plat:ErrorMessage/text()
+			else
+				if (fn:exists($varResponse/soap-env:Fault/detail/edm:PlatformError/edm:ErrorMessage)) 
+				then $varResponse/soap-env:Fault/detail/edm:PlatformError/edm:ErrorMessage/text()
+				else $varResponse/soap-env:Fault/detail/ErrorMessage/text()}
+		</ErrorMessage>
+	</detail>
+</soap-env:Fault>]]></con1:xqueryText>
+                  </con2:expr>
+                </con2:assign>
+                <con4:delete varName="header" xmlns:con7="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con6="http://www.bea.com/wli/sb/pipeline/config" xmlns:con4="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con5="http://www.bea.com/wli/sb/pipeline/config">
+                  <con1:id>_ActionId-9027735848476100005--16a91c9d.151124df2a7.-7fcd</con1:id>
+                  <con4:location>
+                    <con1:xpathText>.</con1:xpathText>
+                  </con4:location>
+                </con4:delete>
+                <con2:replace contents-only="true" varName="body">
+                  <con1:id>_ActionId-4060564644604535167--40730f9a.15111c2a3d2.-7ff5</con1:id>
+                  <con2:location>
+                    <con1:xpathText>.</con1:xpathText>
+                  </con2:location>
+                  <con2:expr>
+                    <con1:xqueryText>$strErrorMsg</con1:xqueryText>
+                  </con2:expr>
+                </con2:replace>
+                <con1:reply isError="true">
+                  <con1:id>_ActionId-4060564644604535167--40730f9a.15111c2a3d2.-7ff4</con1:id>
+                </con1:reply>
+              </con2:actions>
+            </con2:case>
+          </con2:ifThenElse>
+        </con4:actions>
+      </con4:stage>
+    </con4:pipeline>
+    <con4:pipeline type="request" name="GetAssets-PipelinePair_request">
+      <con4:stage name="Stage-ServiceCallouts">
+        <con4:context>
+          <con1:userNsDecl namespace="http://www.elliemae.com/encompass/platform" prefix="plat"/>
+          <con1:userNsDecl namespace="http://www.elliemae.com/services/assetlibrary" prefix="al"/>
+          <con1:userNsDecl namespace="http://www.elliemae.com/log" prefix="log"/>
+          <con1:userNsDecl namespace="http://www.elliemae.com/services/session" prefix="ses"/>
+          <con1:userNsDecl namespace="http://www.elliemae.com/services/security" prefix="sec"/>
+        </con4:context>
+        <con4:actions>
+          <con2:validate xmlns:con="http://www.bea.com/wli/sb/pipeline/config">
+            <con1:id>_ActionId-5211983354778704439--59cb9e65.14f41abd461.-7f37</con1:id>
+            <con2:schema ref="Services_SOAP_v1/InputFormSvcs/Resources/xsd/Services/AssetLibrary"/>
+            <con2:schemaElement xmlns:inp="http://www.elliemae.com/services/inputform" xmlns:ass="http://www.elliemae.com/services/assetlibrary">ass:GetAssetsRequest</con2:schemaElement>
+            <con2:varName>strRequest</con2:varName>
+            <con2:location>
+              <con1:xpathText>.</con1:xpathText>
+            </con2:location>
+            <con2:resultVarName/>
+          </con2:validate>
+          <con2:ifThenElse xmlns:con="http://www.bea.com/wli/sb/pipeline/config">
+            <con1:id>_ActionId-5211983354778704439--59cb9e65.14f41abd461.-7f3d</con1:id>
+            <con2:case>
+              <con2:condition>
+                <con1:xqueryText>fn:string-length($body/plat:GetAssetsRequest/plat:AssetType)>0 and fn:string-length($body/plat:GetAssetsRequest/plat:InputFormID)>0</con1:xqueryText>
+              </con2:condition>
+              <con2:actions>
+                <con2:delete varName="header">
+                  <con1:id>_ActionId-5211983354778704439--59cb9e65.14f41abd461.-7f3c</con1:id>
+                  <con2:location>
+                    <con1:xpathText>.</con1:xpathText>
+                  </con2:location>
+                </con2:delete>
+                <con2:Error>
+                  <con1:id>_ActionId-5211983354778704439--59cb9e65.14f41abd461.-7f3b</con1:id>
+                  <con2:errCode>2991</con2:errCode>
+                  <con2:message/>
+                </con2:Error>
+                <con1:reply isError="true">
+                  <con1:id>_ActionId-5211983354778704439--59cb9e65.14f41abd461.-7f3a</con1:id>
+                </con1:reply>
+              </con2:actions>
+            </con2:case>
+            <con2:case>
+              <con2:condition>
+                <con1:xqueryText>(: GetAssetsByType :)
+fn:string-length($body/plat:GetAssetsRequest/plat:AssetType)>0 and
+fn:string-length($body/plat:GetAssetsRequest/plat:InputFormID)=0</con1:xqueryText>
+              </con2:condition>
+              <con2:actions>
+                <con2:replace varName="body" contents-only="true">
+                  <con1:id>_ActionId-1112483026490974360-1d7ca11f.14f433eaa0b.-7fff</con1:id>
+                  <con2:location>
+                    <con1:xpathText>.</con1:xpathText>
+                  </con2:location>
+                  <con2:expr>
+                    <con1:xqueryText>(: GetAssets By Type :)
+&lt;plat:InputFormAssetsByTypeGetRequest>
+	&lt;plat:Type>{$body/plat:GetAssetsRequest/plat:AssetType/text()}&lt;/plat:Type>
+&lt;/plat:InputFormAssetsByTypeGetRequest></con1:xqueryText>
+                  </con2:expr>
+                </con2:replace>
+                <con2:wsCallout>
+                  <con1:id>_ActionId-1112483026490974360-1d7ca11f.14f433eaa0b.-7f7f</con1:id>
+                  <con2:service xsi:type="ref:BusinessServiceRef" ref="Services_SOAP_v1/InputFormSvcs/BusinessServices/InputFormSvc_bs" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                  <con2:operation>GetInputFormAssetsByType</con2:operation>
+                  <con2:request>
+                    <con2:body wrapped="true">$body</con2:body>
+                    <con2:header>$header</con2:header>
+                  </con2:request>
+                  <con2:response>
+                    <con2:body wrapped="true">body</con2:body>
+                  </con2:response>
+                  <con2:requestTransform>
+                    <con2:routing-options>
+                      <con1:id>_ActionId-1112483026490974360-1d7ca11f.14f433eaa0b.-7e44</con1:id>
+                      <con2:uriExpr>
+                        <con1:xqueryText>$podURL</con1:xqueryText>
+                      </con2:uriExpr>
+                    </con2:routing-options>
+                    <con4:ifThenElse xmlns:con3="http://www.bea.com/wli/sb/stages/alert/config" xmlns:con="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con2="http://www.bea.com/wli/sb/pipeline/config" xmlns:con5="http://www.bea.com/wli/sb/stages/publish/config" xmlns:con4="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con6="http://www.bea.com/wli/sb/stages/publish/config">
+                      <con1:id>_ActionId-1736992497100438200--23113bf2.14fb4053b5a.-7ca1</con1:id>
+                      <con4:case>
+                        <con4:condition>
+                          <con1:xqueryText>fn:contains($logProperties/SLPlatformRequest/text(),'yes')</con1:xqueryText>
+                        </con4:condition>
+                        <con4:actions>
+                          <con7:route xmlns:con4="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con1="http://www.bea.com/wli/sb/stages/logging/config" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con5="http://www.bea.com/wli/sb/stages/alert/config" xmlns:con7="http://www.bea.com/wli/sb/stages/publish/config">
+                            <con2:id>_ActionId-1736992497100438200--23113bf2.14fb4053b5a.-7ca0</con2:id>
+                            <con7:service ref="LogService_v1/BusinessServices/LogProducer_bs" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                            <con7:outboundTransform>
+                              <con7:replace varName="body" contents-only="true" xmlns:con7="http://www.bea.com/wli/sb/stages/transform/config">
+                                <con2:id>_ActionId-1736992497100438200--23113bf2.14fb4053b5a.-7c9f</con2:id>
+                                <con7:location>
+                                  <con8:xpathText xmlns:con8="http://www.bea.com/wli/sb/stages/config">.</con8:xpathText>
+                                </con7:location>
+                                <con7:expr>
+                                  <con2:xqueryText><![CDATA[<log:LogRecord>
+  <log:RawXml>{fn-bea:serialize($body)}</log:RawXml>
+  <log:TrxID>{$CorrelationID}</log:TrxID>
+  <log:Status>START</log:Status>
+  <log:Keys>
+    <log:keyitem>
+      <log:key>componentname</log:key>
+      <log:value>AssetLibrarySvc</log:value>
+    </log:keyitem>
+    <log:keyitem>
+      <log:key>operationstep</log:key>
+      <log:value>{fn:concat('SL-Platform-',$operationName,'-Outgoing-Request')}</log:value>
+    </log:keyitem>
+    <log:keyitem>
+      <log:key>sessionid</log:key>
+      <log:value>{$sessionId}</log:value>
+    </log:keyitem>
+    <log:keyitem>
+      <log:key>clientid</log:key>
+      <log:value>{$sessionResponse/ses:GetUserSessionResponse/ses:SecurityContext/sec:UserName/text()}</log:value>
+    </log:keyitem>
+  </log:Keys>
+</log:LogRecord>]]></con2:xqueryText>
+                                </con7:expr>
+                              </con7:replace>
+                              <con3:routing-options>
+                                <con2:id>_ActionId-1736992497100438200--23113bf2.14fb4053b5a.-7c9e</con2:id>
+                                <con3:qualityOfService>best-effort</con3:qualityOfService>
+                              </con3:routing-options>
+                            </con7:outboundTransform>
+                          </con7:route>
+                        </con4:actions>
+                      </con4:case>
+                    </con4:ifThenElse>
+                  </con2:requestTransform>
+                  <con2:responseTransform>
+                    <con2:replace varName="body" contents-only="true">
+                      <con1:id>_ActionId-1112483026490974360-1d7ca11f.14f433eaa0b.-7d35</con1:id>
+                      <con2:location>
+                        <con1:xpathText>.</con1:xpathText>
+                      </con2:location>
+                      <con2:expr>
+                        <con1:xqueryText><![CDATA[<al:GetAssetsResponse>
+	<al:Assets>
+	{	
+		for $items in $body/plat:InputFormAssetsByTypeGetResponse/plat:Items/plat:InputFormAssetItem
+		return 
+			<al:Asset>
+				<al:AssetID>{$items/plat:AssetId/text()}</al:AssetID>
+				<al:AssetData>{$items/plat:AssetData/text()}</al:AssetData>			
+			</al:Asset>
+	}
+	</al:Assets>
+</al:GetAssetsResponse>]]></con1:xqueryText>
+                      </con2:expr>
+                    </con2:replace>
+                  </con2:responseTransform>
+                </con2:wsCallout>
+              </con2:actions>
+            </con2:case>
+            <con2:case>
+              <con2:condition>
+                <con1:xqueryText>(: GetAssetsByInputForm :)
+
+fn:string-length($body/plat:GetAssetsRequest/plat:InputFormID)>0 and
+fn:string-length($body/plat:GetAssetsRequest/plat:AssetType)=0</con1:xqueryText>
+              </con2:condition>
+              <con2:actions>
+                <con2:replace varName="body" contents-only="true">
+                  <con1:id>_ActionId-1112483026490974360-1d7ca11f.14f433eaa0b.-7e05</con1:id>
+                  <con2:location>
+                    <con1:xpathText>.</con1:xpathText>
+                  </con2:location>
+                  <con2:expr>
+                    <con1:xqueryText>(:GetAssets by InputFormID :)
+&lt;plat:InputFormAssetsByInputFormGetRequest>
+	&lt;plat:InputFormId>{$body/plat:GetAssetsRequest/plat:InputFormID/text()}&lt;/plat:InputFormId>
+&lt;/plat:InputFormAssetsByInputFormGetRequest></con1:xqueryText>
+                  </con2:expr>
+                </con2:replace>
+                <con2:wsCallout>
+                  <con1:id>_ActionId-1112483026490974360-1d7ca11f.14f433eaa0b.-7de6</con1:id>
+                  <con2:service xsi:type="ref:BusinessServiceRef" ref="Services_SOAP_v1/InputFormSvcs/BusinessServices/InputFormSvc_bs" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                  <con2:operation>GetInputFormAssetsByInputForm</con2:operation>
+                  <con2:request>
+                    <con2:body wrapped="true">$body</con2:body>
+                    <con2:header>$header</con2:header>
+                  </con2:request>
+                  <con2:response>
+                    <con2:body wrapped="true">body</con2:body>
+                  </con2:response>
+                  <con2:requestTransform>
+                    <con2:routing-options>
+                      <con1:id>_ActionId-1112483026490974360-1d7ca11f.14f433eaa0b.-7de3</con1:id>
+                      <con2:uriExpr>
+                        <con1:xqueryText>$podURL</con1:xqueryText>
+                      </con2:uriExpr>
+                    </con2:routing-options>
+                    <con4:ifThenElse xmlns:con3="http://www.bea.com/wli/sb/stages/alert/config" xmlns:con="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con2="http://www.bea.com/wli/sb/pipeline/config" xmlns:con5="http://www.bea.com/wli/sb/stages/publish/config" xmlns:con4="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con6="http://www.bea.com/wli/sb/stages/publish/config">
+                      <con1:id>_ActionId-1736992497100438200--23113bf2.14fb4053b5a.-7c99</con1:id>
+                      <con4:case>
+                        <con4:condition>
+                          <con1:xqueryText>fn:contains($logProperties/SLPlatformRequest/text(),'yes')</con1:xqueryText>
+                        </con4:condition>
+                        <con4:actions>
+                          <con7:route xmlns:con4="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con1="http://www.bea.com/wli/sb/stages/logging/config" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con5="http://www.bea.com/wli/sb/stages/alert/config" xmlns:con7="http://www.bea.com/wli/sb/stages/publish/config">
+                            <con2:id>_ActionId-1736992497100438200--23113bf2.14fb4053b5a.-7c98</con2:id>
+                            <con7:service ref="LogService_v1/BusinessServices/LogProducer_bs" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                            <con7:outboundTransform>
+                              <con7:replace varName="body" contents-only="true" xmlns:con7="http://www.bea.com/wli/sb/stages/transform/config">
+                                <con2:id>_ActionId-1736992497100438200--23113bf2.14fb4053b5a.-7c97</con2:id>
+                                <con7:location>
+                                  <con8:xpathText xmlns:con8="http://www.bea.com/wli/sb/stages/config">.</con8:xpathText>
+                                </con7:location>
+                                <con7:expr>
+                                  <con2:xqueryText><![CDATA[<log:LogRecord>
+  <log:RawXml>{fn-bea:serialize($body)}</log:RawXml>
+  <log:TrxID>{$CorrelationID}</log:TrxID>
+  <log:Status>START</log:Status>
+  <log:Keys>
+    <log:keyitem>
+      <log:key>componentname</log:key>
+      <log:value>AssetLibrarySvc</log:value>
+    </log:keyitem>
+    <log:keyitem>
+      <log:key>operationstep</log:key>
+      <log:value>{fn:concat('SL-Platform-',$operationName,'-Outgoing-Request')}</log:value>
+    </log:keyitem>
+    <log:keyitem>
+      <log:key>sessionid</log:key>
+      <log:value>{$sessionId}</log:value>
+    </log:keyitem>
+    <log:keyitem>
+      <log:key>clientid</log:key>
+      <log:value>{$sessionResponse/ses:GetUserSessionResponse/ses:SecurityContext/sec:UserName/text()}</log:value>
+    </log:keyitem>
+  </log:Keys>
+</log:LogRecord>]]></con2:xqueryText>
+                                </con7:expr>
+                              </con7:replace>
+                              <con3:routing-options>
+                                <con2:id>_ActionId-1736992497100438200--23113bf2.14fb4053b5a.-7c96</con2:id>
+                                <con3:qualityOfService>best-effort</con3:qualityOfService>
+                              </con3:routing-options>
+                            </con7:outboundTransform>
+                          </con7:route>
+                        </con4:actions>
+                      </con4:case>
+                    </con4:ifThenElse>
+                  </con2:requestTransform>
+                  <con2:responseTransform>
+                    <con2:replace varName="body" contents-only="true">
+                      <con1:id>_ActionId-1112483026490974360-1d7ca11f.14f433eaa0b.-7d38</con1:id>
+                      <con2:location>
+                        <con1:xpathText>.</con1:xpathText>
+                      </con2:location>
+                      <con2:expr>
+                        <con1:xqueryText><![CDATA[<al:GetAssetsResponse>
+	<al:Assets>
+	{	
+		for $items in $body/plat:InputFormAssetsByInputFormGetResponse/plat:Items/plat:InputFormAssetItem
+		return 
+			<al:Asset>
+				<al:AssetID>{$items/plat:AssetId/text()}</al:AssetID>
+				<al:AssetData>{$items/plat:AssetData/text()}</al:AssetData>			
+			</al:Asset>
+	}
+	</al:Assets>
+</al:GetAssetsResponse>]]></con1:xqueryText>
+                      </con2:expr>
+                    </con2:replace>
+                  </con2:responseTransform>
+                </con2:wsCallout>
+              </con2:actions>
+            </con2:case>
+            <con2:case>
+              <con2:condition>
+                <con1:xqueryText>(: Get All Assets :)
+fn:string-length($body/plat:GetAssetsRequest/plat:AssetType)=0 and
+fn:string-length($body/plat:GetAssetsRequest/plat:InputFormID)=0</con1:xqueryText>
+              </con2:condition>
+              <con2:actions>
+                <con2:replace varName="body" contents-only="true">
+                  <con1:id>_ActionId-1112483026490974360-1d7ca11f.14f433eaa0b.-7d90</con1:id>
+                  <con2:location>
+                    <con1:xpathText>.</con1:xpathText>
+                  </con2:location>
+                  <con2:expr>
+                    <con1:xqueryText>(: Get All Assets :)
+&lt;plat:InputFormAssetsGetRequest/></con1:xqueryText>
+                  </con2:expr>
+                </con2:replace>
+                <con2:wsCallout>
+                  <con1:id>_ActionId-1112483026490974360-1d7ca11f.14f433eaa0b.-7d68</con1:id>
+                  <con2:service xsi:type="ref:BusinessServiceRef" ref="Services_SOAP_v1/InputFormSvcs/BusinessServices/InputFormSvc_bs" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                  <con2:operation>GetInputFormAssets</con2:operation>
+                  <con2:request>
+                    <con2:body wrapped="true">$body</con2:body>
+                    <con2:header>$header</con2:header>
+                  </con2:request>
+                  <con2:response>
+                    <con2:body wrapped="true">body</con2:body>
+                  </con2:response>
+                  <con2:requestTransform>
+                    <con2:routing-options>
+                      <con1:id>_ActionId-1112483026490974360-1d7ca11f.14f433eaa0b.-7d65</con1:id>
+                      <con2:uriExpr>
+                        <con1:xqueryText>$podURL</con1:xqueryText>
+                      </con2:uriExpr>
+                    </con2:routing-options>
+                    <con4:ifThenElse xmlns:con3="http://www.bea.com/wli/sb/stages/alert/config" xmlns:con="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con2="http://www.bea.com/wli/sb/pipeline/config" xmlns:con5="http://www.bea.com/wli/sb/stages/publish/config" xmlns:con4="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con6="http://www.bea.com/wli/sb/stages/publish/config">
+                      <con1:id>_ActionId-1736992497100438200--23113bf2.14fb4053b5a.-7c91</con1:id>
+                      <con4:case>
+                        <con4:condition>
+                          <con1:xqueryText>fn:contains($logProperties/SLPlatformRequest/text(),'yes')</con1:xqueryText>
+                        </con4:condition>
+                        <con4:actions>
+                          <con7:route xmlns:con4="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con1="http://www.bea.com/wli/sb/stages/logging/config" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con5="http://www.bea.com/wli/sb/stages/alert/config" xmlns:con7="http://www.bea.com/wli/sb/stages/publish/config">
+                            <con2:id>_ActionId-1736992497100438200--23113bf2.14fb4053b5a.-7c90</con2:id>
+                            <con7:service ref="LogService_v1/BusinessServices/LogProducer_bs" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                            <con7:outboundTransform>
+                              <con7:replace varName="body" contents-only="true" xmlns:con7="http://www.bea.com/wli/sb/stages/transform/config">
+                                <con2:id>_ActionId-1736992497100438200--23113bf2.14fb4053b5a.-7c8f</con2:id>
+                                <con7:location>
+                                  <con8:xpathText xmlns:con8="http://www.bea.com/wli/sb/stages/config">.</con8:xpathText>
+                                </con7:location>
+                                <con7:expr>
+                                  <con2:xqueryText><![CDATA[<log:LogRecord>
+  <log:RawXml>{fn-bea:serialize($body)}</log:RawXml>
+  <log:TrxID>{$CorrelationID}</log:TrxID>
+  <log:Status>START</log:Status>
+  <log:Keys>
+    <log:keyitem>
+      <log:key>componentname</log:key>
+      <log:value>AssetLibrarySvc</log:value>
+    </log:keyitem>
+    <log:keyitem>
+      <log:key>operationstep</log:key>
+      <log:value>{fn:concat('SL-Platform-',$operationName,'-Outgoing-Request')}</log:value>
+    </log:keyitem>
+    <log:keyitem>
+      <log:key>sessionid</log:key>
+      <log:value>{$sessionId}</log:value>
+    </log:keyitem>
+    <log:keyitem>
+      <log:key>clientid</log:key>
+      <log:value>{$sessionResponse/ses:GetUserSessionResponse/ses:SecurityContext/sec:UserName/text()}</log:value>
+    </log:keyitem>
+  </log:Keys>
+</log:LogRecord>]]></con2:xqueryText>
+                                </con7:expr>
+                              </con7:replace>
+                              <con3:routing-options>
+                                <con2:id>_ActionId-1736992497100438200--23113bf2.14fb4053b5a.-7c8e</con2:id>
+                                <con3:qualityOfService>best-effort</con3:qualityOfService>
+                              </con3:routing-options>
+                            </con7:outboundTransform>
+                          </con7:route>
+                        </con4:actions>
+                      </con4:case>
+                    </con4:ifThenElse>
+                  </con2:requestTransform>
+                  <con2:responseTransform>
+                    <con2:replace varName="body" contents-only="true">
+                      <con1:id>_ActionId-1112483026490974360-1d7ca11f.14f433eaa0b.-7d33</con1:id>
+                      <con2:location>
+                        <con1:xpathText>.</con1:xpathText>
+                      </con2:location>
+                      <con2:expr>
+                        <con1:xqueryText><![CDATA[<al:GetAssetsResponse>
+	<al:Assets>
+	{	
+		for $items in $body/plat:InputFormAssetsGetResponse/plat:Items/plat:InputFormAssetItem
+		return 
+			<al:Asset>
+				<al:AssetID>{$items/plat:AssetId/text()}</al:AssetID>
+				<al:AssetData>{$items/plat:AssetData/text()}</al:AssetData>			
+			</al:Asset>
+	}
+	</al:Assets>
+</al:GetAssetsResponse>]]></con1:xqueryText>
+                      </con2:expr>
+                    </con2:replace>
+                  </con2:responseTransform>
+                </con2:wsCallout>
+              </con2:actions>
+            </con2:case>
+          </con2:ifThenElse>
+        </con4:actions>
+      </con4:stage>
+    </con4:pipeline>
+    <con4:pipeline type="error" name="_onErrorHandler-3624244163563246103--6dc81ec0.1508715bc0a.-7a6d">
+      <con4:stage name="CreateAsset-Errorhandler">
+        <con4:comment>If SetFileExpiration fails for any reason, then CreateAsset transaction will be rolled back by calling Delete Asset and passing the newly created AssetID as input to it.</con4:comment>
+        <con4:context>
+          <con1:userNsDecl namespace="http://www.elliemae.com/edm/platform" prefix="edm"/>
+          <con1:userNsDecl namespace="http://www.elliemae.com/encompass/platform" prefix="plat"/>
+        </con4:context>
+        <con4:actions>
+          <con7:transport-headers copy-all="true" xmlns:con6="http://www.bea.com/wli/sb/stages/publish/config" xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:con7="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con4="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+            <con2:id>_ActionId-3624244163563246103--6dc81ec0.1508715bc0a.-7894</con2:id>
+            <con7:header-set>inbound-response</con7:header-set>
+            <con7:header name="CorrelationID" value="expression">
+              <con6:xqueryText xmlns:con6="http://www.bea.com/wli/sb/stages/config">$CorrelationID</con6:xqueryText>
+            </con7:header>
+          </con7:transport-headers>
+          <con4:assign varName="faultCode" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con6="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con4="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con5="http://www.bea.com/wli/sb/pipeline/config">
+            <con7:id xmlns:con7="http://www.bea.com/wli/sb/stages/config">_ActionId-3624244163563246103--6dc81ec0.1508715bc0a.-79e1</con7:id>
+            <con4:expr>
+              <con7:xqueryText xmlns:con7="http://www.bea.com/wli/sb/stages/config">if (fn:contains($varResponse/soap-env:Fault/faultcode/text(),':'))
+then fn:substring-after($varResponse/soap-env:Fault/faultcode/text(),':') 
+else $varResponse/soap-env:Fault/faultcode/text()</con7:xqueryText>
+            </con4:expr>
+          </con4:assign>
+          <con2:ifThenElse>
+            <con1:id>_ActionId-3624244163563246103--6dc81ec0.1508715bc0a.-79c1</con1:id>
+            <con2:case>
+              <con2:condition>
+                <con1:xqueryText>fn:contains($varResponse/soap-env:Fault/detail/edm:PlatformError/edm:ErrorMessage/text(),'FileNotFound - The file was not found')</con1:xqueryText>
+              </con2:condition>
+              <con2:actions>
+                <con2:wsCallout>
+                  <con1:comment>Call InputFormSvc Business service - DeleteInputFormAsset operation</con1:comment>
+                  <con1:id>_ActionId-3624244163563246103--6dc81ec0.1508715bc0a.-7983</con1:id>
+                  <con2:service xsi:type="ref:BusinessServiceRef" ref="Services_SOAP_v1/InputFormSvcs/BusinessServices/InputFormSvc_bs" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                  <con2:operation>DeleteInputFormAsset</con2:operation>
+                  <con2:request>
+                    <con2:body wrapped="true">$strDeleteAssetReq</con2:body>
+                    <con2:header>$strHeader</con2:header>
+                  </con2:request>
+                  <con2:response>
+                    <con2:body wrapped="true">strDeleteAssetResp</con2:body>
+                  </con2:response>
+                  <con2:requestTransform>
+                    <con2:assign varName="strDeleteAssetReq">
+                      <con1:comment>Body with Platform's DeleteInputFormAsset format</con1:comment>
+                      <con1:id>_ActionId-3624244163563246103--6dc81ec0.1508715bc0a.-796c</con1:id>
+                      <con2:expr>
+                        <con1:xqueryText><![CDATA[<soap-env:Body>
+	<plat:InputFormAssetDeleteRequest>
+		<plat:AssetId>{$strAssetID}</plat:AssetId>
+	</plat:InputFormAssetDeleteRequest>
+</soap-env:Body>]]></con1:xqueryText>
+                      </con2:expr>
+                    </con2:assign>
+                  </con2:requestTransform>
+                  <con2:responseTransform/>
+                </con2:wsCallout>
+                <con4:delete varName="header" xmlns:con7="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con6="http://www.bea.com/wli/sb/pipeline/config" xmlns:con4="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con5="http://www.bea.com/wli/sb/pipeline/config">
+                  <con1:id>_ActionId-3624244163563246103--6dc81ec0.1508715bc0a.-792f</con1:id>
+                  <con4:location>
+                    <con1:xpathText>.</con1:xpathText>
+                  </con4:location>
+                </con4:delete>
+                <con2:replace contents-only="true" varName="body">
+                  <con1:id>_ActionId-3624244163563246103--6dc81ec0.1508715bc0a.-790e</con1:id>
+                  <con2:location>
+                    <con1:xpathText>.</con1:xpathText>
+                  </con2:location>
+                  <con2:expr>
+                    <con1:xqueryText><![CDATA[<soap-env:Fault>
+	<faultcode>{$faultCode}</faultcode>
+	<faultstring>{$varResponse/soap-env:Fault/faultstring/text()}</faultstring>
+	<detail>
+		<ErrorMessage>
+			{if (fn:exists($varResponse/soap-env:Fault/detail/edm:PlatformError/edm:ErrorMessage)) 
+			then concat('Invaid FileGuid. ',$varResponse/soap-env:Fault/detail/edm:PlatformError/edm:ErrorMessage/text())
+			else $varResponse/soap-env:Fault/detail/ErrorMessage/text()}
+		</ErrorMessage>
+	</detail>
+</soap-env:Fault>]]></con1:xqueryText>
+                  </con2:expr>
+                </con2:replace>
+                <con1:reply isError="true">
+                  <con1:id>_ActionId-3624244163563246103--6dc81ec0.1508715bc0a.-78e9</con1:id>
+                </con1:reply>
+              </con2:actions>
+            </con2:case>
+          </con2:ifThenElse>
+        </con4:actions>
+      </con4:stage>
+    </con4:pipeline>
+    <con4:pipeline type="response" name="CommonActionsPipeline_response">
+      <con4:stage name="LogSOAPResponse-stage">
+        <con4:context>
+          <con1:userNsDecl namespace="http://www.elliemae.com/log" prefix="log"/>
+          <con1:userNsDecl namespace="http://www.elliemae.com/services/session" prefix="ses"/>
+          <con1:userNsDecl namespace="http://www.elliemae.com/services/security" prefix="sec"/>
+        </con4:context>
+        <con4:actions>
+          <con4:ifThenElse xmlns:con3="http://www.bea.com/wli/sb/stages/alert/config" xmlns:con="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con2="http://www.bea.com/wli/sb/pipeline/config" xmlns:con5="http://www.bea.com/wli/sb/stages/publish/config" xmlns:con4="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con6="http://www.bea.com/wli/sb/stages/publish/config">
+            <con1:id>_ActionId-1736992497100438200--23113bf2.14fb4053b5a.-7d15</con1:id>
+            <con4:case>
+              <con4:condition>
+                <con1:xqueryText>fn:contains($logProperties/SLPlatformResponse/text(),'yes')</con1:xqueryText>
+              </con4:condition>
+              <con4:actions>
+                <con7:route xmlns:con4="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con1="http://www.bea.com/wli/sb/stages/logging/config" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con5="http://www.bea.com/wli/sb/stages/alert/config" xmlns:con7="http://www.bea.com/wli/sb/stages/publish/config">
+                  <con2:id>_ActionId-1736992497100438200--23113bf2.14fb4053b5a.-7d14</con2:id>
+                  <con7:service ref="LogService_v1/BusinessServices/LogProducer_bs" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                  <con7:outboundTransform>
+                    <con7:replace varName="body" contents-only="true" xmlns:con7="http://www.bea.com/wli/sb/stages/transform/config">
+                      <con2:id>_ActionId-1736992497100438200--23113bf2.14fb4053b5a.-7d13</con2:id>
+                      <con7:location>
+                        <con8:xpathText xmlns:con8="http://www.bea.com/wli/sb/stages/config">.</con8:xpathText>
+                      </con7:location>
+                      <con7:expr>
+                        <con2:xqueryText><![CDATA[<log:LogRecord>
+  <log:RawXml>{fn-bea:serialize($body)}</log:RawXml>
+  <log:TrxID>{$CorrelationID}</log:TrxID>
+  <log:Status>START</log:Status>
+  <log:Keys>
+    <log:keyitem>
+      <log:key>componentname</log:key>
+      <log:value>AssetLibrarySvc</log:value>
+    </log:keyitem>
+    <log:keyitem>
+      <log:key>operationstep</log:key>
+      <log:value>{fn:concat('SL-Internal-',$operationName,'-Incoming-TransformedResponse')}</log:value>
+    </log:keyitem>
+    <log:keyitem>
+      <log:key>sessionid</log:key>
+      <log:value>{$sessionId}</log:value>
+    </log:keyitem>
+    <log:keyitem>
+      <log:key>clientid</log:key>
+      <log:value>{$sessionResponse/ses:GetUserSessionResponse/ses:SecurityContext/sec:UserName/text()}</log:value>
+    </log:keyitem>
+  </log:Keys>
+</log:LogRecord>]]></con2:xqueryText>
+                      </con7:expr>
+                    </con7:replace>
+                    <con3:routing-options>
+                      <con2:id>_ActionId-1736992497100438200--23113bf2.14fb4053b5a.-7d12</con2:id>
+                      <con3:qualityOfService>best-effort</con3:qualityOfService>
+                    </con3:routing-options>
+                  </con7:outboundTransform>
+                </con7:route>
+              </con4:actions>
+            </con4:case>
+          </con4:ifThenElse>
+        </con4:actions>
+      </con4:stage>
+      <con4:stage name="HeaderWithTrxID-stage">
+        <con4:context/>
+        <con4:actions>
+          <con4:transport-headers copy-all="true" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con4="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con6="http://www.bea.com/wli/sb/stages/publish/config" xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con="http://www.bea.com/wli/sb/pipeline/config">
+            <con7:id xmlns:con7="http://www.bea.com/wli/sb/stages/config">_ActionId-1736992497100438200--23113bf2.14fb4053b5a.-7d0f</con7:id>
+            <con4:header-set>inbound-response</con4:header-set>
+            <con4:header name="CorrelationID" value="expression">
+              <con6:xqueryText xmlns:con6="http://www.bea.com/wli/sb/stages/config">$CorrelationID</con6:xqueryText>
+            </con4:header>
+          </con4:transport-headers>
+        </con4:actions>
+      </con4:stage>
+    </con4:pipeline>
+    <con4:pipeline type="response" name="GetAssets-PipelinePair_response">
+      <con4:stage name="RespStage-Transform_Validate">
+        <con4:context>
+          <con1:userNsDecl namespace="http://www.elliemae.com/services/assetlibrary" prefix="al"/>
+          <con1:userNsDecl namespace="http://www.elliemae.com/encompass/platform" prefix="plat"/>
+        </con4:context>
+        <con4:actions>
+          <con2:delete varName="header">
+            <con1:id>_ActionId-1112483026490974360-1d7ca11f.14f433eaa0b.-7d3a</con1:id>
+            <con2:location>
+              <con1:xpathText>.</con1:xpathText>
+            </con2:location>
+          </con2:delete>
+          <con2:validate xmlns:con="http://www.bea.com/wli/sb/pipeline/config">
+            <con1:id>_ActionId-5211983354778704439--59cb9e65.14f41abd461.-7f48</con1:id>
+            <con2:schema ref="Services_SOAP_v1/InputFormSvcs/Resources/xsd/Services/AssetLibrary"/>
+            <con2:schemaElement xmlns:inp="http://www.elliemae.com/services/inputform" xmlns:ass="http://www.elliemae.com/services/assetlibrary">ass:GetAssetsResponse</con2:schemaElement>
+            <con2:varName>body</con2:varName>
+            <con2:location>
+              <con1:xpathText>./al:GetAssetsResponse</con1:xpathText>
+            </con2:location>
+          </con2:validate>
+        </con4:actions>
+      </con4:stage>
+    </con4:pipeline>
+    <con4:pipeline name="_onErrorHandler-6673855215477373904--6255a661.1403aeac08c.-7e01" type="error">
+      <con4:stage name="LogSvcErrHandlerFault-stage">
+        <con4:context>
+          <con1:userNsDecl namespace="http://www.elliemae.com/log" prefix="log"/>
+          <con1:userNsDecl namespace="http://www.elliemae.com/services/session" prefix="ses"/>
+          <con1:userNsDecl namespace="http://www.elliemae.com/services/security" prefix="sec"/>
+          <con1:userNsDecl namespace="http://www.elliemae.com/encompass/platform" prefix="plat"/>
+        </con4:context>
+        <con4:actions>
+          <con7:assign varName="finalResp" xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:con4="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con5="http://www.bea.com/wli/sb/stages/publish/config" xmlns:con2="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con3="http://www.bea.com/wli/sb/stages/alert/config" xmlns:con7="http://www.bea.com/wli/sb/stages/transform/config">
+            <con1:id>_ActionId-1736992497100438200--23113bf2.14fb4053b5a.-78a6</con1:id>
+            <con7:expr>
+              <con1:xqueryText>$body</con1:xqueryText>
+            </con7:expr>
+          </con7:assign>
+          <con4:ifThenElse xmlns:con6="http://www.bea.com/wli/sb/stages/publish/config" xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:con4="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con5="http://www.bea.com/wli/sb/stages/publish/config" xmlns:con3="http://www.bea.com/wli/sb/stages/alert/config">
+            <con1:id>_ActionId-1736992497100438200--23113bf2.14fb4053b5a.-78a5</con1:id>
+            <con4:case>
+              <con4:condition>
+                <con1:xqueryText>fn:contains($logProperties/SLErrorResponse/text(),'yes')</con1:xqueryText>
+              </con4:condition>
+              <con4:actions>
+                <con5:route>
+                  <con1:id>_ActionId-1736992497100438200--23113bf2.14fb4053b5a.-78a4</con1:id>
+                  <con5:service ref="LogService_v1/BusinessServices/LogProducer_bs" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                  <con5:outboundTransform>
+                    <con7:replace varName="body" contents-only="true" xmlns:con7="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con5="http://www.bea.com/wli/sb/stages/alert/config" xmlns:con4="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con1="http://www.bea.com/wli/sb/stages/logging/config">
+                      <con8:id xmlns:con8="http://www.bea.com/wli/sb/stages/config">_ActionId-1736992497100438200--23113bf2.14fb4053b5a.-78a3</con8:id>
+                      <con7:location>
+                        <con8:xpathText xmlns:con8="http://www.bea.com/wli/sb/stages/config">.</con8:xpathText>
+                      </con7:location>
+                      <con7:expr>
+                        <con8:xqueryText xmlns:con8="http://www.bea.com/wli/sb/stages/config"><![CDATA[<log:LogRecord>
+  <log:RawXml>{fn-bea:serialize($finalResp)}</log:RawXml>
+  <log:TrxID>{$CorrelationID}</log:TrxID>
+  <log:Status>START</log:Status>
+  <log:Keys>
+    <log:keyitem>
+      <log:key>componentname</log:key>
+      <log:value>AssetLibrarySvc</log:value>
+    </log:keyitem>
+    <log:keyitem>
+      <log:key>operationstep</log:key>
+      <log:value>{fn:concat('SL-Internal-',$operationName,'-Error-Response')}</log:value>
+    </log:keyitem>
+    <log:keyitem>
+      <log:key>sessionid</log:key>
+      <log:value>{$sessionId}</log:value>
+    </log:keyitem>
+   <log:keyitem>
+	  <log:key>clientid</log:key>
+	  <log:value>{$sessionResponse/ses:GetUserSessionResponse/ses:SecurityContext/sec:UserName/text()}</log:value>
+    </log:keyitem>
+    <log:keyitem>
+      <log:key>errorcode</log:key>
+      <log:value>{$body/soap-env:Fault/faultcode/text()}</log:value>
+    </log:keyitem>
+    <log:keyitem>
+      <log:key>errorsummary</log:key>
+      <log:value>{fn:substring($body/soap-env:Fault/faultstring/text(),1,99)}</log:value>
+    </log:keyitem>
+    <log:keyitem>
+      <log:key>errordetails</log:key>
+      <log:value>{if(fn:exists($body/soap-env:Fault/detail/plat:PlatformError/plat:ErrorMessage)) 
+                                then fn:substring($body/soap-env:Fault/detail/plat:PlatformError/plat:ErrorMessage/text(),1,500) 
+                              else fn:substring($body/soap-env:Fault/detail/ErrorMessage/text(),1,500)}</log:value>
+    </log:keyitem>
+  </log:Keys>
+</log:LogRecord>]]></con8:xqueryText>
+                      </con7:expr>
+                    </con7:replace>
+                    <con7:routing-options xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con5="http://www.bea.com/wli/sb/stages/alert/config" xmlns:con4="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con1="http://www.bea.com/wli/sb/stages/logging/config" xmlns:con7="http://www.bea.com/wli/sb/stages/transform/config">
+                      <con8:id xmlns:con8="http://www.bea.com/wli/sb/stages/config">_ActionId-1736992497100438200--23113bf2.14fb4053b5a.-78a2</con8:id>
+                      <con7:qualityOfService>best-effort</con7:qualityOfService>
+                    </con7:routing-options>
+                  </con5:outboundTransform>
+                </con5:route>
+              </con4:actions>
+            </con4:case>
+          </con4:ifThenElse>
+        </con4:actions>
+      </con4:stage>
+      <con4:stage name="Rollback-SetFileExpiration">
+        <con4:context>
+          <con1:userNsDecl namespace="http://www.elliemae.com/edm/platform" prefix="edm"/>
+          <con1:userNsDecl namespace="http://www.elliemae.com/encompass/platform" prefix="plat"/>
+        </con4:context>
+        <con4:actions>
+          <con2:ifThenElse>
+            <con1:id>_ActionId-3624244163563246103--6dc81ec0.1508715bc0a.-7b87</con1:id>
+            <con2:case>
+              <con2:condition>
+                <con1:xqueryText>$varResponse/edm:SetFileExpirationResponse/edm:Success/text()='true'</con1:xqueryText>
+              </con2:condition>
+              <con2:actions>
+                <con2:wsCallout xmlns:con="http://www.bea.com/wli/sb/pipeline/config">
+                  <con1:id>_ActionId-3624244163563246103--6dc81ec0.1508715bc0a.-7b83</con1:id>
+                  <con2:service xsi:type="ref:BusinessServiceRef" ref="eVaultSvcs_SOAP_v1/eVaultSvcs/BusinessServices/eVaultService_bs" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                  <con2:operation>SetFileExpiration</con2:operation>
+                  <con2:request>
+                    <con2:body wrapped="true">$varRequest</con2:body>
+                  </con2:request>
+                  <con2:response>
+                    <con2:body wrapped="true">varResponse</con2:body>
+                  </con2:response>
+                  <con2:requestTransform>
+                    <con2:assign varName="varRequest">
+                      <con1:id>_ActionId-3624244163563246103--6dc81ec0.1508715bc0a.-7b84</con1:id>
+                      <con2:expr>
+                        <con1:xqueryText><![CDATA[<soap-env:Body>
+	<edm:SetFileExpirationRequest>
+         <edm:FileGuid>{$variables/fileGuid/text()}</edm:FileGuid>
+         <edm:MediaClient>Test</edm:MediaClient>
+      </edm:SetFileExpirationRequest>
+</soap-env:Body>]]></con1:xqueryText>
+                      </con2:expr>
+                    </con2:assign>
+                  </con2:requestTransform>
+                  <con2:responseTransform/>
+                </con2:wsCallout>
+              </con2:actions>
+            </con2:case>
+          </con2:ifThenElse>
+        </con4:actions>
+      </con4:stage>
+      <con4:stage name="SvcErrHndlrStage">
+        <con5:context xmlns:con4="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con5="http://www.bea.com/wli/sb/pipeline/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+          <con2:userNsDecl namespace="http://www.bea.com/wli/sb/stages/transform/config" prefix="wliFault"/>
+          <con2:userNsDecl namespace="http://www.elliemae.com/encompass/platform" prefix="plat"/>
+          <con2:varNsDecl prefix="sec" namespace="http://www.elliemae.com/services/security"/>
+          <con2:varNsDecl prefix="loan" namespace="http://www.elliemae.com/services/LoanSvc"/>
+        </con5:context>
+        <con5:actions xmlns:con4="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con5="http://www.bea.com/wli/sb/pipeline/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+          <con7:transport-headers copy-all="true" xmlns:con5="http://www.bea.com/wli/sb/stages/alert/config" xmlns:con6="http://www.bea.com/wli/sb/stages/publish/config" xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:con7="http://www.bea.com/wli/sb/stages/transform/config">
+            <con8:id xmlns:con8="http://www.bea.com/wli/sb/stages/config">_ActionId-1736992497100438200--23113bf2.14fb4053b5a.-780f</con8:id>
+            <con7:header-set>inbound-response</con7:header-set>
+            <con7:header name="CorrelationID" value="expression">
+              <con6:xqueryText xmlns:con6="http://www.bea.com/wli/sb/stages/config">$CorrelationID</con6:xqueryText>
+            </con7:header>
+          </con7:transport-headers>
+          <con7:delete varName="header" xmlns:con7="http://www.bea.com/wli/sb/stages/transform/config">
+            <con2:id>_ActionId-1112483026490974360-1d7ca11f.14f433eaa0b.-7cfe</con2:id>
+            <con7:location>
+              <con2:xpathText>.</con2:xpathText>
+            </con7:location>
+          </con7:delete>
+          <con6:ifThenElse xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con6="http://www.bea.com/wli/sb/stages/transform/config">
+            <con7:comment xmlns:con7="http://www.bea.com/wli/sb/stages/config">The IF grabs the details for SOAP faults thrown from service callouts, the ELSE from Route nodes</con7:comment>
+            <con7:id xmlns:con7="http://www.bea.com/wli/sb/stages/config">_ActionId-8124497351661423437-57b899d7.14ea928408a.-7f2b</con7:id>
+            <con6:case>
+              <con6:condition>
+                <con7:xqueryText xmlns:con7="http://www.bea.com/wli/sb/stages/config">fn:exists($body/soap-env:Fault)</con7:xqueryText>
+              </con6:condition>
+              <con6:actions>
+                <con6:assign varName="faultCode">
+                  <con7:id xmlns:con7="http://www.bea.com/wli/sb/stages/config">_ActionId-8124497351661423437-57b899d7.14ea928408a.-7f2a</con7:id>
+                  <con6:expr>
+                    <con7:xqueryText xmlns:con7="http://www.bea.com/wli/sb/stages/config">if (fn:contains($body/soap-env:Fault/faultcode/text(),':'))
+then fn:substring-after($body/soap-env:Fault/faultcode/text(),':') 
+else $body/soap-env:Fault/faultcode/text()</con7:xqueryText>
+                  </con6:expr>
+                </con6:assign>
+                <con6:assign varName="faultCode">
+                  <con7:id xmlns:con7="http://www.bea.com/wli/sb/stages/config">_ActionId-8124497351661423437-57b899d7.14ea928408a.-7f29</con7:id>
+                  <con6:expr>
+                    <con7:xqueryText xmlns:con7="http://www.bea.com/wli/sb/stages/config">if  (fn:contains($faultCode,'Client.') or fn:contains($faultCode,'Server.'))
+then $faultCode
+else if (fn:contains($faultCode,'NotFound') or fn:contains($faultCode,'BadRequest'))
+then fn:concat('Client.',$faultCode) 
+else fn:concat('Server.',$faultCode)</con7:xqueryText>
+                  </con6:expr>
+                </con6:assign>
+                <con6:ifThenElse>
+                  <con7:id xmlns:con7="http://www.bea.com/wli/sb/stages/config">_ActionId-8124497351661423437-57b899d7.14ea928408a.-7f28</con7:id>
+                  <con6:case>
+                    <con6:condition>
+                      <con7:xqueryText xmlns:con7="http://www.bea.com/wli/sb/stages/config">fn:exists($body/soap-env:Fault/detail/plat:PlatformError/plat:Details)</con7:xqueryText>
+                    </con6:condition>
+                    <con6:actions>
+                      <con6:assign varName="ErrorDetails">
+                        <con7:id xmlns:con7="http://www.bea.com/wli/sb/stages/config">_ActionId-8124497351661423437-57b899d7.14ea928408a.-7f27</con7:id>
+                        <con6:expr>
+                          <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">&lt;error>
+{$body/soap-env:Fault/detail/plat:PlatformError/plat:Details/*}
+&lt;/error></con:xqueryText>
+                        </con6:expr>
+                      </con6:assign>
+                      <con6:replace varName="ErrorDetails" contents-only="false">
+                        <con7:id xmlns:con7="http://www.bea.com/wli/sb/stages/config">_ActionId-8124497351661423437-57b899d7.14ea928408a.-7f26</con7:id>
+                        <con6:location>
+                          <con7:xpathText xmlns:con7="http://www.bea.com/wli/sb/stages/config">.</con7:xpathText>
+                        </con6:location>
+                        <con6:expr>
+                          <con7:xsltTransform xmlns:con7="http://www.bea.com/wli/sb/stages/config">
+                            <con7:resource ref="Services_SOAP_v1/LoanSvcs/Resources/xform/removeNamespaces"/>
+                            <con7:input>$ErrorDetails</con7:input>
+                          </con7:xsltTransform>
+                        </con6:expr>
+                      </con6:replace>
+                      <con6:replace contents-only="true" varName="body">
+                        <con7:id xmlns:con7="http://www.bea.com/wli/sb/stages/config">_ActionId-8124497351661423437-57b899d7.14ea928408a.-7f25</con7:id>
+                        <con6:location>
+                          <con7:xpathText xmlns:con7="http://www.bea.com/wli/sb/stages/config">.</con7:xpathText>
+                        </con6:location>
+                        <con6:expr>
+                          <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config"><![CDATA[<soap-env:Fault>
+<faultcode >{$faultCode}</faultcode>
+<faultstring>{$body/soap-env:Fault/faultstring/text()}</faultstring>
+<detail>
+    <ErrorMessage>{$body/soap-env:Fault/detail/plat:PlatformError/plat:ErrorMessage/text()}</ErrorMessage>
+    <Errordetails>{$ErrorDetails}</Errordetails>
+</detail>
+</soap-env:Fault>]]></con:xqueryText>
+                        </con6:expr>
+                      </con6:replace>
+                    </con6:actions>
+                  </con6:case>
+                  <con6:default>
+                    <con6:replace contents-only="true" varName="body">
+                      <con7:id xmlns:con7="http://www.bea.com/wli/sb/stages/config">_ActionId-8124497351661423437-57b899d7.14ea928408a.-7f24</con7:id>
+                      <con6:location>
+                        <con7:xpathText xmlns:con7="http://www.bea.com/wli/sb/stages/config">.</con7:xpathText>
+                      </con6:location>
+                      <con6:expr>
+                        <con7:xqueryText xmlns:con7="http://www.bea.com/wli/sb/stages/config"><![CDATA[<soap-env:Fault>
+<faultcode>{$faultCode}</faultcode>
+<faultstring>{$body/soap-env:Fault/faultstring/text()}</faultstring>
+<detail><ErrorMessage>
+{if (fn:exists($body/soap-env:Fault/detail/plat:PlatformError/plat:ErrorMessage)) 
+then $body/soap-env:Fault/detail/plat:PlatformError/plat:ErrorMessage/text() 
+else $body/soap-env:Fault/detail/ErrorMessage/text()}
+</ErrorMessage></detail>
+</soap-env:Fault>]]></con7:xqueryText>
+                      </con6:expr>
+                    </con6:replace>
+                  </con6:default>
+                </con6:ifThenElse>
+                <con5:alert xmlns:con5="http://www.bea.com/wli/sb/stages/alert/config">
+                  <con7:id xmlns:con7="http://www.bea.com/wli/sb/stages/config">_ActionId-8124497351661423437-57b899d7.14ea928408a.-7f23</con7:id>
+                  <con5:destination ref="ErrorHandling_SOAP_v1/AlertDestinations/Warning_Alert_Destination"/>
+                  <con5:description>AssetLibrarySvc_ps.proxy>>Application Warning occurred</con5:description>
+                  <con5:severity>warning</con5:severity>
+                  <con5:payload>
+                    <con7:xqueryText xmlns:con7="http://www.bea.com/wli/sb/stages/config"><![CDATA[<Error>
+   <TimeStamp>{fn:current-dateTime()}</TimeStamp>
+   <Inbound>{$inbound}</Inbound>
+   <Request>{$requestXML}</Request>
+   <Outbound>{$outbound}</Outbound>
+   <Response>{$body}</Response>
+   <Fault>{$fault}</Fault>
+</Error>]]></con7:xqueryText>
+                  </con5:payload>
+                </con5:alert>
+                <con7:reply isError="true" xmlns:con7="http://www.bea.com/wli/sb/stages/config">
+                  <con7:id>_ActionId-8124497351661423437-57b899d7.14ea928408a.-7f22</con7:id>
+                </con7:reply>
+              </con6:actions>
+            </con6:case>
+            <con6:case>
+              <con6:condition>
+                <con7:xqueryText xmlns:con7="http://www.bea.com/wli/sb/stages/config">fn:starts-with($fault/ctx:errorCode/text(),"BEA-38")</con7:xqueryText>
+              </con6:condition>
+              <con6:actions>
+                <con6:ifThenElse>
+                  <con7:id xmlns:con7="http://www.bea.com/wli/sb/stages/config">_ActionId-8124497351661423437-57b899d7.14ea928408a.-7f21</con7:id>
+                  <con6:case>
+                    <con6:condition>
+                      <con7:xqueryText xmlns:con7="http://www.bea.com/wli/sb/stages/config">fn:contains($fault/ctx:reason/text(), "java.net.SocketTimeoutException")</con7:xqueryText>
+                    </con6:condition>
+                    <con6:actions>
+                      <con6:replace contents-only="true" varName="body">
+                        <con7:id xmlns:con7="http://www.bea.com/wli/sb/stages/config">_ActionId-8124497351661423437-57b899d7.14ea928408a.-7f20</con7:id>
+                        <con6:location>
+                          <con7:xpathText xmlns:con7="http://www.bea.com/wli/sb/stages/config">.</con7:xpathText>
+                        </con6:location>
+                        <con6:expr>
+                          <con7:xqueryText xmlns:con7="http://www.bea.com/wli/sb/stages/config"><![CDATA[<soap-env:Fault>
+<faultcode>Server.TimeOut</faultcode>
+<faultstring>Request Time out</faultstring>
+	<detail>
+	    <ErrorMessage>Request has exceed the time limit </ErrorMessage>
+	</detail>
+</soap-env:Fault>]]></con7:xqueryText>
+                        </con6:expr>
+                      </con6:replace>
+                    </con6:actions>
+                  </con6:case>
+                  <con6:case>
+                    <con6:condition>
+                      <con7:xqueryText xmlns:con7="http://www.bea.com/wli/sb/stages/config">fn:contains($fault/ctx:reason/text(), "OSB Validate action failed validation")</con7:xqueryText>
+                    </con6:condition>
+                    <con6:actions>
+                      <con6:replace contents-only="true" varName="body">
+                        <con7:id xmlns:con7="http://www.bea.com/wli/sb/stages/config">_ActionId-8124497351661423437-57b899d7.14ea928408a.-7f18</con7:id>
+                        <con6:location>
+                          <con7:xpathText xmlns:con7="http://www.bea.com/wli/sb/stages/config">.</con7:xpathText>
+                        </con6:location>
+                        <con6:expr>
+                          <con7:xqueryText xmlns:con7="http://www.bea.com/wli/sb/stages/config"><![CDATA[<soap-env:Fault>
+<faultcode>Server.ValidationError</faultcode>
+<faultstring>Validation error due to schema compliance issue</faultstring>
+	<detail>
+	    <ErrorMessage>{$fault/ctx:details/wliFault:ValidationFailureDetail/wliFault:message/text()}</ErrorMessage>
+	</detail>
+</soap-env:Fault>]]></con7:xqueryText>
+                        </con6:expr>
+                      </con6:replace>
+                    </con6:actions>
+                  </con6:case>
+                  <con6:case>
+                    <con6:condition>
+                      <con7:xqueryText xmlns:con7="http://www.bea.com/wli/sb/stages/config">fn:exists($fault/ctx:details/wliFault:ReceivedFaultDetail/wliFault:faultcode/text())</con7:xqueryText>
+                    </con6:condition>
+                    <con6:actions>
+                      <con6:replace varName="body" contents-only="true">
+                        <con7:id xmlns:con7="http://www.bea.com/wli/sb/stages/config">_ActionId-3624244163563246103--6dc81ec0.1508715bc0a.-7e05</con7:id>
+                        <con6:location>
+                          <con7:xpathText xmlns:con7="http://www.bea.com/wli/sb/stages/config">.</con7:xpathText>
+                        </con6:location>
+                        <con6:expr>
+                          <con7:xqueryText xmlns:con7="http://www.bea.com/wli/sb/stages/config"><![CDATA[<soap-env:Fault>
+	<faultcode> 
+		{if (fn:contains($fault/ctx:details/wliFault:ReceivedFaultDetail/wliFault:faultcode/text(),':'))
+		 then fn:substring-after($fault/ctx:details/wliFault:ReceivedFaultDetail/wliFault:faultcode/text(),':') 
+		 else 'BadRequest'}
+	</faultcode>
+	<faultstring>{$fault/ctx:details/wliFault:ReceivedFaultDetail/wliFault:faultstring/text()}</faultstring>
+	<detail>
+	    <ErrorMessage>{$fault/ctx:details/wliFault:ReceivedFaultDetail/wliFault:detail/*}</ErrorMessage>
+	</detail>
+</soap-env:Fault>]]></con7:xqueryText>
+                        </con6:expr>
+                      </con6:replace>
+                    </con6:actions>
+                  </con6:case>
+                  <con6:default>
+                    <con6:replace contents-only="true" varName="body" xmlns:con="http://www.bea.com/wli/sb/pipeline/config">
+                      <con7:id xmlns:con7="http://www.bea.com/wli/sb/stages/config">_ActionId-8124497351661423437-57b899d7.14ea928408a.-7f15</con7:id>
+                      <con6:location>
+                        <con7:xpathText xmlns:con7="http://www.bea.com/wli/sb/stages/config">.</con7:xpathText>
+                      </con6:location>
+                      <con6:expr>
+                        <con7:xqueryText xmlns:con7="http://www.bea.com/wli/sb/stages/config"><![CDATA[<soap-env:Fault>
+<faultcode>Server.SystemError</faultcode>
+<faultstring>System Error Occurred</faultstring>
+	<detail>
+	    <ErrorMessage>
+	    	<errorCode>{$fault/ctx:errorCode/text()}</errorCode>
+	    	<errorDetails>{
+	    		if (fn:exists($fault/ctx:details)) then $fault/ctx:details/*
+	    		else if(fn:exists($fault/ctx:reason)) then 
+	    			<details>
+	    				<reason> {$fault/ctx:reason/text()} </reason>
+	    				<location>{$fault/ctx:location/*} </location>
+					</details>
+	    		else 'Unknown error'
+	    	}
+	    	</errorDetails>
+	    </ErrorMessage>
+	</detail>
+</soap-env:Fault>]]></con7:xqueryText>
+                      </con6:expr>
+                    </con6:replace>
+                  </con6:default>
+                </con6:ifThenElse>
+                <con6:alert xmlns:con6="http://www.bea.com/wli/sb/stages/alert/config" xmlns:con1="http://www.bea.com/wli/sb/stages/config">
+                  <con1:id>_ActionId-8124497351661423437-57b899d7.14ea928408a.-7f1e</con1:id>
+                  <con6:destination ref="ErrorHandling_SOAP_v1/AlertDestinations/Warning_Alert_Destination"/>
+                  <con6:description>AssetLibrarySvc_ps.proxy>>Application Warning occurred</con6:description>
+                  <con6:severity>warning</con6:severity>
+                  <con6:payload>
+                    <con1:xqueryText><![CDATA[<Error>
+   <TimeStamp>{fn:current-dateTime()}</TimeStamp>
+   <Inbound>{$inbound}</Inbound>
+   <Request>{$requestXML}</Request>
+   <Outbound>{$outbound}</Outbound>
+   <Response>{$body}</Response>
+   <Fault>{$fault}</Fault>
+</Error>]]></con1:xqueryText>
+                  </con6:payload>
+                </con6:alert>
+                <con7:reply isError="true" xmlns:con7="http://www.bea.com/wli/sb/stages/config">
+                  <con7:id>_ActionId-8124497351661423437-57b899d7.14ea928408a.-7f1d</con7:id>
+                </con7:reply>
+              </con6:actions>
+            </con6:case>
+            <con6:case>
+              <con6:condition>
+                <con7:xqueryText xmlns:con7="http://www.bea.com/wli/sb/stages/config">$fault/ctx:errorCode/text()=2991</con7:xqueryText>
+              </con6:condition>
+              <con6:actions>
+                <con6:replace contents-only="true" varName="body">
+                  <con7:id xmlns:con7="http://www.bea.com/wli/sb/stages/config">_ActionId-1112483026490974360-1d7ca11f.14f433eaa0b.-7cd2</con7:id>
+                  <con6:location>
+                    <con7:xpathText xmlns:con7="http://www.bea.com/wli/sb/stages/config">.</con7:xpathText>
+                  </con6:location>
+                  <con6:expr>
+                    <con7:xqueryText xmlns:con7="http://www.bea.com/wli/sb/stages/config"><![CDATA[<soap-env:Fault>
+<faultcode>Server.InvalidInputs</faultcode>
+<faultstring>Inavlid parameter inputs</faultstring>
+	<detail>
+	    <ErrorMessage>Can not retrieve Assets by passing both Type and InputFormID
+	Get all Assets: pass nulls for AssetType and InputFormID parameters
+	Get Assets by Type: Pass a valid value for AssetType only
+	Get Assets by InputFormID: Pass a valid value for InputFormID only
+		</ErrorMessage>
+	</detail>
+</soap-env:Fault>]]></con7:xqueryText>
+                  </con6:expr>
+                </con6:replace>
+                <con5:alert xmlns:con5="http://www.bea.com/wli/sb/stages/alert/config">
+                  <con7:id xmlns:con7="http://www.bea.com/wli/sb/stages/config">_ActionId-1112483026490974360-1d7ca11f.14f433eaa0b.-7c22</con7:id>
+                  <con5:destination ref="ErrorHandling_SOAP_v1/AlertDestinations/Major_Alert_Destination"/>
+                  <con5:description>AssetLibrarySvc_ps.proxy>>Application warning occurred</con5:description>
+                  <con5:severity>warning</con5:severity>
+                  <con5:payload>
+                    <con7:xqueryText xmlns:con7="http://www.bea.com/wli/sb/stages/config"><![CDATA[<Error>
+   <TimeStamp>{fn:current-dateTime()}</TimeStamp>
+   <Inbound>{$inbound}</Inbound>
+   <Request>{$requestXML}</Request>
+   <Outbound>{$outbound}</Outbound>
+   <Response>{$body}</Response>
+   <Fault>{$fault}</Fault>
+</Error>]]></con7:xqueryText>
+                  </con5:payload>
+                </con5:alert>
+                <con7:reply isError="true" xmlns:con7="http://www.bea.com/wli/sb/stages/config">
+                  <con7:id>_ActionId-1112483026490974360-1d7ca11f.14f433eaa0b.-7c24</con7:id>
+                </con7:reply>
+              </con6:actions>
+            </con6:case>
+            <con6:default>
+              <con6:replace varName="body" contents-only="true" xmlns:con2="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con1="http://www.bea.com/wli/sb/stages/config">
+                <con1:id>_ActionId-8124497351661423437-57b899d7.14ea928408a.-7f1c</con1:id>
+                <con6:location>
+                  <con1:xpathText>.</con1:xpathText>
+                </con6:location>
+                <con6:expr>
+                  <con1:xqueryText><![CDATA[<soap-env:Fault>
+<faultcode>Server.UnknownError</faultcode>
+<faultstring>Unknown Error Occurred</faultstring>
+	<detail>
+	    <ErrorMessage>Unknown Error Occurred while processing the request</ErrorMessage>
+	</detail>
+</soap-env:Fault>]]></con1:xqueryText>
+                </con6:expr>
+              </con6:replace>
+              <con5:alert xmlns:con5="http://www.bea.com/wli/sb/stages/alert/config">
+                <con7:id xmlns:con7="http://www.bea.com/wli/sb/stages/config">_ActionId-1112483026490974360-1d7ca11f.14f433eaa0b.-7c5e</con7:id>
+                <con5:destination ref="ErrorHandling_SOAP_v1/AlertDestinations/Major_Alert_Destination"/>
+                <con5:description>AssetLibrarySvc_ps.proxy>>System Error occurred</con5:description>
+                <con5:severity>major</con5:severity>
+                <con5:payload>
+                  <con7:xqueryText xmlns:con7="http://www.bea.com/wli/sb/stages/config"><![CDATA[<Error>
+   <TimeStamp>{fn:current-dateTime()}</TimeStamp>
+   <Inbound>{$inbound}</Inbound>
+   <Request>{$requestXML}</Request>
+   <Outbound>{$outbound}</Outbound>
+   <Response>{$body}</Response>
+   <Fault>{$fault}</Fault>
+</Error>]]></con7:xqueryText>
+                </con5:payload>
+              </con5:alert>
+              <con7:reply isError="true" xmlns:con7="http://www.bea.com/wli/sb/stages/config">
+                <con7:id>_ActionId-8124497351661423437-57b899d7.14ea928408a.-7f1a</con7:id>
+              </con7:reply>
+            </con6:default>
+          </con6:ifThenElse>
+        </con5:actions>
+      </con4:stage>
+    </con4:pipeline>
+    <con4:pipeline type="error" name="_onErrorHandler-3869170662379924425-2c13b7e8.1491f492a0e.-7fc8">
+      <con4:stage name="LogVerifySessionFault-stage">
+        <con7:context xmlns:con3="http://www.bea.com/wli/sb/stages/alert/config" xmlns:con5="http://www.bea.com/wli/sb/stages/publish/config" xmlns:con4="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con7="http://www.bea.com/wli/sb/pipeline/config">
+          <con1:userNsDecl namespace="http://xmlns.oracle.com/pcbpel/adapter/db/top/ServicesLogging" prefix="ser"/>
+          <con1:userNsDecl namespace="http://www.elliemae.com/encompass/platform" prefix="plat"/>
+          <con1:userNsDecl namespace="http://www.elliemae.com/services/session" prefix="ses"/>
+          <con1:userNsDecl namespace="http://www.elliemae.com/log" prefix="log"/>
+          <con1:varNsDecl prefix="sec" namespace="http://www.elliemae.com/services/security"/>
+          <con1:varNsDecl prefix="loan" namespace="http://www.elliemae.com/services/LoanSvc"/>
+          <con1:varNsDecl prefix="loan1" namespace="http://www.elliemae.com/services/trade/loan"/>
+        </con7:context>
+        <con7:actions xmlns:con3="http://www.bea.com/wli/sb/stages/alert/config" xmlns:con5="http://www.bea.com/wli/sb/stages/publish/config" xmlns:con4="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con7="http://www.bea.com/wli/sb/pipeline/config">
+          <con4:assign varName="faultCode">
+            <con1:id>_ActionId-1736992497100438200--23113bf2.14fb4053b5a.-7cdb</con1:id>
+            <con4:expr>
+              <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">if (fn:contains($sessionResponse/soap-env:Fault/faultcode/text(),':'))
+then fn:substring-after($sessionResponse/soap-env:Fault/faultcode/text(),':') 
+else $sessionResponse/soap-env:Fault/faultcode/text()</con:xqueryText>
+            </con4:expr>
+          </con4:assign>
+          <con4:assign varName="faultCode">
+            <con1:id>_ActionId-1736992497100438200--23113bf2.14fb4053b5a.-7cda</con1:id>
+            <con4:expr>
+              <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">if  (fn:contains($faultCode,'Client.') or fn:contains($faultCode,'Server.'))
+then $faultCode
+else if (fn:contains($faultCode,'NotFound') or fn:contains($faultCode,'BadRequest'))
+then fn:concat('Client.',$faultCode) 
+else fn:concat('Server.',$faultCode)</con:xqueryText>
+            </con4:expr>
+          </con4:assign>
+          <con4:ifThenElse xmlns:con6="http://www.bea.com/wli/sb/stages/publish/config">
+            <con1:id>_ActionId-1736992497100438200--23113bf2.14fb4053b5a.-7cd9</con1:id>
+            <con4:case>
+              <con4:condition>
+                <con1:xqueryText>fn:contains($logProperties/SLErrorResponse/text(),'yes')</con1:xqueryText>
+              </con4:condition>
+              <con4:actions>
+                <con6:route>
+                  <con1:id>_ActionId-1736992497100438200--23113bf2.14fb4053b5a.-7cd8</con1:id>
+                  <con6:service ref="LogService_v1/BusinessServices/LogProducer_bs" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                  <con6:outboundTransform>
+                    <con7:replace varName="body" contents-only="true" xmlns:con7="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con5="http://www.bea.com/wli/sb/stages/alert/config" xmlns:con4="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con1="http://www.bea.com/wli/sb/stages/logging/config">
+                      <con8:id xmlns:con8="http://www.bea.com/wli/sb/stages/config">_ActionId-1736992497100438200--23113bf2.14fb4053b5a.-7cd7</con8:id>
+                      <con7:location>
+                        <con8:xpathText xmlns:con8="http://www.bea.com/wli/sb/stages/config">.</con8:xpathText>
+                      </con7:location>
+                      <con7:expr>
+                        <con8:xqueryText xmlns:con8="http://www.bea.com/wli/sb/stages/config"><![CDATA[<log:LogRecord>
+  <log:RawXml>{fn-bea:serialize($body)}</log:RawXml>
+  <log:TrxID>{$CorrelationID}</log:TrxID>
+  <log:Status>START</log:Status>
+  <log:Keys>
+    <log:keyitem>
+      <log:key>componentname</log:key>
+      <log:value>AssetLibrarySvc</log:value>
+    </log:keyitem>
+    <log:keyitem>
+      <log:key>operationstep</log:key>
+      <log:value>{fn:concat('SL-Internal-',$operationName,'-Error-Response')}</log:value>
+    </log:keyitem>
+    <log:keyitem>
+      <log:key>sessionid</log:key>
+      <log:value>{$sessionId}</log:value>
+    </log:keyitem>
+   <log:keyitem>
+	  <log:key>clientid</log:key>
+	  <log:value>{$sessionResponse/ses:GetUserSessionResponse/ses:SecurityContext/sec:UserName/text()}</log:value>
+    </log:keyitem>
+    <log:keyitem>
+      <log:key>errorcode</log:key>
+      <log:value>{$faultCode}</log:value>
+    </log:keyitem>
+    <log:keyitem>
+      <log:key>errorsummary</log:key>
+      <log:value>{fn:substring($sessionResponse/soap-env:Fault/faultstring/text(),1,99)}</log:value>
+    </log:keyitem>
+    <log:keyitem>
+      <log:key>errordetails</log:key>
+      <log:value>{if(fn:exists($sessionResponse/soap-env:Fault/detail/plat:PlatformError/plat:ErrorMessage)) 
+                                then fn:substring($sessionResponse/soap-env:Fault/detail/plat:PlatformError/plat:ErrorMessage/text(),1,500) 
+                              else fn:substring($sessionResponse/soap-env:Fault/detail/ErrorMessage/text(),1,500)}</log:value>
+    </log:keyitem>
+  </log:Keys>
+</log:LogRecord>]]></con8:xqueryText>
+                      </con7:expr>
+                    </con7:replace>
+                    <con7:routing-options xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con5="http://www.bea.com/wli/sb/stages/alert/config" xmlns:con4="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con1="http://www.bea.com/wli/sb/stages/logging/config" xmlns:con7="http://www.bea.com/wli/sb/stages/transform/config">
+                      <con8:id xmlns:con8="http://www.bea.com/wli/sb/stages/config">_ActionId-1736992497100438200--23113bf2.14fb4053b5a.-7cd6</con8:id>
+                      <con7:qualityOfService>best-effort</con7:qualityOfService>
+                    </con7:routing-options>
+                  </con6:outboundTransform>
+                </con6:route>
+              </con4:actions>
+            </con4:case>
+          </con4:ifThenElse>
+        </con7:actions>
+      </con4:stage>
+      <con4:stage name="SessionVerificationErrHndlr">
+        <con6:context xmlns:con5="http://www.bea.com/wli/sb/pipeline/config" xmlns:con4="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con6="http://www.bea.com/wli/sb/pipeline/config">
+          <con1:userNsDecl namespace="http://www.bea.com/wli/sb/stages/transform/config" prefix="wliFault"/>
+          <con1:userNsDecl namespace="http://www.elliemae.com/encompass/platform" prefix="plat"/>
+          <con1:varNsDecl prefix="sec" namespace="http://www.elliemae.com/services/security"/>
+          <con1:varNsDecl prefix="met" namespace="http://www.elliemae.com/services/metadata"/>
+        </con6:context>
+        <con6:actions xmlns:con5="http://www.bea.com/wli/sb/pipeline/config" xmlns:con4="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con6="http://www.bea.com/wli/sb/pipeline/config">
+          <con6:assign varName="faultCode" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con6="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config">
+            <con7:id xmlns:con7="http://www.bea.com/wli/sb/stages/config">_ActionId-6212557679785122581--55b157c6.14e887fc2a9.-7f11</con7:id>
+            <con6:expr>
+              <con7:xqueryText xmlns:con7="http://www.bea.com/wli/sb/stages/config">if (fn:contains($sessionResponse/soap-env:Fault/faultcode/text(),':'))
+then fn:substring-after($sessionResponse/soap-env:Fault/faultcode/text(),':') 
+else $sessionResponse/soap-env:Fault/faultcode/text()</con7:xqueryText>
+            </con6:expr>
+          </con6:assign>
+          <con6:assign varName="faultCode" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con6="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config">
+            <con7:id xmlns:con7="http://www.bea.com/wli/sb/stages/config">_ActionId-6212557679785122581--55b157c6.14e887fc2a9.-7f10</con7:id>
+            <con6:expr>
+              <con7:xqueryText xmlns:con7="http://www.bea.com/wli/sb/stages/config">if  (fn:contains($faultCode,'Client.') or fn:contains($faultCode,'Server.'))
+then $faultCode
+else if (fn:contains($faultCode,'NotFound') or fn:contains($faultCode,'BadRequest'))
+then fn:concat('Client.',$faultCode) 
+else fn:concat('Server.',$faultCode)</con7:xqueryText>
+            </con6:expr>
+          </con6:assign>
+          <con7:replace contents-only="true" varName="body" xmlns:con7="http://www.bea.com/wli/sb/stages/transform/config">
+            <con1:id>_ActionId-6212557679785122581--55b157c6.14e887fc2a9.-7f0f</con1:id>
+            <con7:location>
+              <con1:xpathText>.</con1:xpathText>
+            </con7:location>
+            <con7:expr>
+              <con1:xqueryText><![CDATA[<soap-env:Fault>
+<faultcode>{$faultCode}</faultcode>
+<faultstring>{$sessionResponse/soap-env:Fault/faultstring/text()}</faultstring>
+<detail><ErrorMessage>
+{if (fn:exists($sessionResponse/soap-env:Fault/detail/plat:PlatformError/plat:ErrorMessage)) 
+then $sessionResponse/soap-env:Fault/detail/plat:PlatformError/plat:ErrorMessage/text() 
+else $sessionResponse/soap-env:Fault/detail/ErrorMessage/text()}
+</ErrorMessage></detail>
+</soap-env:Fault>]]></con1:xqueryText>
+            </con7:expr>
+          </con7:replace>
+          <con7:delete varName="header" xmlns:con7="http://www.bea.com/wli/sb/stages/transform/config">
+            <con1:id>_ActionId-6212557679785122581--55b157c6.14e887fc2a9.-7f0e</con1:id>
+            <con7:location>
+              <con1:xpathText>.</con1:xpathText>
+            </con7:location>
+          </con7:delete>
+          <con7:alert xmlns:con7="http://www.bea.com/wli/sb/stages/alert/config">
+            <con1:id>_ActionId-6212557679785122581--55b157c6.14e887fc2a9.-7f0d</con1:id>
+            <con7:destination ref="ErrorHandling_SOAP_v1/AlertDestinations/Warning_Alert_Destination"/>
+            <con7:description>AssetLibrarySvc_ps.proxy>>Application Warning occurred</con7:description>
+            <con7:severity>warning</con7:severity>
+            <con7:payload>
+              <con1:xqueryText><![CDATA[<Error>
+   <TimeStamp>{fn:current-dateTime()}</TimeStamp>
+   <Inbound>{$inbound}</Inbound>
+   <Request>{$requestXML}</Request>
+   <Outbound>{$outbound}</Outbound>
+   <Response>{$body}</Response>
+   <Fault>{$fault}</Fault>
+</Error>]]></con1:xqueryText>
+            </con7:payload>
+          </con7:alert>
+          <con7:transport-headers copy-all="true" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con5="http://www.bea.com/wli/sb/stages/alert/config" xmlns:con6="http://www.bea.com/wli/sb/stages/publish/config" xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:con7="http://www.bea.com/wli/sb/stages/transform/config">
+            <con8:id xmlns:con8="http://www.bea.com/wli/sb/stages/config">_ActionId-1736992497100438200--23113bf2.14fb4053b5a.-780c</con8:id>
+            <con7:header-set>inbound-response</con7:header-set>
+            <con7:header name="CorrelationID" value="expression">
+              <con6:xqueryText xmlns:con6="http://www.bea.com/wli/sb/stages/config">$CorrelationID</con6:xqueryText>
+            </con7:header>
+          </con7:transport-headers>
+          <con1:reply isError="true">
+            <con1:id>_ActionId-6212557679785122581--55b157c6.14e887fc2a9.-7f0c</con1:id>
+          </con1:reply>
+        </con6:actions>
+      </con4:stage>
+    </con4:pipeline>
+    <con4:pipeline type="request" name="CommonActionsPipeline_request">
+      <con4:stage name="LogSOAPRequest-stage">
+        <con4:context>
+          <con1:userNsDecl namespace="http://www.elliemae.com/log" prefix="log"/>
+          <con1:userNsDecl namespace="http://www.elliemae.com/services/session" prefix="ses"/>
+          <con1:userNsDecl namespace="http://www.elliemae.com/services/security" prefix="sec"/>
+        </con4:context>
+        <con4:actions>
+          <con4:ifThenElse xmlns:con3="http://www.bea.com/wli/sb/stages/alert/config" xmlns:con="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con2="http://www.bea.com/wli/sb/pipeline/config" xmlns:con5="http://www.bea.com/wli/sb/stages/publish/config" xmlns:con4="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con6="http://www.bea.com/wli/sb/stages/publish/config">
+            <con1:id>_ActionId-1736992497100438200--23113bf2.14fb4053b5a.-7d08</con1:id>
+            <con4:case>
+              <con4:condition>
+                <con1:xqueryText>fn:exists($inbound/ctx:transport/ctx:request/tp:headers/tp:user-header[@name='CorrelationID']/@value)</con1:xqueryText>
+              </con4:condition>
+              <con4:actions>
+                <con7:assign varName="CorrelationID" xmlns:con6="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con3="http://www.bea.com/wli/sb/stages/logging/config" xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con5="http://www.bea.com/wli/sb/stages/alert/config" xmlns:con4="http://www.bea.com/wli/sb/pipeline/config" xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con7="http://www.bea.com/wli/sb/stages/transform/config">
+                  <con8:id xmlns:con8="http://www.bea.com/wli/sb/stages/config">_ActionId-1736992497100438200--23113bf2.14fb4053b5a.-7d07</con8:id>
+                  <con7:expr>
+                    <con8:xqueryText xmlns:con8="http://www.bea.com/wli/sb/stages/config">$inbound/ctx:transport/ctx:request/tp:headers/tp:user-header[@name='CorrelationID']/@value</con8:xqueryText>
+                  </con7:expr>
+                </con7:assign>
+              </con4:actions>
+            </con4:case>
+            <con4:default>
+              <con4:assign varName="CorrelationID">
+                <con1:id>_ActionId-1736992497100438200--23113bf2.14fb4053b5a.-7d06</con1:id>
+                <con4:expr>
+                  <con1:xqueryText>fn-bea:uuid()</con1:xqueryText>
+                </con4:expr>
+              </con4:assign>
+            </con4:default>
+          </con4:ifThenElse>
+          <con4:assign varName="logProperties" xmlns:con3="http://www.bea.com/wli/sb/stages/alert/config" xmlns:con="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con2="http://www.bea.com/wli/sb/pipeline/config" xmlns:con5="http://www.bea.com/wli/sb/stages/publish/config" xmlns:con4="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con6="http://www.bea.com/wli/sb/stages/publish/config">
+            <con1:id>_ActionId-1736992497100438200--23113bf2.14fb4053b5a.-7cf9</con1:id>
+            <con4:expr>
+              <con1:xqueryTransform>
+                <con1:resource ref="LogService_v1/Properties/SL-Internal-Log-Properties"/>
+              </con1:xqueryTransform>
+            </con4:expr>
+          </con4:assign>
+          <con4:assign varName="operationName" xmlns:con3="http://www.bea.com/wli/sb/stages/alert/config" xmlns:con="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con2="http://www.bea.com/wli/sb/pipeline/config" xmlns:con5="http://www.bea.com/wli/sb/stages/publish/config" xmlns:con4="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con6="http://www.bea.com/wli/sb/stages/publish/config">
+            <con1:id>_ActionId-1736992497100438200--23113bf2.14fb4053b5a.-7cf8</con1:id>
+            <con4:expr>
+              <con1:xqueryText>$inbound/ctx:service/ctx:operation</con1:xqueryText>
+            </con4:expr>
+          </con4:assign>
+          <con4:ifThenElse xmlns:con3="http://www.bea.com/wli/sb/stages/alert/config" xmlns:con="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con2="http://www.bea.com/wli/sb/pipeline/config" xmlns:con5="http://www.bea.com/wli/sb/stages/publish/config" xmlns:con4="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con6="http://www.bea.com/wli/sb/stages/publish/config">
+            <con1:id>_ActionId-1736992497100438200--23113bf2.14fb4053b5a.-7cf7</con1:id>
+            <con4:case>
+              <con4:condition>
+                <con1:xqueryText>fn:contains($logProperties/SLIncomingRequest/text(),'yes')</con1:xqueryText>
+              </con4:condition>
+              <con4:actions>
+                <con7:route xmlns:con4="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con1="http://www.bea.com/wli/sb/stages/logging/config" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con5="http://www.bea.com/wli/sb/stages/alert/config" xmlns:con7="http://www.bea.com/wli/sb/stages/publish/config">
+                  <con2:id>_ActionId-1736992497100438200--23113bf2.14fb4053b5a.-7cf6</con2:id>
+                  <con7:service ref="LogService_v1/BusinessServices/LogProducer_bs" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                  <con7:outboundTransform>
+                    <con7:replace varName="body" contents-only="true" xmlns:con7="http://www.bea.com/wli/sb/stages/transform/config">
+                      <con2:id>_ActionId-1736992497100438200--23113bf2.14fb4053b5a.-7cf5</con2:id>
+                      <con7:location>
+                        <con8:xpathText xmlns:con8="http://www.bea.com/wli/sb/stages/config">.</con8:xpathText>
+                      </con7:location>
+                      <con7:expr>
+                        <con2:xqueryText><![CDATA[<log:LogRecord>
+  <log:RawXml>{fn-bea:serialize($body)}</log:RawXml>
+  <log:TrxID>{$CorrelationID}</log:TrxID>
+  <log:Status>START</log:Status>
+  <log:Keys>
+    <log:keyitem>
+      <log:key>componentname</log:key>
+      <log:value>AssetLibrarySvc</log:value>
+    </log:keyitem>
+    <log:keyitem>
+      <log:key>operationstep</log:key>
+      <log:value>{fn:concat('SL-Internal-',$operationName,'-Incoming-Request')}</log:value>
+    </log:keyitem>
+    <log:keyitem>
+      <log:key>sessionid</log:key>
+      <log:value>{$header/sec:SecurityContext/sec:SessionId/text()}</log:value>
+    </log:keyitem>
+    <log:keyitem>
+      <log:key>clientid</log:key>
+      <log:value>{$sessionResponse/ses:GetUserSessionResponse/ses:SecurityContext/sec:UserName/text()}</log:value>
+    </log:keyitem>
+  </log:Keys>
+</log:LogRecord>]]></con2:xqueryText>
+                      </con7:expr>
+                    </con7:replace>
+                    <con3:routing-options>
+                      <con2:id>_ActionId-1736992497100438200--23113bf2.14fb4053b5a.-7cf4</con2:id>
+                      <con3:qualityOfService>best-effort</con3:qualityOfService>
+                    </con3:routing-options>
+                  </con7:outboundTransform>
+                </con7:route>
+              </con4:actions>
+            </con4:case>
+          </con4:ifThenElse>
+        </con4:actions>
+      </con4:stage>
+      <con4:stage name="Stage-renameNamespace">
+        <con4:context>
+          <con1:varNsDecl namespace="http://www.elliemae.com/services/loanfolder" prefix="loan"/>
+          <con1:varNsDecl namespace="http://www.elliemae.com/services/usersettings" prefix="user"/>
+          <con1:varNsDecl prefix="sec" namespace="http://www.elliemae.com/services/security"/>
+          <con1:varNsDecl prefix="fiel" namespace="http://www.elliemae.com/services/fieldsearch"/>
+        </con4:context>
+        <con4:actions>
+          <con2:assign varName="strRequest" xmlns:con="http://www.bea.com/wli/sb/pipeline/config">
+            <con1:id>_ActionId-6212557679785122581--55b157c6.14e887fc2a9.-7ce9</con1:id>
+            <con2:expr>
+              <con1:xqueryText>$body/*</con1:xqueryText>
+            </con2:expr>
+          </con2:assign>
+          <con2:rename varName="body">
+            <con1:id>_ActionId-6212557679785122581--55b157c6.14e887fc2a9.-7ce6</con1:id>
+            <con2:location>
+              <con1:xpathText>.//*</con1:xpathText>
+            </con2:location>
+            <con2:namespace>http://www.elliemae.com/encompass/platform</con2:namespace>
+          </con2:rename>
+          <con2:rename varName="header">
+            <con1:id>_ActionId-6212557679785122581--55b157c6.14e887fc2a9.-7dcb</con1:id>
+            <con2:location>
+              <con1:xpathText>.//*</con1:xpathText>
+            </con2:location>
+            <con2:namespace>http://www.elliemae.com/encompass/platform</con2:namespace>
+          </con2:rename>
+        </con4:actions>
+      </con4:stage>
+      <con6:stage name="sessionValidation" xmlns:con="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con4="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con5="http://www.bea.com/wli/sb/pipeline/config" xmlns:con6="http://www.bea.com/wli/sb/pipeline/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+        <con6:context>
+          <con2:userNsDecl namespace="http://www.elliemae.com/encompass/platform" prefix="plat"/>
+        </con6:context>
+        <con6:actions>
+          <con7:ifThenElse xmlns:con7="http://www.bea.com/wli/sb/stages/transform/config">
+            <con2:id>_ActionId-3869170662379924425-2c13b7e8.1491f492a0e.-7fd0</con2:id>
+            <con7:case>
+              <con7:condition>
+                <con2:xqueryText>fn:count($header/plat:SecurityContext/plat:SessionId)=0 or fn:string-length($header/plat:SecurityContext/plat:SessionId/text())=0</con2:xqueryText>
+              </con7:condition>
+              <con7:actions>
+                <con7:replace contents-only="true" varName="body">
+                  <con2:id>_ActionId-3869170662379924425-2c13b7e8.1491f492a0e.-7fce</con2:id>
+                  <con7:location>
+                    <con2:xpathText>.</con2:xpathText>
+                  </con7:location>
+                  <con7:expr>
+                    <con2:xqueryText><![CDATA[<soap-env:Fault >
+	<faultcode>Client.Authentication</faultcode>
+    <faultstring>SessionIDMissing</faultstring>
+	<detail>
+	    <ErrorMessage>A valid SessionId must be provided in the header for accessing EllieMae Encompass APIs</ErrorMessage>
+	</detail>
+</soap-env:Fault>]]></con2:xqueryText>
+                  </con7:expr>
+                </con7:replace>
+                <con7:delete varName="header">
+                  <con2:id>_ActionId-1736992497100438200--23113bf2.14fb4053b5a.-7692</con2:id>
+                  <con7:location>
+                    <con2:xpathText>.</con2:xpathText>
+                  </con7:location>
+                </con7:delete>
+                <con7:transport-headers copy-all="true" xmlns:con6="http://www.bea.com/wli/sb/stages/publish/config" xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:con5="http://www.bea.com/wli/sb/stages/alert/config">
+                  <con8:id xmlns:con8="http://www.bea.com/wli/sb/stages/config">_ActionId-1736992497100438200--23113bf2.14fb4053b5a.-7690</con8:id>
+                  <con7:header-set>inbound-response</con7:header-set>
+                  <con7:header name="CorrelationID" value="expression">
+                    <con6:xqueryText xmlns:con6="http://www.bea.com/wli/sb/stages/config">$CorrelationID</con6:xqueryText>
+                  </con7:header>
+                </con7:transport-headers>
+                <con2:reply isError="true">
+                  <con2:id>_ActionId-3869170662379924425-2c13b7e8.1491f492a0e.-7fcd</con2:id>
+                </con2:reply>
+              </con7:actions>
+            </con7:case>
+          </con7:ifThenElse>
+        </con6:actions>
+      </con6:stage>
+      <con6:stage errorHandler="_onErrorHandler-3869170662379924425-2c13b7e8.1491f492a0e.-7fc8" name="verifySessionID" xmlns:con="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con4="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con5="http://www.bea.com/wli/sb/pipeline/config" xmlns:con6="http://www.bea.com/wli/sb/pipeline/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+        <con6:context>
+          <con2:userNsDecl prefix="ses" namespace="http://www.elliemae.com/services/session"/>
+          <con2:varNsDecl namespace="http://www.elliemae.com/encompass/platform" prefix="plat"/>
+          <con2:varNsDecl namespace="http://tempuri.org/" prefix="tem"/>
+          <con2:varNsDecl prefix="sec" namespace="http://www.elliemae.com/services/security"/>
+          <con2:varNsDecl prefix="fiel" namespace="http://www.elliemae.com/services/fieldsearch"/>
+        </con6:context>
+        <con6:actions>
+          <con5:assign varName="sessionId" xmlns:con5="http://www.bea.com/wli/sb/stages/transform/config">
+            <con2:id>_ActionId-3869170662379924425-2c13b7e8.1491f492a0e.-7fcc</con2:id>
+            <con5:expr>
+              <con2:xqueryText>$header/plat:SecurityContext/plat:SessionId/text()</con2:xqueryText>
+            </con5:expr>
+          </con5:assign>
+          <con5:assign varName="sessionRequest" xmlns:con5="http://www.bea.com/wli/sb/stages/transform/config">
+            <con2:id>_ActionId-3869170662379924425-2c13b7e8.1491f492a0e.-7fcb</con2:id>
+            <con5:expr>
+              <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config"><![CDATA[<soap-env:Body> 
+   <ses:GetUserSessionRequest>
+       <ses:Realm>{$realm}</ses:Realm>
+       <ses:SessionId>{$sessionId}</ses:SessionId>
+    </ses:GetUserSessionRequest>
+</soap-env:Body>]]></con:xqueryText>
+            </con5:expr>
+          </con5:assign>
+          <con5:wsCallout xmlns:con5="http://www.bea.com/wli/sb/stages/transform/config">
+            <con2:id>_ActionId-3869170662379924425-2c13b7e8.1491f492a0e.-7fc9</con2:id>
+            <con5:service ref="Services_SOAP_v1/SessionSvcs/ProxyServices/SessionService_ps" xsi:type="ref:ProxyRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+            <con5:operation>GetUserSession</con5:operation>
+            <con5:request>
+              <con5:body wrapped="true">$sessionRequest</con5:body>
+              <con5:header/>
+            </con5:request>
+            <con5:response>
+              <con5:body wrapped="true">sessionResponse</con5:body>
+              <con5:header/>
+            </con5:response>
+            <con5:requestTransform/>
+            <con5:responseTransform>
+              <con5:replace contents-only="false" varName="header">
+                <con2:id>_ActionId-3869170662379924425-2c13b7e8.1491f492a0e.-7fca</con2:id>
+                <con5:location>
+                  <con2:xpathText>.</con2:xpathText>
+                </con5:location>
+                <con5:expr>
+                  <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config"><![CDATA[<soap-env:Header>
+      <plat:SecurityContext>
+         <plat:Created>{$sessionResponse/ses:GetUserSessionResponse/ses:SecurityContext/sec:Created/text()}</plat:Created>
+         <plat:Realm/>
+         <plat:SessionId>{$sessionId}</plat:SessionId>
+         <plat:UserName>{$sessionResponse/ses:GetUserSessionResponse/ses:SecurityContext/sec:UserName/text()}</plat:UserName>
+      </plat:SecurityContext>
+</soap-env:Header>]]></con:xqueryText>
+                </con5:expr>
+              </con5:replace>
+            </con5:responseTransform>
+          </con5:wsCallout>
+        </con6:actions>
+      </con6:stage>
+      <con4:stage name="PODLookup_ServiceCallout_Stage">
+        <con4:context>
+          <con1:userNsDecl namespace="http://www.elliemae.com/services/fieldsearch" prefix="fs"/>
+          <con1:userNsDecl namespace="http://www.elliemae.com/encompass/directory" prefix="dir"/>
+          <con1:userNsDecl namespace="http://www.elliemae.com/encompass/platform" prefix="plat"/>
+        </con4:context>
+        <con4:actions>
+          <con2:assign varName="instanceID">
+            <con1:id>_ActionId-8505256589280163624-14b62462.1492f01ef97.-7e87</con1:id>
+            <con2:expr>
+              <con1:xqueryText>if(fn:string-length($header//plat:Realm) > 0) then $header//plat:Realm/text()
+else fn:tokenize($header//plat:UserName/text(), '[\\]')[2]</con1:xqueryText>
+            </con2:expr>
+          </con2:assign>
+          <con2:assign varName="podRequest">
+            <con1:id>_ActionId-3949768024731305113--610eb50.1495d503cdc.-7fde</con1:id>
+            <con2:expr>
+              <con1:xqueryText><![CDATA[<soap-env:Body>
+    <dir:GetSettingsRequest>
+         <dir:InstanceID>{$instanceID}</dir:InstanceID>
+         <dir:Category>Host</dir:Category>
+         <dir:Settings>
+            <dir:Setting>
+               <dir:Name>EncompassPlatformAPI</dir:Name>
+               <dir:Value></dir:Value>
+            </dir:Setting>
+         </dir:Settings>
+    </dir:GetSettingsRequest>
+</soap-env:Body>]]></con1:xqueryText>
+            </con2:expr>
+          </con2:assign>
+          <con2:wsCallout>
+            <con1:id>_ActionId-8505256589280163624-14b62462.1492f01ef97.-7eb7</con1:id>
+            <con2:service xsi:type="ref:ProxyRef" ref="DirectorySvcs_SOAP_v1/DirectorySvcs/ProxyServices/DirectorySvcs_ps" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+            <con2:operation>GetSettings</con2:operation>
+            <con2:request>
+              <con2:body wrapped="true">$podRequest</con2:body>
+            </con2:request>
+            <con2:response>
+              <con2:body wrapped="true">podResponse</con2:body>
+            </con2:response>
+            <con2:requestTransform/>
+            <con2:responseTransform>
+              <con4:assign varName="targetURL" xmlns:con3="http://www.bea.com/wli/sb/stages/alert/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con5="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:con4="http://www.bea.com/wli/sb/stages/transform/config">
+                <con7:id xmlns:con7="http://www.bea.com/wli/sb/stages/config">_ActionId-8505256589280163624-14b62462.1492f01ef97.-7e81</con7:id>
+                <con4:expr>
+                  <con7:xqueryText xmlns:con7="http://www.bea.com/wli/sb/stages/config">fn:concat('http://',$body/dir:Settings/dir:Setting/dir:Value/text(),'/InputFormService.svc')</con7:xqueryText>
+                </con4:expr>
+              </con4:assign>
+              <con2:assign varName="podURL">
+                <con1:id>_ActionId-3949768024731305113--610eb50.1495d503cdc.-7fae</con1:id>
+                <con2:expr>
+                  <con1:xqueryText>(: 'http://encplat-pod1.dev.dco.elmae/EncompassPlatform/InputFormService.svc' :)
+fn:concat('http://',$podResponse/dir:GetSettingsResponse/dir:Settings/dir:Setting/dir:Value/text(),'/EncompassPlatform/InputFormService.svc')</con1:xqueryText>
+                </con2:expr>
+              </con2:assign>
+            </con2:responseTransform>
+          </con2:wsCallout>
+        </con4:actions>
+      </con4:stage>
+    </con4:pipeline>
+    <con:flow xmlns:con="http://www.bea.com/wli/sb/pipeline/config">
+      <con:pipeline-node name="CommonActionsPipeline">
+        <con:request>CommonActionsPipeline_request</con:request>
+        <con:response>CommonActionsPipeline_response</con:response>
+      </con:pipeline-node>
+      <con:branch-node type="operation" name="AssetLibrary_BranchNode">
+        <con:context/>
+        <con:branch-table>
+          <con:branch name="CreateAsset">
+            <con:operator>equals</con:operator>
+            <con:value/>
+            <con:flow>
+              <con:route-node name="CreateAsset_Routing" error-handler="_onErrorHandler-3624244163563246103--6dc81ec0.1508715bc0a.-7a6d">
+                <con:context>
+                  <con1:userNsDecl namespace="http://www.elliemae.com/encompass/platform" prefix="plat"/>
+                  <con1:userNsDecl namespace="http://www.elliemae.com/services/assetlibrary" prefix="al"/>
+                  <con1:userNsDecl namespace="http://www.elliemae.com/log" prefix="log"/>
+                  <con1:userNsDecl namespace="http://www.elliemae.com/services/session" prefix="ses"/>
+                  <con1:userNsDecl namespace="http://www.elliemae.com/edm/platform" prefix="edm"/>
+                  <con1:varNsDecl namespace="http://www.elliemae.com/services/fieldsearch" prefix="fiel"/>
+                  <con1:varNsDecl prefix="sec" namespace="http://www.elliemae.com/services/security"/>
+                  <con1:varNsDecl namespace="http://www.elliemae.com/services/inputform" prefix="inp"/>
+                </con:context>
+                <con:actions>
+                  <con6:route>
+                    <con1:id>_ActionId-3869170662379924425-2c13b7e8.1491f492a0e.-7f84</con1:id>
+                    <con6:service ref="Services_SOAP_v1/InputFormSvcs/BusinessServices/InputFormSvc_bs" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                    <con6:operation>CreateInputFormAsset</con6:operation>
+                    <con6:outboundTransform>
+                      <con2:validate>
+                        <con1:id>_ActionId-6212557679785122581--55b157c6.14e887fc2a9.-7de0</con1:id>
+                        <con2:schema ref="Services_SOAP_v1/InputFormSvcs/Resources/xsd/Services/AssetLibrary"/>
+                        <con2:schemaElement xmlns:inp="http://www.elliemae.com/services/inputform" xmlns:ass="http://www.elliemae.com/services/assetlibrary">ass:CreateAssetRequest</con2:schemaElement>
+                        <con2:varName>strRequest</con2:varName>
+                        <con2:location>
+                          <con1:xpathText>.</con1:xpathText>
+                        </con2:location>
+                        <con2:resultVarName/>
+                      </con2:validate>
+                      <con2:assign varName="strHeader">
+                        <con1:id>_ActionId-3624244163563246103--6dc81ec0.1508715bc0a.-786d</con1:id>
+                        <con2:expr>
+                          <con1:xqueryText>$header</con1:xqueryText>
+                        </con2:expr>
+                      </con2:assign>
+                      <con2:replace varName="body" contents-only="true">
+                        <con1:id>_ActionId-6212557679785122581--55b157c6.14e887fc2a9.-7ea0</con1:id>
+                        <con2:location>
+                          <con1:xpathText>.</con1:xpathText>
+                        </con2:location>
+                        <con2:expr>
+                          <con1:xqueryText>&lt;plat:InputFormAssetCreateRequest>
+    &lt;plat:AssetData>{$body/plat:CreateAssetRequest/plat:AssetData/text()}&lt;/plat:AssetData>
+&lt;/plat:InputFormAssetCreateRequest></con1:xqueryText>
+                        </con2:expr>
+                      </con2:replace>
+                      <con4:routing-options xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con4="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con3="http://www.bea.com/wli/sb/stages/alert/config">
+                        <con7:id xmlns:con7="http://www.bea.com/wli/sb/stages/config">_ActionId-6212557679785122581--55b157c6.14e887fc2a9.-7f5a</con7:id>
+                        <con4:uriExpr>
+                          <con7:xqueryText xmlns:con7="http://www.bea.com/wli/sb/stages/config">$podURL</con7:xqueryText>
+                        </con4:uriExpr>
+                      </con4:routing-options>
+                      <con4:ifThenElse xmlns:con3="http://www.bea.com/wli/sb/stages/alert/config" xmlns:con="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con2="http://www.bea.com/wli/sb/pipeline/config" xmlns:con5="http://www.bea.com/wli/sb/stages/publish/config" xmlns:con4="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con6="http://www.bea.com/wli/sb/stages/publish/config">
+                        <con1:id>_ActionId-1736992497100438200--23113bf2.14fb4053b5a.-7ccd</con1:id>
+                        <con4:case>
+                          <con4:condition>
+                            <con1:xqueryText>fn:contains($logProperties/SLPlatformRequest/text(),'yes')</con1:xqueryText>
+                          </con4:condition>
+                          <con4:actions>
+                            <con7:route xmlns:con4="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con1="http://www.bea.com/wli/sb/stages/logging/config" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con5="http://www.bea.com/wli/sb/stages/alert/config" xmlns:con7="http://www.bea.com/wli/sb/stages/publish/config">
+                              <con2:id>_ActionId-1736992497100438200--23113bf2.14fb4053b5a.-7ccc</con2:id>
+                              <con7:service ref="LogService_v1/BusinessServices/LogProducer_bs" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                              <con7:outboundTransform>
+                                <con7:replace varName="body" contents-only="true" xmlns:con7="http://www.bea.com/wli/sb/stages/transform/config">
+                                  <con2:id>_ActionId-1736992497100438200--23113bf2.14fb4053b5a.-7ccb</con2:id>
+                                  <con7:location>
+                                    <con8:xpathText xmlns:con8="http://www.bea.com/wli/sb/stages/config">.</con8:xpathText>
+                                  </con7:location>
+                                  <con7:expr>
+                                    <con2:xqueryText><![CDATA[<log:LogRecord>
+  <log:RawXml>{fn-bea:serialize($body)}</log:RawXml>
+  <log:TrxID>{$CorrelationID}</log:TrxID>
+  <log:Status>START</log:Status>
+  <log:Keys>
+    <log:keyitem>
+      <log:key>componentname</log:key>
+      <log:value>AssetLibrarySvc</log:value>
+    </log:keyitem>
+    <log:keyitem>
+      <log:key>operationstep</log:key>
+      <log:value>{fn:concat('SL-Platform-',$operationName,'-Outgoing-Request')}</log:value>
+    </log:keyitem>
+    <log:keyitem>
+      <log:key>sessionid</log:key>
+      <log:value>{$sessionId}</log:value>
+    </log:keyitem>
+    <log:keyitem>
+      <log:key>clientid</log:key>
+      <log:value>{$sessionResponse/ses:GetUserSessionResponse/ses:SecurityContext/sec:UserName/text()}</log:value>
+    </log:keyitem>
+  </log:Keys>
+</log:LogRecord>]]></con2:xqueryText>
+                                  </con7:expr>
+                                </con7:replace>
+                                <con3:routing-options>
+                                  <con2:id>_ActionId-1736992497100438200--23113bf2.14fb4053b5a.-7cca</con2:id>
+                                  <con3:qualityOfService>best-effort</con3:qualityOfService>
+                                </con3:routing-options>
+                              </con7:outboundTransform>
+                            </con7:route>
+                          </con4:actions>
+                        </con4:case>
+                      </con4:ifThenElse>
+                    </con6:outboundTransform>
+                    <con6:responseTransform>
+                      <con2:assign varName="strAssetID">
+                        <con1:id>_ActionId-3624244163563246103--6dc81ec0.1508715bc0a.-7931</con1:id>
+                        <con2:expr>
+                          <con1:xqueryText>$body/plat:InputFormAssetCreateResponse/plat:AssetId/text()</con1:xqueryText>
+                        </con2:expr>
+                      </con2:assign>
+                      <con2:assign varName="strFileGuid">
+                        <con1:id>_ActionId-3624244163563246103--6dc81ec0.1508715bc0a.-7ed8</con1:id>
+                        <con2:expr>
+                          <con1:xqueryTransform>
+                            <con1:resource ref="Services_SOAP_v1/InputFormSvcs/Resources/xform/extractFromJson"/>
+                            <con1:param name="strKey">
+                              <con1:path>'FileGuid'</con1:path>
+                            </con1:param>
+                            <con1:param name="strJSON">
+                              <con1:path>fn:normalize-space($strRequest)</con1:path>
+                            </con1:param>
+                          </con1:xqueryTransform>
+                        </con2:expr>
+                      </con2:assign>
+                      <con2:assign varName="strCheck">
+                        <con1:id>_ActionId-132563859322602895--4c97ab66.150a51f1047.-7fd0</con1:id>
+                        <con2:expr>
+                          <con1:xqueryText>if(fn:contains($strRequest,'FileExpirationDate'))
+then 'FileExpirationDate Exists'
+else "FileExpirationDate doesn't exist"</con1:xqueryText>
+                        </con2:expr>
+                      </con2:assign>
+                      <con2:assign varName="strJsonReq">
+                        <con1:id>_ActionId-132563859322602895--4c97ab66.150a51f1047.-7fb0</con1:id>
+                        <con2:expr>
+                          <con1:xqueryText>$strRequest/al:AssetData/text()</con1:xqueryText>
+                        </con2:expr>
+                      </con2:assign>
+                      <con2:ifThenElse>
+                        <con1:comment>call extracFromJson xquery to extract the FileExpirationDate if the string has it.</con1:comment>
+                        <con1:id>_ActionId-3624244163563246103--6dc81ec0.1508715bc0a.-7a70</con1:id>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>fn:contains($strRequest,'FileExpirationDate')</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con2:assign varName="strExpirationDate">
+                              <con1:id>_ActionId-3624244163563246103--6dc81ec0.1508715bc0a.-7a6e</con1:id>
+                              <con2:expr>
+                                <con1:xqueryTransform>
+                                  <con1:resource ref="Services_SOAP_v1/InputFormSvcs/Resources/xform/extractFromJson"/>
+                                  <con1:param name="strKey">
+                                    <con1:path>'FileExpirationDate'</con1:path>
+                                  </con1:param>
+                                  <con1:param name="strJSON">
+                                    <con1:path>fn:normalize-space($strRequest/al:AssetData/text())</con1:path>
+                                  </con1:param>
+                                </con1:xqueryTransform>
+                              </con2:expr>
+                            </con2:assign>
+                          </con2:actions>
+                        </con2:case>
+                      </con2:ifThenElse>
+                      <con2:wsCallout>
+                        <con1:comment>After successfully creating an Asset, call eVault's SetFileExpiration so that the Asset can be made permanent by updating the date with null</con1:comment>
+                        <con1:id>_ActionId-3624244163563246103--6dc81ec0.1508715bc0a.-7ef4</con1:id>
+                        <con2:service xsi:type="ref:BusinessServiceRef" ref="eVaultSvcs_SOAP_v1/eVaultSvcs/BusinessServices/eVaultService_bs" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con2:operation>SetFileExpiration</con2:operation>
+                        <con2:request>
+                          <con2:body wrapped="true">$varRequest</con2:body>
+                        </con2:request>
+                        <con2:response>
+                          <con2:body wrapped="true">varResponse</con2:body>
+                        </con2:response>
+                        <con2:requestTransform>
+                          <con2:assign varName="varRequest">
+                            <con1:id>_ActionId-3624244163563246103--6dc81ec0.1508715bc0a.-7e7b</con1:id>
+                            <con2:expr>
+                              <con1:xqueryText><![CDATA[<soap-env:Body>
+	<edm:SetFileExpirationRequest>
+         {          
+         if (fn:string-length(fn-bea:trim($strExpirationDate)) > 0)
+         then <edm:ExpirationDate>{fn-bea:trim($strExpirationDate)}</edm:ExpirationDate>
+         else ''
+         }
+         <edm:FileGuid>{$strFileGuid}</edm:FileGuid>
+         <edm:MediaClient>Test</edm:MediaClient>
+     </edm:SetFileExpirationRequest>
+</soap-env:Body>]]></con1:xqueryText>
+                            </con2:expr>
+                          </con2:assign>
+                        </con2:requestTransform>
+                        <con2:responseTransform/>
+                      </con2:wsCallout>
+                      <con2:replace varName="body" contents-only="true">
+                        <con1:id>_ActionId-6212557679785122581--55b157c6.14e887fc2a9.-7c8d</con1:id>
+                        <con2:location>
+                          <con1:xpathText>.</con1:xpathText>
+                        </con2:location>
+                        <con2:expr>
+                          <con1:xqueryText>&lt;al:CreateAssetResponse>
+	&lt;al:AssetID>{$body/plat:InputFormAssetCreateResponse/plat:AssetId/text()}&lt;/al:AssetID>
+&lt;/al:CreateAssetResponse></con1:xqueryText>
+                        </con2:expr>
+                      </con2:replace>
+                      <con2:validate>
+                        <con1:id>_ActionId-6212557679785122581--55b157c6.14e887fc2a9.-7d77</con1:id>
+                        <con2:schema ref="Services_SOAP_v1/InputFormSvcs/Resources/xsd/Services/AssetLibrary"/>
+                        <con2:schemaElement xmlns:inp="http://www.elliemae.com/services/inputform" xmlns:ass="http://www.elliemae.com/services/assetlibrary">ass:CreateAssetResponse</con2:schemaElement>
+                        <con2:varName>body</con2:varName>
+                        <con2:location>
+                          <con1:xpathText>./al:CreateAssetResponse</con1:xpathText>
+                        </con2:location>
+                        <con2:resultVarName/>
+                      </con2:validate>
+                    </con6:responseTransform>
+                  </con6:route>
+                </con:actions>
+              </con:route-node>
+            </con:flow>
+          </con:branch>
+          <con:branch name="GetAsset">
+            <con:operator>equals</con:operator>
+            <con:value/>
+            <con:flow>
+              <con:route-node name="GetAsset_Routing">
+                <con:context>
+                  <con1:userNsDecl namespace="http://www.elliemae.com/encompass/platform" prefix="plat"/>
+                  <con1:userNsDecl namespace="http://www.elliemae.com/services/assetlibrary" prefix="al"/>
+                  <con1:userNsDecl namespace="http://www.elliemae.com/log" prefix="log"/>
+                  <con1:userNsDecl namespace="http://www.elliemae.com/services/session" prefix="ses"/>
+                  <con1:varNsDecl namespace="http://www.elliemae.com/services/inputform" prefix="inp"/>
+                  <con1:varNsDecl namespace="http://www.elliemae.com/services/security" prefix="sec"/>
+                </con:context>
+                <con:actions>
+                  <con6:route>
+                    <con1:id>_ActionId-6212557679785122581--55b157c6.14e887fc2a9.-7e64</con1:id>
+                    <con6:service ref="Services_SOAP_v1/InputFormSvcs/BusinessServices/InputFormSvc_bs" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                    <con6:operation>GetInputFormAsset</con6:operation>
+                    <con6:outboundTransform>
+                      <con2:validate>
+                        <con1:id>_ActionId-6212557679785122581--55b157c6.14e887fc2a9.-7cba</con1:id>
+                        <con2:schema ref="Services_SOAP_v1/InputFormSvcs/Resources/xsd/Services/AssetLibrary"/>
+                        <con2:schemaElement xmlns:inp="http://www.elliemae.com/services/inputform" xmlns:ass="http://www.elliemae.com/services/assetlibrary">ass:GetAssetRequest</con2:schemaElement>
+                        <con2:varName>strRequest</con2:varName>
+                        <con2:location>
+                          <con1:xpathText>.</con1:xpathText>
+                        </con2:location>
+                        <con2:resultVarName/>
+                      </con2:validate>
+                      <con2:replace varName="body" contents-only="true">
+                        <con1:id>_ActionId-6212557679785122581--55b157c6.14e887fc2a9.-7e25</con1:id>
+                        <con2:location>
+                          <con1:xpathText>.</con1:xpathText>
+                        </con2:location>
+                        <con2:expr>
+                          <con1:xqueryText><![CDATA[<plat:InputFormAssetGetRequest>
+	<plat:AssetId>{$body/plat:GetAssetRequest/plat:AssetID/text()}</plat:AssetId>
+    <plat:AssetName>{$body/plat:GetAssetRequest/plat:AssetName/text()}</plat:AssetName>
+</plat:InputFormAssetGetRequest>]]></con1:xqueryText>
+                        </con2:expr>
+                      </con2:replace>
+                      <con4:routing-options xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con4="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con3="http://www.bea.com/wli/sb/stages/alert/config">
+                        <con7:id xmlns:con7="http://www.bea.com/wli/sb/stages/config">_ActionId-6212557679785122581--55b157c6.14e887fc2a9.-7e63</con7:id>
+                        <con4:uriExpr>
+                          <con7:xqueryText xmlns:con7="http://www.bea.com/wli/sb/stages/config">$podURL</con7:xqueryText>
+                        </con4:uriExpr>
+                      </con4:routing-options>
+                      <con4:ifThenElse xmlns:con3="http://www.bea.com/wli/sb/stages/alert/config" xmlns:con="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con2="http://www.bea.com/wli/sb/pipeline/config" xmlns:con5="http://www.bea.com/wli/sb/stages/publish/config" xmlns:con4="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con6="http://www.bea.com/wli/sb/stages/publish/config">
+                        <con1:id>_ActionId-1736992497100438200--23113bf2.14fb4053b5a.-7cc1</con1:id>
+                        <con4:case>
+                          <con4:condition>
+                            <con1:xqueryText>fn:contains($logProperties/SLPlatformRequest/text(),'yes')</con1:xqueryText>
+                          </con4:condition>
+                          <con4:actions>
+                            <con7:route xmlns:con4="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con1="http://www.bea.com/wli/sb/stages/logging/config" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con5="http://www.bea.com/wli/sb/stages/alert/config" xmlns:con7="http://www.bea.com/wli/sb/stages/publish/config">
+                              <con2:id>_ActionId-1736992497100438200--23113bf2.14fb4053b5a.-7cc0</con2:id>
+                              <con7:service ref="LogService_v1/BusinessServices/LogProducer_bs" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                              <con7:outboundTransform>
+                                <con7:replace varName="body" contents-only="true" xmlns:con7="http://www.bea.com/wli/sb/stages/transform/config">
+                                  <con2:id>_ActionId-1736992497100438200--23113bf2.14fb4053b5a.-7cbf</con2:id>
+                                  <con7:location>
+                                    <con8:xpathText xmlns:con8="http://www.bea.com/wli/sb/stages/config">.</con8:xpathText>
+                                  </con7:location>
+                                  <con7:expr>
+                                    <con2:xqueryText><![CDATA[<log:LogRecord>
+  <log:RawXml>{fn-bea:serialize($body)}</log:RawXml>
+  <log:TrxID>{$CorrelationID}</log:TrxID>
+  <log:Status>START</log:Status>
+  <log:Keys>
+    <log:keyitem>
+      <log:key>componentname</log:key>
+      <log:value>AssetLibrarySvc</log:value>
+    </log:keyitem>
+    <log:keyitem>
+      <log:key>operationstep</log:key>
+      <log:value>{fn:concat('SL-Platform-',$operationName,'-Outgoing-Request')}</log:value>
+    </log:keyitem>
+    <log:keyitem>
+      <log:key>sessionid</log:key>
+      <log:value>{$sessionId}</log:value>
+    </log:keyitem>
+    <log:keyitem>
+      <log:key>clientid</log:key>
+      <log:value>{$sessionResponse/ses:GetUserSessionResponse/ses:SecurityContext/sec:UserName/text()}</log:value>
+    </log:keyitem>
+  </log:Keys>
+</log:LogRecord>]]></con2:xqueryText>
+                                  </con7:expr>
+                                </con7:replace>
+                                <con3:routing-options>
+                                  <con2:id>_ActionId-1736992497100438200--23113bf2.14fb4053b5a.-7cbe</con2:id>
+                                  <con3:qualityOfService>best-effort</con3:qualityOfService>
+                                </con3:routing-options>
+                              </con7:outboundTransform>
+                            </con7:route>
+                          </con4:actions>
+                        </con4:case>
+                      </con4:ifThenElse>
+                    </con6:outboundTransform>
+                    <con6:responseTransform>
+                      <con2:replace varName="body" contents-only="true">
+                        <con1:id>_ActionId-8124497351661423437-57b899d7.14ea928408a.-7f57</con1:id>
+                        <con2:location>
+                          <con1:xpathText>.</con1:xpathText>
+                        </con2:location>
+                        <con2:expr>
+                          <con1:xqueryText><![CDATA[<al:GetAssetResponse>
+	<al:AssetID>{$body/plat:InputFormAssetGetResponse/plat:AssetId/text()}</al:AssetID>
+	<al:AssetData>{$body/plat:InputFormAssetGetResponse/plat:AssetData/text()}</al:AssetData>
+</al:GetAssetResponse>]]></con1:xqueryText>
+                        </con2:expr>
+                      </con2:replace>
+                      <con2:validate>
+                        <con1:id>_ActionId-8124497351661423437-57b899d7.14ea928408a.-7f56</con1:id>
+                        <con2:schema ref="Services_SOAP_v1/InputFormSvcs/Resources/xsd/Services/AssetLibrary"/>
+                        <con2:schemaElement xmlns:inp="http://www.elliemae.com/services/inputform" xmlns:ass="http://www.elliemae.com/services/assetlibrary">ass:GetAssetResponse</con2:schemaElement>
+                        <con2:varName>body</con2:varName>
+                        <con2:location>
+                          <con1:xpathText>./al:GetAssetResponse</con1:xpathText>
+                        </con2:location>
+                      </con2:validate>
+                    </con6:responseTransform>
+                  </con6:route>
+                </con:actions>
+              </con:route-node>
+            </con:flow>
+          </con:branch>
+          <con:branch name="GetInputFormsByAsset">
+            <con:operator>equals</con:operator>
+            <con:value/>
+            <con:flow>
+              <con:route-node name="GetInputFormsByAsset_Routing">
+                <con:context>
+                  <con1:userNsDecl namespace="http://www.elliemae.com/encompass/platform" prefix="plat"/>
+                  <con1:userNsDecl namespace="http://www.elliemae.com/services/assetlibrary" prefix="al"/>
+                  <con1:userNsDecl namespace="http://www.elliemae.com/log" prefix="log"/>
+                  <con1:userNsDecl namespace="http://www.elliemae.com/services/session" prefix="ses"/>
+                  <con1:varNsDecl namespace="http://www.elliemae.com/services/inputform" prefix="inp"/>
+                  <con1:varNsDecl namespace="http://www.elliemae.com/services/assetlibrary" prefix="ass"/>
+                  <con1:varNsDecl namespace="http://www.elliemae.com/services/security" prefix="sec"/>
+                </con:context>
+                <con:actions>
+                  <con6:route>
+                    <con1:id>_ActionId-6212557679785122581--55b157c6.14e887fc2a9.-7e5c</con1:id>
+                    <con6:service ref="Services_SOAP_v1/InputFormSvcs/BusinessServices/InputFormSvc_bs" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                    <con6:operation>GetInputFormsByAsset</con6:operation>
+                    <con6:outboundTransform>
+                      <con2:validate>
+                        <con1:id>_ActionId-6212557679785122581--55b157c6.14e887fc2a9.-7cb5</con1:id>
+                        <con2:schema ref="Services_SOAP_v1/InputFormSvcs/Resources/xsd/Services/AssetLibrary"/>
+                        <con2:schemaElement xmlns:inp="http://www.elliemae.com/services/inputform" xmlns:ass="http://www.elliemae.com/services/assetlibrary">ass:GetInputFormsByAssetRequest</con2:schemaElement>
+                        <con2:varName>strRequest</con2:varName>
+                        <con2:location>
+                          <con1:xpathText>.</con1:xpathText>
+                        </con2:location>
+                        <con2:resultVarName/>
+                      </con2:validate>
+                      <con2:replace varName="body" contents-only="true">
+                        <con1:id>_ActionId-6212557679785122581--55b157c6.14e887fc2a9.-7e20</con1:id>
+                        <con2:location>
+                          <con1:xpathText>.</con1:xpathText>
+                        </con2:location>
+                        <con2:expr>
+                          <con1:xqueryText>&lt;plat:InputFormsByAssetGetRequest>
+	&lt;plat:AssetId>{$body/plat:GetInputFormsByAssetRequest/plat:AssetID/text()}&lt;/plat:AssetId>
+&lt;/plat:InputFormsByAssetGetRequest></con1:xqueryText>
+                        </con2:expr>
+                      </con2:replace>
+                      <con4:routing-options xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con4="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con3="http://www.bea.com/wli/sb/stages/alert/config">
+                        <con7:id xmlns:con7="http://www.bea.com/wli/sb/stages/config">_ActionId-6212557679785122581--55b157c6.14e887fc2a9.-7e5b</con7:id>
+                        <con4:uriExpr>
+                          <con7:xqueryText xmlns:con7="http://www.bea.com/wli/sb/stages/config">$podURL</con7:xqueryText>
+                        </con4:uriExpr>
+                      </con4:routing-options>
+                      <con4:ifThenElse xmlns:con3="http://www.bea.com/wli/sb/stages/alert/config" xmlns:con="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con2="http://www.bea.com/wli/sb/pipeline/config" xmlns:con5="http://www.bea.com/wli/sb/stages/publish/config" xmlns:con4="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con6="http://www.bea.com/wli/sb/stages/publish/config">
+                        <con1:id>_ActionId-1736992497100438200--23113bf2.14fb4053b5a.-7cb9</con1:id>
+                        <con4:case>
+                          <con4:condition>
+                            <con1:xqueryText>fn:contains($logProperties/SLPlatformRequest/text(),'yes')</con1:xqueryText>
+                          </con4:condition>
+                          <con4:actions>
+                            <con7:route xmlns:con4="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con1="http://www.bea.com/wli/sb/stages/logging/config" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con5="http://www.bea.com/wli/sb/stages/alert/config" xmlns:con7="http://www.bea.com/wli/sb/stages/publish/config">
+                              <con2:id>_ActionId-1736992497100438200--23113bf2.14fb4053b5a.-7cb8</con2:id>
+                              <con7:service ref="LogService_v1/BusinessServices/LogProducer_bs" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                              <con7:outboundTransform>
+                                <con7:replace varName="body" contents-only="true" xmlns:con7="http://www.bea.com/wli/sb/stages/transform/config">
+                                  <con2:id>_ActionId-1736992497100438200--23113bf2.14fb4053b5a.-7cb7</con2:id>
+                                  <con7:location>
+                                    <con8:xpathText xmlns:con8="http://www.bea.com/wli/sb/stages/config">.</con8:xpathText>
+                                  </con7:location>
+                                  <con7:expr>
+                                    <con2:xqueryText><![CDATA[<log:LogRecord>
+  <log:RawXml>{fn-bea:serialize($body)}</log:RawXml>
+  <log:TrxID>{$CorrelationID}</log:TrxID>
+  <log:Status>START</log:Status>
+  <log:Keys>
+    <log:keyitem>
+      <log:key>componentname</log:key>
+      <log:value>AssetLibrarySvc</log:value>
+    </log:keyitem>
+    <log:keyitem>
+      <log:key>operationstep</log:key>
+      <log:value>{fn:concat('SL-Platform-',$operationName,'-Outgoing-Request')}</log:value>
+    </log:keyitem>
+    <log:keyitem>
+      <log:key>sessionid</log:key>
+      <log:value>{$sessionId}</log:value>
+    </log:keyitem>
+    <log:keyitem>
+      <log:key>clientid</log:key>
+      <log:value>{$sessionResponse/ses:GetUserSessionResponse/ses:SecurityContext/sec:UserName/text()}</log:value>
+    </log:keyitem>
+  </log:Keys>
+</log:LogRecord>]]></con2:xqueryText>
+                                  </con7:expr>
+                                </con7:replace>
+                                <con3:routing-options>
+                                  <con2:id>_ActionId-1736992497100438200--23113bf2.14fb4053b5a.-7cb6</con2:id>
+                                  <con3:qualityOfService>best-effort</con3:qualityOfService>
+                                </con3:routing-options>
+                              </con7:outboundTransform>
+                            </con7:route>
+                          </con4:actions>
+                        </con4:case>
+                      </con4:ifThenElse>
+                    </con6:outboundTransform>
+                    <con6:responseTransform>
+                      <con2:replace varName="body" contents-only="true">
+                        <con1:id>_ActionId-3496780669255191206-35da3563.14ecc14f45c.-7ee1</con1:id>
+                        <con2:location>
+                          <con1:xpathText>.</con1:xpathText>
+                        </con2:location>
+                        <con2:expr>
+                          <con1:xqueryText><![CDATA[<al:GetInputFormsByAssetResponse>
+	<al:InputForms>
+	{
+		for $items in $body/plat:InputFormsByAssetGetResponse/plat:Items/plat:InputFormItem
+		return 
+		<al:InputForm>
+			<al:InputFormID>{$items/plat:InputFormId/text()}</al:InputFormID>
+			<al:InputFormData>{$items/plat:InputFormData/text()}</al:InputFormData>			
+		</al:InputForm>
+		}
+	</al:InputForms>
+</al:GetInputFormsByAssetResponse>]]></con1:xqueryText>
+                        </con2:expr>
+                      </con2:replace>
+                      <con2:validate>
+                        <con1:id>_ActionId-3496780669255191206-35da3563.14ecc14f45c.-7edc</con1:id>
+                        <con2:schema ref="Services_SOAP_v1/InputFormSvcs/Resources/xsd/Services/AssetLibrary"/>
+                        <con2:schemaElement xmlns:inp="http://www.elliemae.com/services/inputform" xmlns:ass="http://www.elliemae.com/services/assetlibrary">ass:GetInputFormsByAssetResponse</con2:schemaElement>
+                        <con2:varName>body</con2:varName>
+                        <con2:location>
+                          <con1:xpathText>./al:GetInputFormsByAssetResponse</con1:xpathText>
+                        </con2:location>
+                      </con2:validate>
+                    </con6:responseTransform>
+                  </con6:route>
+                </con:actions>
+              </con:route-node>
+            </con:flow>
+          </con:branch>
+          <con:branch name="UpdateAsset">
+            <con:operator>equals</con:operator>
+            <con:value/>
+            <con:flow>
+              <con:route-node name="Route-UpdateAsset">
+                <con:context>
+                  <con1:userNsDecl namespace="http://www.elliemae.com/encompass/platform" prefix="plat"/>
+                  <con1:userNsDecl namespace="http://www.elliemae.com/services/assetlibrary" prefix="al"/>
+                  <con1:userNsDecl namespace="http://www.elliemae.com/log" prefix="log"/>
+                  <con1:userNsDecl namespace="http://www.elliemae.com/services/session" prefix="ses"/>
+                  <con1:varNsDecl namespace="http://www.elliemae.com/services/security" prefix="sec"/>
+                </con:context>
+                <con:actions>
+                  <con6:route>
+                    <con1:id>_ActionId-3496780669255191206-35da3563.14ecc14f45c.-7f0f</con1:id>
+                    <con6:service ref="Services_SOAP_v1/InputFormSvcs/BusinessServices/InputFormSvc_bs" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                    <con6:operation>UpdateInputFormAsset</con6:operation>
+                    <con6:outboundTransform>
+                      <con2:validate>
+                        <con1:id>_ActionId-3496780669255191206-35da3563.14ecc14f45c.-7ed5</con1:id>
+                        <con2:schema ref="Services_SOAP_v1/InputFormSvcs/Resources/xsd/Services/AssetLibrary"/>
+                        <con2:schemaElement xmlns:inp="http://www.elliemae.com/services/inputform" xmlns:ass="http://www.elliemae.com/services/assetlibrary">ass:UpdateAssetRequest</con2:schemaElement>
+                        <con2:varName>strRequest</con2:varName>
+                        <con2:location>
+                          <con1:xpathText>.</con1:xpathText>
+                        </con2:location>
+                        <con2:resultVarName/>
+                      </con2:validate>
+                      <con2:replace varName="body" contents-only="true">
+                        <con1:id>_ActionId-3496780669255191206-35da3563.14ecc14f45c.-7ed4</con1:id>
+                        <con2:location>
+                          <con1:xpathText>.</con1:xpathText>
+                        </con2:location>
+                        <con2:expr>
+                          <con1:xqueryText><![CDATA[<plat:InputFormAssetUpdateRequest>
+    <plat:AssetData>{$body/plat:UpdateAssetRequest/plat:AssetData/text()}</plat:AssetData>
+	<plat:AssetId>{$body/plat:UpdateAssetRequest/plat:AssetID/text()}</plat:AssetId>
+</plat:InputFormAssetUpdateRequest>]]></con1:xqueryText>
+                        </con2:expr>
+                      </con2:replace>
+                      <con4:routing-options xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con4="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con3="http://www.bea.com/wli/sb/stages/alert/config">
+                        <con7:id xmlns:con7="http://www.bea.com/wli/sb/stages/config">_ActionId-3496780669255191206-35da3563.14ecc14f45c.-7ed3</con7:id>
+                        <con4:uriExpr>
+                          <con7:xqueryText xmlns:con7="http://www.bea.com/wli/sb/stages/config">$podURL</con7:xqueryText>
+                        </con4:uriExpr>
+                      </con4:routing-options>
+                      <con4:ifThenElse xmlns:con3="http://www.bea.com/wli/sb/stages/alert/config" xmlns:con="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con2="http://www.bea.com/wli/sb/pipeline/config" xmlns:con5="http://www.bea.com/wli/sb/stages/publish/config" xmlns:con4="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con6="http://www.bea.com/wli/sb/stages/publish/config">
+                        <con1:id>_ActionId-1736992497100438200--23113bf2.14fb4053b5a.-7cb1</con1:id>
+                        <con4:case>
+                          <con4:condition>
+                            <con1:xqueryText>fn:contains($logProperties/SLPlatformRequest/text(),'yes')</con1:xqueryText>
+                          </con4:condition>
+                          <con4:actions>
+                            <con7:route xmlns:con4="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con1="http://www.bea.com/wli/sb/stages/logging/config" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con5="http://www.bea.com/wli/sb/stages/alert/config" xmlns:con7="http://www.bea.com/wli/sb/stages/publish/config">
+                              <con2:id>_ActionId-1736992497100438200--23113bf2.14fb4053b5a.-7cb0</con2:id>
+                              <con7:service ref="LogService_v1/BusinessServices/LogProducer_bs" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                              <con7:outboundTransform>
+                                <con7:replace varName="body" contents-only="true" xmlns:con7="http://www.bea.com/wli/sb/stages/transform/config">
+                                  <con2:id>_ActionId-1736992497100438200--23113bf2.14fb4053b5a.-7caf</con2:id>
+                                  <con7:location>
+                                    <con8:xpathText xmlns:con8="http://www.bea.com/wli/sb/stages/config">.</con8:xpathText>
+                                  </con7:location>
+                                  <con7:expr>
+                                    <con2:xqueryText><![CDATA[<log:LogRecord>
+  <log:RawXml>{fn-bea:serialize($body)}</log:RawXml>
+  <log:TrxID>{$CorrelationID}</log:TrxID>
+  <log:Status>START</log:Status>
+  <log:Keys>
+    <log:keyitem>
+      <log:key>componentname</log:key>
+      <log:value>AssetLibrarySvc</log:value>
+    </log:keyitem>
+    <log:keyitem>
+      <log:key>operationstep</log:key>
+      <log:value>{fn:concat('SL-Platform-',$operationName,'-Outgoing-Request')}</log:value>
+    </log:keyitem>
+    <log:keyitem>
+      <log:key>sessionid</log:key>
+      <log:value>{$sessionId}</log:value>
+    </log:keyitem>
+    <log:keyitem>
+      <log:key>clientid</log:key>
+      <log:value>{$sessionResponse/ses:GetUserSessionResponse/ses:SecurityContext/sec:UserName/text()}</log:value>
+    </log:keyitem>
+  </log:Keys>
+</log:LogRecord>]]></con2:xqueryText>
+                                  </con7:expr>
+                                </con7:replace>
+                                <con3:routing-options>
+                                  <con2:id>_ActionId-1736992497100438200--23113bf2.14fb4053b5a.-7cae</con2:id>
+                                  <con3:qualityOfService>best-effort</con3:qualityOfService>
+                                </con3:routing-options>
+                              </con7:outboundTransform>
+                            </con7:route>
+                          </con4:actions>
+                        </con4:case>
+                      </con4:ifThenElse>
+                    </con6:outboundTransform>
+                    <con6:responseTransform>
+                      <con2:replace varName="body" contents-only="true">
+                        <con1:id>_ActionId-3496780669255191206-35da3563.14ecc14f45c.-7ec8</con1:id>
+                        <con2:location>
+                          <con1:xpathText>.</con1:xpathText>
+                        </con2:location>
+                        <con2:expr>
+                          <con1:xqueryText>&lt;al:UpdateAssetResponse>
+	&lt;al:Result>{$body/plat:InputFormAssetUpdateResponse/plat:Result/text()}&lt;/al:Result>
+&lt;/al:UpdateAssetResponse></con1:xqueryText>
+                        </con2:expr>
+                      </con2:replace>
+                      <con2:validate>
+                        <con1:id>_ActionId-3496780669255191206-35da3563.14ecc14f45c.-7ec7</con1:id>
+                        <con2:schema ref="Services_SOAP_v1/InputFormSvcs/Resources/xsd/Services/AssetLibrary"/>
+                        <con2:schemaElement xmlns:inp="http://www.elliemae.com/services/inputform" xmlns:ass="http://www.elliemae.com/services/assetlibrary">ass:UpdateAssetResponse</con2:schemaElement>
+                        <con2:varName>body</con2:varName>
+                        <con2:location>
+                          <con1:xpathText>./al:UpdateAssetResponse</con1:xpathText>
+                        </con2:location>
+                      </con2:validate>
+                    </con6:responseTransform>
+                  </con6:route>
+                </con:actions>
+              </con:route-node>
+            </con:flow>
+          </con:branch>
+          <con:branch name="DeleteAsset">
+            <con:operator>equals</con:operator>
+            <con:value/>
+            <con:flow>
+              <con:route-node name="Route-DeleteAsset">
+                <con:context>
+                  <con1:userNsDecl namespace="http://www.elliemae.com/encompass/platform" prefix="plat"/>
+                  <con1:userNsDecl namespace="http://www.elliemae.com/services/assetlibrary" prefix="al"/>
+                  <con1:userNsDecl namespace="http://www.elliemae.com/log" prefix="log"/>
+                  <con1:userNsDecl namespace="http://www.elliemae.com/services/session" prefix="ses"/>
+                  <con1:userNsDecl namespace="http://www.elliemae.com/edm/platform" prefix="edm"/>
+                  <con1:varNsDecl namespace="http://www.elliemae.com/services/security" prefix="sec"/>
+                </con:context>
+                <con:actions>
+                  <con6:route>
+                    <con1:id>_ActionId-3496780669255191206-35da3563.14ecc14f45c.-7ee4</con1:id>
+                    <con6:service ref="Services_SOAP_v1/InputFormSvcs/BusinessServices/InputFormSvc_bs" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                    <con6:operation>DeleteInputFormAsset</con6:operation>
+                    <con6:outboundTransform>
+                      <con2:assign varName="variables">
+                        <con1:id>_ActionId-3624244163563246103--6dc81ec0.1508715bc0a.-7c15</con1:id>
+                        <con2:expr>
+                          <con1:xqueryText><![CDATA[<variables>
+	<fileGuid>{$body/plat:DeleteAssetRequest/plat:FileGuid/text()}</fileGuid>
+	<fileExpirationDate>{
+		if (fn:empty($body/plat:DeleteAssetRequest/plat:FileExpirationDate/text()))
+		then fn:current-dateTime()
+		else ($body/plat:DeleteAssetRequest/plat:FileExpirationDate/text())
+		}
+	</fileExpirationDate>
+</variables>]]></con1:xqueryText>
+                        </con2:expr>
+                      </con2:assign>
+                      <con2:assign varName="validations">
+                        <con1:id>_ActionId-3624244163563246103--6dc81ec0.1508715bc0a.-7cd1</con1:id>
+                        <con2:expr>
+                          <con1:xqueryText>if
+	(fn:empty($variables/fileExpirationDate/text()))
+then
+	'Missing FileExpirationDate'
+else if 
+	(fn:empty($variables/fileGuid/text()))
+then
+	'Missing FileGuid'
+else
+	'none'</con1:xqueryText>
+                        </con2:expr>
+                      </con2:assign>
+                      <con2:ifThenElse>
+                        <con1:id>_ActionId-3624244163563246103--6dc81ec0.1508715bc0a.-7c9c</con1:id>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>$validations = 'Missing FileExpirationDate' or $validations='Missing FileGuid'</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con2:Error>
+                              <con1:id>_ActionId-3624244163563246103--6dc81ec0.1508715bc0a.-7c76</con1:id>
+                              <con2:errCode>BadRequest</con2:errCode>
+                              <con2:message>'Missing FileExpirationDate - cannot delete the Asset'</con2:message>
+                            </con2:Error>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>$validations ='Missing FileGuid'</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con2:Error>
+                              <con1:id>_ActionId-3624244163563246103--6dc81ec0.1508715bc0a.-7c4d</con1:id>
+                              <con2:errCode>BadRequest</con2:errCode>
+                              <con2:message>'Missing FileGuid - cannot delete the asset'</con2:message>
+                            </con2:Error>
+                          </con2:actions>
+                        </con2:case>
+                      </con2:ifThenElse>
+                      <con2:validate>
+                        <con1:id>_ActionId-3496780669255191206-35da3563.14ecc14f45c.-7ecf</con1:id>
+                        <con2:schema ref="Services_SOAP_v1/InputFormSvcs/Resources/xsd/Services/AssetLibrary"/>
+                        <con2:schemaElement xmlns:inp="http://www.elliemae.com/services/inputform" xmlns:ass="http://www.elliemae.com/services/assetlibrary">ass:DeleteAssetRequest</con2:schemaElement>
+                        <con2:varName>strRequest</con2:varName>
+                        <con2:location>
+                          <con1:xpathText>.</con1:xpathText>
+                        </con2:location>
+                        <con2:resultVarName/>
+                      </con2:validate>
+                      <con2:wsCallout>
+                        <con1:id>_ActionId-3624244163563246103--6dc81ec0.1508715bc0a.-7d31</con1:id>
+                        <con2:service xsi:type="ref:BusinessServiceRef" ref="eVaultSvcs_SOAP_v1/eVaultSvcs/BusinessServices/eVaultService_bs" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con2:operation>SetFileExpiration</con2:operation>
+                        <con2:request>
+                          <con2:body wrapped="true">$varRequest</con2:body>
+                        </con2:request>
+                        <con2:response>
+                          <con2:body wrapped="true">varResponse</con2:body>
+                        </con2:response>
+                        <con2:requestTransform>
+                          <con2:assign varName="varRequest">
+                            <con1:id>_ActionId-3624244163563246103--6dc81ec0.1508715bc0a.-7d32</con1:id>
+                            <con2:expr>
+                              <con1:xqueryText><![CDATA[<soap-env:Body>
+	<edm:SetFileExpirationRequest>
+         <edm:ExpirationDate>{$variables/fileExpirationDate/text()}</edm:ExpirationDate>
+         <edm:FileGuid>{$variables/fileGuid/text()}</edm:FileGuid>
+         <edm:MediaClient>Test</edm:MediaClient>
+      </edm:SetFileExpirationRequest>
+</soap-env:Body>]]></con1:xqueryText>
+                            </con2:expr>
+                          </con2:assign>
+                        </con2:requestTransform>
+                        <con2:responseTransform>
+                          <con2:ifThenElse>
+                            <con1:id>_ActionId-3624244163563246103--6dc81ec0.1508715bc0a.-7bcd</con1:id>
+                            <con2:case>
+                              <con2:condition>
+                                <con1:xqueryText>$varResponse/edm:SetFileExpirationResponse/edm:Success/text()='false'</con1:xqueryText>
+                              </con2:condition>
+                              <con2:actions>
+                                <con2:replace varName="body" contents-only="true">
+                                  <con1:id>_ActionId-3624244163563246103--6dc81ec0.1508715bc0a.-7b5c</con1:id>
+                                  <con2:location>
+                                    <con1:xpathText>.</con1:xpathText>
+                                  </con2:location>
+                                  <con2:expr>
+                                    <con1:xqueryText><![CDATA[<soap-env:Fault >
+	<faultcode>Server.Conflict</faultcode>
+    <faultstring>Conflict</faultstring>
+	<detail>
+	    <ErrorMessage>Cannot delete the Asset.Unable to update FileExpiration for the Asset. Please check FileGuid and FileExpirationDate before re-submitting the request</ErrorMessage>
+	</detail>
+</soap-env:Fault>]]></con1:xqueryText>
+                                  </con2:expr>
+                                </con2:replace>
+                                <con4:transport-headers copy-all="true" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con6="http://www.bea.com/wli/sb/stages/publish/config" xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con7="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con4="http://www.bea.com/wli/sb/stages/transform/config">
+                                  <con8:id xmlns:con8="http://www.bea.com/wli/sb/stages/config">_ActionId-3624244163563246103--6dc81ec0.1508715bc0a.-7b21</con8:id>
+                                  <con4:header-set>inbound-response</con4:header-set>
+                                  <con4:header name="CorrelationID" value="expression">
+                                    <con6:xqueryText xmlns:con6="http://www.bea.com/wli/sb/stages/config">$CorrelationID</con6:xqueryText>
+                                  </con4:header>
+                                </con4:transport-headers>
+                                <con1:reply isError="true">
+                                  <con1:id>_ActionId-3624244163563246103--6dc81ec0.1508715bc0a.-7af0</con1:id>
+                                </con1:reply>
+                                <con4:delete varName="header" xmlns:con7="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con="http://www.bea.com/wli/sb/typesystem/config" xmlns:con6="http://www.bea.com/wli/sb/pipeline/config" xmlns:con4="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con5="http://www.bea.com/wli/sb/pipeline/config">
+                                  <con1:id>_ActionId-3624244163563246103--6dc81ec0.1508715bc0a.-7a9a</con1:id>
+                                  <con4:location>
+                                    <con1:xpathText>.</con1:xpathText>
+                                  </con4:location>
+                                </con4:delete>
+                              </con2:actions>
+                            </con2:case>
+                          </con2:ifThenElse>
+                        </con2:responseTransform>
+                      </con2:wsCallout>
+                      <con2:replace varName="body" contents-only="true">
+                        <con1:id>_ActionId-3496780669255191206-35da3563.14ecc14f45c.-7ece</con1:id>
+                        <con2:location>
+                          <con1:xpathText>.</con1:xpathText>
+                        </con2:location>
+                        <con2:expr>
+                          <con1:xqueryText>&lt;plat:InputFormAssetDeleteRequest>
+	&lt;plat:AssetId>{$body/plat:DeleteAssetRequest/plat:AssetID/text()}&lt;/plat:AssetId>
+&lt;/plat:InputFormAssetDeleteRequest></con1:xqueryText>
+                        </con2:expr>
+                      </con2:replace>
+                      <con4:routing-options xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con4="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con3="http://www.bea.com/wli/sb/stages/alert/config">
+                        <con7:id xmlns:con7="http://www.bea.com/wli/sb/stages/config">_ActionId-3496780669255191206-35da3563.14ecc14f45c.-7ecd</con7:id>
+                        <con4:uriExpr>
+                          <con7:xqueryText xmlns:con7="http://www.bea.com/wli/sb/stages/config">$podURL</con7:xqueryText>
+                        </con4:uriExpr>
+                      </con4:routing-options>
+                      <con4:ifThenElse xmlns:con3="http://www.bea.com/wli/sb/stages/alert/config" xmlns:con="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con2="http://www.bea.com/wli/sb/pipeline/config" xmlns:con5="http://www.bea.com/wli/sb/stages/publish/config" xmlns:con4="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con6="http://www.bea.com/wli/sb/stages/publish/config">
+                        <con1:id>_ActionId-1736992497100438200--23113bf2.14fb4053b5a.-7ca9</con1:id>
+                        <con4:case>
+                          <con4:condition>
+                            <con1:xqueryText>fn:contains($logProperties/SLPlatformRequest/text(),'yes')</con1:xqueryText>
+                          </con4:condition>
+                          <con4:actions>
+                            <con7:route xmlns:con4="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con1="http://www.bea.com/wli/sb/stages/logging/config" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con5="http://www.bea.com/wli/sb/stages/alert/config" xmlns:con7="http://www.bea.com/wli/sb/stages/publish/config">
+                              <con2:id>_ActionId-1736992497100438200--23113bf2.14fb4053b5a.-7ca8</con2:id>
+                              <con7:service ref="LogService_v1/BusinessServices/LogProducer_bs" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                              <con7:outboundTransform>
+                                <con7:replace varName="body" contents-only="true" xmlns:con7="http://www.bea.com/wli/sb/stages/transform/config">
+                                  <con2:id>_ActionId-1736992497100438200--23113bf2.14fb4053b5a.-7ca7</con2:id>
+                                  <con7:location>
+                                    <con8:xpathText xmlns:con8="http://www.bea.com/wli/sb/stages/config">.</con8:xpathText>
+                                  </con7:location>
+                                  <con7:expr>
+                                    <con2:xqueryText><![CDATA[<log:LogRecord>
+  <log:RawXml>{fn-bea:serialize($body)}</log:RawXml>
+  <log:TrxID>{$CorrelationID}</log:TrxID>
+  <log:Status>START</log:Status>
+  <log:Keys>
+    <log:keyitem>
+      <log:key>componentname</log:key>
+      <log:value>AssetLibrarySvc</log:value>
+    </log:keyitem>
+    <log:keyitem>
+      <log:key>operationstep</log:key>
+      <log:value>{fn:concat('SL-Platform-',$operationName,'-Outgoing-Request')}</log:value>
+    </log:keyitem>
+    <log:keyitem>
+      <log:key>sessionid</log:key>
+      <log:value>{$sessionId}</log:value>
+    </log:keyitem>
+    <log:keyitem>
+      <log:key>clientid</log:key>
+      <log:value>{$sessionResponse/ses:GetUserSessionResponse/ses:SecurityContext/sec:UserName/text()}</log:value>
+    </log:keyitem>
+  </log:Keys>
+</log:LogRecord>]]></con2:xqueryText>
+                                  </con7:expr>
+                                </con7:replace>
+                                <con3:routing-options>
+                                  <con2:id>_ActionId-1736992497100438200--23113bf2.14fb4053b5a.-7ca6</con2:id>
+                                  <con3:qualityOfService>best-effort</con3:qualityOfService>
+                                </con3:routing-options>
+                              </con7:outboundTransform>
+                            </con7:route>
+                          </con4:actions>
+                        </con4:case>
+                      </con4:ifThenElse>
+                    </con6:outboundTransform>
+                    <con6:responseTransform>
+                      <con2:replace varName="body" contents-only="true">
+                        <con1:id>_ActionId-3496780669255191206-35da3563.14ecc14f45c.-7ec4</con1:id>
+                        <con2:location>
+                          <con1:xpathText>.</con1:xpathText>
+                        </con2:location>
+                        <con2:expr>
+                          <con1:xqueryText>&lt;al:DeleteAssetResponse>
+	&lt;al:Result>{$body/plat:InputFormAssetDeleteResponse/plat:Result/text()}&lt;/al:Result>
+&lt;/al:DeleteAssetResponse></con1:xqueryText>
+                        </con2:expr>
+                      </con2:replace>
+                      <con2:validate>
+                        <con1:id>_ActionId-3496780669255191206-35da3563.14ecc14f45c.-7ec3</con1:id>
+                        <con2:schema ref="Services_SOAP_v1/InputFormSvcs/Resources/xsd/Services/AssetLibrary"/>
+                        <con2:schemaElement xmlns:inp="http://www.elliemae.com/services/inputform" xmlns:ass="http://www.elliemae.com/services/assetlibrary">ass:DeleteAssetResponse</con2:schemaElement>
+                        <con2:varName>body</con2:varName>
+                        <con2:location>
+                          <con1:xpathText>./al:DeleteAssetResponse</con1:xpathText>
+                        </con2:location>
+                      </con2:validate>
+                    </con6:responseTransform>
+                  </con6:route>
+                </con:actions>
+              </con:route-node>
+            </con:flow>
+          </con:branch>
+          <con:branch name="GetAssets">
+            <con:operator>equals</con:operator>
+            <con:value/>
+            <con:flow>
+              <con:pipeline-node name="GetAssets-PipelinePair">
+                <con:request>GetAssets-PipelinePair_request</con:request>
+                <con:response>GetAssets-PipelinePair_response</con:response>
+              </con:pipeline-node>
+            </con:flow>
+          </con:branch>
+          <con:branch name="OverwriteAsset">
+            <con:operator>equals</con:operator>
+            <con:value/>
+            <con:flow>
+              <con:route-node name="Route-OverwriteAsset" error-handler="_onErrorHandler-8827088423971146351-692099dc.150c93d82e1.-7ec1">
+                <con:context>
+                  <con1:userNsDecl namespace="http://www.elliemae.com/encompass/platform" prefix="plat"/>
+                  <con1:userNsDecl namespace="http://www.elliemae.com/services/assetlibrary" prefix="al"/>
+                  <con1:userNsDecl namespace="http://www.elliemae.com/log" prefix="log"/>
+                  <con1:userNsDecl namespace="http://www.elliemae.com/services/session" prefix="ses"/>
+                  <con1:userNsDecl namespace="http://www.elliemae.com/edm/platform" prefix="edm"/>
+                  <con1:varNsDecl namespace="http://www.elliemae.com/services/security" prefix="sec"/>
+                </con:context>
+                <con:actions>
+                  <con6:route>
+                    <con1:id>_ActionId-8827088423971146351-692099dc.150c93d82e1.-7fec</con1:id>
+                    <con6:service ref="Services_SOAP_v1/InputFormSvcs/BusinessServices/InputFormSvc_bs" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                    <con6:operation>UpdateInputFormAsset</con6:operation>
+                    <con6:outboundTransform>
+                      <con2:assign varName="initialBody">
+                        <con1:id>_ActionId-8827088423971146351-692099dc.150c93d82e1.-7c64</con1:id>
+                        <con2:expr>
+                          <con1:xqueryText>&lt;soap-env:Body>{$body/*}&lt;/soap-env:Body></con1:xqueryText>
+                        </con2:expr>
+                      </con2:assign>
+                      <con2:validate>
+                        <con1:id>_ActionId-8827088423971146351-692099dc.150c93d82e1.-7fab</con1:id>
+                        <con2:schema ref="Services_SOAP_v1/InputFormSvcs/Resources/xsd/Services/AssetLibrary"/>
+                        <con2:schemaElement xmlns:inp="http://www.elliemae.com/services/inputform" xmlns:ass="http://www.elliemae.com/services/assetlibrary">ass:OverwriteAssetRequest</con2:schemaElement>
+                        <con2:varName>strRequest</con2:varName>
+                        <con2:location>
+                          <con1:xpathText>.</con1:xpathText>
+                        </con2:location>
+                        <con2:resultVarName/>
+                      </con2:validate>
+                      <con7:ifThenElse xmlns:con7="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con6="http://www.bea.com/wli/sb/pipeline/config" xmlns:con4="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con5="http://www.bea.com/wli/sb/pipeline/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                        <con2:id>_ActionId-8827088423971146351-692099dc.150c93d82e1.-7b00</con2:id>
+                        <con7:case>
+                          <con7:condition>
+                            <con2:xqueryText>fn:string-length($body/plat:OverwriteAssetRequest/plat:AssetToOverwrite/plat:AssetID/text())=0</con2:xqueryText>
+                          </con7:condition>
+                          <con7:actions>
+                            <con7:replace contents-only="true" varName="body">
+                              <con2:id>_ActionId-8827088423971146351-692099dc.150c93d82e1.-7aff</con2:id>
+                              <con7:location>
+                                <con2:xpathText>.</con2:xpathText>
+                              </con7:location>
+                              <con7:expr>
+                                <con2:xqueryText><![CDATA[<soap-env:Fault >
+	<faultcode>BadRequest</faultcode>
+    <faultstring>AssetIDMissing</faultstring>
+	<detail>
+	    <ErrorMessage>A valid AssetId must be provided in the body</ErrorMessage>
+	</detail>
+</soap-env:Fault>]]></con2:xqueryText>
+                              </con7:expr>
+                            </con7:replace>
+                            <con7:delete varName="header">
+                              <con2:id>_ActionId-8827088423971146351-692099dc.150c93d82e1.-7afe</con2:id>
+                              <con7:location>
+                                <con2:xpathText>.</con2:xpathText>
+                              </con7:location>
+                            </con7:delete>
+                            <con7:transport-headers copy-all="true" xmlns:con6="http://www.bea.com/wli/sb/stages/publish/config" xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:con5="http://www.bea.com/wli/sb/stages/alert/config">
+                              <con8:id xmlns:con8="http://www.bea.com/wli/sb/stages/config">_ActionId-8827088423971146351-692099dc.150c93d82e1.-7afd</con8:id>
+                              <con7:header-set>inbound-response</con7:header-set>
+                              <con7:header name="CorrelationID" value="expression">
+                                <con6:xqueryText xmlns:con6="http://www.bea.com/wli/sb/stages/config">$CorrelationID</con6:xqueryText>
+                              </con7:header>
+                            </con7:transport-headers>
+                            <con2:reply isError="true">
+                              <con2:id>_ActionId-8827088423971146351-692099dc.150c93d82e1.-7afc</con2:id>
+                            </con2:reply>
+                          </con7:actions>
+                        </con7:case>
+                        <con7:case>
+                          <con7:condition>
+                            <con2:xqueryText>fn:matches($body/plat:OverwriteAssetRequest/plat:CurrentAssetDetails/plat:FileGuid/text(),
+     		$body/plat:OverwriteAssetRequest/plat:NewAssetDetails/plat:FileGuid/text())</con2:xqueryText>
+                          </con7:condition>
+                          <con7:actions>
+                            <con7:replace contents-only="true" varName="body">
+                              <con2:id>_ActionId-8827088423971146351-692099dc.150c93d82e1.-7afb</con2:id>
+                              <con7:location>
+                                <con2:xpathText>.</con2:xpathText>
+                              </con7:location>
+                              <con7:expr>
+                                <con2:xqueryText><![CDATA[<soap-env:Fault >
+	<faultcode>BadRequest</faultcode>
+    <faultstring>InvalidFileGuids</faultstring>
+	<detail>
+	    <ErrorMessage>Both CurrentAsset and NewAsset FileGuid's cannot be the same</ErrorMessage>
+	</detail>
+</soap-env:Fault>]]></con2:xqueryText>
+                              </con7:expr>
+                            </con7:replace>
+                            <con7:delete varName="header">
+                              <con2:id>_ActionId-8827088423971146351-692099dc.150c93d82e1.-7afa</con2:id>
+                              <con7:location>
+                                <con2:xpathText>.</con2:xpathText>
+                              </con7:location>
+                            </con7:delete>
+                            <con7:transport-headers copy-all="true" xmlns:con6="http://www.bea.com/wli/sb/stages/publish/config" xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:con5="http://www.bea.com/wli/sb/stages/alert/config">
+                              <con8:id xmlns:con8="http://www.bea.com/wli/sb/stages/config">_ActionId-8827088423971146351-692099dc.150c93d82e1.-7af9</con8:id>
+                              <con7:header-set>inbound-response</con7:header-set>
+                              <con7:header name="CorrelationID" value="expression">
+                                <con6:xqueryText xmlns:con6="http://www.bea.com/wli/sb/stages/config">$CorrelationID</con6:xqueryText>
+                              </con7:header>
+                            </con7:transport-headers>
+                            <con2:reply isError="true">
+                              <con2:id>_ActionId-8827088423971146351-692099dc.150c93d82e1.-7af8</con2:id>
+                            </con2:reply>
+                          </con7:actions>
+                        </con7:case>
+                        <con7:case>
+                          <con7:condition>
+                            <con2:xqueryText>fn:string-length($body/plat:OverwriteAssetRequest/plat:CurrentAssetDetails/plat:FileGuid/text())=0</con2:xqueryText>
+                          </con7:condition>
+                          <con7:actions>
+                            <con7:replace contents-only="true" varName="body">
+                              <con2:id>_ActionId-8827088423971146351-692099dc.150c93d82e1.-79a8</con2:id>
+                              <con7:location>
+                                <con2:xpathText>.</con2:xpathText>
+                              </con7:location>
+                              <con7:expr>
+                                <con2:xqueryText><![CDATA[<soap-env:Fault >
+	<faultcode>BadRequest</faultcode>
+    <faultstring>MissingFileGuid</faultstring>
+	<detail>
+	    <ErrorMessage>CurrentAsset FileGuid cannot be empty</ErrorMessage>
+	</detail>
+</soap-env:Fault>]]></con2:xqueryText>
+                              </con7:expr>
+                            </con7:replace>
+                            <con7:delete varName="header">
+                              <con2:id>_ActionId-8827088423971146351-692099dc.150c93d82e1.-79a7</con2:id>
+                              <con7:location>
+                                <con2:xpathText>.</con2:xpathText>
+                              </con7:location>
+                            </con7:delete>
+                            <con7:transport-headers copy-all="true" xmlns:con6="http://www.bea.com/wli/sb/stages/publish/config" xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:con5="http://www.bea.com/wli/sb/stages/alert/config">
+                              <con8:id xmlns:con8="http://www.bea.com/wli/sb/stages/config">_ActionId-8827088423971146351-692099dc.150c93d82e1.-79a6</con8:id>
+                              <con7:header-set>inbound-response</con7:header-set>
+                              <con7:header name="CorrelationID" value="expression">
+                                <con6:xqueryText xmlns:con6="http://www.bea.com/wli/sb/stages/config">$CorrelationID</con6:xqueryText>
+                              </con7:header>
+                            </con7:transport-headers>
+                            <con2:reply isError="true">
+                              <con2:id>_ActionId-8827088423971146351-692099dc.150c93d82e1.-79a5</con2:id>
+                            </con2:reply>
+                          </con7:actions>
+                        </con7:case>
+                        <con7:case>
+                          <con7:condition>
+                            <con2:xqueryText>fn:string-length($body/plat:OverwriteAssetRequest/plat:NewAssetDetails/plat:FileGuid/text())=0</con2:xqueryText>
+                          </con7:condition>
+                          <con7:actions>
+                            <con7:replace contents-only="true" varName="body">
+                              <con2:id>_ActionId-8827088423971146351-692099dc.150c93d82e1.-7915</con2:id>
+                              <con7:location>
+                                <con2:xpathText>.</con2:xpathText>
+                              </con7:location>
+                              <con7:expr>
+                                <con2:xqueryText><![CDATA[<soap-env:Fault >
+	<faultcode>BadRequest</faultcode>
+    <faultstring>MissingFileGuid</faultstring>
+	<detail>
+	    <ErrorMessage>NewAsset FileGuid cannot be empty</ErrorMessage>
+	</detail>
+</soap-env:Fault>]]></con2:xqueryText>
+                              </con7:expr>
+                            </con7:replace>
+                            <con7:delete varName="header">
+                              <con2:id>_ActionId-8827088423971146351-692099dc.150c93d82e1.-78b9</con2:id>
+                              <con7:location>
+                                <con2:xpathText>.</con2:xpathText>
+                              </con7:location>
+                            </con7:delete>
+                            <con7:transport-headers copy-all="true" xmlns:con6="http://www.bea.com/wli/sb/stages/publish/config" xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:con5="http://www.bea.com/wli/sb/stages/alert/config">
+                              <con8:id xmlns:con8="http://www.bea.com/wli/sb/stages/config">_ActionId-8827088423971146351-692099dc.150c93d82e1.-78b7</con8:id>
+                              <con7:header-set>inbound-response</con7:header-set>
+                              <con7:header name="CorrelationID" value="expression">
+                                <con6:xqueryText xmlns:con6="http://www.bea.com/wli/sb/stages/config">$CorrelationID</con6:xqueryText>
+                              </con7:header>
+                            </con7:transport-headers>
+                            <con2:reply isError="true">
+                              <con2:id>_ActionId-8827088423971146351-692099dc.150c93d82e1.-78b5</con2:id>
+                            </con2:reply>
+                          </con7:actions>
+                        </con7:case>
+                      </con7:ifThenElse>
+                      <con2:replace varName="body" contents-only="true">
+                        <con1:id>_ActionId-8827088423971146351-692099dc.150c93d82e1.-7c8d</con1:id>
+                        <con2:location>
+                          <con1:xpathText>.</con1:xpathText>
+                        </con2:location>
+                        <con2:expr>
+                          <con1:xqueryText><![CDATA[<plat:InputFormAssetUpdateRequest>
+    <plat:AssetData>{$initialBody/plat:OverwriteAssetRequest/plat:NewAssetDetails/plat:AssetData/text()}</plat:AssetData>
+	<plat:AssetId>{$initialBody/plat:OverwriteAssetRequest/plat:AssetToOverwrite/plat:AssetID/text()}</plat:AssetId>
+</plat:InputFormAssetUpdateRequest>]]></con1:xqueryText>
+                        </con2:expr>
+                      </con2:replace>
+                      <con4:routing-options xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con4="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con3="http://www.bea.com/wli/sb/stages/alert/config">
+                        <con7:id xmlns:con7="http://www.bea.com/wli/sb/stages/config">_ActionId-8827088423971146351-692099dc.150c93d82e1.-7fe9</con7:id>
+                        <con4:uriExpr>
+                          <con7:xqueryText xmlns:con7="http://www.bea.com/wli/sb/stages/config">$podURL</con7:xqueryText>
+                        </con4:uriExpr>
+                      </con4:routing-options>
+                      <con4:ifThenElse xmlns:con3="http://www.bea.com/wli/sb/stages/alert/config" xmlns:con="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con2="http://www.bea.com/wli/sb/pipeline/config" xmlns:con5="http://www.bea.com/wli/sb/stages/publish/config" xmlns:con4="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con6="http://www.bea.com/wli/sb/stages/publish/config">
+                        <con1:id>_ActionId-8827088423971146351-692099dc.150c93d82e1.-7c92</con1:id>
+                        <con4:case>
+                          <con4:condition>
+                            <con1:xqueryText>fn:contains($logProperties/SLPlatformRequest/text(),'yes')</con1:xqueryText>
+                          </con4:condition>
+                          <con4:actions>
+                            <con7:route xmlns:con4="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con1="http://www.bea.com/wli/sb/stages/logging/config" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con5="http://www.bea.com/wli/sb/stages/alert/config" xmlns:con7="http://www.bea.com/wli/sb/stages/publish/config">
+                              <con2:id>_ActionId-8827088423971146351-692099dc.150c93d82e1.-7c91</con2:id>
+                              <con7:service ref="LogService_v1/BusinessServices/LogProducer_bs" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                              <con7:outboundTransform>
+                                <con7:replace varName="body" contents-only="true" xmlns:con7="http://www.bea.com/wli/sb/stages/transform/config">
+                                  <con2:id>_ActionId-8827088423971146351-692099dc.150c93d82e1.-7c90</con2:id>
+                                  <con7:location>
+                                    <con8:xpathText xmlns:con8="http://www.bea.com/wli/sb/stages/config">.</con8:xpathText>
+                                  </con7:location>
+                                  <con7:expr>
+                                    <con2:xqueryText><![CDATA[<log:LogRecord>
+  <log:RawXml>{fn-bea:serialize($body)}</log:RawXml>
+  <log:TrxID>{$CorrelationID}</log:TrxID>
+  <log:Status>START</log:Status>
+  <log:Keys>
+    <log:keyitem>
+      <log:key>componentname</log:key>
+      <log:value>AssetLibrarySvc</log:value>
+    </log:keyitem>
+    <log:keyitem>
+      <log:key>operationstep</log:key>
+      <log:value>{fn:concat('SL-Platform-',$operationName,'-Outgoing-Request')}</log:value>
+    </log:keyitem>
+    <log:keyitem>
+      <log:key>sessionid</log:key>
+      <log:value>{$sessionId}</log:value>
+    </log:keyitem>
+    <log:keyitem>
+      <log:key>clientid</log:key>
+      <log:value>{$sessionResponse/ses:GetUserSessionResponse/ses:SecurityContext/sec:UserName/text()}</log:value>
+    </log:keyitem>
+  </log:Keys>
+</log:LogRecord>]]></con2:xqueryText>
+                                  </con7:expr>
+                                </con7:replace>
+                                <con3:routing-options>
+                                  <con2:id>_ActionId-8827088423971146351-692099dc.150c93d82e1.-7c8f</con2:id>
+                                  <con3:qualityOfService>best-effort</con3:qualityOfService>
+                                </con3:routing-options>
+                              </con7:outboundTransform>
+                            </con7:route>
+                          </con4:actions>
+                        </con4:case>
+                      </con4:ifThenElse>
+                    </con6:outboundTransform>
+                    <con6:responseTransform>
+                      <con2:ifThenElse>
+                        <con1:comment>End date the current Asset</con1:comment>
+                        <con1:id>_ActionId-8827088423971146351-692099dc.150c93d82e1.-7b0d</con1:id>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>fn:string-length($initialBody/plat:OverwriteAssetRequest/plat:CurrentAssetDetails/plat:FileGuid/text())>0</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con2:wsCallout>
+                              <con1:id>_ActionId-8827088423971146351-692099dc.150c93d82e1.-7b0b</con1:id>
+                              <con2:service xsi:type="ref:BusinessServiceRef" ref="eVaultSvcs_SOAP_v1/eVaultSvcs/BusinessServices/eVaultService_bs" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                              <con2:operation>SetFileExpiration</con2:operation>
+                              <con2:request>
+                                <con2:body wrapped="true">$varRequest</con2:body>
+                              </con2:request>
+                              <con2:response>
+                                <con2:body wrapped="true">varResponse</con2:body>
+                              </con2:response>
+                              <con2:requestTransform>
+                                <con2:assign varName="varRequest">
+                                  <con1:id>_ActionId-8827088423971146351-692099dc.150c93d82e1.-7b0c</con1:id>
+                                  <con2:expr>
+                                    <con1:xqueryText><![CDATA[(: End date current Asset :)
+
+<soap-env:Body>
+	<edm:SetFileExpirationRequest>
+		<edm:ExpirationDate>
+         {          
+         if (fn:string-length(fn-bea:trim($initialBody/plat:OverwriteAssetRequest/plat:CurrentAssetDetails/plat:FileExpirationDate/text())) > 0)
+         then $initialBody/plat:OverwriteAssetRequest/plat:CurrentAssetDetails/plat:FileExpirationDate/text()
+         else fn:current-dateTime()
+         }
+        </edm:ExpirationDate>
+        <edm:FileGuid>{$initialBody/plat:OverwriteAssetRequest/plat:CurrentAssetDetails/plat:FileGuid/text()}</edm:FileGuid>
+        <edm:MediaClient>Test</edm:MediaClient>
+     </edm:SetFileExpirationRequest>
+</soap-env:Body>]]></con1:xqueryText>
+                                  </con2:expr>
+                                </con2:assign>
+                              </con2:requestTransform>
+                              <con2:responseTransform/>
+                            </con2:wsCallout>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:default>
+                          <con2:Error>
+                            <con1:id>_ActionId-8827088423971146351-692099dc.150c93d82e1.-7b0a</con1:id>
+                            <con2:errCode>BadRequest</con2:errCode>
+                            <con2:message>Missing FileGuid for the current Asset.</con2:message>
+                          </con2:Error>
+                        </con2:default>
+                      </con2:ifThenElse>
+                      <con2:ifThenElse>
+                        <con1:comment>Make the new asset permanent if old asset got end dated succussfully</con1:comment>
+                        <con1:id>_ActionId-8827088423971146351-692099dc.150c93d82e1.-7af2</con1:id>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>$varResponse/edm:SetFileExpirationResponse/edm:Success/text()='true' and
+fn:string-length($initialBody/plat:OverwriteAssetRequest/plat:NewAssetDetails/plat:FileGuid/text())>0</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con2:wsCallout>
+                              <con1:id>_ActionId-8827088423971146351-692099dc.150c93d82e1.-7af0</con1:id>
+                              <con2:service xsi:type="ref:BusinessServiceRef" ref="eVaultSvcs_SOAP_v1/eVaultSvcs/BusinessServices/eVaultService_bs" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                              <con2:operation>SetFileExpiration</con2:operation>
+                              <con2:request>
+                                <con2:body wrapped="true">$varRequestNewAsset</con2:body>
+                              </con2:request>
+                              <con2:response>
+                                <con2:body wrapped="true">varResponseNewAsset</con2:body>
+                              </con2:response>
+                              <con2:requestTransform>
+                                <con2:assign varName="varRequestNewAsset">
+                                  <con1:id>_ActionId-8827088423971146351-692099dc.150c93d82e1.-7af1</con1:id>
+                                  <con2:expr>
+                                    <con1:xqueryText><![CDATA[<soap-env:Body>
+	<edm:SetFileExpirationRequest>
+         {          
+         if (fn:string-length(fn-bea:trim($initialBody/plat:OverwriteAssetRequest/plat:NewAssetDetails/plat:FileExpirationDate/text())) > 0)
+         then <edm:ExpirationDate>{fn-bea:trim(fn-bea:trim($initialBody/plat:OverwriteAssetRequest/plat:NewAssetDetails/plat:FileExpirationDate/text()))}</edm:ExpirationDate>
+         else ''
+         }
+         <edm:FileGuid>{fn-bea:trim($initialBody/plat:OverwriteAssetRequest/plat:NewAssetDetails/plat:FileGuid/text())}</edm:FileGuid>
+         <edm:MediaClient>Test</edm:MediaClient>
+     </edm:SetFileExpirationRequest>
+</soap-env:Body>]]></con1:xqueryText>
+                                  </con2:expr>
+                                </con2:assign>
+                              </con2:requestTransform>
+                              <con2:responseTransform/>
+                            </con2:wsCallout>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>$varResponse/edm:SetFileExpirationResponse/edm:Success/text()='false'</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con2:Error>
+                              <con1:id>_ActionId-8827088423971146351-692099dc.150c93d82e1.-7aef</con1:id>
+                              <con2:errCode>BadRequest</con2:errCode>
+                              <con2:message>Set File Expiration for the current asset failed.</con2:message>
+                            </con2:Error>
+                          </con2:actions>
+                        </con2:case>
+                        <con2:default>
+                          <con2:Error>
+                            <con1:id>_ActionId-8827088423971146351-692099dc.150c93d82e1.-7aee</con1:id>
+                            <con2:errCode>BadRequest</con2:errCode>
+                          </con2:Error>
+                        </con2:default>
+                      </con2:ifThenElse>
+                      <con2:ifThenElse>
+                        <con1:id>_ActionId-8827088423971146351-692099dc.150c93d82e1.-7ae9</con1:id>
+                        <con2:case>
+                          <con2:condition>
+                            <con1:xqueryText>$varResponseNewAsset/edm:SetFileExpirationResponse/edm:Success/text()='false'</con1:xqueryText>
+                          </con2:condition>
+                          <con2:actions>
+                            <con2:wsCallout>
+                              <con1:id>_ActionId-8827088423971146351-692099dc.150c93d82e1.-7ae7</con1:id>
+                              <con2:service xsi:type="ref:BusinessServiceRef" ref="eVaultSvcs_SOAP_v1/eVaultSvcs/BusinessServices/eVaultService_bs" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                              <con2:operation>SetFileExpiration</con2:operation>
+                              <con2:request>
+                                <con2:body wrapped="true">$varRequest</con2:body>
+                              </con2:request>
+                              <con2:response>
+                                <con2:body wrapped="true">varResponse</con2:body>
+                              </con2:response>
+                              <con2:requestTransform>
+                                <con2:assign varName="varRequest">
+                                  <con1:id>_ActionId-8827088423971146351-692099dc.150c93d82e1.-7ae8</con1:id>
+                                  <con2:expr>
+                                    <con1:xqueryText><![CDATA[<soap-env:Body>
+	<edm:SetFileExpirationRequest>
+         <edm:FileGuid>{fn-bea:trim($initialBody/plat:OverwriteAssetRequest/plat:CurrentAssetDetails/plat:FileGuid/text())}</edm:FileGuid>
+         <edm:MediaClient>Test</edm:MediaClient>
+     </edm:SetFileExpirationRequest>
+</soap-env:Body>]]></con1:xqueryText>
+                                  </con2:expr>
+                                </con2:assign>
+                              </con2:requestTransform>
+                              <con2:responseTransform/>
+                            </con2:wsCallout>
+                            <con2:Error>
+                              <con1:id>_ActionId-8827088423971146351-692099dc.150c93d82e1.-7ae6</con1:id>
+                              <con2:errCode>BadRequest</con2:errCode>
+                              <con2:message>Set File Expiration for the new asset failed.</con2:message>
+                            </con2:Error>
+                          </con2:actions>
+                        </con2:case>
+                      </con2:ifThenElse>
+                      <con2:replace varName="body" contents-only="true">
+                        <con1:id>_ActionId-8827088423971146351-692099dc.150c93d82e1.-796d</con1:id>
+                        <con2:location>
+                          <con1:xpathText>.</con1:xpathText>
+                        </con2:location>
+                        <con2:expr>
+                          <con1:xqueryText>&lt;al:OverwriteAssetResponse>
+	&lt;al:Result>{$body/plat:InputFormAssetUpdateResponse/plat:Result/text()}&lt;/al:Result>
+&lt;/al:OverwriteAssetResponse></con1:xqueryText>
+                        </con2:expr>
+                      </con2:replace>
+                      <con2:validate>
+                        <con1:id>_ActionId-8827088423971146351-692099dc.150c93d82e1.-796b</con1:id>
+                        <con2:schema ref="Services_SOAP_v1/InputFormSvcs/Resources/xsd/Services/AssetLibrary"/>
+                        <con2:schemaElement xmlns:inp="http://www.elliemae.com/services/inputform" xmlns:ass="http://www.elliemae.com/services/assetlibrary">ass:OverwriteAssetResponse</con2:schemaElement>
+                        <con2:varName>body</con2:varName>
+                        <con2:location>
+                          <con1:xpathText>./al:OverwriteAssetResponse</con1:xpathText>
+                        </con2:location>
+                      </con2:validate>
+                    </con6:responseTransform>
+                  </con6:route>
+                </con:actions>
+              </con:route-node>
+            </con:flow>
+          </con:branch>
+          <con:default-branch>
+            <con:flow/>
+          </con:default-branch>
+        </con:branch-table>
+      </con:branch-node>
+    </con:flow>
+  </ser:router>
+</xml-fragment>

@@ -1,0 +1,428 @@
+<xsd:schema elementFormDefault="qualified" targetNamespace="http://www.elliemae.com/services/loanpipeline" 
+			xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+			xmlns:tns="http://www.elliemae.com/services/loanpipeline" >
+	
+	<!-- Old Pipeline schema -->
+	<xsd:element name="GetLoanPipelineRequest" type="tns:GetLoanPipelineRequestType"/>
+	<xsd:element name="GetLoanPipelineResponse" type="tns:GetLoanPipelineResponseType"/>
+	<xsd:element name="GetLoanPipelineDetailsRequest" type="tns:GetLoanPipelineDetailsRequestType"/>
+	<xsd:element name="GetLoanPipelineDetailsResponse" type="tns:GetLoanPipelineDetailsResponseType"/>
+	<xsd:element name="GetLoanPipelinePagedRequest" type="tns:GetLoanPipelinePagedRequestType"/>
+	<xsd:element name="GetLoanPipelinePagedResponse" type="tns:GetLoanPipelinePagedResponseType"/>
+	
+ 	
+	<xsd:simpleType name="FilterOperator">
+		<xsd:restriction base="xsd:string">
+			<xsd:enumeration value="None"/>
+			<xsd:enumeration value="And"/>
+			<xsd:enumeration value="Or"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:complexType name="ArrayOfPipelineField">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" maxOccurs="unbounded" name="PipelineField" nillable="true" type="tns:NameSortOrderType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="NameSortOrderType">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" name="Name" nillable="true" type="xsd:string"/>
+			<xsd:element minOccurs="0" name="SortOrder" type="tns:SortOrder"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	
+	<xsd:complexType name="ArrayOfFilterCriterion">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" maxOccurs="unbounded" name="FilterCriterion" nillable="true" type="tns:FilterCriterion"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	 <xsd:complexType name="EmListOfguid">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" maxOccurs="unbounded" name="Item" type="tns:guid"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:simpleType name="guid">
+		<xsd:restriction base="xsd:string">
+			<xsd:pattern value="[\da-fA-F]{8}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{4}-[\da-fA-F]{12}"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	
+	<xsd:complexType name="ArrayOfPipelineItem">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" maxOccurs="unbounded" name="PipelineItem" nillable="true" type="tns:PipelineItem"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="PipelineItem">
+		<xsd:complexContent mixed="false">
+			<xsd:extension base="tns:EntityContractBase">
+				<xsd:sequence>
+					<xsd:element minOccurs="0" name="AlertCount" type="xsd:int"/>
+					<xsd:element minOccurs="0" name="FieldData" nillable="true" type="tns:ArrayOfPipelineItemData"/>
+					<xsd:element minOccurs="0" name="LoanId" type="tns:guid"/>
+					<xsd:element minOccurs="0" name="LockedBy" nillable="true" type="xsd:string" />
+                                        <xsd:element minOccurs="0" name="Readonly" type="xsd:boolean" />
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+
+    <xsd:complexType name="ArrayOfPipelineItemData">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" maxOccurs="unbounded" name="PipelineItemData" nillable="true" type="tns:PipelineItemData"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="PipelineItemData">
+		<xsd:complexContent mixed="false">
+			<xsd:extension base="tns:EntityContractBase">
+				<xsd:sequence>
+					<xsd:element minOccurs="0" name="DataType" nillable="true" type="xsd:string"/>
+					<xsd:element minOccurs="0" name="Name" nillable="true" type="xsd:string"/>
+					<xsd:element minOccurs="0" name="Value" nillable="true" type="xsd:string"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	
+	<xsd:complexType name="EntityContractBase">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" name="Id" type="tns:guid"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	
+     <xsd:complexType name="FilterCriterion">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" name="DataType" nillable="true" type="xsd:string"/>
+			<xsd:element minOccurs="0" name="EvaluationOperator" nillable="true" type="xsd:string"/>
+			<xsd:element name="Field" nillable="true" type="xsd:string"/>
+			<xsd:element minOccurs="0" name="LogicalOperator" type="tns:FilterOperator"/> 
+			<xsd:element minOccurs="0" name="MaxRange" nillable="true" type="xsd:string"/>
+			<xsd:element minOccurs="0" name="MinRange" nillable="true" type="xsd:string"/>
+			<xsd:element minOccurs="0" name="Name" nillable="true" type="xsd:string"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="GetLoanPipelineRequestType">
+		<xsd:sequence>
+		     <xsd:element name="FieldSort" nillable="true" type="tns:ArrayOfPipelineField"/>
+		     <xsd:element name="Filter" nillable="true" type="tns:ArrayOfFilterCriterion"/>
+	         <xsd:element name="LoanFolder" nillable="true" type="xsd:string"/>
+	         <xsd:element name="MaxCount" type="xsd:int"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="GetLoanPipelineResponseType">
+		<xsd:sequence>
+			<xsd:element name="LoanGuids" nillable="true" type="tns:EmListOfguid"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="GetLoanPipelineDetailsRequestType">
+		<xsd:sequence>
+		   	 <xsd:element name="Fields" nillable="true" type="tns:ArrayOfPipelineField"/>
+			 <xsd:element name="LoanGuids" nillable="true" type="tns:EmListOfguid"/>
+		   </xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="GetLoanPipelineDetailsResponseType">
+		<xsd:sequence>
+			<xsd:element name="Items" nillable="true" type="tns:ArrayOfPipelineItem"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="GetLoanPipelinePagedRequestType">
+		<xsd:sequence>
+		     <xsd:element name="FieldSort" nillable="true" type="tns:ArrayOfPipelineField"/>
+			 <xsd:element name="Fields" nillable="true" type="tns:ArrayOfPipelineField"/>
+		     <xsd:element name="Filter" nillable="true" type="tns:ArrayOfFilterCriterion"/>
+		     <xsd:element name="LoanFolder" nillable="true" type="xsd:string"/>
+		     <xsd:element name="MaxCount" type="xsd:int"/>
+		     <xsd:element name="PageIndex" type="xsd:int"/>
+		     <xsd:element name="PageSize" type="xsd:int"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	
+    <xsd:complexType name="GetLoanPipelinePagedResponseType">
+		<xsd:sequence>
+			<xsd:element name="Items" nillable="true" type="tns:ArrayOfPipelineItem"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<!-- End of Old Pipeline schema -->
+	
+	<xsd:element name="GetPipelineViewsRequest" type="tns:GetPipelineViewsRequestType"/>
+	<xsd:element name="GetPipelineViewsResponse" type="tns:GetPipelineViewsResponseType"/>
+	
+	<xsd:element name="SavePipelineViewsRequest" type="tns:SavePipelineViewsRequestType"/>
+	<xsd:element name="SavePipelineViewsResponse" type="tns:SavePipelineViewsResponseType"/>
+	
+	<xsd:element name="DuplicatePipelineViewRequest" type="tns:DuplicatePipelineViewRequestType"/>
+	<xsd:element name="DuplicatePipelineViewResponse" type="tns:DuplicatePipelineViewResponseType"/>
+	
+	<xsd:element name="RenamePipelineViewRequest" type="tns:RenamePipelineViewRequestType"/>
+	<xsd:element name="RenamePipelineViewResponse" type="tns:RenamePipelineViewResponseType"/>
+	
+	<xsd:element name="SetPipelineViewAsDefaultRequest" type="tns:SetPipelineViewAsDefaultRequestType"/>
+	<xsd:element name="SetPipelineViewAsDefaultResponse" type="tns:SetPipelineViewAsDefaultResponseType"/>
+
+	<xsd:element name="GetPipelineLoanMailboxMsgsCountRequest" type="tns:GetPipelineLoanMailboxMsgsCountRequestType"/>
+	<xsd:element name="GetPipelineLoanMailboxMsgsCountResponse" type="tns:GetPipelineLoanMailboxMsgsCountResponseType"/>
+	
+	<xsd:element name="DeletePipelineViewRequest" type="tns:DeletePipelineViewRequestType"/>
+	<xsd:element name="DeletePipelineViewResponse" type="tns:DeletePipelineViewResponseType"/>
+	
+	<xsd:element name="GetPipelineDefaultViewNameRequest" type="tns:GetPipelineDefaultViewNameRequestType"/>
+	<xsd:element name="GetPipelineDefaultViewNameResponse" type="tns:GetPipelineDefaultViewNameResponseType"/>
+		
+	<xsd:element name="GetPipelineViewByNameRequest" type="tns:GetPipelineViewByNameRequestType"/>
+	<xsd:element name="GetPipelineViewByNameResponse" type="tns:GetPipelineViewByNameResponseType"/>
+	
+	<xsd:element name="CreatePipelineCustomViewRequest" type="tns:CreatePipelineCustomViewRequestType"/>
+	<xsd:element name="CreatePipelineCustomViewResponse" type="tns:CreatePipelineCustomViewResponseType"/>
+	
+	<xsd:element name="GetFoldersListForPipelineMoveLoansRequest" type="tns:GetFoldersListForPipelineMoveLoansRequestType"/>
+	<xsd:element name="GetFoldersListForPipelineMoveLoansResponse" type="tns:GetFoldersListForPipelineMoveLoansResponseType"/>
+	
+	
+	<xsd:element name="GetFoldersListForPipelineMoveLoansFromRequest" type="tns:GetFoldersListForPipelineMoveLoansFromRequestType"/>
+	<xsd:element name="GetFoldersListForPipelineMoveLoansFromResponse" type="tns:GetFoldersListForPipelineMoveLoansFromResponseType"/>	
+	
+	
+	<xsd:complexType name="GetFoldersListForPipelineMoveLoansRequestType">
+		<xsd:sequence/>
+	</xsd:complexType>
+	
+	<xsd:complexType name="GetFoldersListForPipelineMoveLoansResponseType">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" maxOccurs="1" name="FoldersList" nillable="true" type="tns:FoldersListType"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="FoldersListType">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" maxOccurs="unbounded" name="name" nillable="true" type="xsd:string"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="GetFoldersListForPipelineMoveLoansFromRequestType">
+		<xsd:sequence/>
+	</xsd:complexType>
+	
+	<xsd:complexType name="GetFoldersListForPipelineMoveLoansFromResponseType">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" maxOccurs="1" name="FoldersList" nillable="true" type="tns:FoldersListType"/>
+		</xsd:sequence>
+	</xsd:complexType>	
+	
+	<xsd:complexType name="GetPipelineViewByNameRequestType">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" maxOccurs="1" name="PersonaName" nillable="true" type="xsd:string"/>
+			<xsd:element minOccurs="0" maxOccurs="1" name="ViewName" nillable="true" type="xsd:string"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="GetPipelineViewByNameResponseType">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" name="PipelineView" nillable="true" type="tns:PipelineView"/>
+		</xsd:sequence>
+	</xsd:complexType>
+		
+	<xsd:complexType name="GetPipelineViewsRequestType">
+		<xsd:sequence/>
+	</xsd:complexType>
+	
+	<xsd:complexType name="GetPipelineViewsResponseType">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" name="PipelineViews" nillable="true" type="tns:ArrayOfPipelineView" />
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:element name="ArrayOfPipelineView" nillable="true" 	type="tns:ArrayOfPipelineView" />
+	
+	<xsd:complexType name="ArrayOfPipelineView">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" maxOccurs="unbounded" name="PipelineView" nillable="true" type="tns:PipelineView" />
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="PipelineView">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" name="Columns" nillable="true" type="tns:ArrayOfPipelineColumn"/>				
+			<xsd:element minOccurs="0" name="ExternalOrgId" nillable="true"	type="xsd:string"/>		
+			<xsd:element minOccurs="0" name="Filter" nillable="true" type="tns:ArrayOfPipelineFieldFilter"/>			
+			<xsd:element minOccurs="0" name="FilterSummary" nillable="true"	type="xsd:string"/>			
+			<xsd:element minOccurs="0" name="LoanFolder" nillable="true" type="xsd:string"/>				
+			<xsd:element minOccurs="0" name="Name" nillable="true"	type="xsd:string"/>							
+			<xsd:element minOccurs="0" name="OrgType" nillable="true" type="xsd:string"/>						
+			<xsd:element minOccurs="0" name="Ownership" nillable="true"	type="xsd:string"/>						
+			<xsd:element minOccurs="0" name="PersonaName" nillable="true" type="xsd:string"/>			
+			<xsd:element minOccurs="0" name="SortIndex" nillable="true" type="xsd:int"/>			
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="ArrayOfPipelineColumn">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" maxOccurs="unbounded" name="PipelineColumn"	nillable="true" type="tns:PipelineColumn" />
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="PipelineColumn">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" name="Alignment" 	nillable="true"	type="xsd:string"/>	
+			<xsd:element minOccurs="0" name="DisplayType" 	nillable="true"	type="xsd:string"/>				
+			<xsd:element minOccurs="0" name="OrderIndex" 	nillable="true"	type="xsd:string"/>				
+			<xsd:element minOccurs="0" name="PipelineField" nillable="true"	type="tns:PipelineField"/>					
+			<xsd:element minOccurs="0" name="Required" 		nillable="true" type="xsd:string"/>						
+			<xsd:element minOccurs="0" name="SortOrder" 	nillable="true"	type="xsd:string"/>			
+			<xsd:element minOccurs="0" name="SortPriority" 	nillable="true"	type="xsd:string"/>			
+			<xsd:element minOccurs="0" name="Width" 		nillable="true"	type="xsd:string"/>						
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="PipelineField">
+		<xsd:sequence>
+			<xsd:element  minOccurs="0" name="FieldId" nillable="true"   type="xsd:string" />
+			<xsd:element minOccurs="0" name="Header" 	nillable="true"	type="xsd:string"/>
+			<xsd:element minOccurs="0" name="Name" 		nillable="true" 		type="xsd:string"/>			
+			<xsd:element minOccurs="0" name="SortOrder" nillable="true"	type="tns:SortOrder"/>				
+		</xsd:sequence>
+	</xsd:complexType>	
+	
+	<xsd:simpleType name="SortOrder">
+		<xsd:restriction base="xsd:string">
+                        <xsd:enumeration value="None"/>
+			<xsd:enumeration value="Ascending"/>
+			<xsd:enumeration value="Descending"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+	
+	<xsd:complexType name="ArrayOfPipelineFieldFilter">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" maxOccurs="unbounded" name="PipelineFieldFilter"
+				nillable="true" type="tns:PipelineFieldFilter" />
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="PipelineFieldFilter">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" name="CriterionName" 	nillable="true"	type="xsd:string" />
+			<xsd:element minOccurs="0" name="DataSource" 		nillable="true" type="xsd:string" />			
+			<xsd:element minOccurs="0" name="FieldDescription"	nillable="true" type="xsd:string" />	
+                        <xsd:element minOccurs="0" name="FieldID"                 nillable="true" type="xsd:string"/>		
+			<xsd:element minOccurs="0" name="FieldType" 		nillable="true"	type="xsd:string" />
+			<xsd:element minOccurs="0" name="ForceDataConversion" 				type="xsd:boolean" />	
+			<xsd:element minOccurs="0" name="IsVolatile" 						type="xsd:boolean" />
+			<xsd:element minOccurs="0" name="JointToken" 		nillable="true" type="xsd:string" />
+			<xsd:element minOccurs="0" name="LeftParentheses" 					type="xsd:int" />
+			<xsd:element minOccurs="0" name="OpDesc" 			nillable="true"	type="xsd:string" />
+			<xsd:element minOccurs="0" name="OpType" 			nillable="true"	type="xsd:string" />
+			<xsd:element minOccurs="0" name="RightParentheses" 					type="xsd:int" />
+			<xsd:element minOccurs="0" name="ValueDescription"	nillable="true" type="xsd:string" />
+			<xsd:element minOccurs="0" name="ValueFrom" 		nillable="true"	type="xsd:string" />
+			<xsd:element minOccurs="0" name="ValueTo" 			nillable="true" type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="SavePipelineViewsRequestType">
+		<xsd:sequence>
+			<xsd:element name="PipelineViews" nillable="true" type="tns:ArrayOfPipelineView"/>
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="SavePipelineViewsResponseType">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" name="NumOfUpdatedCustomViews" type="xsd:int"/>
+			<xsd:element minOccurs="0" name="NumOfUpdatedPersonaViews" type="xsd:int"/>
+		</xsd:sequence>
+	</xsd:complexType>
+    
+    <xsd:complexType name="DuplicatePipelineViewRequestType">
+		<xsd:sequence>
+			<xsd:element name="NewViewName" nillable="true" type="xsd:string" />
+			<xsd:element minOccurs="0" name="PersonaName" nillable="true" type="xsd:string" />
+			<xsd:element name="ViewName" nillable="true" type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="DuplicatePipelineViewResponseType">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" name="Result" type="xsd:boolean" />
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="RenamePipelineViewRequestType">
+		<xsd:sequence>
+			<xsd:element name="NewName" minOccurs="1" maxOccurs="1" nillable="false" type="xsd:string" />
+			<xsd:element name="ExistingName" minOccurs="1" maxOccurs="1" nillable="false" type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="RenamePipelineViewResponseType">
+		<xsd:sequence>
+			<xsd:element minOccurs="1" maxOccurs="1" name="Result" type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="SetPipelineViewAsDefaultRequestType">
+		<xsd:sequence>
+			<xsd:element name="PersonaName" minOccurs="1" maxOccurs="1" nillable="false" type="xsd:string" />
+			<xsd:element name="ViewName" minOccurs="1" maxOccurs="1" nillable="false" type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="SetPipelineViewAsDefaultResponseType">
+		<xsd:sequence>
+			<xsd:element minOccurs="1" maxOccurs="1" name="Result" type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>
+		
+	<xsd:complexType name="GetPipelineLoanMailboxMsgsCountRequestType"/>
+
+	<xsd:complexType name="GetPipelineLoanMailboxMsgsCountResponseType">
+		<xsd:sequence>
+			<xsd:element minOccurs="1" maxOccurs="1" name="Count" type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="DeletePipelineViewRequestType">
+		<xsd:sequence>
+			<xsd:element name="ViewName" nillable="true" type="xsd:string"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="DeletePipelineViewResponseType">
+		<xsd:sequence>
+			<xsd:element name="Result" nillable="true" type="xsd:boolean"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="GetPipelineDefaultViewNameRequestType">
+		<xsd:sequence/>
+	</xsd:complexType>
+	
+	<xsd:complexType name="GetPipelineDefaultViewNameResponseType">
+		<xsd:sequence>
+			<xsd:element name="DefaultViewName" minOccurs="0" maxOccurs="1" nillable="true" type="xsd:string"/>
+			<xsd:element name="PersonaName" minOccurs="0" maxOccurs="1" nillable="true" type="xsd:string"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="CreatePipelineCustomViewRequestType">
+		<xsd:sequence>
+			<xsd:element name="CustomPipelineView" nillable="true"	type="tns:PipelineView" />
+			<xsd:element minOccurs="0" name="SetAsDefault" type="xsd:boolean" />
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="CreatePipelineCustomViewResponseType">
+		<xsd:sequence>
+			<xsd:element minOccurs="0" name="Result" type="xsd:boolean" />
+		</xsd:sequence>
+	</xsd:complexType>	
+	
+</xsd:schema>

@@ -1,0 +1,250 @@
+<xs:schema elementFormDefault="qualified"
+	targetNamespace="http://www.elliemae.com/services/trade/loan/pipeline"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.elliemae.com/services/trade/loan/pipeline">
+
+	<xs:element name="GetLoanTradePipelineDetailRequest"
+		nillable="true" type="tns:GetLoanTradePipelineDetailRequest" />
+	<xs:element name="GetLoanTradePipelineDetailResponse"
+		nillable="true" type="tns:GetLoanTradePipelineDetailResponse" />
+
+	<xs:complexType name="GetLoanTradePipelineDetailRequest">
+		<xs:sequence>
+			<xs:element name="Fields" nillable="true" type="tns:EmListOfstring" />
+			<xs:element name="TradeIds" nillable="true" type="tns:EmListOfint" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="EmListOfstring">
+		<xs:sequence>
+			<xs:element minOccurs="0" maxOccurs="unbounded" name="Item"
+				nillable="true" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="EmListOfint">
+		<xs:sequence>
+			<xs:element minOccurs="0" maxOccurs="unbounded" name="Item"
+				type="xs:int" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="GetLoanTradePipelineDetailResponse">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="LoanTradePipelineDetails"
+				nillable="true" type="tns:ArrayOfLoanTradePipelineView" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="ArrayOfLoanTradePipelineView">
+		<xs:sequence>
+			<xs:element minOccurs="0" maxOccurs="unbounded"
+				name="LoanTradePipelineView" nillable="true" type="tns:LoanTradePipelineView" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="LoanTradePipelineView">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="TradeId" type="xs:int" />
+			<xs:element minOccurs="0" name="TradePipelineFields"
+				nillable="true" type="tns:ArrayOfTradePipelineField" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="ArrayOfTradePipelineField">
+		<xs:sequence>
+			<xs:element minOccurs="0" maxOccurs="unbounded" name="TradePipelineField"
+				nillable="true" type="tns:TradePipelineField" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="TradePipelineField">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="Name" nillable="true"
+				type="xs:string" />
+			<xs:element minOccurs="0" name="Value" nillable="true"
+				type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="GetLoanTradePipelineRequest">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="FieldFilters" nillable="true"
+				type="tns:ArrayOfTradePipelineFieldFilter" />
+			<xs:element minOccurs="0" name="PageIndex" type="xs:int" />
+			<xs:element minOccurs="0" name="PageSize" type="xs:int" />
+			<xs:element minOccurs="0" name="SortFields" nillable="true"
+				type="tns:ArrayOfSortField" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="ArrayOfTradePipelineFieldFilter">
+		<xs:sequence>
+			<xs:element minOccurs="0" maxOccurs="unbounded"
+				name="TradePipelineFieldFilter" nillable="true"
+				type="tns:TradePipelineFieldFilter" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="TradePipelineFieldFilter">
+		<xs:complexContent mixed="false">
+			<xs:extension base="tns:FieldFilterBase">
+				<xs:sequence />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="FieldFilterBase">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="CriterionName" nillable="true"
+				type="xs:string" />
+			<xs:element minOccurs="0" name="DataSource" type="tns:FilterDataSource" />
+			<xs:element minOccurs="0" name="FieldDescription"
+				nillable="true" type="xs:string" />
+			<xs:element minOccurs="0" name="FieldID" nillable="true"
+				type="xs:string" />
+			<xs:element minOccurs="0" name="FieldType" type="tns:FieldTypes" />
+			<xs:element minOccurs="0" name="ForceDataConversion" type="xs:boolean" />
+			<xs:element minOccurs="0" name="IsVolatile" type="xs:boolean" />
+			<xs:element minOccurs="0" name="JointToken" type="tns:JointTokens" />
+			<xs:element minOccurs="0" name="LeftParentheses" type="xs:int" />
+			<xs:element minOccurs="0" name="OpDesc" nillable="true"
+				type="xs:string" />
+			<xs:element minOccurs="0" name="OpType" type="tns:OperatorTypes" />
+			<xs:element minOccurs="0" name="RightParentheses" type="xs:int" />
+			<xs:element minOccurs="0" name="ValueDescription"
+				nillable="true" type="xs:string" />
+			<xs:element minOccurs="0" name="ValueFrom" nillable="true"
+				type="xs:string" />
+			<xs:element minOccurs="0" name="ValueTo" nillable="true"
+				type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="ArrayOfSortField">
+		<xs:sequence>
+			<xs:element minOccurs="0" maxOccurs="unbounded" name="SortField"
+				nillable="true" type="tns:SortField" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="SortField">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="FieldName" nillable="true"
+				type="xs:string" />
+			<xs:element minOccurs="0" name="FieldSortOrder" type="tns:SortOrderOption" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:simpleType name="FilterDataSource">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Unknown" />
+			<xs:enumeration value="Loan" />
+			<xs:enumeration value="BorrowerContact" />
+			<xs:enumeration value="BizContact" />
+			<xs:enumeration value="MasterContract" />
+			<xs:enumeration value="Trade" />
+			<xs:enumeration value="CorrespondentMasterCommitment" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="FieldTypes">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="IsNothing" />
+			<xs:enumeration value="IsString" />
+			<xs:enumeration value="IsNumeric" />
+			<xs:enumeration value="IsDate" />
+			<xs:enumeration value="IsPhone" />
+			<xs:enumeration value="IsMonthDay" />
+			<xs:enumeration value="IsOptionList" />
+			<xs:enumeration value="IsYesNo" />
+			<xs:enumeration value="IsCheckbox" />
+			<xs:enumeration value="IsDateTime" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="JointTokens">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Nothing" />
+			<xs:enumeration value="And" />
+			<xs:enumeration value="Or" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="OperatorTypes">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="None" />
+			<xs:enumeration value="IsExact" />
+			<xs:enumeration value="IsNot" />
+			<xs:enumeration value="StartsWith" />
+			<xs:enumeration value="DoesnotStartWith" />
+			<xs:enumeration value="Contains" />
+			<xs:enumeration value="DoesnotContain" />
+			<xs:enumeration value="Equals" />
+			<xs:enumeration value="NotEqual" />
+			<xs:enumeration value="GreaterThan" />
+			<xs:enumeration value="NotGreaterThan" />
+			<xs:enumeration value="LessThan" />
+			<xs:enumeration value="NotLessThan" />
+			<xs:enumeration value="Between" />
+			<xs:enumeration value="NotBetween" />
+			<xs:enumeration value="CurrentWeek" />
+			<xs:enumeration value="CurrentMonth" />
+			<xs:enumeration value="YearToDate" />
+			<xs:enumeration value="PreviousWeek" />
+			<xs:enumeration value="PreviousMonth" />
+			<xs:enumeration value="PreviousYear" />
+			<xs:enumeration value="Last7Days" />
+			<xs:enumeration value="Last30Days" />
+			<xs:enumeration value="Last90Days" />
+			<xs:enumeration value="Last365Days" />
+			<xs:enumeration value="DateBetween" />
+			<xs:enumeration value="DateNotBetween" />
+			<xs:enumeration value="EmptyDate" />
+			<xs:enumeration value="NotEmptyDate" />
+			<xs:enumeration value="DateAfter" />
+			<xs:enumeration value="DateOnOrAfter" />
+			<xs:enumeration value="DateBefore" />
+			<xs:enumeration value="DateOnOrBefore" />
+			<xs:enumeration value="IsAnyOf" />
+			<xs:enumeration value="IsNotAnyOf" />
+			<xs:enumeration value="IsYes" />
+			<xs:enumeration value="IsNotYes" />
+			<xs:enumeration value="IsChecked" />
+			<xs:enumeration value="IsNotChecked" />
+			<xs:enumeration value="Today" />
+			<xs:enumeration value="NextWeek" />
+			<xs:enumeration value="NextMonth" />
+			<xs:enumeration value="NextYear" />
+			<xs:enumeration value="Last15Days" />
+			<xs:enumeration value="Last60Days" />
+			<xs:enumeration value="Last180Days" />
+			<xs:enumeration value="Next7Days" />
+			<xs:enumeration value="Next15Days" />
+			<xs:enumeration value="Next30Days" />
+			<xs:enumeration value="Next60Days" />
+			<xs:enumeration value="Next90Days" />
+			<xs:enumeration value="Next180Days" />
+			<xs:enumeration value="Next365Days" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="SortOrderOption">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="None" />
+			<xs:enumeration value="Ascending" />
+			<xs:enumeration value="Descending" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:complexType name="GetLoanTradePipelineResponse">
+		<xs:sequence>
+			<xs:element minOccurs="0" name="LoanTradeIds" nillable="true"
+				type="tns:EmListOfint" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:element name="GetLoanTradePipelineRequest"
+		nillable="true" type="tns:GetLoanTradePipelineRequest" />
+	<xs:element name="GetLoanTradePipelineResponse"
+		nillable="true" type="tns:GetLoanTradePipelineResponse" />
+</xs:schema>
