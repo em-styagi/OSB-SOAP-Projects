@@ -34,3 +34,6 @@
 	<tns:StartIndex>0</tns:StartIndex>
 	<tns:EndIndex>0</tns:EndIndex>
 </tns:CreatePipelineCursorRequest>
+
+TEST 1
+TEST 4
